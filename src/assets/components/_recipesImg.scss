@@ -1,0 +1,43 @@
+// recipes 頁面的圖片大小
+.selectProductCategory img{
+    width: 90px;
+    height: 90px;
+}
+.selectProductCategory span{
+    font-size: 16px;
+}
+// product 產品單頁圖片大小
+.productMainImg{
+    height: 200px;
+}
+// 食譜單頁圖片大小
+.recipeMainImg img{
+    width: 300px;
+    height: 200px;
+}
+
+// 會員專區 訂單狀況單頁 文字大小
+#orderProcess div h5{
+    font-size: 12px;
+}
+@include media-breakpoint-up(lg) {
+    // recipes 頁面的圖片大小
+    .selectProductCategory img{
+        width: 120px;
+        height: 120px;
+    }
+    .selectProductCategory span{
+        font-size: 20px;
+    }
+    .productMainImg{
+        height: 300px;
+    }
+    .recipeMainImg img{
+        width: 400px;
+        height: 300px;
+    }
+    // 會員專區 訂單狀況單頁 文字大小
+    #orderProcess div h5{
+        font-size: 20px;
+    }
+}

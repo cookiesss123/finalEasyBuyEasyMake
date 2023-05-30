@@ -1,0 +1,27 @@
+/* 全部的圖片 */
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  /* 統一圖片 高度100px */
+  .swiper {
+    height: 100px;
+  }
+  /* 相關食譜 桌面 改箭頭樣式要用 ::after 偽元素 */
+  .swiper-button-next::after, .swiper-button-prev::after{
+    font-size: 15px !important;
+    color: white;
+  
+  }
+  .swiper-button-next, .swiper-button-prev{
+    background: #815B15;
+    border-radius: 30px;
+    width: 30px !important;
+    height:30px !important;
+  
+    padding: 0px;
+    position: absolute !important;
+    /* 要加 important 否則點入換頁會有問題 */
+  }

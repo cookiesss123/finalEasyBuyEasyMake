@@ -1,0 +1,64 @@
+$sidebar-width: 430px;
+
+// 手機
+.sidebar {
+    width: $sidebar-width;
+    margin-right: -$sidebar-width;
+    transition: margin-right .25s;
+    position: fixed;
+    top:0;
+    right: 0;
+}
+.main {
+    width: 100%;
+    margin-right: 0 !important; // 不然小於桌面的畫面會縮起來
+
+}
+// .sidebar {
+//     width: 0;
+//     margin-right: 0;
+//     top:0;
+//     right: 0;
+// }
+// .main {
+//     width: 100%;
+//     margin-right: 0 !important; // 不然小於桌面的畫面會縮起來
+
+// }
+
+// 展開
+.sidebar-toggled{
+    .sidebar {
+        margin-right: 0;
+    }
+    .main {
+        margin-right: $sidebar-width;
+    }
+}
+
+// 電腦
+@include media-breakpoint-up(lg) {
+    .sidebar {
+        width: $sidebar-width;
+        margin-right: 0;
+        // 新增的
+        position: fixed;
+        transition: margin-right .25s;
+
+    }
+    .main {
+        width: calc(100vw - #{$sidebar-width});
+        margin-right: $sidebar-width;
+        transition: margin-right .25s;
+    }
+    // 收合
+    .sidebar-toggled {
+        .sidebar {
+            margin-right: -$sidebar-width;
+        }
+        .main {
+            width: 100%;
+            margin-right: 0;
+        }
+    }
+}

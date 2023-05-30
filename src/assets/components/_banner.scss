@@ -1,0 +1,201 @@
+// 手機
+// navbar
+.logo{
+    height: 54px;
+}
+// 手機 menu link
+#navbarNav{
+    font-size: 16px;
+}
+/* 避免文字移動位置 */
+.navbar-nav .nav-link{
+    position: relative;
+    border-bottom: 2px solid transparent;
+  }
+.navbar-nav .nav-link::after{
+    content: "";
+    width: 4px;
+    height: 2px;
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: transparent;
+    transition: width .4s;
+  }
+
+  // hover 僅針對線條
+  .navbar-nav .nav-link:hover::after {
+    background-color: #b15c17;
+    width: 20%;
+  }
+  
+  // hover 對線條
+  #navbarNav .nav-link:hover{
+    color: #b15c17;
+    background: white;
+    width: 100%;
+} 
+
+#navbarNav .mainMenu .active-link {
+    color: #b15c17 !important;
+    border-bottom: 2px solid #b15c17 !important;
+    background: white;
+    width: 20%; // !important
+    margin: 0 auto;
+}
+#navbarNav .login .active-link {
+    color: #b15c17 !important;
+    border-bottom: 2px solid #b15c17 !important;
+    background: white;
+}
+#navbarNav .signup .active-link {
+    background: #b15c17;
+}
+#navbarNav .signup.active-link {
+    background: #b15c17;
+    color: white !important;
+}
+// 頁籤 hover 顏色
+.nav .nav-item button:hover{
+    color: #b15c17;
+  }
+.logo{
+    height: 40px;
+}
+
+.banner{
+    background-image:url('@/assets/images/hero-mobile.png');
+    // background-image:url('./src/assets/images/hero-mobile.png');
+    background-repeat: no-repeat;
+    height: 358px;
+    background-size: cover;
+    margin-top: 90px;
+}
+.h1Text{
+    font-size: 24px;
+}
+.bannerContent{
+    padding: 160px 0;
+}
+.subTitle{
+    font-size: 14px;
+}
+// 食譜title文字大小
+.mainTitle{
+  font-size: 16px;
+}
+.badgeSize{
+  font-size: 10px;
+}
+
+// 產品價格大小
+.priceSize{
+  font-size: 16px;
+}
+/* 獎品 */
+.prizes .card img{
+    /* transform: rotateY(-90deg); */
+    opacity: 0;
+    transform: rotateY(-180deg);
+    transition: all ease-in-out 0.5s;
+  }
+  .prizes .card:hover img{
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+  .prizes .card .questionMark{
+    /* transform: rotateY(0deg); */
+    transform: rotateY(0deg);
+    transition: all ease-in-out 0.5s;
+  }
+  .prizes .card:hover .questionMark{
+    /* transform: rotateY(-90deg); */
+    transform: rotateY(-180deg);
+    opacity: 0;
+  }
+  .prizes .card .card-footer{
+    opacity: 0;
+  }
+  
+  .prizes .card:hover .card-footer{
+    opacity: 1;
+  }
+  
+// 桌機
+@include media-breakpoint-up(lg) {
+    .logo{
+        height: 54px;
+    }
+    #navbarNav{
+        font-size: 16px;
+    }
+    /* 避免文字移動位置 */
+    .navbar-nav .nav-link{
+        position: relative;
+        border-bottom: 2px solid transparent;
+      }
+    .navbar-nav .nav-link::after{
+        content: "";
+        width: 4px;
+        height: 2px;
+        position: absolute;
+        top: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: transparent;
+        transition: width .4s;
+      }
+
+      .navbar-nav .nav-link:hover::after {
+        background-color: #b15c17;
+        width: 100%;
+      }
+      
+      #navbarNav .nav-link:hover{
+        color: #b15c17;
+        background: white;
+    } 
+    
+    // 桌機 menu link
+
+    #navbarNav .mainMenu .active-link {
+        color: #b15c17 !important;
+        border-bottom: 2px solid #b15c17 !important;
+        background: white;
+        width: 100%;
+    }
+
+    .banner{
+        background-image:url('@/assets/images/hero.png');
+        height: 670px;
+        width:100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        margin-top: 125px;
+    }
+    .h1Text{
+        font-size: 40px;
+    }
+    .bannerContent{
+        padding-top: 80px;
+    }
+    .mb-lg-80{
+        margin-bottom: 80px;
+    }
+    .subTitle{
+        font-size: 16px;
+    }
+    // 食譜title文字大小
+    .mainTitle{
+      font-size: 24px;
+    }
+    // 標籤大小
+    .badgeSize{
+      font-size: 14px;
+    }
+    // 產品價格大小
+    .priceSize{
+      font-size: 20px;
+    }
+}
