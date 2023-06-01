@@ -84,7 +84,7 @@
                 <p>本店會透過信箱與您聯絡獎品寄送時間，請時刻關注信件，並請留下電話、地址到@EasyMakeEasyBuy.gmail.com，感謝您的支持!<br>下期好禮更精彩，千萬別錯過!</p>
             </div>
           </div>
-          <section class="py-100-sm-40 ">
+          <section class="my-10">
     <div class="container">
       <h2 class="display-6 fw-bold d-flex align-items-center mb-4 d-flex flex-lg-row align-items-center mb-4 ">
         <div class="d-flex align-items-center">
@@ -124,7 +124,7 @@
         </div>
       </div>
     </div>
-  </section>
+          </section>
           <h5>規則：</h5>
             <ol>
               <li v-for="rule in lottery.rules" :key="rule + 20">{{ rule }}</li>

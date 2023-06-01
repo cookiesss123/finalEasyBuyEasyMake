@@ -16,3 +16,59 @@
 .card:hover .enlargeImg img{
   transform:scale(1.2,1.2);
 }
+
+// 食譜和產品的圖片
+.cardImg .card-img{
+  height: 120px;
+}
+// 產品 折
+.card-text span{
+  font-size: 10px;
+}
+// 食譜分類
+.card-text .cardTextCategory{
+  top: 65px;
+}
+
+// 產品、食譜 title 記得之後home 也要加
+.card-footer .cardTextTitle{
+  font-size: 8px;
+}
+// 產品、食譜 價格
+.card-footer .cardTextPrice{
+  font-size: 8px;
+}
+
+// 產品 評價
+.card-footer .starRates{
+  font-size: 8px;
+}
+
+// 桌機
+@include media-breakpoint-up(lg) {
+  // 食譜和產品的圖片
+  .cardImg .card-img{
+    height: 220px;
+  }
+ // 產品 折
+.card-text span{
+  font-size: 14px;
+}
+
+// 產品、食譜 title 記得之後home 也要加
+.card-footer .cardTextTitle{
+  font-size: 20px;
+}
+// 產品、食譜 價格
+.card-footer .cardTextPrice{
+  font-size: 16px;
+}
+// 產品 評價
+.card-footer .starRates{
+  font-size: 20px;
+}
+// 食譜分類
+.card-text .cardTextCategory{
+  top: 155px;
+}
+}

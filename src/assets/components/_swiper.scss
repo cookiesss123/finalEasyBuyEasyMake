@@ -11,17 +11,29 @@
   }
   /* 相關食譜 桌面 改箭頭樣式要用 ::after 偽元素 */
   .swiper-button-next::after, .swiper-button-prev::after{
-    font-size: 15px !important;
+    font-size: 10px !important;
     color: white;
-  
   }
   .swiper-button-next, .swiper-button-prev{
     background: #d04740;
     border-radius: 30px;
-    width: 30px !important;
-    height:30px !important;
-  
+    width: 20px !important;
+    height:20px !important;
     padding: 0px;
     position: absolute !important;
     /* 要加 important 否則點入換頁會有問題 */
   }
+
+// 除了首頁的手機swiper 有包含副圖 產品、食譜
+@include media-breakpoint-up(lg) {
+  .swiper-button-next, .swiper-button-prev{
+    width: 30px !important;
+    height:30px !important;
+  }
+
+  .swiper-button-next::after, .swiper-button-prev::after{
+    font-size: 15px !important;
+    color: white;
+  }
+
+}

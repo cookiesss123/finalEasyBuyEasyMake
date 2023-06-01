@@ -1,11 +1,21 @@
 /* 購買按鈕 */
-.buyBtn:hover{
+.buyBtn{
+    top: 80px;
     img{
-        content: url('@/assets/images/icon-cart-hover.png');
+        height: 30px;
     }
 }
-.clickBuyBtn{
-    img{
-        content: url('@/assets/images/icon-cart-hover.png');
+@include media-breakpoint-up(lg) {
+   /* 購買按鈕 */
+    .buyBtn:hover{
+        img{
+            content: url('@/assets/images/icon-cart-hover.png');
+        }
+    }
+    .buyBtn{
+        top: 155px;
+        img{
+            height: 48px;
+        }
     }
 }

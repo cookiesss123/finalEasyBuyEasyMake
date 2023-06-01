@@ -180,6 +180,7 @@ export default {
     addBookmark (product) {
       if (!this.uid) {
         this.toastMessage('登入才可使用收藏功能', 'error')
+        return
       }
       const reference = ref(db, `productBookmarks/${this.uid}/${product.id}`)
       set(reference, product)
@@ -316,42 +317,45 @@ export default {
       </div>
       <!-- 產品畫面 -->
       <div class="container mt-4">
-        <div v-if="filterProducts.length" class="row row-cols-lg-4 row-cols-1 gy-4">
+        <div v-if="filterProducts.length" class="row row-cols-lg-4 row-cols-2 gy-4">
           <div class="col text-decoration-none" v-for="product in this.$refs.pagination.pageProducts" :key="product.id">
             <div class="card position-relative border-0 bg-transparent" style="border-radius: 20px;">
-              <div class=" cardImg" style="border-radius: 20px;">
+              <div class="cardImg" style="border-radius: 20px;">
                 <RouterLink :to="`/products/${product.id}`" class="enlargeImg">
                   <img :src="product.imgUrl" class="card-img" height="220" style="border-radius: 20px; object-fit: cover;  max-width: 100%; max-height: 100%;" alt="">
                 </RouterLink>
               </div>
               <h5 class="card-text">
-                <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent end-0 top-0 m-3" @click="()=>addBookmark(product)">
+                <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2" @click="()=>addBookmark(product)">
                   <img src="../../assets/images/image5.png">
                 </button>
-                <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex flex-column align-items-center text-white p-2 bg-red border me-3 position-absolute top-0 start-0 m-3 rounded">
+                <span v-if="product.isCheaper" style="pointer-events: none; " class="d-flex flex-column align-items-center text-white p-2 bg-red border position-absolute top-0 start-0 rounded">
                   {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                 </span>
                 <!-- 先轉成 string 再取得字串第一個字元 .charAt(0) -->
                 <div v-for="mark in bookMarks" :key="mark">
-                  <button v-if="mark === product.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent end-0 top-0 m-3"  @click="()=>deleteBookmark(product.id)">
+                  <button v-if="mark === product.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>deleteBookmark(product.id)">
                       <img src="../../assets/images/image4.png">
                   </button>
                 </div>
-                <button :disabled="loadingItem === 'loading'" @click="()=>addCart(product)" type="button" class="buyBtn border-0 bg-transparent me-2 position-absolute end-0" style="top: 155px;">
-                  <img src="../../assets/images/icon-cart.png" style="height: 48px;" alt="" class="rounded-circle shadow-sm">
+                <!-- top: 155px; -->
+                <button :disabled="loadingItem === 'loading'" @click="()=>addCart(product)" type="button" class="buyBtn border-0 bg-transparent me-lg-2 me-1 position-absolute end-0" >
+                  <img src="../../assets/images/icon-cart.png"  alt="" class="rounded-circle shadow-sm">
                 </button>
               </h5>
               <RouterLink :to="`/products/${product.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown">
-                <h5 class="h5 fw-bold">{{product.title}}</h5>
-                <div class="d-flex align-items-center">
+                <h5 class="fw-bold cardTextTitle">{{product.title}}</h5>
+                <div class="d-flex align-items-center cardTextPrice">
                   <div class="me-auto">
                     <del v-if="product.originalPrice" class="me-2 text-muted mt-1" :class="{'d-none': !product.isCheaper}">NT$ {{ numberComma(product.originalPrice) }}</del>
-                    <span class=" mt-1">
+                    <span class="mt-1 d-block d-lg-inline-block">
+                      <!-- 有折價 -->
                       <span v-if="product.price" :class="{'text-danger':product.isCheaper, 'fw-bold':product.isCheaper}">
                         NT$ {{numberComma(product.price)}}</span> / {{ product.num }}{{ product.unit }}
                     </span>
                   </div>
-                  <h5 class="mb-0">
+                  <!--  ms-auto -->
+                  <h5 class="mb-0 starRates">
                     <div class="badge border rounded-pill bg-white" :class="{'text-orange': product.averageRate, 'border-orange': product.averageRate, 'text-lightBrownGray': !product.averageRate, 'border-lightBrownGray': !product.averageRate}">
                       <span class="me-1">
                       {{ product.averageRate }}

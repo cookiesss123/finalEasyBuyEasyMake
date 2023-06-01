@@ -152,6 +152,7 @@ export default {
     addBookmark (recipe) {
       if (!this.uid) {
         this.toastMessage('登入才可使用收藏功能', 'error')
+        return
       }
       const reference = ref(db, `recipeBookmarks/${this.uid}/${recipe.id}`)
       set(reference, recipe)
@@ -225,7 +226,7 @@ export default {
 }
 </script>
 <template>
-    <div class="py-100-sm-40">
+    <div class="my-7">
         <!-- Loading -->
         <LoadingModal ref="loadingModal"></LoadingModal>
 
@@ -334,36 +335,38 @@ export default {
 
         <section class="container">
           <!-- 多了這個判斷 filterRecipes.length 至少要有一個存在 -->
-          <div v-if="filterRecipes.length" class="row row-cols-lg-4 row-cols-1 gy-4">
+          <div v-if="filterRecipes.length" class="row row-cols-lg-4 row-cols-2 gy-4">
             <div class="col text-decoration-none" v-for="recipe in this.$refs.pagination.pageProducts" :key="recipe.id">
               <div class="card position-relative border-0 bg-transparent" style="border-radius: 20px;">
-                <div class=" cardImg" style="border-radius: 20px;">
+                <div class="cardImg" style="border-radius: 20px;">
                   <RouterLink :to="`/recipes/${recipe.id}`" class="enlargeImg">
-                    <img :src="recipe.image" class="card-img" height="220" style="border-radius: 20px; object-fit: cover;  max-width: 100%; max-height: 100%;" alt="">
+                    <!--  height="220" -->
+                    <img :src="recipe.image" class="card-img" style="border-radius: 20px; object-fit: cover;  max-width: 100%; max-height: 100%;" alt="">
                   </RouterLink>
                 </div>
                 <h5 class="card-text">
-                    <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent end-0 top-0 m-3" @click="()=>addBookmark(recipe)">
+                    <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2" @click="()=>addBookmark(recipe)">
                       <img src="../../assets/images/image5.png">
                     </button>
                     <!-- 已收藏狀態 -->
                     <div v-for="mark in bookMarks" :key="mark + 4567">
-                      <button v-if="mark === recipe.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent end-0 top-0 m-3"  @click="()=>deleteBookmark(recipe.id)">
+                      <button v-if="mark === recipe.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>deleteBookmark(recipe.id)">
                           <img src="../../assets/images/image4.png">
                       </button>
                     </div>
-                    <span style="pointer-events: none; top: 155px;" class="badge rounded-pill bg-red mt-4 border-0 m-3 position-absolute start-0">{{ recipe.category }}</span>
+                    <!--  top: 155px; -->
+                    <span style="pointer-events: none; " class="cardTextCategory badge rounded-pill bg-red mt-4 border-0 m-3 position-absolute start-0">{{ recipe.category }}</span>
                 </h5>
                 <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown">
-                  <h5 class="d-flex justify-content-between align-items-center fw-bold">
+                  <h5 class="d-flex justify-content-between align-items-center fw-bold cardTextTitle">
                     <span>{{recipe.title}}</span>
                     <p class="mb-0 badge rounded-pill border" :class="{'border-red': recipe.thumbs !== 0, 'border-lightBrownGray':  recipe.thumbs === 0, 'text-red':recipe.thumbs !== 0,'text-lightBrownGray': recipe.thumbs === 0}">
                       <span class="me-1">{{ recipe.thumbs }}</span>
                       <i class="bi bi-hand-thumbs-up-fill"></i>
                     </p>
                   </h5>
-                  <div>
-                    <del v-if="recipe.total" class="me-2 text-muted" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
+                  <div class="cardTextPrice">
+                    <del v-if="recipe.total" class="me-2 text-muted d-block d-lg-inline-block" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
                     <span><span v-if="recipe.price" :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{numberComma(recipe.price)}}</span> / {{ recipe.content }}</span>
                   </div>
                 </RouterLink>

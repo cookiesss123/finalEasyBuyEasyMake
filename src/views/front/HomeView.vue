@@ -379,6 +379,7 @@ export default {
           <div class="d-flex flex-column align-items-center" >
             <!-- 內容 為甚麼點進去之後再回到首頁尺寸會縮小???? => 要用 !important固定 -->
             <!-- 桌機 橫向 -->
+            <!-- d-none d-md-none d-lg-block  -->
             <div class="d-none d-md-none d-lg-block container horizontalSwiper">
               <swiper :slides-per-view="4" :space-between="25"
               :modules="modules"
@@ -425,44 +426,45 @@ export default {
                 </swiper-slide>
               </swiper>
             </div>
-            <!-- 手機 直向 -->
-            <div class="d-lg-none d-md-block container verticalSwiper" >
-              <swiper :slides-per-view="4" :space-between="10"
+            <!-- 手機 橫向2 -->
+            <div class="d-lg-none d-md-block container verticalSwiper">
+              <swiper :slides-per-view="2" :space-between="25"
               :modules="modules"
               navigation
-              direction="vertical"
-              style="height: 1400px;"
+              style="height: 250px;"
               >
                 <swiper-slide v-for="recipe in popularRecipes" :key="recipe.id" style="cursor: pointer;">
                   <div class="card position-relative border-0 bg-transparent" style="border-radius: 20px;">
-                    <div class="position-absolute cardImg" style="border-radius: 20px; width: 100%; height: 220px;">
-                      <RouterLink :to="`/recipes/${recipe.id}`" class="enlargeImg position-absolute top-0" style=" width: 100%; border-radius: 20px;">
-                        <!-- 圖片要加 !important; 不然點了連結回到首頁會變小 -->
-                        <img :src="recipe.image" class="card-img" style="border-radius: 20px; object-fit: cover; height: 220px !important;" alt="">
+                    <div class="position-absolute border-0" style="border-radius: 20px; width: 100%; height: 120px;">
+                      <RouterLink :to="`/recipes/${recipe.id}`" style="border-radius: 20px;" >
+                        <img :src="recipe.image" class="position-absolute top-0 card-img border-0" style="border-radius: 20px; object-fit: cover; height: 120px !important;" alt="">
                       </RouterLink>
                     </div>
                     <h5 class="card-text">
-                        <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('recipeBookmarks', recipe)">
-                          <img src="../../assets/images/image5.png" style="width: 36px !important;">
+                        <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent top-0 end-0 m-2 m-lg-3" @click="()=>addBookmark('recipeBookmarks',recipe)">
+                          <img src="../../assets/images/image5.png" style="width: 20px !important;">
                         </button>
                         <div v-for="mark in recipeBookMarks" :key="mark">
-                          <button v-if="mark === recipe.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent end-0 top-0 m-3"  @click="()=>deleteBookmark('recipeBookmarks', recipe.id)">
-                              <img src="../../assets/images/image4.png" style="width: 36px !important;">
+                          <button v-if="mark === recipe.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent top-0 end-0 m-2 m-lg-3" @click="()=>deleteBookmark('recipeBookmarks', recipe.id)">
+                              <img src="../../assets/images/image4.png" style="width: 20px !important;">
                           </button>
                         </div>
-                        <span style="pointer-events: none; top: 155px;" class="badge rounded-pill bg-red mt-4 border-0 ms-3 position-absolute start-0">{{ recipe.category }}</span>
+                        <span style="pointer-events: none; top: 65px;" class=" badge rounded-pill bg-red mt-4 border-0 ms-3 position-absolute start-0">{{ recipe.category }}</span>
                     </h5>
-                    <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer  bg-transparent border-0 text-decoration-none link-darkBrown" style="margin-top: 220px;">
+                    <!-- margin-top 所以才很高... -->
+                    <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown" style="margin-top: 120px;">
                       <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="fw-bold mb-0" style="font-size: 16px;">{{recipe.title}}</h5>
-                        <span class="badge rounded-pill text-red border border-red">
-                          {{ recipe.thumbs }}
-                          <i class="bi bi-hand-thumbs-up-fill" ></i>
-                        </span>
+                        <h5 class="fw-bold mb-0 cardTextTitle">{{recipe.title}}</h5>
+                        <p class="mb-0" style="font-size: 10px;">
+                          <span class="badge rounded-pill text-red border border-red">
+                            {{ recipe.thumbs }}
+                            <i class="bi bi-hand-thumbs-up-fill" ></i>
+                          </span>
+                        </p>
                       </div>
-                      <div class="col-12 d-flex" style="font-size: 14px;">
-                        <del class="me-2 text-muted mt-1" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
-                        <span class=" mt-1"> <span :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{numberComma(recipe.price)}}</span> / {{ recipe.content }}</span>
+                      <div class="col-12 cardTextPrice">
+                        <del class="me-2 text-muted mt-1 d-block" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
+                        <span class=" mt-1"> <span :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{ numberComma(recipe.price) }}</span> / {{ recipe.content }}</span>
                       </div>
                     </RouterLink>
                   </div>
@@ -601,7 +603,7 @@ export default {
                   <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('productBookmarks' ,product)">
                     <img src="../../assets/images/image5.png" style="width: 36px !important;">
                   </button>
-                  <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex flex-column align-items-center text-white p-2 bg-red border me-3 position-absolute top-0 start-0 m-3 rounded">
+                  <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex flex-column align-items-center text-white p-2 bg-red border me-3 position-absolute top-0 start-0 rounded">
                     {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                   </span>
                   <div v-for="mark in productBookmarks" :key="mark">
@@ -637,52 +639,52 @@ export default {
             </div>
 
             <!-- 手機 直向 -->
-            <div class="d-lg-none d-md-block container verticalSwiper">
-                <swiper :slides-per-view="4" :space-between="10"
+            <div class="d-lg-none container verticalSwiper">
+                <swiper :slides-per-view="2" :space-between="25"
                 :modules="modules"
                 navigation
-                direction="vertical"
-                style="height: 1400px;"
+                style="height: 250px;"
                 >
                   <swiper-slide v-for="product in goodProducts" :key="product.id" style="cursor: pointer;">
                     <div class="card position-relative border-0 bg-transparent" style="border-radius: 20px;">
-                      <div class="position-absolute cardImg" style="border-radius: 20px; width: 100%; height: 220px;">
-                        <RouterLink :to="`/products/${product.id}`" class="enlargeImg position-absolute top-0" style="width: 100%;border-radius: 20px;">
-                          <img :src="product.imgUrl" class="card-img" style="border-radius: 20px; object-fit: cover; height: 220px !important;" alt="">
+                      <div class="position-absolute cardImg" style=" width: 100%; border-radius: 20px; height: 120px;">
+                        <RouterLink :to="`/products/${product.id}`" class="enlargeImg">
+                          <img :src="product.imgUrl" class="position-absolute top-0 card-img" style="border-radius: 20px; object-fit: cover;  max-width: 100%; max-height: 100%; height:120px !important;" alt="">
                         </RouterLink>
                       </div>
+
                 <h5 class="card-text">
-                  <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent end-0 top-0 m-3" @click="()=>addBookmark('productBookmarks' ,product)">
-                    <img src="../../assets/images/image5.png" style="width: 36px !important;">
+                  <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent top-0 end-0 m-2 m-lg-3" @click="()=>addBookmark('productBookmarks' ,product)">
+                    <img src="../../assets/images/image5.png" style="width: 20px !important;">
                   </button>
-                  <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex flex-column align-items-center text-white p-2 bg-red border me-3 position-absolute top-0 start-0 m-3 rounded">
+                  <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex flex-column align-items-center text-white p-2 bg-red border me-3 position-absolute top-0 start-0 rounded">
                     {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                   </span>
                   <div v-for="mark in productBookmarks" :key="mark">
-                    <button v-if="mark === product.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent end-0 top-0 m-3"  @click="()=>deleteBookmark('productBookmarks', product.id)">
-                        <img src="../../assets/images/image4.png" style="width: 36px !important;">
+                    <button v-if="mark === product.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent top-0 end-0 m-2 m-lg-3"  @click="()=>deleteBookmark('productBookmarks', product.id)">
+                        <img src="../../assets/images/image4.png" style="width: 20px !important;">
                     </button>
                   </div>
-                  <button @click="()=>addCart(product)" type="button" class="buyBtn border-0 bg-transparent me-2 position-absolute end-0" style="top: 155px;">
-                    <img src="../../assets/images/icon-cart.png" style="height: 48px;" alt="" class="rounded-circle shadow-sm">
+                  <button @click="()=>addCart(product)" type="button" class="buyBtn border-0 bg-transparent me-lg-2 me-1  position-absolute end-0" style="top: 80px;">
+                    <img src="../../assets/images/icon-cart.png" style="height: 30px;" alt="" class="rounded-circle shadow-sm">
                   </button>
                 </h5>
-                <RouterLink :to="`/products/${product.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown" style="margin-top: 220px;">
-                  <h5 class="fw-bold" style="font-size: 16px;">{{product.title}}</h5>
-                    <div class="d-flex align-items-center justify-content-between">
-                      <p class="mb-0" style="font-size: 14px;">
-                        <del v-if="product.originalPrice" class="me-2 text-muted " :class="{'d-none': !product.isCheaper}">NT$ {{ numberComma(product.originalPrice) }}</del>
-                      <span v-if="product.price" class=" "> <span :class="{'text-danger':product.isCheaper, 'fw-bold':product.isCheaper}">NT$ {{ numberComma(product.price)}}</span> / {{ product.num }}{{ product.unit }}</span>
-                      </p>
-                        <div class="badge rounded-pill border border-orange">
-                          <span class="me-1 text-orange">
-                            {{ product.averageRate }}
-                          </span>
-                          <i class="bi bi-star-fill text-orange"></i>
-                        </div>
+                <RouterLink :to="`/products/${product.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown" style="margin-top: 120px;">
+                  <h5 class="fw-bold cardTextTitle">{{product.title}}</h5>
+                    <div class="d-flex align-items-center justify-content-between cardTextPrice">
+                      <div>
+                        <del v-if="product.originalPrice" class="me-2 text-muted d-block" :class="{'d-none': !product.isCheaper}">NT$ {{ numberComma(product.originalPrice) }}</del>
+                        <span v-if="product.price" class=" "> <span :class="{'text-danger':product.isCheaper, 'fw-bold':product.isCheaper}">NT$ {{ numberComma(product.price)}}</span> / {{ product.num }}{{ product.unit }}</span>
+                      </div>
+                      <div class="badge starRates rounded-pill border border-orange">
+                        <span class="me-1 text-orange">
+                          {{ product.averageRate }}
+                        </span>
+                        <i class="bi bi-star-fill text-orange"></i>
+                      </div>
                     </div>
                 </RouterLink>
-              </div>
+                    </div>
                   </swiper-slide>
 
                 </swiper>
@@ -729,7 +731,7 @@ export default {
                         <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('productBookmarks', product)">
                           <img src="../../assets/images/image5.png" style="width: 36px !important;">
                         </button>
-                        <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex flex-column align-items-center text-white p-2 bg-red border me-3 position-absolute top-0 start-0 m-3 rounded">
+                        <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex flex-column align-items-center text-white p-2 bg-red border me-3 position-absolute top-0 start-0  rounded">
                           {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                         </span>
                         <div v-for="mark in productBookmarks" :key="mark">
@@ -765,56 +767,56 @@ export default {
                 </swiper>
             </div>
             <!-- 手機直向 -->
-            <div class="d-lg-none d-md-block container verticalSwiper">
-                <swiper :slides-per-view="4" :space-between="10"
+            <div class="d-lg-none container verticalSwiper">
+                <swiper :slides-per-view="2" :space-between="25"
                 :modules="modules"
                 navigation
-                direction="vertical"
-                style="height: 1400px;"
+                style="height: 250px;"
                 >
                   <swiper-slide v-for="product in onSaleProducts" :key="product.id" style="cursor: pointer;">
                     <div class="card position-relative border-0 bg-transparent" style="border-radius: 20px;">
-                      <div class="position-absolute cardImg" style="border-radius: 20px; width: 100%; height: 220px;">
-                        <RouterLink :to="`/products/${product.id}`" class="enlargeImg position-absolute top-0" style="width: 100%;border-radius: 20px;">
-                          <img :src="product.imgUrl" class="card-img" style="border-radius: 20px; object-fit: cover; height: 220px !important;" alt="">
+                      <div class="position-absolute cardImg" style="width: 100%; border-radius: 20px; height: 120px;">
+                        <RouterLink :to="`/products/${product.id}`" class="enlargeImg">
+                          <img :src="product.imgUrl" class="position-absolute top-0 card-img" style="border-radius: 20px; object-fit: cover;  max-width: 100%; max-height: 100%; height: 120px !important;;" alt="">
                         </RouterLink>
                       </div>
-                <h5 class="card-text">
-                  <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('productBookmarks', product)">
-                    <img src="../../assets/images/image5.png" style="width: 36px !important;">
-                  </button>
-                  <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex border flex-column align-items-center text-white p-2 bg-red me-3 position-absolute top-0 start-0 m-3 rounded">
-                    {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
-                  </span>
-                  <div v-for="mark in productBookmarks" :key="mark">
-                    <button v-if="mark === product.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent end-0 top-0 m-3"  @click="()=>deleteBookmark('productBookmarks' ,product.id)">
-                        <img src="../../assets/images/image4.png" style="width: 36px !important;">
-                    </button>
-                  </div>
-                  <button @click="()=>addCart(product)" type="button" class="buyBtn border-0 bg-transparent me-3 position-absolute end-0" style="top: 155px;">
-                    <img src="../../assets/images/icon-cart.png" style="height: 48px;" alt="" class="rounded-circle shadow-sm">
-                  </button>
-                </h5>
-                <RouterLink :to="`/products/${product.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown" style="margin-top: 220px;">
-                        <h5 class="fw-bold" style="font-size: 16px;">
+                      <h5 class="card-text">
+                        <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent top-0 end-0 m-2 m-lg-3" @click="()=>addBookmark('productBookmarks', product)">
+                          <img src="../../assets/images/image5.png" style="width: 20px !important;">
+                        </button>
+                        <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex flex-column align-items-center text-white p-2 bg-red border me-3 position-absolute top-0 start-0  rounded">
+                          {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
+                        </span>
+                        <div v-for="mark in productBookmarks" :key="mark">
+                          <button v-if="mark === product.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent end-0 top-0 m-2 m-lg-3"  @click="()=>deleteBookmark('productBookmarks', product.id)">
+                              <img src="../../assets/images/image4.png" style="width: 20px !important;">
+                          </button>
+                        </div>
+                        <button @click="()=>addCart(product)" type="button" class="buyBtn border-0 bg-transparent me-lg-2 me-1 position-absolute end-0" style="top: 80px;">
+                          <img src="../../assets/images/icon-cart.png" style="height: 30px;" alt="" class="rounded-circle shadow-sm">
+                        </button>
+                      </h5>
+                      <RouterLink :to="`/products/${product.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown" style="margin-top: 120px;">
+                        <h5 class="fw-bold cardTextTitle">
                           {{product.title}}
                         </h5>
-                        <div class="d-flex align-items-center justify-content-between" style="font-size: 14px;">
-                          <div>
-                            <del v-if="product.originalPrice" class="me-2 text-muted mt-1" :class="{'d-none': !product.isCheaper}">NT$ {{ numberComma(product.originalPrice) }}</del>
-                            <span v-if="product.price" class=" mt-1"> <span :class="{'text-danger':product.isCheaper, 'fw-bold':product.isCheaper}">NT$ {{ numberComma(product.price)}}</span> / {{ product.num }}{{ product.unit }}</span>
+                        <div class="d-flex align-items-center">
+                          <div class="cardTextPrice">
+                            <del v-if="product.originalPrice" class="me-2 text-muted d-block" :class="{'d-none': !product.isCheaper}">NT$ {{ numberComma(product.originalPrice) }}</del>
+                            <span v-if="product.price" class=""> <span :class="{'text-danger':product.isCheaper, 'fw-bold':product.isCheaper}">NT$ {{ numberComma(product.price)}}</span> / {{ product.num }}{{ product.unit }}</span>
                           </div>
-                          <div class="badge border rounded-pill bg-white" :class="{'text-orange': product.averageRate, 'border-orange': product.averageRate, 'text-lightBrownGray': !product.averageRate, 'border-lightBrownGray': !product.averageRate}">
-                            <span class="me-1">
-                            {{ product.averageRate }}
-                            </span>
-                            <i  class="bi bi-star-fill"></i>
-                          </div>
+                          <h5 class="ms-auto mb-0 starRates">
+                            <div class="badge border rounded-pill bg-white " :class="{'text-orange': product.averageRate, 'border-orange': product.averageRate, 'text-lightBrownGray': !product.averageRate, 'border-lightBrownGray': !product.averageRate}">
+                              <span class="me-1">
+                              {{ product.averageRate }}
+                              </span>
+                              <i class="bi bi-star-fill"></i>
+                            </div>
+                          </h5>
                         </div>
-                </RouterLink>
-              </div>
+                      </RouterLink>
+                    </div>
                   </swiper-slide>
-
                 </swiper>
             </div>
             <div class="d-flex">
@@ -893,18 +895,19 @@ export default {
   top:95%;
   left: 92%;
 }
-/* 手機 直向 swiper 箭頭 */
+/* 手機 直向 swiper 箭頭 應該要改了 因為手機也改成橫向了 */
 .verticalSwiper .swiper-button-next{
-  top:99%;
-  right:0
+  top:95%;
+  right:0;
 }
 .verticalSwiper .swiper-button-next::after{
   margin-left: 50%;
   transform: translateX(-50%);
 }
+/* 因為手機是左右兩側點擊比較方便 */
 .verticalSwiper .swiper-button-prev{
-  top:99%;
-  left: 80%;
+  top:95%;
+  left: 0%;
 }
 /* 輸入框提示 */
  ::placeholder {

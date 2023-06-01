@@ -60,6 +60,7 @@ export default {
           console.log('並未登入')
           this.uid = null
           this.user = {}
+          this.myThumb = null
         }
       })
     },
@@ -79,6 +80,10 @@ export default {
     },
     // 增加讚 recipeThumbs/食譜id/使用者id 這樣比較方便
     addThumb () {
+      if (!this.uid) {
+        this.toastMessage('登入才可按讚', 'error')
+        return
+      }
       const reference = ref(db, `recipePersonalThumbs/${this.uid}/${this.recipe.id}`)
       set(reference, this.recipe)
       // 先取得再增加
@@ -156,11 +161,6 @@ export default {
           onValue(dataRef, snapshot => {
             this.user = snapshot.val()
             console.log(this.user, '讀取的資料')
-            if (this.user.admin) {
-              console.log('管理者登場')
-            }
-
-            console.log(this.uid, '存在嗎?')
             const { id } = this.$route.params
             const dataRef = ref(db, `recipeBookmarks/${this.uid}/${id}`)
             onValue(dataRef, snapshot => {
@@ -172,6 +172,7 @@ export default {
           console.log('並未登入')
           this.uid = null
           this.user = {}
+          this.bookMark = null
         }
       })
     },
@@ -179,6 +180,7 @@ export default {
     addBookmark () {
       if (!this.uid) {
         this.toastMessage('登入才可使用收藏功能', 'error')
+        return
       }
       const reference = ref(db, `recipeBookmarks/${this.uid}/${this.recipe.id}`)
       set(reference, this.recipe)
@@ -257,13 +259,11 @@ export default {
             <button v-else-if="bookMark" type="button" class=" border-0 bg-transparent fs-4" @click="deleteBookmark" style="color: #fa6e42">
               <i class="bi bi-heart-fill"></i>
             </button>
-              <span class="mb-0 ms-3">{{ allThumbNum }}</span>
-              <!--  v-if="!myThumb" -->
-              <button v-if="!myThumb" type="button" class="border-0 bg-transparent text-red fs-4" @click="addThumb">
+              <span class="mb-0 ms-3" :class="{'text-red': allThumbNum,'text-lightGray': !allThumbNum}">{{ allThumbNum }}</span>
+              <button v-if="!myThumb" type="button" class="border-0 bg-transparent fs-4" :class="{'text-red': allThumbNum,'text-lightGray': !allThumbNum}" @click="addThumb">
                 <i class="bi bi-hand-thumbs-up"></i>
               </button>
-              <!-- v-else-if="myThumb" -->
-              <button v-else-if="myThumb" type="button" class="border-0 bg-transparent text-red fs-4" @click="deleteThumb">
+              <button v-else-if="myThumb" type="button" class="border-0 bg-transparent fs-4" :class="{'text-red': allThumbNum,'text-lightGray': !allThumbNum}" @click="deleteThumb">
                 <i class="bi bi-hand-thumbs-up-fill"></i>
               </button>
             </div>

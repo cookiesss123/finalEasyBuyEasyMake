@@ -1,25 +1,39 @@
 $fullHeart: url('@/assets/images/image4.png');
 $heart: url('@/assets/images/image5.png');
 // @/assets/seabed.png
-/* 收藏按鈕 */
+/* 收藏按鈕 取消 hover */
 .bookmarkBtn{
     img{
-        height: 36px;
-    }
-    &:hover{
-        img{
-            content: $fullHeart;
-        }
+        height: 20px;
     }
 }
 
 .deleteBookmarkBtn{
     img{
-        height: 36px;
+        height: 20px;
     }
-    &:hover{
+}
+@include media-breakpoint-up(lg) {
+    .bookmarkBtn{
         img{
-            content: url('@/assets/images/image5.png');
+            height: 36px;
+        }
+        &:hover{
+            img{
+                content: $fullHeart;
+            }
+        }
+    }
+    
+    .deleteBookmarkBtn{
+        img{
+            height: 36px;
+        }
+        &:hover{
+            img{
+                content: url('@/assets/images/image5.png');
+            }
         }
     }
 }
+

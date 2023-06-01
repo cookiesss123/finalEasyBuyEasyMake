@@ -199,6 +199,7 @@ export default {
           console.log('並未登入')
           this.uid = null
           this.user = {}
+          this.bookMark = null
         }
       })
     },
@@ -206,6 +207,7 @@ export default {
     addBookmark () {
       if (!this.uid) {
         this.toastMessage('登入才可使用收藏功能', 'error')
+        return
       }
       const reference = ref(db, `productBookmarks/${this.uid}/${this.product.id}`)
       set(reference, this.product)
