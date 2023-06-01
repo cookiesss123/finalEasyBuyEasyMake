@@ -3,14 +3,14 @@
       <LoadingModal ref="loadingModal"></LoadingModal>
 
       <ul class="nav nav-tabs" >
-        <li class="nav-lottery" @click="()=>tabName = '優惠折扣'">
-          <button class="nav-link" :class="{'active': tabName === '優惠折扣', 'link-redBrown':tabName === '優惠折扣'}"  type="button" >優惠折扣</button>
+        <li class="nav-item" @click="()=>tabName = '優惠折扣'">
+          <button class="nav-link" :class="{'active': tabName === '優惠折扣', 'link-red':tabName === '優惠折扣'}"  type="button" >優惠折扣</button>
         </li>
-        <li class="nav-lottery" @click="()=>tabName = '抽獎回饋'">
-          <button class="nav-link" :class="{'active': tabName === '抽獎回饋', 'link-redBrown':tabName === '抽獎回饋'}" type="button">抽獎回饋</button>
+        <li class="nav-item" @click="()=>tabName = '抽獎回饋'">
+          <button class="nav-link" :class="{'active': tabName === '抽獎回饋', 'link-red':tabName === '抽獎回饋'}" type="button">抽獎回饋</button>
         </li>
       </ul>
-      <section v-if="tabName === '優惠折扣'" class="text-brown">
+      <section v-if="tabName === '優惠折扣'" class="text-red">
         <h3 class="text-center py-3 py-lg-5 fw-bold bg-lightYellow mt-3">本月優惠</h3>
         <div class="row row-cols-lg-4 g-4 py-3 text-darkBrown">
           <div class="col" v-for="(coupon, index) in coupons" :key="index">
@@ -23,7 +23,7 @@
                       <h5 class="card-title h3">{{  coupon.title }}</h5>
                       <p class="card-text text-truncate">{{ coupon.description }}</p>
                       <div class="d-flex">
-                          <RouterLink :to="`/discounts/${index}`" href="#" class="stretched-link btn btn-brown ms-auto">查看完整優惠資訊</RouterLink>
+                          <RouterLink :to="`/discounts/${index}`" href="#" class="stretched-link btn btn-red ms-auto">查看完整優惠資訊</RouterLink>
                       </div>
                     </div>
                   </div>
@@ -43,7 +43,7 @@
           <div v-if="!getPrize || (getPrize && getPrize.id !== 1)" class="col-lg-12 align-self-center">
             <p class="mb-0">本月指定抽獎食譜：</p>
             <div class="row row-cols-lg-3 row-cols-1 pt-4">
-              <div v-for="(item, index) in drewProducts" :key="item" class="border col">
+              <div v-for="(item, index) in drewProducts" :key="item" class="border border-red col">
                 <h3 class="text-center fw-bold my-3">{{ item[0] }}</h3>
                 <div class="row">
                   <div class="d-flex flex-column align-items-center position-relative col-4"
@@ -60,14 +60,14 @@
               </div>
             </div>
             <div class="d-flex">
-              <button type="button" class="mx-auto mt-3 btn btn-brown" @click="addtLotteryResult">立即抽獎</button>
+              <button type="button" class="mx-auto mt-3 btn btn-red" @click="addtLotteryResult">立即抽獎</button>
             </div>
             <p class="text-end">抽一次消耗一張抽獎券</p>
           </div>
           <!-- 完成食譜 -->
           <!-- v-else-if="getPrize" -->
-          <div v-if="lotteryResult && getPrize" class="d-flex flex-column align-items-center">
-            <h5 class="h3 text-center text-brown fw-bold">恭喜您完成{{ getPrize.id === 1 ? '全部' : getPrize.id === 2 ? '2份' : '1份' }}食譜，獲得：</h5>
+          <div v-if="lotteryResult && this.getPrize && this.getPrize.id" class="d-flex flex-column align-items-center">
+            <h5 class="h3 text-center text-red fw-bold">恭喜您完成{{ getPrize.id === 1 ? '全部' : getPrize.id === 2 ? '2份' : '1份' }}食譜，獲得：</h5>
             <div class="col-lg-6 col-12">
                 <div class="card position-relative border-0" style="border-radius: 20px;">
                   <div class="card-header h4 fw-bold text-center mb-3 bg-white border-0" >
@@ -221,13 +221,15 @@ export default {
                 this.drewArr = []
                 this.getPrize = {}
               }
-              console.log(this.lotteryResult, '抽獎結果')
+              // console.log(this.lotteryResult, this.getPrize, !this.getPrize.id, '抽獎結果')
             })
           })
         } else {
           console.log('並未登入')
           this.uid = null
           this.user = {}
+          this.drewArr = []
+          this.getPrize = {}
         }
       })
     },
@@ -246,7 +248,7 @@ export default {
             '<p>單筆金額滿  <b>NT$2,000</b> 即可獲得一張抽獎券</p>' +
             '<p>單筆金額滿  <b>NT$5,000</b> 即可獲得三張抽獎券</p>' +
             '<p>單筆金額滿  <b>NT$10,000</b> 即可獲得七張抽獎券</p>' +
-            '<a href="/finalEasyMakeEasyBuy/#/products" class="link-orange">前往選購商品</a>',
+            '<a href="/finalEasyMakeEasyBuy/#/products" class="link-red">前往選購商品</a>',
           showConfirmButton: true
         })
         return
@@ -390,4 +392,5 @@ export default {
   height: 100px;
   background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.7));
 }
+
 </style>

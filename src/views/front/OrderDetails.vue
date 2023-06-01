@@ -60,7 +60,7 @@ export default {
         <div v-if="!loadingItem">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item "><RouterLink to="/member" href="#" class="link-redBrown">會員專區</RouterLink></li>
+                    <li class="breadcrumb-item "><RouterLink to="/member" href="#" class="link-orange">會員專區</RouterLink></li>
                     <li class="breadcrumb-item ">訂單狀況</li>
                     <li class="breadcrumb-item active " aria-current="page">{{ order.deliveryStatus }}</li>
                 </ol>
@@ -71,27 +71,27 @@ export default {
                 <!-- justify-content-between  -->
                 <section class="col-12 col-lg-10 d-flex  text-lightBrown" id="orderProcess">
                     <div class="d-flex flex-column align-items-center">
-                        <i class=" fs-1 bi bi-box-seam text-brown"></i>
+                        <i class=" fs-1 bi bi-box-seam text-red"></i>
                         <!-- -->
-                        <h5 class=" fw-bold text-brown"  style="white-space: nowrap" >待出貨</h5>
+                        <h5 class=" fw-bold text-red"  style="white-space: nowrap" >待出貨</h5>
                     </div>
                     <div v-if="barWidth < 33" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #C0AB8E; width: 33%;"></div>
                     <div v-else-if="barWidth >= 33" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #815B15; width: 33%;"></div>
                     <div class="d-flex flex-column align-items-center">
-                        <i class="bi bi-truck  fs-1" :class="{'text-brown': barWidth >= 33}"></i>
-                        <h5 class=" fw-bold" :class="{'text-brown': barWidth >= 33}" style="white-space: nowrap">運送中</h5>
+                        <i class="bi bi-truck  fs-1" :class="{'text-red': barWidth >= 33}"></i>
+                        <h5 class=" fw-bold" :class="{'text-red': barWidth >= 33}" style="white-space: nowrap">運送中</h5>
                     </div>
                     <div v-if="barWidth < 66" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #C0AB8E; width: 33%;"></div>
                     <div v-else-if="barWidth >= 66" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #815B15; width: 33%;"></div>
                     <div class="d-flex flex-column align-items-center">
-                        <i class="bi bi-house-check  fs-1" :class="{'text-brown': barWidth >= 66}" ></i>
-                        <h5 class=" fw-bold" :class="{'text-brown': barWidth >= 66}" style="white-space: nowrap">已抵達</h5>
+                        <i class="bi bi-house-check  fs-1" :class="{'text-red': barWidth >= 66}" ></i>
+                        <h5 class=" fw-bold" :class="{'text-red': barWidth >= 66}" style="white-space: nowrap">已抵達</h5>
                     </div>
                     <div v-if="barWidth < 100" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #C0AB8E; width: 33%;"></div>
                     <div v-else-if="barWidth === 100" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #815B15; width: 33%;"></div>
                     <div class="d-flex flex-column align-items-center">
-                        <i class="bi bi-clipboard-check  fs-1" :class="{'text-brown': barWidth === 100}" ></i>
-                        <h5 class=" fw-bold" :class="{'text-brown': barWidth === 100}" style="white-space: nowrap">訂單完成</h5>
+                        <i class="bi bi-clipboard-check  fs-1" :class="{'text-red': barWidth === 100}" ></i>
+                        <h5 class=" fw-bold" :class="{'text-red': barWidth === 100}" style="white-space: nowrap">訂單完成</h5>
                     </div>
                 </section>
                 <div class="row gx-5 row-cols-1 row-cols-lg-2 my-5">
@@ -156,7 +156,7 @@ export default {
                     </div>
                     <div class="col ">
                         <h4  class="text-center">收件人資訊</h4>
-                        <table class="table table-borderless text-brown">
+                        <table class="table table-borderless text-red">
                         <thead>
                         <tr>
                             <th class="fw-normal"><i class="bi bi-envelope-fill" ></i> 信箱</th>

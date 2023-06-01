@@ -229,57 +229,57 @@ export default {
         <div class="row gy-5 my-4 row-cols-1 row-cols-lg-2  align-items-center">
           <div class="col d-flex flex-column align-items-center ">
               <!-- 大頭貼 -->
-              <div v-if="!user.headshotImg" class="border border-5 border-lightBrown d-flex mb-4" style="width: 300px; height: 300px;">
-                <i class="bi bi-person-fill m-auto" style="font-size: 200px;"></i>
+              <div v-if="!user.headshotImg" class="d-flex mb-4" style="width: 300px; height: 300px; border: 5px solid #ef6b5a;">
+                <i class="bi bi-person-fill m-auto text-red" style="font-size: 200px;"></i>
               </div>
-              <img v-else-if="user.headshotImg" :src="user.headshotImg" width="300" height="300" style="object-fit: cover; border: 5px solid #C0AB8E;" class="mb-4" alt="">
+              <img v-else-if="user.headshotImg" :src="user.headshotImg" width="300" height="300" style="object-fit: cover; border: 5px solid #ef6b5a;" class="mb-4" alt="">
               <div class="">
-                <button type="button" class="btn btn-brown text-white me-4" @click="selectImgUrl">上傳圖片網址</button>
-                <button type="button" class="btn btn-brown" @click="selectFile">上傳本地圖片</button>
+                <button type="button" class="btn btn-red text-white me-4" @click="selectImgUrl">上傳圖片網址</button>
+                <button type="button" class="btn btn-red" @click="selectFile">上傳本地圖片</button>
               </div>
           </div>
           <!-- 新 -->
           <div class="col-12 col-lg-4">
             <!-- 暱稱 -->
-            <div class="border-start border-brown d-flex align-items-center">
+            <div class="border-start border-red d-flex align-items-center">
               <label for="nickName" class="form-label mb-0 fw-bold ms-1 ms-lg-3">暱稱</label>
               <span v-if="nickNameEdit" class="ms-4">{{ user.nickName }}</span>
               <div class="ms-auto">
-                <button v-if="nickNameEdit" type="button" class="btn btn-sm btn-brown" @click="()=>nickNameEdit = !nickNameEdit">
+                <button v-if="nickNameEdit" type="button" class="btn btn-sm btn-red" @click="()=>nickNameEdit = !nickNameEdit">
                     <span>修改暱稱</span>
                 </button>
                 <div class="input-group" :class="{'d-none': nickNameEdit}">
                   <input type="text" class="form-control" placeholder="請輸入新暱稱" id="nickName" v-model="newNickName">
                   <button @click="()=>nickNameEdit = true" class="btn btn-outline-secondary btn-sm" type="button" id="button-addon2">取消</button>
-                  <button @click="()=>changeEmail()" class="btn btn-sm btn-outline-brown" type="button" id="button-addon2">確定</button>
+                  <button @click="()=>changeEmail()" class="btn btn-sm btn-outline-red" type="button" id="button-addon2">確定</button>
                 </div>
               </div>
             </div>
             <!-- 信箱 -->
-            <div class="border-start border-brown d-flex align-items-center mt-3 mt-lg-5">
+            <div class="border-start border-red d-flex align-items-center mt-3 mt-lg-5">
               <label for="email" class="form-label mb-0 fw-bold ms-1 ms-lg-3">信箱</label>
               <span class="ms-4">{{user.email}}</span>
             </div>
             <!-- 密碼 -->
-            <div class="border-start border-brown d-flex align-items-center mt-3 mt-lg-5">
+            <div class="border-start border-red d-flex align-items-center mt-3 mt-lg-5">
               <label for="password" class="form-label mb-0 fw-bold ms-1 ms-lg-3">密碼</label>
               <span v-if="passwordEdit" class="ms-4">* * * * * * * *</span>
               <div class="ms-auto">
-                <button v-if="passwordEdit" type="button" class="btn btn-sm btn-brown"  @click="()=>passwordEdit = !passwordEdit">
+                <button v-if="passwordEdit" type="button" class="btn btn-sm btn-red"  @click="()=>passwordEdit = !passwordEdit">
                   <span>變更密碼</span>
                 </button>
                 <div class="input-group" :class="{'d-none': passwordEdit}">
                   <input type="password" class="form-control" placeholder="請輸入新密碼" id="password" v-model="newPassword">
                   <button @click="()=>passwordEdit = true" class="btn btn-sm btn-outline-secondary" type="button" id="button-addon2">取消</button>
-                  <button @click="()=>changePassword()" class="btn btn-sm btn-outline-brown" type="button" id="button-addon2">確定</button>
+                  <button @click="()=>changePassword()" class="btn btn-sm btn-outline-red" type="button" id="button-addon2">確定</button>
                 </div>
               </div>
             </div>
               <!-- 我的抽獎券 -->
-            <div class="border-start border-brown d-flex align-items-center mt-3 mt-lg-5">
+            <div class="border-start border-red d-flex align-items-center mt-3 mt-lg-5">
               <label for="ticket" class="form-label mb-0 fw-bold ms-1 ms-lg-3">我的抽獎券</label>
               <span class="ms-4">{{ user.lotteryTicket }} 張</span>
-              <button type="button" class="btn btn-sm btn-brown ms-auto" @click="linkToLottery">立即抽獎</button>
+              <button type="button" class="btn btn-sm btn-red ms-auto" @click="linkToLottery">立即抽獎</button>
             </div>
           </div>
 
@@ -300,7 +300,7 @@ export default {
               </div>
           </button>
           <button type="button" class=" btn border-0 me-lg-5 hvr-rectangle-out bg-transparent"   :class="{'activePage':selectItem === '待出貨'}" @click="() => selectItem ='待出貨'">
-            <!-- 'text-brown':selectItem === '待出貨' -->
+            <!-- 'text-red':selectItem === '待出貨' -->
             <span class="text-secondary d-none d-lg-block" :class="{'text-white':selectItem === '待出貨','fw-bold':selectItem === '待出貨'}">待出貨</span>
               <!-- 手機版 -->
               <div class=" d-lg-none">
@@ -341,7 +341,7 @@ export default {
               </div>
           </button>
         </div>
-        <div class="row row-cols-1 text-brown py-3">
+        <div class="row row-cols-1 py-3">
             <h4 class="mb-3">
                 總共有 {{ filterOrders.length }} 筆
             </h4>
@@ -368,7 +368,7 @@ export default {
                     <div class="ms-auto d-flex align-items-center">
                         <span class="me-3 fw-bold">運送狀態：{{order.deliveryStatus}}</span>
                         <span>總付款金額：NT$ {{  numberComma(order.cart.finalTotal)  }}</span>
-                        <RouterLink :to="`/orders/${order.id}`" class="btn btn-brown ms-3">查看詳細訂單狀況</RouterLink>
+                        <RouterLink :to="`/orders/${order.id}`" class="btn btn-red ms-3">查看詳細訂單狀況</RouterLink>
                     </div>
                 </div>
                 <hr>
@@ -406,9 +406,9 @@ export default {
     font-weight: bold;
   }
   .hvr-rectangle-out::before {
-    background: #815B15;
+    background: #d04740;
   }
   .activePage{
-    background: #815B15 !important;
+    background: #d04740 !important;
   }
 </style>

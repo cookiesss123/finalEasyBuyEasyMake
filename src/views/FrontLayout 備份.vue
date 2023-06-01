@@ -59,14 +59,26 @@
                     <RouterLink to="/member" active-class="active-link" class="nav-link d-inline-block" >會員專區</RouterLink>
                   </li>
                 </ul>
+              <!-- d-lg-flex align-items-lg-center -->
               <!-- ms-auto -->
-              <ul class="navbar-nav d-flex align-items-center" v-if="!uid">
+              <ul class=" navbar-nav d-lg-flex align-items-lg-center my-2 my-lg-0" v-if="!uid">
+                <li class="login d-flex align-items-center justify-content-center">
+                  <RouterLink to="/login" class="text-decoration-none link-red border-0 me-1 d-lg-none">
+                  登入 /
+                </RouterLink>
                 <!-- 手機 -->
-                <!-- style="white-space:nowrap" 這個沒用 -->
-                <li class="login nav-item me-lg-3 mb-2 mb-lg-0" style="white-space:nowrap">
-                  <RouterLink to="/login" active-class="active-link" class="nav-link">登入</RouterLink>
+                <!-- <RouterLink to="/signup"  class="btn badge btn-red rounded-pill fs-6 px-4 py-3 text-white" >註冊</RouterLink> -->
+
+                <RouterLink to="/signup" class="signup ms-1 btn d-lg-none btn-red rounded-pill text-white">
+                  註冊
+                </RouterLink>
                 </li>
-                <li class="signup nav-item me-lg-4 " style="white-space:nowrap">
+
+                <li class="login nav-item me-lg-3 d-none d-lg-block" style="white-space:nowrap">
+                  <RouterLink to="/login" active-class="active-link" class="nav-link text-center text-lg-start">登入</RouterLink>
+                </li>
+                <!-- 電腦 註冊 -->
+                <li class="signup nav-item me-4 d-none d-lg-block" style="white-space:nowrap">
                   <!--  data-bs-toggle="tooltip" data-bs-placement="bottom" title="立即註冊抽獎去！" -->
                   <RouterLink to="/signup"  class="btn badge btn-red rounded-pill fs-6 px-4 py-3 text-white" >註冊</RouterLink>
                 </li>

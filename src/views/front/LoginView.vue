@@ -4,7 +4,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                       <li class="breadcrumb-item fs-5">
-                        <RouterLink to="/home" class="link-redBrown  d-none d-lg-block">首頁</RouterLink>
+                        <RouterLink to="/home" class="link-red  d-none d-lg-block">首頁</RouterLink>
                       </li>
                       <li class="breadcrumb-item active fs-5  d-none d-lg-block" aria-current="page">登入</li>
                     </ol>
@@ -16,7 +16,7 @@
                             <div class="card-img-overlay" style="top:450px">
                                 <h2 class="text-darkBrown text-center mb-4 h1">
                                     您在找的
-                                    <span class="text-brown"> 食譜材料 </span>
+                                    <span class="text-red"> 食譜材料 </span>
                                     都在這裡
                                 </h2>
                                 <!-- <div class="d-flex">
@@ -31,18 +31,18 @@
                             <div class="card-body p-0">
                                 <div class="card-header bg-white py-0 "  style="border-radius: 20px 20px 0px 0px;">
                                     <div class="row " style="margin: 0 -18px;">
-                                        <h2 class="h5 col mb-0 text-center py-3 position-relative bg-brown text-decoration-none fw-bold text-white" style="padding-bottom: 10px; border-radius: 20px 0 0 0;">
+                                        <h2 class="h5 col mb-0 text-center py-3 position-relative bg-red text-decoration-none fw-bold text-white" style="padding-bottom: 10px; border-radius: 20px 0 0 0;">
                                             登入
                                         </h2>
                                         <h2 class="h5 col mb-0 text-center py-3 position-relative" style="padding-bottom: 10px; border-radius: 0 20px 0 0;">
-                                            <RouterLink to="/signup" class="link-dark stretched-link text-decoration-none fw-bold link-brown ">註冊</RouterLink>
+                                            <RouterLink to="/signup" class="link-dark stretched-link text-decoration-none fw-bold link-red ">註冊</RouterLink>
                                         </h2>
                                     </div>
                                 </div>
                                 <!--  d-flex flex-column -->
-                                <h1 class="text-brown text-center h3 mt-4">
+                                <h1 class="text-red text-center h3 mt-4">
                                     歡迎來到
-                                    <!-- <span class="text-redBrown">甜點食譜一鍵購</span> -->
+                                    <!-- <span class="text-orange">甜點食譜一鍵購</span> -->
                                     <div class="d-flex mt-2">
                                         <img src="../../assets/images/logo.png" class="mx-auto" alt="" width="280">
                                     </div>
@@ -50,7 +50,7 @@
                                 <VForm ref="form" class="mx-5 card-body" v-slot="{ errors }"  @submit="login">
                                     <div class="row gy-4 d-flex">
                                         <div class="col-12 fs-5">
-                                            <label for="email" class="form-label text-secondary" :class="{'text-brown':user.email && !errors['信箱']}"><i class="bi bi-envelope-fill" ></i> 信箱</label>
+                                            <label for="email" class="form-label text-secondary" :class="{'text-red':user.email && !errors['信箱']}"><i class="bi bi-envelope-fill" ></i> 信箱</label>
                                             <VField
                                                 id="email"
                                                 name="信箱"
@@ -65,7 +65,7 @@
                                             <ErrorMessage name="信箱" class="invalid-feedback"></ErrorMessage>
                                         </div>
                                         <div class="col-12 fs-5">
-                                            <label for="password" class="form-label text-secondary" :class="{'text-brown':user.password && !errors['密碼']}"><i class="bi bi-lock-fill" ></i> 密碼</label>
+                                            <label for="password" class="form-label text-secondary" :class="{'text-red':user.password && !errors['密碼']}"><i class="bi bi-lock-fill" ></i> 密碼</label>
                                             <VField
                                                 id="password"
                                                 name="密碼"
@@ -80,21 +80,19 @@
                                             <ErrorMessage name="密碼" class="invalid-feedback"></ErrorMessage>
                                         </div>
                                         <div class="col-12 mt-9" >
-                                            <button type="submit" class="btn btn-brown w-100">登入</button>
+                                            <button type="submit" class="btn btn-red w-100">登入</button>
                                         </div>
                                     </div>
                                 </VForm>
 
                             </div>
-                            <div class="loginSignupImg card-footer d-flex justify-content-center bg-white border-0 py-4" style="border-radius: 30px;">
-                                <img src="../../assets/images/1410887.png" alt="" class="me-4 d-none d-lg-block">
-                                <img src="../../assets/images/7627774.png" alt="" class="me-4" >
-                                <img src="../../assets/images/5887767.png" alt="" class="me-4" >
-                                <img src="../../assets/images/8734574.png" alt="" class="me-4" >
-                                <img src="../../assets/images/8346809.png" alt="" class="me-4" >
-                                <img src="../../assets/images/726917.png" alt="" class="me-4" >
-                                <img src="../../assets/images/2747131.png" alt="" class="me-4 d-none d-lg-block" >
-                                <img src="../../assets/images/4771632.png" alt="" class="" >
+                            <div class="loginSignupImg card-footer d-flex justify-content-evenly bg-white border-0 py-4" style="border-radius: 30px;">
+                              <img src="../../assets/images/dessert3.png">
+                                <img src="../../assets/images/donut3.png" >
+                                <img src="../../assets/images/pannacott3.png" >
+                                <img src="../../assets/images/mochi.png" >
+                                <img src="../../assets/images/cakeko.png" >
+                                <img src="../../assets/images/cake23.png" >
                             </div>
                         </div>
                     </div>
@@ -173,7 +171,7 @@ export default {
 <style>
 .login-card .card-header h2:hover {
     /* border-bottom: 3px solid #493A25;  */
-    background-color: #b15c17;
+    background-color: #eb8b07;
     color: white;
 }
 .login-card .card-header h2:hover a {

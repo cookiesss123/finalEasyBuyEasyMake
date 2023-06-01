@@ -2,7 +2,7 @@
   <div class="container my-10 ">
     <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><RouterLink to="/discounts" class="link-redBrown">優惠特報</RouterLink></li>
+            <li class="breadcrumb-item"><RouterLink to="/discounts" class="link-red">優惠特報</RouterLink></li>
             <li class="breadcrumb-item active" aria-current="page">{{ coupon.title }}</li>
           </ol>
         </nav>

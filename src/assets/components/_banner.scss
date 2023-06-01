@@ -26,39 +26,45 @@
 
   // hover 僅針對線條
   .navbar-nav .nav-link:hover::after {
-    background-color: #b15c17;
+    background-color: #d04740;
     width: 20%;
   }
   
   // hover 對線條
   #navbarNav .nav-link:hover{
-    color: #b15c17;
+    color: #d04740;
     background: white;
     width: 100%;
 } 
 
 #navbarNav .mainMenu .active-link {
-    color: #b15c17 !important;
-    border-bottom: 2px solid #b15c17 !important;
+    color: #d04740 !important;
+    border-bottom: 2px solid #d04740 !important;
     background: white;
     width: 20%; // !important
     margin: 0 auto;
 }
 #navbarNav .login .active-link {
-    color: #b15c17 !important;
-    border-bottom: 2px solid #b15c17 !important;
+    color: #d04740 !important;
+    border-bottom: 2px solid #d04740 !important;
     background: white;
 }
-#navbarNav .signup .active-link {
-    background: #b15c17;
-}
+
+
+    // 電腦 註冊按鈕
+    #navbarNav .signup .active-link {
+      background: #eb8b07;
+      border-color: #eb8b07;
+    }
+// 手機 註冊按鈕
 #navbarNav .signup.active-link {
-    background: #b15c17;
+    background: #eb8b07;
+    // border-color: #eb8b07;
     color: white !important;
 }
 // 頁籤 hover 顏色
 .nav .nav-item button:hover{
-    color: #b15c17;
+    color: #d04740;
   }
 .logo{
     height: 40px;
@@ -148,20 +154,20 @@
       }
 
       .navbar-nav .nav-link:hover::after {
-        background-color: #b15c17;
+        background-color: #d04740;
         width: 100%;
       }
       
       #navbarNav .nav-link:hover{
-        color: #b15c17;
+        color: #d04740;
         background: white;
     } 
     
     // 桌機 menu link
 
     #navbarNav .mainMenu .active-link {
-        color: #b15c17 !important;
-        border-bottom: 2px solid #b15c17 !important;
+        color: #d04740 !important;
+        border-bottom: 2px solid #d04740 !important;
         background: white;
         width: 100%;
     }
@@ -198,4 +204,5 @@
     .priceSize{
       font-size: 20px;
     }
+
 }

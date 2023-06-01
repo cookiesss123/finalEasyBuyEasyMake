@@ -18,7 +18,7 @@
                         </div>
                         <div class="col-12">
                           <h3>訂購人資訊</h3>
-                          <table class="table table-borderless text-brown">
+                          <table class="table table-borderless text-red">
                             <thead>
                             <tr>
                                 <th class="fw-normal"><i class="bi bi-envelope-fill" ></i> 信箱</th>
@@ -98,7 +98,7 @@
                         </div>
                         <div class="col-12">
                           <h3>選購商品</h3>
-                          <table class="table table-borderless text-brown">
+                          <table class="table table-borderless text-red">
                             <tbody v-if="tempOrder.cart">
                               <tr v-for="item in tempOrder.cart.items" :key="item + 986">
                                   <td>{{ item.product.title }}</td>

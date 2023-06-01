@@ -238,6 +238,7 @@ export default {
     addBookmark (bookMark, item) {
       if (!this.uid) {
         this.toastMessage('登入才可使用收藏功能', 'error')
+        return
       }
       const reference = ref(db, `${bookMark}/${this.uid}/${item.id}`)
       set(reference, item)
@@ -318,7 +319,7 @@ export default {
               <div class="card" style="border-color: #C0AB8E;">
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-4 border-end border-brown">
+                    <div class="col-4 border-end border-red">
                       <p class="card-title mb-0" style="font-size: 14px;">種類</p>
                       <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="selectItem">
                         <option selected >全部</option>
@@ -329,14 +330,14 @@ export default {
                         <option value="義式甜點">義式甜點</option>
                       </select>
                     </div>
-                    <div class="col-4 border-end border-brown">
+                    <div class="col-4 border-end border-red">
                       <p class="card-title mb-0" style="font-size: 14px;">成本或評價</p>
                       <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="priceOrRate">
                         <option value="成本">成本</option>
                         <option value="評價">評價</option>
                       </select>
                     </div>
-                    <div class="col-4 border-brown">
+                    <div class="col-4 border-red">
                       <p class="card-title mb-0" style="font-size: 14px;">由高到低或由低到高</p>
                       <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="highOrLow">
                         <option value="不拘" selected>不拘</option>
@@ -403,13 +404,13 @@ export default {
                               <img src="../../assets/images/image4.png" style="width: 36px !important;">
                           </button>
                         </div>
-                        <span style="pointer-events: none; top: 155px;" class="badge rounded-pill bg-brown mt-4 border-0 ms-3 position-absolute start-0">{{ recipe.category }}</span>
+                        <span style="pointer-events: none; top: 155px;" class="badge rounded-pill bg-red mt-4 border-0 ms-3 position-absolute start-0">{{ recipe.category }}</span>
                     </h5>
-                    <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer  bg-transparent border-0 text-decoration-none link-darkBrown" style="margin-top: 220px;">
+                    <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown" style="margin-top: 220px;">
                       <div class="d-flex justify-content-between align-items-center">
                         <h5 class="fw-bold mb-0">{{recipe.title}}</h5>
                         <p class="mb-0 h5">
-                          <span class="badge rounded-pill text-brown border border-brown">
+                          <span class="badge rounded-pill text-red border border-red">
                             {{ recipe.thumbs }}
                             <i class="bi bi-hand-thumbs-up-fill" ></i>
                           </span>
@@ -449,12 +450,12 @@ export default {
                               <img src="../../assets/images/image4.png" style="width: 36px !important;">
                           </button>
                         </div>
-                        <span style="pointer-events: none; top: 155px;" class="badge rounded-pill bg-brown mt-4 border-0 ms-3 position-absolute start-0">{{ recipe.category }}</span>
+                        <span style="pointer-events: none; top: 155px;" class="badge rounded-pill bg-red mt-4 border-0 ms-3 position-absolute start-0">{{ recipe.category }}</span>
                     </h5>
                     <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer  bg-transparent border-0 text-decoration-none link-darkBrown" style="margin-top: 220px;">
                       <div class="d-flex justify-content-between align-items-center">
                         <h5 class="fw-bold mb-0" style="font-size: 16px;">{{recipe.title}}</h5>
-                        <span class="badge rounded-pill text-brown border border-brown">
+                        <span class="badge rounded-pill text-red border border-red">
                           {{ recipe.thumbs }}
                           <i class="bi bi-hand-thumbs-up-fill" ></i>
                         </span>
@@ -469,14 +470,15 @@ export default {
               </swiper>
             </div>
             <div class="d-flex">
-                <RouterLink to="/recipes" type="button" class="d-lg-none btn btn-brown rounded-pill px-4 mx-auto mt-3">
+                <RouterLink to="/recipes" type="button" class="d-lg-none btn btn-red rounded-pill px-4 mx-auto mt-3">
                   更多食譜
                 </RouterLink>
               </div>
           </div>
         </section>
 
-        <section class="py-10 px-3 bg-lightYellow">
+        <!-- bg-lightYellow -->
+        <section class="py-10 px-3 bg-lightYellow " style="background-color: #ffe3d5;">
           <div class="container bg-white py-lg-5 py-4" style="border-radius: 20px;"  data-aos="zoom-in-right">
             <h2 class="h4 fw-bold text-center mb-4 questionTitle">總是花錢花時間 尋找甜點材料嗎？</h2>
             <div class="px-5">
@@ -572,7 +574,7 @@ export default {
                 </div>
                 <span class="recipeTitle">選食材</span>
               </div>
-              <span class="light-brown mb-lg-0 mb-2 h6 ms-2 speakerText d-flex align-items-center">
+              <span class="light-red mb-lg-0 mb-2 h6 ms-2 speakerText d-flex align-items-center">
                 <img src="../../assets/images/icon-speaker.png" class="speaker" alt="">
                 總消費額滿500即可獲得1次抽獎機會!
               </span>
@@ -599,7 +601,7 @@ export default {
                   <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('productBookmarks' ,product)">
                     <img src="../../assets/images/image5.png" style="width: 36px !important;">
                   </button>
-                  <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex flex-column align-items-center text-white p-2 bg-brown border me-3 position-absolute top-0 start-0 m-3 rounded">
+                  <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex flex-column align-items-center text-white p-2 bg-red border me-3 position-absolute top-0 start-0 m-3 rounded">
                     {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                   </span>
                   <div v-for="mark in productBookmarks" :key="mark">
@@ -653,7 +655,7 @@ export default {
                   <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent end-0 top-0 m-3" @click="()=>addBookmark('productBookmarks' ,product)">
                     <img src="../../assets/images/image5.png" style="width: 36px !important;">
                   </button>
-                  <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex flex-column align-items-center text-white p-2 bg-brown border me-3 position-absolute top-0 start-0 m-3 rounded">
+                  <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex flex-column align-items-center text-white p-2 bg-red border me-3 position-absolute top-0 start-0 m-3 rounded">
                     {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                   </span>
                   <div v-for="mark in productBookmarks" :key="mark">
@@ -686,7 +688,7 @@ export default {
                 </swiper>
             </div>
             <div class="d-flex">
-              <RouterLink to="/products" type="button" class="d-lg-none btn btn-brown rounded-pill px-4 mx-auto mt-3">
+              <RouterLink to="/products" type="button" class="d-lg-none btn btn-red rounded-pill px-4 mx-auto mt-3">
                 更多商品
               </RouterLink>
             </div>
@@ -702,7 +704,7 @@ export default {
                 <img src="../../assets/images/title2.png" class="me-lg-4 me-2 titleImg " alt="">
                 <span class="recipeTitle">價商品</span>
               </div>
-              <span class="light-brown mb-lg-0 mb-2 h6 ms-2 speakerText d-flex align-items-center">
+              <span class="light-red mb-lg-0 mb-2 h6 ms-2 speakerText d-flex align-items-center">
                 <img src="../../assets/images/icon-speaker.png" class="speaker" alt="">
                 總消費額滿500即可獲得1次抽獎機會!
               </span>
@@ -727,7 +729,7 @@ export default {
                         <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('productBookmarks', product)">
                           <img src="../../assets/images/image5.png" style="width: 36px !important;">
                         </button>
-                        <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex flex-column align-items-center text-white p-2 bg-brown border me-3 position-absolute top-0 start-0 m-3 rounded">
+                        <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex flex-column align-items-center text-white p-2 bg-red border me-3 position-absolute top-0 start-0 m-3 rounded">
                           {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                         </span>
                         <div v-for="mark in productBookmarks" :key="mark">
@@ -781,7 +783,7 @@ export default {
                   <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('productBookmarks', product)">
                     <img src="../../assets/images/image5.png" style="width: 36px !important;">
                   </button>
-                  <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex border flex-column align-items-center text-white p-2 bg-brown me-3 position-absolute top-0 start-0 m-3 rounded">
+                  <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex border flex-column align-items-center text-white p-2 bg-red me-3 position-absolute top-0 start-0 m-3 rounded">
                     {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                   </span>
                   <div v-for="mark in productBookmarks" :key="mark">
@@ -816,7 +818,7 @@ export default {
                 </swiper>
             </div>
             <div class="d-flex">
-              <RouterLink to="/products" type="button" class="d-lg-none btn btn-brown rounded-pill px-4 mx-auto mt-3">
+              <RouterLink to="/products" type="button" class="d-lg-none btn btn-red rounded-pill px-4 mx-auto mt-3">
                 更多商品
               </RouterLink>
             </div>
@@ -840,7 +842,7 @@ export default {
                 </div>
                 <span class="recipeTitle">月獎品</span>
               </div>
-              <button class="d-none d-lg-block btn btn-brown rounded-pill" @click="linkToLottery">
+              <button class="d-none d-lg-block btn btn-red rounded-pill" @click="linkToLottery">
                 立即抽獎
               </button>
             </h2>
@@ -853,6 +855,7 @@ export default {
                   <div class="card-header border-0 h4 fw-bold text-center mb-3 bg-white" >
                     {{ prize.id === 1 ? '大獎' : prize.id === 2 ? '二獎' : '三獎' }}
                   </div>
+                  <!-- background: linear-gradient(45deg, rgb(252, 179, 78) 20%, rgb(253,164,72), rgb(255,113,75) 90% ); -->
                   <div class="questionMark  position-absolute d-flex bg-lightYellow" style="top: 60px;  width: 100%; height: 220px; border-radius: 20px; background: linear-gradient(45deg, rgb(252, 179, 78) 20%, rgb(253,164,72), rgb(255,113,75) 90% );">
                     <i class="bi bi-question-lg mx-auto text-white" style="font-size: 150px;"></i>
                   </div>
@@ -868,7 +871,7 @@ export default {
             </div>
             </div>
             <div class="d-flex">
-              <button type="button" class="d-lg-none btn btn-brown rounded-pill px-4 mx-auto" @click="linkToLottery">
+              <button type="button" class="d-lg-none btn btn-red rounded-pill px-4 mx-auto" @click="linkToLottery">
                 立即抽獎
               </button>
             </div>
@@ -912,7 +915,7 @@ export default {
   position: relative;
 }
 .fixedQ .card .card-img-overlay{
-  background-image: linear-gradient(180deg , transparent, rgba(0, 0, 0,0.1), rgba(73, 58, 37,0.5));
+  background-image: linear-gradient(180deg , transparent, rgba(0, 0, 0,0.1), rgba(244, 143, 3, 0.5));
 }
 
 .fixedQ .card:hover .card-img-overlay{

@@ -4,9 +4,9 @@
         <div class="modal-dialog modal-fullscreen-md-down" style="margin-right: 0; margin-top: 0;">
           <!-- v-if="cart" 避免錯誤 -->
             <div class="modal-content" style="height: 100vh; overflow-y:auto">
-              <div class="modal-header bg-brown">
-                  <h5 class="modal-title text-white" v-if="nickName">
-                   {{ nickName }}的購物車
+              <div class="modal-header bg-red">
+                  <h5 class="modal-title text-white" v-if="uid">
+                   {{ user.nickName }} 的購物車
                   </h5>
                   <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
@@ -15,7 +15,7 @@
                 <div v-if="this.$route.fullPath !== '/checkout'">
                   <div v-if="cartItems.length !== 0" class="row gy-3 row-cols-1 px-3">
                   <div class="col-12 d-flex">
-                    <button type="button" class="ms-auto btn btn-danger" @click="clearAllCarts" :disabled="loadingItem === 'loading'">
+                    <button type="button" class="ms-auto btn btn-outline-red" @click="clearAllCarts" :disabled="loadingItem === 'loading'">
                       清空購物車
                       <font-awesome-icon v-if="loadingItem === 'loading'" icon="fa-solid fa-spinner" spin />
                     </button>
@@ -41,13 +41,13 @@
                               <p class="mb-0 text-danger text-end fw-bold" v-if="item.product.category === '組合包'">小計：NT$ {{ numberComma(item.product.price * item.qty) }} / {{ numberComma(item.qty) }}組</p>
 
                               <div class="d-flex justify-content-end align-items-center mt-2">
-                                <button :disabled="loadingItem === 'loading'" class="btn btn-sm btn-brown rounded-circle" :class="{'disabled': item.qty === 1}"  style="width: 30px; height: 30px;" type="button" id="button-addon2" @click="()=>updateCartNum('reduce', item.product, item.qty)">
+                                <button :disabled="loadingItem === 'loading'" class="btn btn-sm btn-red rounded-circle" :class="{'disabled': item.qty === 1}"  style="width: 30px; height: 30px;" type="button" id="button-addon2" @click="()=>updateCartNum('reduce', item.product, item.qty)">
                                   <span v-if="loadingItem !== 'loading'">-</span>
                                   <font-awesome-icon v-else-if="loadingItem === 'loading'" icon="fa-solid fa-spinner" spin />
                                 </button>
 
                                 <input type="number" class="form-control border-0 text-center" v-model.number="item.qty" @change="changeCartNum(item.product, item.qty, $event)"  style="width: 70px;" @keydown="handleKeyDown">
-                                <button :disabled="loadingItem === 'loading'" class="btn btn-sm btn-brown rounded-circle" style="width: 30px; height: 30px;" type="button" id="button-addon2" @click="()=>updateCartNum('add',item.product, item.qty)">
+                                <button :disabled="loadingItem === 'loading'" class="btn btn-sm btn-red rounded-circle" style="width: 30px; height: 30px;" type="button" id="button-addon2" @click="()=>updateCartNum('add',item.product, item.qty)">
                                   <span v-if="loadingItem !== 'loading'">+</span>
                                   <!-- <i class="fas fa-spinner fa-pulse" v-if="loadingItem === product.id"></i> -->
                                   <font-awesome-icon v-else-if="loadingItem === 'loading'" icon="fa-solid fa-spinner" spin />
@@ -63,7 +63,7 @@
                     <label for="code" class="col-3 form-label">優惠碼</label>
                     <div class="input-group mb-3" v-if="cart.total + cart.deliveryCharge === cart.finalTotal">
                       <input type="text" class="form-control" v-model="code">
-                      <button class="btn btn-outline-brown" type="button" id="button-addon2" @click="()=>checkCoupon(code)">套用優惠碼</button>
+                      <button class="btn btn-outline-red" type="button" id="button-addon2" @click="()=>checkCoupon(code)">套用優惠碼</button>
                     </div>
                     <div class="input-group mb-3" v-else-if="cart.total + cart.deliveryCharge !== cart.finalTotal">
                       <!-- v-if="cart.coupon" -->
@@ -99,12 +99,12 @@
                       </tbody>
                     </table>
                   </div>
-                  <RouterLink to="/checkout" type="button" class="btn btn-brown">前往結帳</RouterLink>
+                  <RouterLink to="/checkout" type="button" class="btn btn-red">前往結帳</RouterLink>
                 </div>
                 <div v-else-if="cartNum === 0" class="mt-6 d-flex flex-column align-items-center" >
                   <img src="../../src/assets/images/undraw_shopping_app_flsj.png" width="300" class="mb-3 " alt="" >
                   <h5 class="text-center">您的購物車是空的</h5>
-                  <RouterLink class="link-redBrown h5" to="/products" >前往選購商品</RouterLink>
+                  <RouterLink class="link-red h5" to="/products" >前往選購商品</RouterLink>
                 </div>
                 </div>
                 <div v-else-if="this.$route.fullPath === '/checkout'" class="h-100 d-flex">
@@ -128,12 +128,15 @@ import modalMixin from '../mixins/modalMixin'
 import { mapActions, mapState } from 'pinia'
 import cartStore from '../stores/carts'
 import numberCommaMixin from '../mixins/numberCommaMixin'
-import { auth } from '../firebase/db'
+import { db, auth } from '../firebase/db'
 import { onAuthStateChanged } from 'firebase/auth'
+import { ref, onValue } from 'firebase/database'
 export default {
   data () {
     return {
-      code: ''
+      code: '',
+      uid: '',
+      user: {}
     }
   },
   mixins: [modalMixin, numberCommaMixin],
@@ -155,6 +158,11 @@ export default {
         if (user) {
           this.uid = user.uid
           this.getCart(this.uid)
+          const dataRef = ref(db, 'users/' + user.uid)
+          onValue(dataRef, snapshot => {
+            this.user = snapshot.val()
+            console.log(this.user, '使用者資料')
+          })
         } else {
           // 需要嗎?
           console.log('並未登入')
@@ -186,7 +194,7 @@ export default {
     // 清空購物車 也要刪除CODE
   },
   computed: {
-    ...mapState(cartStore, ['nickName', 'cart', 'cartItems', 'cartNum', 'loadingItem'])
+    ...mapState(cartStore, ['cart', 'cartItems', 'cartNum', 'loadingItem'])
   }
 }
 </script>

@@ -114,7 +114,7 @@ export default {
                         </div>
                     </div>
                     <div class="col-12">
-                        <RouterLink to="/products" class="btn btn-outline-brown mb-4 ms-3"><i class="bi bi-arrow-left"></i> 繼續選購</RouterLink>
+                        <RouterLink to="/products" class="btn btn-outline-red mb-4 ms-3"><i class="bi bi-arrow-left"></i> 繼續選購</RouterLink>
                     </div>
                 </div>
             </div>
@@ -123,7 +123,7 @@ export default {
                 <VForm ref="form" class="" v-slot="{ errors }" @submit="()=>addOrder (user.email, user.name, user.phoneNum, user.address, user.message)">
                     <div class="row gy-4 d-flex">
                         <div class="col-12 fs-5">
-                            <label for="email" class="form-label text-secondary" :class="{'text-brown':user.email && !errors['信箱']}"><i class="bi bi-envelope-fill" ></i> 信箱<span class="text-danger h4 ms-2">*</span></label>
+                            <label for="email" class="form-label text-secondary" :class="{'text-red':user.email && !errors['信箱']}"><i class="bi bi-envelope-fill" ></i> 信箱<span class="text-danger h4 ms-2">*</span></label>
                             <VField
                                 id="email"
                                 name="信箱"
@@ -137,7 +137,7 @@ export default {
                             <ErrorMessage name="信箱" class="invalid-feedback"></ErrorMessage>
                         </div>
                         <div class="col-12 fs-5">
-                            <label for="name" class="form-label text-secondary" :class="{'text-brown':user.name && !errors['收件人姓名']}"><i class="bi bi-person-fill"></i> 收件人姓名<span class="text-danger h4 ms-2">*</span></label>
+                            <label for="name" class="form-label text-secondary" :class="{'text-red':user.name && !errors['收件人姓名']}"><i class="bi bi-person-fill"></i> 收件人姓名<span class="text-danger h4 ms-2">*</span></label>
                             <VField
                                 id="name"
                                 name="收件人姓名"
@@ -151,7 +151,7 @@ export default {
                             <ErrorMessage name="收件人姓名" class="invalid-feedback"></ErrorMessage>
                         </div>
                         <div class="col-12 fs-5">
-                            <label for="phoneNum" class="form-label text-secondary" :class="{'text-brown':user.phoneNum && !errors['收件人電話']}"><i class="bi bi-telephone-fill"></i> 收件人電話<span class="text-danger h4 ms-2">*</span></label>
+                            <label for="phoneNum" class="form-label text-secondary" :class="{'text-red':user.phoneNum && !errors['收件人電話']}"><i class="bi bi-telephone-fill"></i> 收件人電話<span class="text-danger h4 ms-2">*</span></label>
                             <VField
                                 id="phoneNum"
                                 name="收件人電話"
@@ -165,7 +165,7 @@ export default {
                             <ErrorMessage name="收件人電話" class="invalid-feedback"></ErrorMessage>
                         </div>
                         <div class="col-12 fs-5">
-                            <label for="address" class="form-label text-secondary" :class="{'text-brown':user.address && !errors['收件人地址']}"><i class="bi bi-house-fill"></i> 收件人地址<span class="text-danger h4 ms-2">*</span></label>
+                            <label for="address" class="form-label text-secondary" :class="{'text-red':user.address && !errors['收件人地址']}"><i class="bi bi-house-fill"></i> 收件人地址<span class="text-danger h4 ms-2">*</span></label>
                             <VField
                                 id="address"
                                 name="收件人地址"
@@ -179,19 +179,19 @@ export default {
                             <ErrorMessage name="收件人地址" class="invalid-feedback"></ErrorMessage>
                         </div>
                         <div class="col-12 fs-5 position-relative">
-                            <label for="payWay" class="form-label text-brown"><i class="bi bi-wallet-fill"></i> 付款方式<span class="text-danger h4 ms-2">*</span></label>
+                            <label for="payWay" class="form-label text-red"><i class="bi bi-wallet-fill"></i> 付款方式<span class="text-danger h4 ms-2">*</span></label>
                             <input type="text" class="form-control" id="payWay" value="貨到付款" disabled>
                             <i class="fs-4 text-success bi bi-check-lg position-absolute" style="top:40px; right: 20px"></i>
                             <p class="text-muted" style="font-size: 14px;">注意：本店一律採貨到付款的方式喔!</p>
                         </div>
                         <div class="col-12 fs-5">
-                            <label for="message" class="form-label text-secondary" :class="{'text-brown':user.message}"><i class="bi bi-chat-left-text-fill"></i> 留言</label>
+                            <label for="message" class="form-label text-secondary" :class="{'text-red':user.message}"><i class="bi bi-chat-left-text-fill"></i> 留言</label>
                             <span class="text-muted ms-2" style="font-size: 14px;">(可不填寫)</span>
                             <textarea id="message" class="form-control" cols="30" rows="10" v-model="user.message"></textarea>
                             <p class="text-muted" style="font-size: 14px;">有任何問題或是貨品相關注意事項都歡迎與我們聯繫~</p>
                         </div>
                         <div class="col-12 mt-4" >
-                            <button type="submit" class="btn btn-brown w-100" >確認建立訂單</button>
+                            <button type="submit" class="btn btn-red w-100" >確認建立訂單</button>
                         </div>
                     </div>
                 </VForm>

@@ -235,68 +235,68 @@ export default {
             <button type="button" class="col d-flex flex-column align-items-center btn border-0" :class="{'selectedImg': selectCategory ==='全部'}" @click="() => selectCategory ='全部'">
               <div class="cardImg mb-2" :class="{'opacity-100': selectItem === '全部'}">
                 <div class="enlargeImg rounded-circle " :class="{'selectImgBorder':selectItem === '全部'}" >
-                  <img v-if="selectCategory !=='全部'" src="../../assets/images/dessert-main-image-molten-cake-0fbd4f2.jpg" alt="" class="rounded-circle"  style="object-fit: cover;" >
-                  <img v-else-if="selectCategory ==='全部'" src="../../assets/images/dessert-main-image-molten-cake-0fbd4f2.jpg" alt="" class="rounded-circle"  style="object-fit: cover; transform:scale(1.2,1.2);" >
+                  <img v-if="selectCategory !=='全部'" src="../../assets/images/gettyimages-1268940871.jpg" alt="" class="rounded-circle"  style="object-fit: cover;" >
+                  <img v-else-if="selectCategory ==='全部'" src="../../assets/images/gettyimages-1268940871.jpg" alt="" class="rounded-circle"  style="object-fit: cover; transform:scale(1.2,1.2);" >
                 </div>
               </div>
-              <span class="text-secondary" :class="{'text-brown':selectItem === '全部' , 'fw-bold':selectItem === '全部'}">全部</span>
+              <span class="text-secondary" :class="{'text-red':selectItem === '全部' , 'fw-bold':selectItem === '全部'}">全部</span>
               <!-- 一開始選擇active不會在 全部 => 不曉得為甚麼不能用 selectItem 初始得不到 必須用  selectCategory 才能得到 -->
               <!-- selectItem 是搜尋會影響 selectCategory是直接按 -->
             </button>
             <button type="button" class="col d-flex flex-column align-items-center btn border-0" :class="{'selectedImg': selectCategory ==='台式甜點'}" @click="() => selectCategory ='台式甜點'">
               <div class="cardImg mb-2" :class="{'opacity-100': selectItem === '台式甜點'}">
                 <div class="enlargeImg rounded-circle " :class="{'selectImgBorder':selectItem === '台式甜點'}" >
-                  <img v-if="selectCategory !=='台式甜點'" src="../../assets/images/13d687f987752ba797cc3684987316e6.jpg" alt="" class="rounded-circle"  style="object-fit: cover;" >
-                  <img v-else-if="selectCategory ==='台式甜點'" src="../../assets/images/13d687f987752ba797cc3684987316e6.jpg" alt="" class="rounded-circle"  style="object-fit: cover; transform:scale(1.2,1.2);" >
+                  <img v-if="selectCategory !=='台式甜點'" src="../../assets/images/IMGP0051.jpg" alt="" class="rounded-circle"  style="object-fit: cover;" >
+                  <img v-else-if="selectCategory ==='台式甜點'" src="../../assets/images/IMGP0051.jpg" alt="" class="rounded-circle"  style="object-fit: cover; transform:scale(1.2,1.2);" >
                 </div>
               </div>
-              <span class="text-secondary" :class="{'text-brown':selectItem === '台式甜點', 'fw-bold':selectItem === '台式甜點'}" >台式甜點</span>
+              <span class="text-secondary" :class="{'text-red':selectItem === '台式甜點', 'fw-bold':selectItem === '台式甜點'}" >台式甜點</span>
             </button>
             <button type="button" class="col d-flex flex-column align-items-center btn border-0" :class="{'selectedImg': selectCategory ==='法式甜點'}" @click="() => selectCategory ='法式甜點'">
               <div class="cardImg mb-2" :class="{'opacity-100': selectItem === '法式甜點'}">
                 <div class="enlargeImg rounded-circle " :class="{'selectImgBorder':selectItem === '法式甜點'}" >
-                  <img v-if="selectCategory !=='法式甜點'" src="../../assets/images/cookies-4053771_960_720222.jpg" alt="" class="rounded-circle"  style="object-fit: cover;" >
-                  <img v-else-if="selectCategory ==='法式甜點'" src="../../assets/images/cookies-4053771_960_720222.jpg" alt="" class="rounded-circle"  style="object-fit: cover; transform:scale(1.2,1.2);" >
+                  <img v-if="selectCategory !=='法式甜點'" src="../../assets/images/popularimage4.png" alt="" class="rounded-circle"  style="object-fit: cover;" >
+                  <img v-else-if="selectCategory ==='法式甜點'" src="../../assets/images/popularimage4.png" alt="" class="rounded-circle"  style="object-fit: cover; transform:scale(1.2,1.2);" >
                 </div>
               </div>
-              <span class="text-secondary" :class="{'text-brown':selectItem === '法式甜點', 'fw-bold':selectItem === '法式甜點'}" >法式甜點</span>
+              <span class="text-secondary" :class="{'text-red':selectItem === '法式甜點', 'fw-bold':selectItem === '法式甜點'}" >法式甜點</span>
             </button>
             <button type="button" class="col d-flex flex-column align-items-center btn border-0" :class="{'selectedImg': selectCategory ==='美式甜點'}" @click="() => selectCategory ='美式甜點'">
               <div class="cardImg mb-2" :class="{'opacity-100': selectItem === '美式甜點'}">
                 <div class="enlargeImg rounded-circle " :class="{'selectImgBorder':selectItem === '美式甜點'}" >
-                  <img v-if="selectCategory !=='美式甜點'" src="../../assets/images/baked-mochi-donuts-DSC_3500-1x1-1200.jpg" alt="" class="rounded-circle"  style="object-fit: cover;" >
-                  <img v-else-if="selectCategory ==='美式甜點'" src="../../assets/images/baked-mochi-donuts-DSC_3500-1x1-1200.jpg" alt="" class="rounded-circle"  style="object-fit: cover; transform:scale(1.2,1.2);" >
+                  <img v-if="selectCategory !=='美式甜點'" src="../../assets/images/photo-1533910534207-90f31029a78e.jpg" alt="" class="rounded-circle"  style="object-fit: cover;" >
+                  <img v-else-if="selectCategory ==='美式甜點'" src="../../assets/images/photo-1533910534207-90f31029a78e.jpg" alt="" class="rounded-circle"  style="object-fit: cover; transform:scale(1.2,1.2);" >
                 </div>
               </div>
-              <span class="text-secondary" :class="{'text-brown':selectItem === '美式甜點', 'fw-bold':selectItem === '美式甜點'}" >美式甜點</span>
+              <span class="text-secondary" :class="{'text-red':selectItem === '美式甜點', 'fw-bold':selectItem === '美式甜點'}" >美式甜點</span>
             </button>
             <button type="button" class="col d-flex flex-column align-items-center btn border-0" :class="{'selectedImg': selectCategory ==='日式甜點'}" @click="() => selectCategory ='日式甜點'">
               <div class="cardImg mb-2" :class="{'opacity-100': selectItem === '日式甜點'}">
                 <div class="enlargeImg rounded-circle " :class="{'selectImgBorder':selectItem === '日式甜點'}" >
-                  <img v-if="selectCategory !=='日式甜點'" src="../../assets/images/IMG_P-0051-1000x600.jpg" alt="" class="rounded-circle"  style="object-fit: cover;" >
-                  <img v-else-if="selectCategory ==='日式甜點'" src="../../assets/images/IMG_P-0051-1000x600.jpg" alt="" class="rounded-circle"  style="object-fit: cover; transform:scale(1.2,1.2);" >
+                  <img v-if="selectCategory !=='日式甜點'" src="../../assets/images/421Cv1xH8BYP44T9V8aY241R2UYjhTsiYa7giw6d.jpeg" alt="" class="rounded-circle"  style="object-fit: cover;" >
+                  <img v-else-if="selectCategory ==='日式甜點'" src="../../assets/images/421Cv1xH8BYP44T9V8aY241R2UYjhTsiYa7giw6d.jpeg" alt="" class="rounded-circle"  style="object-fit: cover; transform:scale(1.2,1.2);" >
                 </div>
               </div>
-              <span class="text-secondary" :class="{'text-brown':selectItem === '日式甜點', 'fw-bold':selectItem === '日式甜點'}" >日式甜點</span>
+              <span class="text-secondary" :class="{'text-red':selectItem === '日式甜點', 'fw-bold':selectItem === '日式甜點'}" >日式甜點</span>
             </button>
             <button type="button" class="col d-flex flex-column align-items-center btn border-0" :class="{'selectedImg': selectCategory ==='義式甜點'}" @click="() => selectCategory ='義式甜點'">
               <div class="cardImg mb-2" :class="{'opacity-100': selectItem === '義式甜點'}">
                 <div class="enlargeImg rounded-circle " :class="{'selectImgBorder':selectItem === '義式甜點'}" >
-                  <img v-if="selectCategory !=='義式甜點'" src="../../assets/images/瘋提拉米蘇-1.jpg" alt="" class="rounded-circle"  style="object-fit: cover;" >
-                  <img v-else-if="selectCategory ==='義式甜點'" src="../../assets/images/瘋提拉米蘇-1.jpg" alt="" class="rounded-circle"  style="object-fit: cover; transform:scale(1.2,1.2);" >
+                  <img v-if="selectCategory !=='義式甜點'" src="../../assets/images/pastiera2.jpg" alt="" class="rounded-circle"  style="object-fit: cover;" >
+                  <img v-else-if="selectCategory ==='義式甜點'" src="../../assets/images/pastiera2.jpg" alt="" class="rounded-circle"  style="object-fit: cover; transform:scale(1.2,1.2);" >
                 </div>
               </div>
-              <span class="text-secondary" :class="{'text-brown':selectItem === '義式甜點', 'fw-bold':selectItem === '義式甜點'}" >義式甜點</span>
+              <span class="text-secondary" :class="{'text-red':selectItem === '義式甜點', 'fw-bold':selectItem === '義式甜點'}" >義式甜點</span>
             </button>
           </div>
           </div>
         </section>
         <section class="d-none d-lg-block container selectProduct my-5">
           <div class="input-group">
-            <a class="btn btn-outline-brown px-5" @click="()=> this.costOrRateCollapse.toggle()">篩選對象 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{priceOrRate}}</span></a>
-            <button class="btn btn-outline-brown px-5" type="button" @click="()=> this.highOrLowCollapse.toggle()">篩選值 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{highOrLow}}</span> </button>
-            <input type="search" class="form-control border-brown border-end-0" placeholder="請輸入食譜名稱" aria-label="Example text with two button addons" v-model="recipeSearchName" @keyup.enter="searchRecipes">
-            <button type="submit" class="btn border border-brown border-start-0 bg-transparent" @click.prevent="searchRecipes">
+            <a class="btn btn-outline-red px-5" @click="()=> this.costOrRateCollapse.toggle()">篩選對象 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{priceOrRate}}</span></a>
+            <button class="btn btn-outline-red px-5" type="button" @click="()=> this.highOrLowCollapse.toggle()">篩選值 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{highOrLow}}</span> </button>
+            <input type="search" class="form-control border-red border-end-0" placeholder="請輸入食譜名稱" aria-label="Example text with two button addons" v-model="recipeSearchName" @keyup.enter="searchRecipes">
+            <button type="submit" class="btn border border-red border-start-0 bg-transparent" @click.prevent="searchRecipes">
               <img src="../../assets/images/icon-searchMobile.png" style="height: 25px;" alt="">
             </button>
           </div>
@@ -308,9 +308,9 @@ export default {
                 <div class="card card-body border-0">
                   <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
                     <input type="radio" class="btn-check" value="成本" name="priceOrRate" id="selectprice" autocomplete="off"  v-model="priceOrRate">
-                    <label class="btn btn-outline-brown " for="selectprice">成本</label>
+                    <label class="btn btn-outline-red " for="selectprice">成本</label>
                     <input type="radio" class="btn-check"  value="評價" name="priceOrRate" id="selectRate" autocomplete="off" v-model="priceOrRate">
-                    <label class="btn btn-outline-brown " for="selectRate">評價</label>
+                    <label class="btn btn-outline-red " for="selectRate">評價</label>
                   </div>
                 </div>
               </div>
@@ -320,11 +320,11 @@ export default {
                 <div class="card card-body border-0">
                   <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
                     <input type="radio" class="btn-check" value="不拘" name="highOrLow" id="noDifference" autocomplete="off" checked="" v-model="highOrLow">
-                    <label class="btn btn-outline-brown" for="noDifference">不拘</label>
+                    <label class="btn btn-outline-red" for="noDifference">不拘</label>
                     <input type="radio" class="btn-check" value="高到低" name="highOrLow" id="highToLow" autocomplete="off" v-model="highOrLow">
-                    <label class="btn btn-outline-brown" for="highToLow">高到低</label>
+                    <label class="btn btn-outline-red" for="highToLow">高到低</label>
                     <input type="radio" class="btn-check" value="低到高" name="highOrLow" id="lowToHigh" autocomplete="off" v-model="highOrLow">
-                    <label class="btn btn-outline-brown" for="lowToHigh">低到高</label>
+                    <label class="btn btn-outline-red" for="lowToHigh">低到高</label>
                   </div>
                 </div>
               </div>
@@ -335,7 +335,6 @@ export default {
         <section class="container">
           <!-- 多了這個判斷 filterRecipes.length 至少要有一個存在 -->
           <div v-if="filterRecipes.length" class="row row-cols-lg-4 row-cols-1 gy-4">
-            <!-- recipes/${recipe.id} -->
             <div class="col text-decoration-none" v-for="recipe in this.$refs.pagination.pageProducts" :key="recipe.id">
               <div class="card position-relative border-0 bg-transparent" style="border-radius: 20px;">
                 <div class=" cardImg" style="border-radius: 20px;">
@@ -353,12 +352,12 @@ export default {
                           <img src="../../assets/images/image4.png">
                       </button>
                     </div>
-                    <span style="pointer-events: none; top: 155px;" class="badge rounded-pill bg-brown mt-4 border-0 m-3 position-absolute start-0">{{ recipe.category }}</span>
+                    <span style="pointer-events: none; top: 155px;" class="badge rounded-pill bg-red mt-4 border-0 m-3 position-absolute start-0">{{ recipe.category }}</span>
                 </h5>
                 <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown">
                   <h5 class="d-flex justify-content-between align-items-center fw-bold">
                     <span>{{recipe.title}}</span>
-                    <p class="mb-0 badge rounded-pill border" :class="{'border-brown': recipe.thumbs !== 0, 'border-lightBrownGray':  recipe.thumbs === 0, 'text-brown':recipe.thumbs !== 0,'text-lightBrownGray': recipe.thumbs === 0}">
+                    <p class="mb-0 badge rounded-pill border" :class="{'border-red': recipe.thumbs !== 0, 'border-lightBrownGray':  recipe.thumbs === 0, 'text-red':recipe.thumbs !== 0,'text-lightBrownGray': recipe.thumbs === 0}">
                       <span class="me-1">{{ recipe.thumbs }}</span>
                       <i class="bi bi-hand-thumbs-up-fill"></i>
                     </p>
@@ -384,23 +383,22 @@ export default {
 </template>
 <style>
  ::placeholder {
-    color: #D3CCC1 !important;
+    color: #f39691 !important;
   }
   #myTab .nav-item .active {
-    color: #815B15;
+    color: #d04740;
   }
   /* #be7106 這顏色很好看 */
   .selectProductCategory .btn:hover span{
-    /* background-color: #815B15; */
-    color: #815B15 !important;
+    color: #d04740 !important;
     font-weight: bold;
   }
   /* 不然會移動 */
   .selectProductCategory .btn:hover .enlargeImg{
-    border: 2px solid #815B15;
+    border: 2px solid #d04740;
   }
   .selectImgBorder{
-    border: 2px solid #815B15 !important;
+    border: 2px solid #d04740 !important;
   }
   .selectProductCategory button .cardImg{
   opacity: 0.9;

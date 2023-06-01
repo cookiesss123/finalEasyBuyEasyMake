@@ -190,10 +190,10 @@ export default {
         <section class="">
             <ul class="nav nav-tabs container">
             <li class="nav-item" @click="() => pageStatus = 'recipe'">
-                <button class="nav-link " :class="{'link-redBrown': pageStatus === 'recipe', 'active': pageStatus === 'recipe'}" type="button" :disabled="loadingItem" ><i class="bi bi-book-half"></i> 食譜收藏</button>
+                <button class="nav-link " :class="{'link-red': pageStatus === 'recipe', 'active': pageStatus === 'recipe'}" type="button" :disabled="loadingItem" ><i class="bi bi-book-half"></i> 食譜收藏</button>
             </li>
             <li class="nav-item" @click="() => pageStatus = 'product'">
-                <button class="nav-link" :class="{'link-redBrown': pageStatus === 'product', 'active': pageStatus === 'product'}" type="button" :disabled="loadingItem" ><i class="bi bi-bag-check-fill"></i> 材料收藏</button>
+                <button class="nav-link" :class="{'link-red': pageStatus === 'product', 'active': pageStatus === 'product'}" type="button" :disabled="loadingItem" ><i class="bi bi-bag-check-fill"></i> 材料收藏</button>
             </li>
             </ul>
         </section>
@@ -222,12 +222,12 @@ export default {
                         <img src="../../assets/images/image4.png">
                     </button>
                   </div>
-                  <span style="pointer-events: none; top: 155px;" class="badge rounded-pill bg-brown mt-4 border-0 m-3 position-absolute start-0">{{ recipe.category }}</span>
+                  <span style="pointer-events: none; top: 155px;" class="badge rounded-pill bg-red mt-4 border-0 m-3 position-absolute start-0">{{ recipe.category }}</span>
               </h5>
               <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown">
                 <h5 class="d-flex justify-content-between align-items-center fw-bold">
                   <span>{{recipe.title}}</span>
-                  <p class="mb-0 badge rounded-pill border" :class="{'border-brown': recipe.thumbs !== 0, 'border-lightBrownGray':  recipe.thumbs === 0, 'text-brown':recipe.thumbs !== 0,'text-lightBrownGray': recipe.thumbs === 0}">
+                  <p class="mb-0 badge rounded-pill border" :class="{'border-red': recipe.thumbs !== 0, 'border-lightBrownGray':  recipe.thumbs === 0, 'text-red':recipe.thumbs !== 0,'text-lightBrownGray': recipe.thumbs === 0}">
                     <span class="me-1">{{ recipe.thumbs }}</span>
                     <i class="bi bi-hand-thumbs-up-fill"></i>
                   </p>
@@ -250,7 +250,7 @@ export default {
                 </RouterLink>
               </div>
               <h5 class="card-text">
-                <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex flex-column align-items-center text-white p-2 bg-brown border me-3 position-absolute top-0 start-0 m-3 rounded">
+                <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex flex-column align-items-center text-white p-2 bg-red border me-3 position-absolute top-0 start-0 m-3 rounded">
                   {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                 </span>
                 <!-- 先轉成 string 再取得字串第一個字元 .charAt(0) -->
@@ -306,16 +306,16 @@ export default {
             <div v-if="!loadingItem && !bookMarks" class="py-5 d-flex flex-column align-items-center">
               <img src="../../assets/images/undraw_Appreciation_r2a1.png" class="" alt="" style="height: 250px;">
               <h2 >您尚無任何<span v-if="pageStatus === 'recipe'">食譜</span><span v-else-if="pageStatus === 'product'">材料</span>收藏</h2>
-              <RouterLink to="/recipes" v-if="pageStatus === 'recipe'" class="link-brown h5">前往瀏覽食譜</RouterLink>
-              <RouterLink to="/products" v-else-if="pageStatus === 'product'" class="link-brown h5">前往瀏覽食譜材料</RouterLink>
+              <RouterLink to="/recipes" v-if="pageStatus === 'recipe'" class="link-red h5">前往瀏覽食譜</RouterLink>
+              <RouterLink to="/products" v-else-if="pageStatus === 'product'" class="link-red h5">前往瀏覽食譜材料</RouterLink>
             </div>
         </div>
         <DeleteBookmarksModal :id="deleteId" :item="deleteItem" :page-status="pageStatus" :open-delete-modal="openDeleteModal"></DeleteBookmarksModal>
     </div>
 </template>
 <style>
- .collapse .card input:hover + label{
+ /* .collapse .card input:hover + label{
     background: #C0AB8E !important;
     color: white !important;
-  }
+  } */
 </style>

@@ -63,12 +63,12 @@ export default {
       <section class="container d-flex justify-content-center mt-5">
         <!-- v-if="myOrder.cart -->
         <div class="col-lg-6" v-if="myOrder.cart">
-            <!--  border border-brown -->
+            <!--  border border-red -->
             <div class="row">
-            <h1 class="h4 text-center text-white w-100 bg-brown py-2">恭喜您! 訂單建立完成</h1>
+            <h1 class="h4 text-center text-white w-100 bg-red py-2">恭喜您! 訂單建立完成</h1>
             <div class="col-12 d-flex align-items-center my-4">
-                <span class="">會員可到 <RouterLink to="/member" class="link-redBrown">會員專區</RouterLink> 查看訂單處理狀況</span>
-                <span class="ms-auto"><RouterLink to="/products" class="btn btn-sm btn-brown">繼續購物</RouterLink></span>
+                <span class="">會員可到 <RouterLink to="/member" class="link-orange">會員專區</RouterLink> 查看訂單處理狀況</span>
+                <span class="ms-auto"><RouterLink to="/products" class="btn btn-sm btn-red">繼續購物</RouterLink></span>
             </div>
             <p class="mb-2">訂單建立時間：{{ new Date(myOrder.creatAt).toLocaleDateString() }}</p>
             <div class="col-12" v-for="(item, index) in myOrder.cart.items" :key="index + 756345">
@@ -131,7 +131,7 @@ export default {
             <div class="col-12">
                 <div class="card border-0">
                     <div class="card-body">
-                        <table class="table table-borderless text-brown">
+                        <table class="table table-borderless text-red">
                             <thead>
                             <tr>
                                 <th class="fw-normal"><i class="bi bi-envelope-fill" ></i> 信箱</th>

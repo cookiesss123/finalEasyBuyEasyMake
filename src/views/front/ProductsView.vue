@@ -259,10 +259,9 @@ export default {
 <template>
     <div class="my-10">
       <LoadingModal ref="loadingModal" style="z-index: 2001;"></LoadingModal>
-
       <ul class="nav nav-tabs container d-flex justify-content-center justify-content-lg-start" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-          <button class="nav-link px-1 px-lg-3" :class="{'active': pageStatus === '全部'}"  id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true" @click="()=>selectPage = '全部'">全部</button>
+          <button class="nav-link px-1 px-lg-3 d-flex align-items-center" :class="{'active': pageStatus === '全部'}"  id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true" @click="()=>selectPage = '全部'"><span class="material-icons-outlined fs-5 me-1">apps</span>全部</button>
         </li>
         <li class="nav-item" role="presentation">
           <button class="nav-link px-1 px-lg-3" :class="{'active': pageStatus === '食材組合包'}" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false" @click="()=>selectPage = '食材組合包'"><i class="bi bi-bag-check-fill"></i> 食材組合包</button>
@@ -277,10 +276,10 @@ export default {
       <!-- 搜尋 -->
       <div class="d-none d-lg-block container selectProduct pt-4">
         <div class="input-group">
-          <a class="btn btn-outline-brown px-5" @click="()=> this.priceOrRateCollapse.toggle()">篩選對象 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{priceOrRate}}</span></a>
-          <button class="btn btn-outline-brown px-5" type="button" @click="()=> this.highOrLowCollapse.toggle()">篩選值 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{highOrLow}}</span> </button>
-          <input type="search" class="form-control border-brown border-end-0" placeholder="請輸入食材名稱" aria-label="Example text with two button addons" v-model="productSearchName" @keyup.enter="searchProducts">
-          <button type="submit" class="btn border border-brown border-start-0 bg-transparent" @click.prevent="searchProducts">
+          <a class="btn btn-outline-red px-5" @click="()=> this.priceOrRateCollapse.toggle()">篩選對象 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{priceOrRate}}</span></a>
+          <button class="btn btn-outline-red px-5" type="button" @click="()=> this.highOrLowCollapse.toggle()">篩選值 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{highOrLow}}</span> </button>
+          <input type="search" class="form-control border-red border-end-0" placeholder="請輸入食材名稱" aria-label="Example text with two button addons" v-model="productSearchName" @keyup.enter="searchProducts">
+          <button type="submit" class="btn border border-red border-start-0 bg-transparent" @click.prevent="searchProducts">
             <img src="../../assets/images/icon-searchMobile.png" style="height: 25px;" alt="">
           </button>
         </div>
@@ -292,9 +291,9 @@ export default {
               <div class="card card-body border-0">
                 <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
                   <input type="radio" class="btn-check" value="價格" name="priceOrRate" id="selectprice" autocomplete="off"  v-model="priceOrRate">
-                  <label class="btn btn-outline-brown " for="selectprice">價格</label>
+                  <label class="btn btn-outline-red " for="selectprice">價格</label>
                   <input type="radio" class="btn-check"  value="評價" name="priceOrRate" id="selectRate" autocomplete="off" v-model="priceOrRate">
-                  <label class="btn btn-outline-brown " for="selectRate">評價</label>
+                  <label class="btn btn-outline-red " for="selectRate">評價</label>
                 </div>
               </div>
             </div>
@@ -304,11 +303,11 @@ export default {
               <div class="card card-body border-0">
                 <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
                   <input type="radio" class="btn-check" value="不拘" name="highOrLow" id="noDifference" autocomplete="off" checked="" v-model="highOrLow">
-                  <label class="btn btn-outline-brown" for="noDifference">不拘</label>
+                  <label class="btn btn-outline-red" for="noDifference">不拘</label>
                   <input type="radio" class="btn-check" value="高到低" name="highOrLow" id="highToLow" autocomplete="off" v-model="highOrLow">
-                  <label class="btn btn-outline-brown" for="highToLow">高到低</label>
+                  <label class="btn btn-outline-red" for="highToLow">高到低</label>
                   <input type="radio" class="btn-check" value="低到高" name="highOrLow" id="lowToHigh" autocomplete="off" v-model="highOrLow">
-                  <label class="btn btn-outline-brown" for="lowToHigh">低到高</label>
+                  <label class="btn btn-outline-red" for="lowToHigh">低到高</label>
                 </div>
               </div>
             </div>
@@ -329,7 +328,7 @@ export default {
                 <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent end-0 top-0 m-3" @click="()=>addBookmark(product)">
                   <img src="../../assets/images/image5.png">
                 </button>
-                <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex flex-column align-items-center text-white p-2 bg-brown border me-3 position-absolute top-0 start-0 m-3 rounded">
+                <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex flex-column align-items-center text-white p-2 bg-red border me-3 position-absolute top-0 start-0 m-3 rounded">
                   {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                 </span>
                 <!-- 先轉成 string 再取得字串第一個字元 .charAt(0) -->
@@ -384,22 +383,16 @@ export default {
   background-color: red !important;
 } */
  ::placeholder {
-    color: #D3CCC1 !important;
+    color: #e89995 !important;
   }
-  .selectProduct .nav-link.active{
-    background: #815B15 !important;
-  }
-  .selectProduct .nav-link:hover{
-    color: white !important;
-    background: #815B15;
-  }
+
   #myTab .nav-item .active {
-    color: #b15c17;
+    color: #d04740;
   }
   /* 當要選擇特定input種類要加上  [type="radio"] */
   /* + 是只會選擇相鄰的兄弟 不加上 + 就會選擇全部 */
  .collapse .card input:hover + label{
-    background: #C0AB8E !important;
+    background: #e9a8a5 !important;
     color: white !important;
   }
 
