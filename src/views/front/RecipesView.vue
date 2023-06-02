@@ -356,9 +356,9 @@ export default {
                     <span style="pointer-events: none; " class="cardTextCategory badge rounded-pill bg-red mt-4 border-0 m-3 position-absolute start-0">{{ recipe.category }}</span>
                 </h5>
                 <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown">
-                  <h5 class="d-flex justify-content-between align-items-center fw-bold cardTextTitle">
-                    <span>{{recipe.title}}</span>
-                    <p class="mb-0 badge rounded-pill border" :class="{'border-red': recipe.thumbs !== 0, 'border-lightBrownGray':  recipe.thumbs === 0, 'text-red':recipe.thumbs !== 0,'text-lightBrownGray': recipe.thumbs === 0}">
+                  <h5 class="d-flex justify-content-between align-items-center fw-bold">
+                    <span class="cardTextTitle">{{recipe.title}}</span>
+                    <p class="starRates mb-0 badge rounded-pill border" :class="{'border-red': recipe.thumbs !== 0, 'border-lightBrownGray':  recipe.thumbs === 0, 'text-red':recipe.thumbs !== 0,'text-lightBrownGray': recipe.thumbs === 0}">
                       <span class="me-1">{{ recipe.thumbs }}</span>
                       <i class="bi bi-hand-thumbs-up-fill"></i>
                     </p>
