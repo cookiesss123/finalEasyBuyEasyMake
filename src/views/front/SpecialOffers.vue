@@ -1,7 +1,5 @@
 <template>
     <div class="container my-10">
-      <LoadingModal ref="loadingModal"></LoadingModal>
-
       <ul class="navTitle nav nav-tabs" >
         <li class="nav-item" @click="()=>tabName = '優惠折扣'">
           <button class="nav-link" :class="{'active': tabName === '優惠折扣', 'link-red':tabName === '優惠折扣'}"  type="button" >優惠折扣</button>
@@ -12,7 +10,7 @@
       </ul>
       <section v-if="tabName === '優惠折扣'" class="text-red">
         <h3 class="text-center py-3 py-lg-5 fw-bold bg-lightYellow mt-3">本月優惠</h3>
-        <div class="row row-cols-lg-4 g-4 py-3 text-darkBrown">
+        <div v-if="!loading" class="row row-cols-lg-4 g-4 py-3 text-darkBrown">
           <div class="col" v-for="(coupon, index) in coupons" :key="index">
               <div class="card">
                   <div class="enlargeImg w-100 rounded">
@@ -30,6 +28,7 @@
               </div>
           </div>
         </div>
+        <LoadingComponent v-if="loading"></LoadingComponent>
       </section>
       <section  v-else-if="tabName === '抽獎回饋'" >
         <div class="py-3 text-darkBrown d-flex flex-column">
@@ -137,15 +136,12 @@
 // mapState
 import { mapActions } from 'pinia'
 import cartStore from '../../stores/carts'
-import LoadingModal from '../../components/LoadingModal.vue'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
 import { db, auth } from '../../firebase/db'
 import { ref, onValue, update, set } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
+import LoadingComponent from '../../components/LoadingComponent.vue'
 export default {
-  components: {
-    LoadingModal
-  },
   mixins: [numberCommaMixin],
   data () {
     return {
@@ -158,8 +154,12 @@ export default {
       uid: '',
       getPrize: {},
       tabName: '優惠折扣', // 判斷在哪個頁籤
-      articles: []
+      articles: [],
+      loading: true
     }
+  },
+  components: {
+    LoadingComponent
   },
   methods: {
     ...mapActions(cartStore, ['checkLogin', 'toastMessage']),
@@ -169,6 +169,7 @@ export default {
       onValue(dataRef, snapshot => {
         this.coupons = snapshot.val()
         console.log(this.coupons, '折價券')
+        this.loading = false
       })
     },
     // 取得抽獎
@@ -367,6 +368,7 @@ export default {
   },
   mounted () {
     // this.$refs.loadingModal.show()
+    this.loading = true
     if (this.$route.query.tabName) {
       this.tabName = this.$route.query.tabName
     }
