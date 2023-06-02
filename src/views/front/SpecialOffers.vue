@@ -2,7 +2,7 @@
     <div class="container my-10">
       <LoadingModal ref="loadingModal"></LoadingModal>
 
-      <ul class="nav nav-tabs" >
+      <ul class="navTitle nav nav-tabs" >
         <li class="nav-item" @click="()=>tabName = '優惠折扣'">
           <button class="nav-link" :class="{'active': tabName === '優惠折扣', 'link-red':tabName === '優惠折扣'}"  type="button" >優惠折扣</button>
         </li>

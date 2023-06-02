@@ -44,6 +44,11 @@
   font-size: 8px;
 }
 
+// 產品、優惠特報頁籤標題 文字大小 
+.navTitle{
+  font-size: 8px;
+}
+
 // 桌機
 @include media-breakpoint-up(lg) {
   // 食譜和產品的圖片
@@ -70,5 +75,9 @@
 // 食譜分類
 .card-text .cardTextCategory{
   top: 155px;
+}
+// 產品、優惠特報頁籤標題 文字大小 
+.navTitle{
+  font-size: 16px;
 }
 }

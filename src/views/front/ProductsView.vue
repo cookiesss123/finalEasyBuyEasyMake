@@ -260,18 +260,19 @@ export default {
 <template>
     <div class="my-10">
       <LoadingModal ref="loadingModal" style="z-index: 2001;"></LoadingModal>
-      <ul class="nav nav-tabs container d-flex justify-content-center justify-content-lg-start" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link px-1 px-lg-3 d-flex align-items-center" :class="{'active': pageStatus === '全部'}"  id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true" @click="()=>selectPage = '全部'"><span class="material-icons-outlined fs-5 me-1">apps</span>全部</button>
+      <!-- navTitle -->
+      <ul class="navTitle nav nav-tabs container d-flex justify-content-center justify-content-lg-start" id="myTab" role="tablist">
+        <li class="nav-item " role="presentation">
+          <button class="nav-link px-2 px-lg-3 d-flex align-items-center" :class="{'active': pageStatus === '全部'}"  id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true" @click="()=>selectPage = '全部'"><span class="material-icons-outlined fs-5 me-1">apps</span>全部</button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link px-1 px-lg-3" :class="{'active': pageStatus === '食材組合包'}" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false" @click="()=>selectPage = '食材組合包'"><i class="bi bi-bag-check-fill"></i> 食材組合包</button>
+          <button class="nav-link px-2 px-lg-3" :class="{'active': pageStatus === '食材組合包'}" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false" @click="()=>selectPage = '食材組合包'"><i class="bi bi-bag-check-fill"></i> 食材組合包</button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link px-1 px-lg-3" :class="{'active': pageStatus === '熱銷單品'}" id="popularProducts-tab" data-bs-toggle="tab" data-bs-target="#popularProducts" type="button" role="tab" aria-controls="popularProducts" aria-selected="false" @click="()=>selectPage = '熱銷單品'"><i class="bi bi-fire"></i> 熱銷單品</button>
+          <button class="nav-link px-2 px-lg-3" :class="{'active': pageStatus === '熱銷單品'}" id="popularProducts-tab" data-bs-toggle="tab" data-bs-target="#popularProducts" type="button" role="tab" aria-controls="popularProducts" aria-selected="false" @click="()=>selectPage = '熱銷單品'"><i class="bi bi-fire"></i> 熱銷單品</button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link px-1 px-lg-3" :class="{'active': pageStatus === '特價商品'}" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false" @click="()=>selectPage = '特價商品'"><i class="bi bi-percent "></i> 特價商品</button>
+          <button class="nav-link px-2 px-lg-3" :class="{'active': pageStatus === '特價商品'}" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false" @click="()=>selectPage = '特價商品'"><i class="bi bi-percent "></i> 特價商品</button>
         </li>
       </ul>
       <!-- 搜尋 -->

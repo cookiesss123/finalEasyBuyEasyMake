@@ -340,7 +340,6 @@ export default {
               <div class="card position-relative border-0 bg-transparent" style="border-radius: 20px;">
                 <div class="cardImg" style="border-radius: 20px;">
                   <RouterLink :to="`/recipes/${recipe.id}`" class="enlargeImg">
-                    <!--  height="220" -->
                     <img :src="recipe.image" class="card-img" style="border-radius: 20px; object-fit: cover;  max-width: 100%; max-height: 100%;" alt="">
                   </RouterLink>
                 </div>
@@ -354,7 +353,6 @@ export default {
                           <img src="../../assets/images/image4.png">
                       </button>
                     </div>
-                    <!--  top: 155px; -->
                     <span style="pointer-events: none; " class="cardTextCategory badge rounded-pill bg-red mt-4 border-0 m-3 position-absolute start-0">{{ recipe.category }}</span>
                 </h5>
                 <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown">
