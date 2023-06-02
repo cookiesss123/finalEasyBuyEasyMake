@@ -9,6 +9,7 @@
                     <th>食譜編號</th>
                     <th>分類</th>
                     <th>食譜名稱</th>
+                    <th>內容</th>
                     <th>產品</th>
                     <th>成本</th>
                     <th>組合價</th>
@@ -20,6 +21,7 @@
                     <td>{{ recipe.id }}</td>
                     <td>{{ recipe.category }}</td>
                     <td>{{ recipe.title }}</td>
+                    <td>{{ recipe.content }}</td>
                     <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 400px;">
                       <template v-for="(product, index) in recipe.relativeProducts" :key="product.id">
                         {{`${index + 1}${product.title} `}}

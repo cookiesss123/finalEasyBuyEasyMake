@@ -42,9 +42,13 @@
 import { RouterLink, RouterView } from 'vue-router'
 import { mapActions } from 'pinia'
 import cartStore from '../stores/carts'
+import { auth } from '../firebase/db'
+import { onAuthStateChanged } from 'firebase/auth'
+const { VITE_ADMIN_UID } = import.meta.env
 export default {
   data () {
     return {
+      uid: ''
     }
   },
   components: {
@@ -52,14 +56,24 @@ export default {
     RouterView
   },
   methods: {
-    ...mapActions(cartStore, ['logout']),
-    checkLogin () { // 確認登入
-      const token = document.cookie.replace(/(?:(?:^|.*;\s*)myToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
-      this.$http.defaults.headers.common.Authorization = token
+    ...mapActions(cartStore, ['logout', 'toastMessage']),
+    checkAdmin () {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          this.uid = user.uid
+          if (this.uid !== VITE_ADMIN_UID) {
+            this.toastMessage('您沒有後台使用權，給我滾!!!', 'warning')
+            this.$router.push('/home')
+          }
+        } else {
+          this.toastMessage('您沒有後台使用權，給我滾!!!', 'warning')
+          this.$router.push('/home')
+        }
+      })
     }
   },
   mounted () {
-    this.checkLogin()
+    this.checkAdmin()
   }
 }
 </script>

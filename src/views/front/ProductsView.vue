@@ -81,16 +81,15 @@ export default {
             }
           })
           console.log(this.products, '加了評分的產品')
-        })
 
-        this.filterProducts = this.products
-        if (!this.$route.query.pageStatus && this.$route.fullPath === '/products') { // 未傳值再渲染
+          this.filterProducts = this.products
+          if (!this.$route.query.pageStatus && this.$route.fullPath === '/products') { // 未傳值再渲染
           // 從單頁按讚後這裡會出現錯誤警告 因為觸發了最上方的得到讚 this.$route.fullPath === '/recipes' 用這個在食譜單頁就不會觸發了
-          this.$refs.pagination.renderPage(1, this.filterProducts)
-        } else if (this.$route.query.pageStatus) { // 有外部傳值再搜索
-          this.searchProducts()
-        }
-        // })
+            this.$refs.pagination.renderPage(1, this.filterProducts)
+          } else if (this.$route.query.pageStatus) { // 有外部傳值再搜索
+            this.searchProducts()
+          }
+        })
       })
     },
     // 要加入分類頁面的
@@ -195,8 +194,7 @@ export default {
   mounted () {
     // 先關閉
     // this.$refs.loadingModal.show()
-    this.getProducts()
-    this.getBookmarks()
+    // 加了這個頁碼會不見 為何??? 因為沒使用變成 undefined 了 避免沒值
     this.priceOrRateCollapse = new Collapse(this.$refs.priceOrRateCollapse, {
       toggle: false,
       parent: '#myGroup'
@@ -206,8 +204,6 @@ export default {
       toggle: false,
       parent: '#myGroup'
     })
-
-    // 加了這個頁碼會不見 為何??? 因為沒使用變成 undefined 了 避免沒值
     if (this.$route.query.pageStatus || this.$route.query.searchName || this.$route.query.valueHighOrLow || this.$route.query.valuePriceOrRate) {
       this.pageStatus = this.$route.query.pageStatus
       this.priceOrRate = this.$route.query.valuePriceOrRate
@@ -215,6 +211,8 @@ export default {
       this.productSearchName = this.$route.query.searchName
       console.log('存入了', this.pageStatus, this.priceOrRate, this.highOrLow, this.productSearchName)
     }
+    this.getProducts()
+    this.getBookmarks()
   },
   watch: {
     selectPage () {
@@ -339,30 +337,27 @@ export default {
                       <img src="../../assets/images/image4.png">
                   </button>
                 </div>
-                <!-- top: 155px; -->
                 <button :disabled="loadingItem === 'loading'" @click="()=>addCart(product)" type="button" class="buyBtn border-0 bg-transparent me-lg-2 me-1 position-absolute end-0" >
                   <img src="../../assets/images/icon-cart.png"  alt="" class="rounded-circle shadow-sm">
                 </button>
               </h5>
               <RouterLink :to="`/products/${product.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown">
                 <h5 class="fw-bold cardTextTitle">{{product.title}}</h5>
-                <div class="d-flex align-items-center cardTextPrice">
-                  <div class="me-auto">
+                <div class="d-flex align-items-lg-center cardTextPrice" :class="{'align-items-end': product.isCheaper, 'align-items-center': !product.isCheaper}">
+                  <div class="">
                     <del v-if="product.originalPrice" class="me-2 text-muted mt-1" :class="{'d-none': !product.isCheaper}">NT$ {{ numberComma(product.originalPrice) }}</del>
                     <span class="mt-1 d-block d-lg-inline-block">
-                      <!-- 有折價 -->
                       <span v-if="product.price" :class="{'text-danger':product.isCheaper, 'fw-bold':product.isCheaper}">
                         NT$ {{numberComma(product.price)}}</span> / {{ product.num }}{{ product.unit }}
                     </span>
                   </div>
-                  <!--  ms-auto -->
-                  <h5 class="mb-0 starRates">
-                    <div class="badge border rounded-pill bg-white" :class="{'text-orange': product.averageRate, 'border-orange': product.averageRate, 'text-lightBrownGray': !product.averageRate, 'border-lightBrownGray': !product.averageRate}">
+                  <h5 class="mb-0 ms-auto starRates">
+                    <div class=" badge border rounded-pill bg-white" :class="{'text-orange': product.averageRate, 'border-orange': product.averageRate, 'text-lightBrownGray': !product.averageRate, 'border-lightBrownGray': !product.averageRate}">
                       <span class="me-1">
                       {{ product.averageRate }}
                       </span>
                       <i class="bi bi-star-fill"></i>
-                  </div>
+                    </div>
                   </h5>
                 </div>
               </RouterLink>

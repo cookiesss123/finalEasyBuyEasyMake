@@ -410,16 +410,17 @@ export default {
                     <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown" style="margin-top: 220px;">
                       <div class="d-flex justify-content-between align-items-center">
                         <h5 class="fw-bold mb-0">{{recipe.title}}</h5>
-                        <p class="mb-0 h5">
+                      </div>
+                      <div class="col-12 d-flex">
+                        <del class="me-2 text-muted mt-1" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
+                        <span class=" mt-1"> <span :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{ numberComma(recipe.price) }}</span> / {{ recipe.content }}</span>
+
+                        <p class="mb-0 h5 ms-auto">
                           <span class="badge rounded-pill text-red border border-red">
                             {{ recipe.thumbs }}
                             <i class="bi bi-hand-thumbs-up-fill" ></i>
                           </span>
                         </p>
-                      </div>
-                      <div class="col-12 d-flex">
-                        <del class="me-2 text-muted mt-1" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
-                        <span class=" mt-1"> <span :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{ numberComma(recipe.price) }}</span> / {{ recipe.content }}</span>
                       </div>
                     </RouterLink>
                   </div>
@@ -451,20 +452,22 @@ export default {
                         </div>
                         <span style="pointer-events: none; top: 65px;" class=" badge rounded-pill bg-red mt-4 border-0 ms-3 position-absolute start-0">{{ recipe.category }}</span>
                     </h5>
-                    <!-- margin-top 所以才很高... -->
                     <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown" style="margin-top: 120px;">
                       <div class="d-flex justify-content-between align-items-center">
                         <h5 class="fw-bold mb-0 cardTextTitle">{{recipe.title}}</h5>
+
+                      </div>
+                      <div class="col-12 cardTextPrice">
+                        <del class="me-2 text-muted mt-1 d-block" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
+                        <div class="d-flex justify-content-between align-items-center">
+                          <span> <span :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{ numberComma(recipe.price) }}</span> / {{ recipe.content }}</span>
                         <p class="mb-0" style="font-size: 10px;">
                           <span class="badge rounded-pill text-red border border-red">
                             {{ recipe.thumbs }}
                             <i class="bi bi-hand-thumbs-up-fill" ></i>
                           </span>
                         </p>
-                      </div>
-                      <div class="col-12 cardTextPrice">
-                        <del class="me-2 text-muted mt-1 d-block" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
-                        <span class=" mt-1"> <span :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{ numberComma(recipe.price) }}</span> / {{ recipe.content }}</span>
+                        </div>
                       </div>
                     </RouterLink>
                   </div>
@@ -584,7 +587,6 @@ export default {
           </div>
           <div class="d-flex flex-column align-items-center" >
             <!-- 桌面 橫向 -->
-            <!-- 收藏讀不到 -->
             <div class="d-none d-md-none d-lg-block container horizontalSwiper">
                 <swiper :slides-per-view="4" :space-between="25"
                 :modules="modules"
@@ -671,7 +673,7 @@ export default {
                 </h5>
                 <RouterLink :to="`/products/${product.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown" style="margin-top: 120px;">
                   <h5 class="fw-bold cardTextTitle">{{product.title}}</h5>
-                    <div class="d-flex align-items-center justify-content-between cardTextPrice">
+                    <div class="d-flex align-items-lg-center justify-content-between cardTextPrice" :class="{'align-items-end': product.isCheaper, 'align-items-center': !product.isCheaper}">
                       <div>
                         <del v-if="product.originalPrice" class="me-2 text-muted d-block" :class="{'d-none': !product.isCheaper}">NT$ {{ numberComma(product.originalPrice) }}</del>
                         <span v-if="product.price" class=" "> <span :class="{'text-danger':product.isCheaper, 'fw-bold':product.isCheaper}">NT$ {{ numberComma(product.price)}}</span> / {{ product.num }}{{ product.unit }}</span>
@@ -800,7 +802,7 @@ export default {
                         <h5 class="fw-bold cardTextTitle">
                           {{product.title}}
                         </h5>
-                        <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-lg-center" :class="{'align-items-end': product.isCheaper, 'align-items-center': !product.isCheaper}">
                           <div class="cardTextPrice">
                             <del v-if="product.originalPrice" class="me-2 text-muted d-block" :class="{'d-none': !product.isCheaper}">NT$ {{ numberComma(product.originalPrice) }}</del>
                             <span v-if="product.price" class=""> <span :class="{'text-danger':product.isCheaper, 'fw-bold':product.isCheaper}">NT$ {{ numberComma(product.price)}}</span> / {{ product.num }}{{ product.unit }}</span>

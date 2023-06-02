@@ -358,14 +358,18 @@ export default {
                 <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown">
                   <h5 class="d-flex justify-content-between align-items-center fw-bold">
                     <span class="cardTextTitle">{{recipe.title}}</span>
-                    <p class="starRates mb-0 badge rounded-pill border" :class="{'border-red': recipe.thumbs !== 0, 'border-lightBrownGray':  recipe.thumbs === 0, 'text-red':recipe.thumbs !== 0,'text-lightBrownGray': recipe.thumbs === 0}">
-                      <span class="me-1">{{ recipe.thumbs }}</span>
-                      <i class="bi bi-hand-thumbs-up-fill"></i>
-                    </p>
                   </h5>
-                  <div class="cardTextPrice">
-                    <del v-if="recipe.total" class="me-2 text-muted d-block d-lg-inline-block" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
-                    <span><span v-if="recipe.price" :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{numberComma(recipe.price)}}</span> / {{ recipe.content }}</span>
+                   <div class="cardTextPrice d-flex align-items-lg-center align-items-end">
+                    <div class="">
+                      <del v-if="recipe.total" class="me-2 text-muted d-block d-lg-inline-block" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
+                      <span><span v-if="recipe.price" :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{numberComma(recipe.price)}}</span> / {{ recipe.content }}</span>
+                    </div>
+                    <h5 class="starRates mb-0 ms-auto">
+                      <p class=" mb-0 badge rounded-pill border d-flex align-items-center" :class="{'border-red': recipe.thumbs !== 0, 'border-lightBrownGray':  recipe.thumbs === 0, 'text-red':recipe.thumbs !== 0,'text-lightBrownGray': recipe.thumbs === 0}">
+                        <span class="me-1">{{ recipe.thumbs }}</span>
+                        <i class="bi bi-hand-thumbs-up-fill"></i>
+                      </p>
+                    </h5>
                   </div>
                 </RouterLink>
               </div>

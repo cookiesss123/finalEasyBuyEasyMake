@@ -26,6 +26,9 @@ export default {
         let orders = snapshot.val()
 
         // id 陣列
+        if (!orders) {
+          return
+        }
         let idArr = []
         idArr = Object.values(orders).map(order => {
           return Object.keys(order)

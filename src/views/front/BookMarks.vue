@@ -222,16 +222,20 @@ export default {
                     <span style="pointer-events: none; " class="cardTextCategory badge rounded-pill bg-red mt-4 border-0 m-3 position-absolute start-0">{{ recipe.category }}</span>
                 </h5>
                 <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown">
-                  <h5 class="d-flex justify-content-between align-items-center fw-bold cardTextTitle">
-                    <span>{{recipe.title}}</span>
-                    <p class="mb-0 badge rounded-pill border" :class="{'border-red': recipe.thumbs !== 0, 'border-lightBrownGray':  recipe.thumbs === 0, 'text-red':recipe.thumbs !== 0,'text-lightBrownGray': recipe.thumbs === 0}">
-                      <span class="me-1">{{ recipe.thumbs }}</span>
-                      <i class="bi bi-hand-thumbs-up-fill"></i>
-                    </p>
+                  <h5 class="d-flex justify-content-between align-items-center fw-bold">
+                    <span class="cardTextTitle">{{recipe.title}}</span>
                   </h5>
-                  <div class="cardTextPrice">
-                    <del v-if="recipe.total" class="me-2 text-muted d-block d-lg-inline-block" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
-                    <span><span v-if="recipe.price" :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{numberComma(recipe.price)}}</span> / {{ recipe.content }}</span>
+                   <div class="cardTextPrice d-flex align-items-lg-center align-items-end">
+                    <div class="">
+                      <del v-if="recipe.total" class="me-2 text-muted d-block d-lg-inline-block" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
+                      <span><span v-if="recipe.price" :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{numberComma(recipe.price)}}</span> / {{ recipe.content }}</span>
+                    </div>
+                    <h5 class="starRates mb-0 ms-auto">
+                      <p class=" mb-0 badge rounded-pill border d-flex align-items-center" :class="{'border-red': recipe.thumbs !== 0, 'border-lightBrownGray':  recipe.thumbs === 0, 'text-red':recipe.thumbs !== 0,'text-lightBrownGray': recipe.thumbs === 0}">
+                        <span class="me-1">{{ recipe.thumbs }}</span>
+                        <i class="bi bi-hand-thumbs-up-fill"></i>
+                      </p>
+                    </h5>
                   </div>
                 </RouterLink>
               </div>
@@ -267,27 +271,25 @@ export default {
                   </button>
                 </h5>
                 <RouterLink :to="`/products/${product.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown">
-                  <h5 class="fw-bold cardTextTitle">{{product.title}}</h5>
-                  <div class="d-flex align-items-center cardTextPrice">
-                    <div class="me-auto">
-                      <del v-if="product.originalPrice" class="me-2 text-muted mt-1" :class="{'d-none': !product.isCheaper}">NT$ {{ numberComma(product.originalPrice) }}</del>
-                      <span class="mt-1 d-block d-lg-inline-block">
-                        <!-- 有折價 -->
-                        <span v-if="product.price" :class="{'text-danger':product.isCheaper, 'fw-bold':product.isCheaper}">
-                          NT$ {{numberComma(product.price)}}</span> / {{ product.num }}{{ product.unit }}
-                      </span>
-                    </div>
-                    <!--  ms-auto -->
-                    <h5 class="mb-0 starRates">
-                      <div class="badge border rounded-pill bg-white" :class="{'text-orange': product.averageRate, 'border-orange': product.averageRate, 'text-lightBrownGray': !product.averageRate, 'border-lightBrownGray': !product.averageRate}">
-                        <span class="me-1">
-                        {{ product.averageRate }}
-                        </span>
-                        <i class="bi bi-star-fill"></i>
-                    </div>
-                    </h5>
+                <h5 class="fw-bold cardTextTitle">{{product.title}}</h5>
+                <div class="d-flex align-items-lg-center cardTextPrice" :class="{'align-items-end': product.isCheaper, 'align-items-center': !product.isCheaper}">
+                  <div class="">
+                    <del v-if="product.originalPrice" class="me-2 text-muted mt-1" :class="{'d-none': !product.isCheaper}">NT$ {{ numberComma(product.originalPrice) }}</del>
+                    <span class="mt-1 d-block d-lg-inline-block">
+                      <span v-if="product.price" :class="{'text-danger':product.isCheaper, 'fw-bold':product.isCheaper}">
+                        NT$ {{numberComma(product.price)}}</span> / {{ product.num }}{{ product.unit }}
+                    </span>
                   </div>
-                </RouterLink>
+                  <h5 class="mb-0 ms-auto starRates">
+                    <div class=" badge border rounded-pill bg-white" :class="{'text-orange': product.averageRate, 'border-orange': product.averageRate, 'text-lightBrownGray': !product.averageRate, 'border-lightBrownGray': !product.averageRate}">
+                      <span class="me-1">
+                      {{ product.averageRate }}
+                      </span>
+                      <i class="bi bi-star-fill"></i>
+                    </div>
+                  </h5>
+                </div>
+              </RouterLink>
               </div>
             </div>
           </div>

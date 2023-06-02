@@ -239,9 +239,6 @@ import CartModal from '../components/CartModal.vue'
 export default {
   data () {
     return {
-      // user: {},
-      // closeCart: true, // 預設關閉
-
       toggleBtn, // url 的網址都要這樣寫 banner圖片
       // 禁止同時展開 menu 和 搜尋框
       menuToggle: false,
@@ -327,11 +324,6 @@ export default {
     this.checkLogin()
     // 監聽滾動事件
     window.addEventListener('scroll', this.handleScroll)
-    // 一開始就把token 存到 headers 其他需要權限的功能就能用 如修改密碼
-    // console.log(this.$route.fullPath.includes('/recipes'), '目前頁面')
-    // this.menuCollapse = new Collapse(this.$refs.menuCollapse)
-    // this.searchCollapse = new Collapse(this.$refs.searchCollapse)
-    // this.menuCollapse.hide()
     this.menuCollapse = new Collapse(this.$refs.menuCollapse, {
       toggle: false
     })
@@ -345,11 +337,9 @@ export default {
     tooltipTriggerList.map(function (tooltipTriggerEl) {
       return new Tooltip(tooltipTriggerEl)
     })
-    // this.getCoupons()
   },
   computed: {
-    ...mapState(cartStore, ['uid', 'token', 'userId', 'nickName', 'admin', 'cartItems', 'cartNum', 'user'])
-    // ...mapState(cartStore, ['token', 'userId', 'nickName', 'admin', 'cart', 'cartItems', 'cartNum', 'loadingItem'])
+    ...mapState(cartStore, ['uid', 'cartItems', 'cartNum', 'user'])
 
   },
   watch: {
