@@ -4,19 +4,21 @@ import { mapActions, mapState } from 'pinia'
 import cartStore from '../../stores/carts'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
 import PaginationComponent from '../../components/PaginationComponent.vue'
-import LoadingModal from '../../components/LoadingModal.vue'
 import Collapse from 'bootstrap/js/dist/collapse'
 import { db, auth } from '../../firebase/db'
 import { ref, onValue, set, remove } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
+import LoadingComponent from '../../components/LoadingComponent.vue'
+
 export default {
   components: {
     RouterLink,
     PaginationComponent,
-    LoadingModal
+    LoadingComponent
   },
   data () {
     return {
+      loading: true,
       // 控制搜尋收合
       priceOrRateCollapse: {},
       highOrLowCollapse: {},
@@ -83,6 +85,8 @@ export default {
           console.log(this.products, '加了評分的產品')
 
           this.filterProducts = this.products
+          this.loading = false
+
           if (!this.$route.query.pageStatus && this.$route.fullPath === '/products') { // 未傳值再渲染
           // 從單頁按讚後這裡會出現錯誤警告 因為觸發了最上方的得到讚 this.$route.fullPath === '/recipes' 用這個在食譜單頁就不會觸發了
             this.$refs.pagination.renderPage(1, this.filterProducts)
@@ -192,6 +196,7 @@ export default {
     }
   },
   mounted () {
+    this.loading = true
     // 先關閉
     // this.$refs.loadingModal.show()
     // 加了這個頁碼會不見 為何??? 因為沒使用變成 undefined 了 避免沒值
@@ -257,7 +262,6 @@ export default {
 </script>
 <template>
     <div class="my-10">
-      <LoadingModal ref="loadingModal" style="z-index: 2001;"></LoadingModal>
       <!-- navTitle -->
       <ul class="navTitle nav nav-tabs container d-flex justify-content-center justify-content-lg-start" id="myTab" role="tablist">
         <li class="nav-item " role="presentation">
@@ -316,7 +320,7 @@ export default {
       </div>
       <!-- 產品畫面 -->
       <div class="container mt-4">
-        <div v-if="filterProducts.length" class="row row-cols-lg-4 row-cols-2 gy-4">
+        <div v-if="filterProducts.length && !loading" class="row row-cols-lg-4 row-cols-2 gy-4">
           <div class="col text-decoration-none" v-for="product in this.$refs.pagination.pageProducts" :key="product.id">
             <div class="card position-relative border-0 bg-transparent" style="border-radius: 20px;">
               <div class="cardImg" style="border-radius: 20px;">
@@ -364,8 +368,11 @@ export default {
             </div>
           </div>
         </div>
+
+        <LoadingComponent v-if="loading"></LoadingComponent>
+
           <!-- 查無產品 -->
-        <div v-else-if="!filterProducts.length && search" class="py-10">
+        <div v-else-if="!filterProducts.length && search && !loading" class="py-10">
           <img src="../../assets/images/undraw_Page_not_found_re_e9o6.png" class="mb-3" alt="" style="height: 250px; display: block; margin: auto;">
           <h2 class="text-center">查無商品，請您重新查詢</h2>
         </div>

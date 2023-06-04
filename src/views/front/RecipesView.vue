@@ -6,21 +6,22 @@ import cartStore from '../../stores/carts'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
 import PaginationComponent from '../../components/PaginationComponent.vue'
 import Collapse from 'bootstrap/js/dist/collapse'
-import LoadingModal from '../../components/LoadingModal.vue'
 // auth
 import { db, auth } from '../../firebase/db'
 import { ref, set, remove, onValue } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
+import LoadingComponent from '../../components/LoadingComponent.vue'
 
 export default {
   components: {
     RouterLink,
     PaginationComponent,
-    LoadingModal
+    LoadingComponent
   },
   mixins: [numberCommaMixin],
   data () {
     return {
+      loading: true,
       costOrRateCollapse: {},
       highOrLowCollapse: {},
       recipes: [],
@@ -73,6 +74,8 @@ export default {
           console.log(this.recipes, '食譜')
 
           this.filterRecipes = this.recipes
+          this.loading = false
+
           if (!this.$route.query.category && this.$route.fullPath === '/recipes') { // 未傳值再渲染
           // 從單頁按讚後這裡會出現錯誤警告 因為觸發了最上方的得到讚 this.$route.fullPath === '/recipes' 用這個在食譜單頁就不會觸發了
             this.$refs.pagination.renderPage(1, this.filterRecipes)
@@ -167,6 +170,7 @@ export default {
   mounted () {
     // 暫時關閉
     // this.$refs.loadingModal.show()
+    this.loading = true
 
     this.costOrRateCollapse = new Collapse(this.$refs.costOrRateCollapse, {
       toggle: false,
@@ -228,7 +232,6 @@ export default {
 <template>
     <div class="my-7">
         <!-- Loading -->
-        <LoadingModal ref="loadingModal"></LoadingModal>
 
         <section class="bg-lightYellow mb-4 py-4 px-lg-5" style="overflow-x: hidden;">
           <div class="container">
@@ -375,7 +378,7 @@ export default {
               </div>
             </div>
           </div>
-
+          <LoadingComponent v-if="loading"></LoadingComponent>
           <!-- 查無食譜 -->
           <div v-else-if="!filterRecipes.length && search" class="py-10">
             <img src="../../assets/images/undraw_Page_not_found_re_e9o6.png" class="mb-3" alt="" style="height: 250px; display: block; margin: auto;">

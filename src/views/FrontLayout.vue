@@ -76,7 +76,7 @@
                 <li class="nav-item me-lg-3" v-if="user.admin" style="white-space:nowrap">
                   <RouterLink to="/admin/products"  class="nav-link text-center text-lg-start">進入後台</RouterLink>
                 </li>
-                <li class="nav-item ms-3 fs-5 me-5 d-flex align-items-center justify-content-center justify-content-lg-start">
+                <li class="nav-item fs-5 me-4 d-flex align-items-center justify-content-center justify-content-lg-start">
                   <img v-if="user.headshotImg" :src="user.headshotImg" alt="" height="50" width="50" class="me-3 rounded-circle" style="object-fit: cover;">
                   <i v-else-if="!user.headshotImg" class="bi bi-person-circle me-3 fs-1 text-red"></i>
 
@@ -85,7 +85,7 @@
                   </span>
                 </li>
                 <!-- 桌機 -->
-                <li class="nav-item me-lg-3 " style="white-space:nowrap">
+                <li class="nav-item me-lg-3" style="white-space:nowrap">
                   <a href="#" class="nav-link text-center text-lg-start" @click.prevent="logout">登出</a>
                 </li>
               </ul>

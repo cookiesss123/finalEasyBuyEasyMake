@@ -7,19 +7,21 @@ import 'swiper/css/pagination'
 import { mapActions } from 'pinia'
 import cartStore from '../../stores/carts'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
-import LoadingModal from '../../components/LoadingModal.vue'
 import { db, auth } from '../../firebase/db'
 import { ref, onValue, set, remove, push } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
+import LoadingComponent from '../../components/LoadingComponent.vue'
+
 export default {
   components: {
     Swiper,
     SwiperSlide,
-    LoadingModal
+    LoadingComponent
   },
   mixins: [numberCommaMixin],
   data () {
     return {
+      loading: true,
       recipe: {},
       modules: [Navigation, Pagination],
       navigation: {
@@ -117,6 +119,7 @@ export default {
           return product.category === '組合包'
         })
         this.groupProduct = this.groupProduct[0]
+        this.loading = false
       })
     },
     // 取得所有食譜留言
@@ -206,176 +209,178 @@ export default {
 }
 </script>
 <template>
-    <div class="mt-10" style="overflow-x: hidden;">
-      <LoadingModal ref="loadingModal"></LoadingModal>
+  <div>
+    <div v-if="!loading" class="mt-10" style="overflow-x: hidden;">
 
-      <div class="container">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item ">
-              <RouterLink to="/recipes" class="link-red">甜點食譜</RouterLink>
-              </li>
-              <li class="breadcrumb-item active " aria-current="page">{{ recipe.title }}</li>
-            </ol>
-        </nav>
-      </div>
-      <section class="container mt-lg-5">
-      <div class="row row-cols-lg-2 row-cols-1 gx-5">
-        <div class="col">
-          <!-- 大圖位置 -->
-          <div class="d-flex recipeMainImg mb-4">
-            <img :src="mainImg" style="object-fit: cover; max-height: 300px;" class="w-100" alt="">
-          </div>
-          <div class="recipeSwiper position-relative">
-            <swiper :slides-per-view="3" :space-between="15"
-            :modules="modules"
-            navigation
-            style="height: 160px;"
-            class="w-100"
-            >
-              <swiper-slide style="cursor: pointer;" @click="()=>mainImg = recipe.image">
-                <div>
-                  <img :src="recipe.image" alt="" style="object-fit: cover; height: 100px !important;" :class="{'border': mainImg === recipe.image, 'border-3': mainImg === recipe.image, 'border-red': mainImg === recipe.image}">
-                </div>
-              </swiper-slide>
-              <swiper-slide v-for="pic in recipe.imgsUrl" :key="pic + 45345" style="cursor: pointer;"  @click="()=>mainImg = pic">
-                <div>
-                  <img :src="pic" alt="" style="object-fit: cover; height: 100px !important;" :class="{'border': mainImg === pic, 'border-3': mainImg === pic, 'border-red': mainImg === pic}">
-                </div>
-              </swiper-slide>
-            </swiper>
-          </div>
-        </div>
-        <div class="col d-flex flex-column">
-          <div class=" d-flex align-items-center mb-3">
-            <h5 class="me-2 mb-0">
-              <span class="badge rounded-pill bg-red">{{ recipe.category }}</span>
-            </h5>
-            <h1 class="mb-0 mainTitle">{{ recipe.title }}</h1>
-            <div class="d-flex align-items-center ms-auto">
-            <button v-if="!bookMark" type="button" class="border-0 bg-transparent text-red fs-4" @click="()=>addBookmark(recipe.id)">
-              <i class="bi bi-heart"></i>
-            </button>
-            <button v-else-if="bookMark" type="button" class=" border-0 bg-transparent fs-4" @click="deleteBookmark" style="color: #fa6e42">
-              <i class="bi bi-heart-fill"></i>
-            </button>
-              <span class="mb-0 ms-3" :class="{'text-red': allThumbNum,'text-lightGray': !allThumbNum}">{{ allThumbNum }}</span>
-              <button v-if="!myThumb" type="button" class="border-0 bg-transparent fs-4" :class="{'text-red': allThumbNum,'text-lightGray': !allThumbNum}" @click="addThumb">
-                <i class="bi bi-hand-thumbs-up"></i>
-              </button>
-              <button v-else-if="myThumb" type="button" class="border-0 bg-transparent fs-4" :class="{'text-red': allThumbNum,'text-lightGray': !allThumbNum}" @click="deleteThumb">
-                <i class="bi bi-hand-thumbs-up-fill"></i>
-              </button>
-            </div>
-          </div>
-          <h5 class="mb-3">食譜作者：{{ recipe.author }}</h5>
-          <h5 class="mb-3">份量：{{ recipe.content }}</h5>
-          <div class="mt-auto">
-            <h5>甜點介紹：</h5>
-            <p class="mb-5">{{recipe.description}}</p>
-          </div>
-        </div>
-      </div>
-      </section>
-
-      <section class="bg-lightYellow my-5" style="overflow-x: hidden;">
-        <div class="container py-5">
-          <div class="row row-cols-lg-2 row-cols-1 g-5">
-            <div class="col">
-              <h3 class="mb-3 fw-bold"><span class="material-icons">egg</span> 準備材料</h3>
-              <h5 class="me-3">成本：NT$ {{recipe.total}}</h5>
-              <div class="row mb-6">
-                <div class="col-12" v-for="(ingredient, index) in recipe.ingredients" :key="ingredient + 367657">
-                  {{ index + 1 }}. {{ ingredient.name }} {{ ingredient.num }} {{ ingredient.unit }}
-                </div>
-              </div>
-              <h3 class="mb-3 fw-bold"><span class="material-icons-outlined">soup_kitchen</span> 製作步驟</h3>
-              <div v-if="recipe.instructions">
-                <p class="me-3" v-for="(instruction) in recipe.instructions.split('/')" :key="instruction + 346346">{{instruction}}</p>
-              </div>
-              <h3 class="mt-6 mb-3 fw-bold"><i class="bi bi-youtube"></i> 教學影片</h3>
-              <iframe width="560" height="315" :src="recipe.video" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            </div>
-            <div class="col">
-              <h3 class="mb-4 fw-bold"><i class="bi bi-bag-check-fill"></i> 相關產品</h3>
-              <div class="row">
-                <div class="col-12 relativeProducts">
-                  <div v-for="product in recipe.relativeProducts" :key="product.id + 456496">
-                    <RouterLink :to="`/products/${product.id}`"  class="link-red d-flex flex-column align-items-center cardImg" v-if="product.category === '組合包'">
-                      <div class="enlargeImg" style="width: 50% !important;">
-                        <img :src="product.imgUrl" alt="" class="w-100" height="150" style="object-fit: cover;">
-                      </div>
-                      <p class="fw-bold mt-2">{{ product.title }}</p>
-                    </RouterLink>
-                  </div>
-                </div>
-              </div>
-              <div class="d-flex justify-content-between align-items-end">
-                <p class="h5 mb-0 d-flex flex-column">
-                  <del class="text-secondary me-3" style="font-size: 16px;">NT$ {{numberComma(recipe.total)}}</del>
-                  <span class="text-danger fw-bold">NT$ {{numberComma(recipe.price)}} <span class="text-darkBrown"> / 組</span></span>
-                </p>
-                <div class="input-group w-50">
-                  <select name="" id="" class="form-select text-center" v-model="qty" style="width: 70px;">
-                    <option :value="number" v-for="number in 30" :key="number + 4596945">{{ number}}</option>
-                  </select>
-                  <button class="btn btn-red" type="button" id="button-addon2" @click="()=>addCart(groupProduct, qty)">一鍵買齊</button>
-                </div>
-              </div>
-              <div class="row mt-5 row-cols-lg-3 row-cols-2 relativeProducts">
-                <div class="col" v-for="product in recipe.relativeProducts" :key="product.id + 456496">
-                  <RouterLink :to="`/products/${product.id}`"  class="link-red d-flex flex-column align-items-center cardImg" v-if="product.category === '單一產品'">
-                    <div class="enlargeImg">
-                      <img :src="product.imgUrl" alt="" height="150" style="object-fit: cover;" class="w-100">
-                    </div>
-                    <p class="fw-bold mt-2">{{ product.title }}</p>
-                  </RouterLink>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="container py-5">
-        <h3 class="d-flex align-items-center">
-          <i class="bi bi-stars"></i>
-          顧客評價
-          <div class="ms-2 badge border rounded-pill bg-white" :class="{'text-orange': recipeComments.length, 'text-lightBrownGray': !recipeComments.length,'border-orange': recipeComments.length, 'border-lightBrownGray': !recipeComments.length}" style="font-size: 16px;">
-            {{ recipeComments.length }} 則
-          </div>
-          <RouterLink to="/login" class="ms-3 btn btn-red d-none d-lg-block" v-if="!uid">我要登入寫評價</RouterLink>
-        </h3>
-        <div class="d-flex">
-          <RouterLink to="/login" class="btn btn-red d-lg-none ms-auto" v-if="!uid">我要登入寫評價</RouterLink>
-        </div>
-        <div class="my-5">
-          <form action="" v-if="uid">
-            <h5 class="mb-3 fw-bold d-flex align-items-center">
-              <!-- <i class="bi bi-person-circle fs-1 me-3"></i> -->
-              <img v-if="user.headshotImg" :src="user.headshotImg" alt="" width="50" height="50" style="object-fit: cover;" class="rounded-circle me-3">
-              <i v-else-if="!user.headshotImg" class="bi bi-person-circle me-3" style="font-size: 45px;"></i>
-              {{ user.nickName }}
-            </h5>
-            <textarea class="form-control" name="" id="" cols="30" rows="10" v-model="recipeMessage"></textarea>
-            <div class="d-flex">
-              <button type="submit" class="ms-auto btn btn-red mt-3" @click.prevent="addComments">送出</button>
-            </div>
-          </form>
-          <div class="row gy-5">
-            <div class="col-12 border-bottom" v-for="comment in recipeComments" :key="comment + 3657">
-              <h5 class="mb-2 fw-bold d-flex align-items-center">
-                <!-- <i class="bi bi-person-circle fs-1 me-3"></i> -->
-                <img v-if="comment.userImg" :src="comment.userImg" alt="" width="50" height="50" style="object-fit: cover;" class="rounded-circle me-3">
-                <i  v-else-if="!comment.userImg" class="bi bi-person-circle me-3" style="font-size: 45px;"></i>
-                {{ comment.username }}
-              </h5>
-              <p class="mb-0">{{ `${new Date(comment.createAt).toLocaleDateString()}` }}</p>
-              <p>{{ comment.message }}</p>
-            </div>
-          </div>
-        </div>
-      </section>
+<div class="container">
+  <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item ">
+        <RouterLink to="/recipes" class="link-red">甜點食譜</RouterLink>
+        </li>
+        <li class="breadcrumb-item active " aria-current="page">{{ recipe.title }}</li>
+      </ol>
+  </nav>
+</div>
+<section class="container mt-lg-5">
+<div class="row row-cols-lg-2 row-cols-1 gx-5">
+  <div class="col">
+    <!-- 大圖位置 -->
+    <div class="d-flex recipeMainImg mb-4">
+      <img :src="mainImg" style="object-fit: cover; max-height: 300px;" class="w-100" alt="">
     </div>
+    <div class="recipeSwiper position-relative">
+      <swiper :slides-per-view="3" :space-between="15"
+      :modules="modules"
+      navigation
+      style="height: 160px;"
+      class="w-100"
+      >
+        <swiper-slide style="cursor: pointer;" @click="()=>mainImg = recipe.image">
+          <div>
+            <img :src="recipe.image" alt="" style="object-fit: cover; height: 100px !important;" :class="{'border': mainImg === recipe.image, 'border-3': mainImg === recipe.image, 'border-red': mainImg === recipe.image}">
+          </div>
+        </swiper-slide>
+        <swiper-slide v-for="pic in recipe.imgsUrl" :key="pic + 45345" style="cursor: pointer;"  @click="()=>mainImg = pic">
+          <div>
+            <img :src="pic" alt="" style="object-fit: cover; height: 100px !important;" :class="{'border': mainImg === pic, 'border-3': mainImg === pic, 'border-red': mainImg === pic}">
+          </div>
+        </swiper-slide>
+      </swiper>
+    </div>
+  </div>
+  <div class="col d-flex flex-column">
+    <div class=" d-flex align-items-center mb-3">
+      <h5 class="me-2 mb-0">
+        <span class="badge rounded-pill bg-red">{{ recipe.category }}</span>
+      </h5>
+      <h1 class="mb-0 mainTitle">{{ recipe.title }}</h1>
+      <div class="d-flex align-items-center ms-auto">
+      <button v-if="!bookMark" type="button" class="border-0 bg-transparent text-red fs-4" @click="()=>addBookmark(recipe.id)">
+        <i class="bi bi-heart"></i>
+      </button>
+      <button v-else-if="bookMark" type="button" class=" border-0 bg-transparent fs-4" @click="deleteBookmark" style="color: #fa6e42">
+        <i class="bi bi-heart-fill"></i>
+      </button>
+        <span class="mb-0 ms-3" :class="{'text-red': allThumbNum,'text-lightGray': !allThumbNum}">{{ allThumbNum }}</span>
+        <button v-if="!myThumb" type="button" class="border-0 bg-transparent fs-4" :class="{'text-red': allThumbNum,'text-lightGray': !allThumbNum}" @click="addThumb">
+          <i class="bi bi-hand-thumbs-up"></i>
+        </button>
+        <button v-else-if="myThumb" type="button" class="border-0 bg-transparent fs-4" :class="{'text-red': allThumbNum,'text-lightGray': !allThumbNum}" @click="deleteThumb">
+          <i class="bi bi-hand-thumbs-up-fill"></i>
+        </button>
+      </div>
+    </div>
+    <h5 class="mb-3">食譜作者：{{ recipe.author }}</h5>
+    <h5 class="mb-3">份量：{{ recipe.content }}</h5>
+    <div class="mt-auto">
+      <h5>甜點介紹：</h5>
+      <p class="mb-5">{{recipe.description}}</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="bg-lightYellow my-5" style="overflow-x: hidden;">
+  <div class="container py-5">
+    <div class="row row-cols-lg-2 row-cols-1 g-5">
+      <div class="col">
+        <h3 class="mb-3 fw-bold"><span class="material-icons">egg</span> 準備材料</h3>
+        <h5 class="me-3">成本：NT$ {{recipe.total}}</h5>
+        <div class="row mb-6">
+          <div class="col-12" v-for="(ingredient, index) in recipe.ingredients" :key="ingredient + 367657">
+            {{ index + 1 }}. {{ ingredient.name }} {{ ingredient.num }} {{ ingredient.unit }}
+          </div>
+        </div>
+        <h3 class="mb-3 fw-bold"><span class="material-icons-outlined">soup_kitchen</span> 製作步驟</h3>
+        <div v-if="recipe.instructions">
+          <p class="me-3" v-for="(instruction) in recipe.instructions.split('/')" :key="instruction + 346346">{{instruction}}</p>
+        </div>
+        <h3 class="mt-6 mb-3 fw-bold"><i class="bi bi-youtube"></i> 教學影片</h3>
+        <iframe width="560" height="315" :src="recipe.video" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <div class="col">
+        <h3 class="mb-4 fw-bold"><i class="bi bi-bag-check-fill"></i> 相關產品</h3>
+        <div class="row">
+          <div class="col-12 relativeProducts">
+            <div v-for="product in recipe.relativeProducts" :key="product.id + 456496">
+              <RouterLink :to="`/products/${product.id}`"  class="link-red d-flex flex-column align-items-center cardImg" v-if="product.category === '組合包'">
+                <div class="enlargeImg" style="width: 50% !important;">
+                  <img :src="product.imgUrl" alt="" class="w-100" height="150" style="object-fit: cover;">
+                </div>
+                <p class="fw-bold mt-2">{{ product.title }}</p>
+              </RouterLink>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-end">
+          <p class="h5 mb-0 d-flex flex-column">
+            <del class="text-secondary me-3" style="font-size: 16px;">NT$ {{numberComma(recipe.total)}}</del>
+            <span class="text-danger fw-bold">NT$ {{numberComma(recipe.price)}} <span class="text-darkBrown"> / 組</span></span>
+          </p>
+          <div class="input-group w-50">
+            <select name="" id="" class="form-select text-center" v-model="qty" style="width: 70px;">
+              <option :value="number" v-for="number in 30" :key="number + 4596945">{{ number}}</option>
+            </select>
+            <button class="btn btn-red" type="button" id="button-addon2" @click="()=>addCart(groupProduct, qty)">一鍵買齊</button>
+          </div>
+        </div>
+        <div class="row mt-5 row-cols-lg-3 row-cols-2 relativeProducts">
+          <div class="col" v-for="product in recipe.relativeProducts" :key="product.id + 456496">
+            <RouterLink :to="`/products/${product.id}`"  class="link-red d-flex flex-column align-items-center cardImg" v-if="product.category === '單一產品'">
+              <div class="enlargeImg">
+                <img :src="product.imgUrl" alt="" height="150" style="object-fit: cover;" class="w-100">
+              </div>
+              <p class="fw-bold mt-2">{{ product.title }}</p>
+            </RouterLink>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="container py-5">
+  <h3 class="d-flex align-items-center">
+    <i class="bi bi-stars"></i>
+    顧客評價
+    <div class="ms-2 badge border rounded-pill bg-white" :class="{'text-orange': recipeComments.length, 'text-lightBrownGray': !recipeComments.length,'border-orange': recipeComments.length, 'border-lightBrownGray': !recipeComments.length}" style="font-size: 16px;">
+      {{ recipeComments.length }} 則
+    </div>
+    <RouterLink to="/login" class="ms-3 btn btn-red d-none d-lg-block" v-if="!uid">我要登入寫評價</RouterLink>
+  </h3>
+  <div class="d-flex">
+    <RouterLink to="/login" class="btn btn-red d-lg-none ms-auto" v-if="!uid">我要登入寫評價</RouterLink>
+  </div>
+  <div class="my-5">
+    <form action="" v-if="uid">
+      <h5 class="mb-3 fw-bold d-flex align-items-center">
+        <!-- <i class="bi bi-person-circle fs-1 me-3"></i> -->
+        <img v-if="user.headshotImg" :src="user.headshotImg" alt="" width="50" height="50" style="object-fit: cover;" class="rounded-circle me-3">
+        <i v-else-if="!user.headshotImg" class="bi bi-person-circle me-3" style="font-size: 45px;"></i>
+        {{ user.nickName }}
+      </h5>
+      <textarea class="form-control" name="" id="" cols="30" rows="10" v-model="recipeMessage"></textarea>
+      <div class="d-flex">
+        <button type="submit" class="ms-auto btn btn-red mt-3" @click.prevent="addComments">送出</button>
+      </div>
+    </form>
+    <div class="row gy-5">
+      <div class="col-12 border-bottom" v-for="comment in recipeComments" :key="comment + 3657">
+        <h5 class="mb-2 fw-bold d-flex align-items-center">
+          <!-- <i class="bi bi-person-circle fs-1 me-3"></i> -->
+          <img v-if="comment.userImg" :src="comment.userImg" alt="" width="50" height="50" style="object-fit: cover;" class="rounded-circle me-3">
+          <i  v-else-if="!comment.userImg" class="bi bi-person-circle me-3" style="font-size: 45px;"></i>
+          {{ comment.username }}
+        </h5>
+        <p class="mb-0">{{ `${new Date(comment.createAt).toLocaleDateString()}` }}</p>
+        <p>{{ comment.message }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+    </div>
+    <LoadingComponent v-else-if="loading"></LoadingComponent>
+  </div>
 </template>
 <style>
   .rates .form-check label{

@@ -1,10 +1,10 @@
 <template>
     <!-- fade -->
-    <div class="modal " ref="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style=" overflow-y: hidden;">
-        <div class="modal-dialog modal-fullscreen-md-down" style="margin-right: 0; margin-top: 0;">
+    <div class="modal right" ref="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style=" overflow-y: hidden;">
+        <div class="modal-dialog modal-fullscreen-md-down w-100" style="margin-right: 0; margin-top: 0;">
           <!-- v-if="cart" 避免錯誤 -->
             <div class="modal-content" style="height: 100vh; overflow-y:auto">
-              <div class="modal-header bg-red">
+              <div class="modal-header bg-red" style="border-radius: 0;">
                   <h5 class="modal-title text-white" v-if="uid">
                    {{ user.nickName }} 的購物車
                   </h5>
@@ -199,22 +199,20 @@ export default {
 }
 </script>
 <style>
-/* .closeCartModal{
-  margin-right: 20px;
-  margin-top: 0;
-  transition: margin-right 1s ease-in !important;
-} */
-/* .showCartModal{
-  margin-right: 0px;
-  margin-top: 0;
-} */
-
-/* .modal.fade .modal-dialog {
-  transition: transform .3s ease-out;
-  transform: translateX(30%) !important;
+.right .modal-dialog{
+    transition: transform .3s ease-out;
+    position: fixed;
+    margin: auto;
+    height: 100%;
 }
-.modal.in .modal-dialog {
-  transform: translateX(50%) !important;
-} */
-
+.modal.right .modal-content{
+  overflow-y: auto;
+  border-radius: 0;
+  border: none;
+  height: 100%;
+}
+.right .modal-dialog {
+    transform: translateX(250px);
+    right: 0;
+}
 </style>

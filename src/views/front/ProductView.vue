@@ -9,20 +9,22 @@ import cartStore from '../../stores/carts'
 import fullStar from '../../assets/images/icon-star-filled.png'
 import star from '../../assets/images/icon-star.png'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
-import LoadingModal from '../../components/LoadingModal.vue'
 import { db, auth } from '../../firebase/db'
 import { ref, onValue, set, remove, push } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
+import LoadingComponent from '../../components/LoadingComponent.vue'
+
 export default {
   components: {
     Swiper,
     SwiperSlide,
-    LoadingModal
+    LoadingComponent
   },
   mixins: [numberCommaMixin],
   // ../../assets/images/Line7(Stroke).png
   data () {
     return {
+      loading: true,
       product: {},
       recipes: [],
       relevantRecipesInfo: [],
@@ -168,6 +170,7 @@ export default {
             return this.product.relevantRecipes.includes(recipe.title)
           })
           console.log(this.relevantRecipesInfo, '相關食譜')
+          this.loading = false
         })
       })
     },
@@ -220,8 +223,8 @@ export default {
     }
   },
   mounted () {
+    this.loading = true
     // 如果刷新 uid 就得不到了 user 資料同樣也得不到 但是user 是渲染所以晚點沒關係
-    // this.$refs.loadingModal.show()
     // this.checkLogin() 在書籤寫了 這裡就不用了
     this.getProduct()
     this.getAllProductRates()
@@ -269,9 +272,8 @@ export default {
 }
 </script>
 <template>
-    <div class="mt-10" style="overflow-x: hidden;">
-      <LoadingModal ref="loadingModal"></LoadingModal>
-
+  <div>
+    <div v-if="!loading" class="mt-10" style="overflow-x: hidden;">
       <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -470,6 +472,8 @@ export default {
         </div>
       </section>
     </div>
+    <LoadingComponent v-else-if="loading"></LoadingComponent>
+  </div>
 </template>
 <style>
   .rates .form-check label{
