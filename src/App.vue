@@ -18,10 +18,6 @@ export default {
       color: #493A25;
   }
   /* 更改 Select 组件的背景颜色和文本颜色 */
-.form-select:hover {
-  // background-color: #FBF8F3;
-}
-
 // select:focus > option:checked {
 //     background: #faa635 !important;
 // }
