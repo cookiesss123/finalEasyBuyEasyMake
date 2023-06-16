@@ -72,7 +72,6 @@
 
 .banner{
     background-image:url('@/assets/images/hero-mobile.png');
-    // background-image:url('./src/assets/images/hero-mobile.png');
     background-repeat: no-repeat;
     height: 358px;
     background-size: cover;
@@ -81,6 +80,7 @@
 .h1Text{
     font-size: 24px;
 }
+// 可以刪了
 .bannerContent{
     padding: 160px 0;
 }
@@ -173,6 +173,8 @@
     }
 
     .banner{
+        // background-image:url('@/assets/images/hero.png');
+        // 草莓封面 https://images.unsplash.com/photo-1587314168485-3236d6710814?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1078&q=80
         background-image:url('@/assets/images/hero.png');
         height: 670px;
         width:100%;

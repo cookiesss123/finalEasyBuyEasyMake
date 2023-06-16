@@ -261,22 +261,23 @@ export default {
 }
 </script>
 <template>
-    <div class="my-10">
-      <!-- navTitle -->
-      <ul class="navTitle nav nav-tabs container d-flex justify-content-center justify-content-lg-start" id="myTab" role="tablist">
-        <li class="nav-item " role="presentation">
-          <button class="nav-link px-2 px-lg-3 d-flex align-items-center" :class="{'active': pageStatus === '全部'}"  id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true" @click="()=>selectPage = '全部'"><span class="material-icons-outlined fs-5 me-1">apps</span>全部</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link px-2 px-lg-3" :class="{'active': pageStatus === '食材組合包'}" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false" @click="()=>selectPage = '食材組合包'"><i class="bi bi-bag-check-fill"></i> 食材組合包</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link px-2 px-lg-3" :class="{'active': pageStatus === '熱銷單品'}" id="popularProducts-tab" data-bs-toggle="tab" data-bs-target="#popularProducts" type="button" role="tab" aria-controls="popularProducts" aria-selected="false" @click="()=>selectPage = '熱銷單品'"><i class="bi bi-fire"></i> 熱銷單品</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link px-2 px-lg-3" :class="{'active': pageStatus === '特價商品'}" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false" @click="()=>selectPage = '特價商品'"><i class="bi bi-percent "></i> 特價商品</button>
-        </li>
-      </ul>
+    <div class="my-7">
+      <!--  bg-lightPink -->
+      <section class=" bg-lightPink mb-4 py-4 px-lg-5" style="overflow-x: hidden;">
+          <div class="container">
+            <h3 class="text-center fw-bold py-3 text-red">材料種類</h3>
+
+            <div class="categorySelector mx-lg-10 list-unstyled d-flex justify-content-evenly">
+              <button style="background-color: white;" class="text-red rounded-circle d-flex flex-column align-items-center justify-content-center border border-red" :class="{'text-white': pageStatus === '全部', 'fw-bold': pageStatus === '全部', 'border-red': pageStatus === '全部','bg-red': pageStatus === '全部'}"  type="button" @click="()=>selectPage = '全部'"><span class="material-icons-outlined fs-1 mb-lg-2 mb-1 mt-1 mt-lg-0">apps</span>全部</button>
+              <button style="background-color: white;" class="text-red  rounded-circle d-flex flex-column align-items-center justify-content-center border border-red" :class="{'text-white': pageStatus === '食材組合包', 'fw-bold': pageStatus === '食材組合包', 'border-red': pageStatus === '食材組合包','bg-red': pageStatus === '食材組合包'}" type="button"  @click="()=>selectPage = '食材組合包'"><i class="bi bi-bag-check-fill fs-3 mb-lg-2"></i> 食材組合包</button>
+              <button style="background-color: white;" class="text-red  rounded-circle d-flex flex-column align-items-center justify-content-center border border-red" :class="{'text-white': pageStatus === '熱銷單品', 'fw-bold': pageStatus === '熱銷單品', 'border-red': pageStatus === '熱銷單品','bg-red': pageStatus === '熱銷單品'}" type="button" @click="()=>selectPage = '熱銷單品'"><i class="bi bi-fire fs-3 mb-lg-2"></i> 熱銷單品</button>
+              <button style="background-color: white;" class="text-red  rounded-circle d-flex flex-column align-items-center justify-content-center border border-red" :class="{'text-white': pageStatus === '特價商品', 'fw-bold': pageStatus === '特價商品', 'border-red': pageStatus === '特價商品','bg-red': pageStatus === '特價商品'}" type="button" @click="()=>selectPage = '特價商品'">
+                <i class="bi bi-percent fs-3 mb-lg-2"></i>
+                特價商品</button>
+            </div>
+
+          </div>
+        </section>
       <!-- 搜尋 -->
       <div class="d-none d-lg-block container selectProduct pt-4">
         <div class="input-group">
@@ -292,7 +293,7 @@ export default {
         <div class="row g-0" id="myGroup">
           <div class="col-2">
             <div ref="priceOrRateCollapse" class="collapse">
-              <div class="card card-body border-0">
+              <div class="card card-body border-0" style="border: 0px !important;">
                 <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
                   <input type="radio" class="btn-check" value="價格" name="priceOrRate" id="selectprice" autocomplete="off"  v-model="priceOrRate">
                   <label class="btn btn-outline-red " for="selectprice">價格</label>
@@ -304,7 +305,7 @@ export default {
           </div>
           <div class="col-2">
             <div ref="highOrLowCollapse" class="collapse">
-              <div class="card card-body border-0">
+              <div class="card card-body border-0" style="border: 0px !important;">
                 <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
                   <input type="radio" class="btn-check" value="不拘" name="highOrLow" id="noDifference" autocomplete="off" checked="" v-model="highOrLow">
                   <label class="btn btn-outline-red" for="noDifference">不拘</label>
@@ -320,19 +321,25 @@ export default {
       </div>
       <!-- 產品畫面 -->
       <div class="container mt-4">
+           <!-- 1. 取消所有 border-radius: 20px; -->
+                  <!-- 2. 卡片、圖片 border-radius: 0  -->
+                  <!-- 3. 卡片取消  border-0 加入 border: 1px solid transparent; -->
+                  <!-- 4. footer改成 padding-top: 230px; 食譜、材料 card-text 加入 mb-0 card-footer pt-lg-3 -->
+                  <!-- 折價 取消 border rounded  之後可考慮要不要加 shadow-->
+                  <!-- 折價手機 fs 改成 10  font-size: 10px; -->
         <div v-if="filterProducts.length && !loading" class="row row-cols-lg-4 row-cols-2 gy-4">
           <div class="col text-decoration-none" v-for="product in this.$refs.pagination.pageProducts" :key="product.id">
-            <div class="card position-relative border-0 bg-transparent" style="border-radius: 20px;">
-              <div class="cardImg" style="border-radius: 20px;">
-                <RouterLink :to="`/products/${product.id}`" class="enlargeImg">
-                  <img :src="product.imgUrl" class="card-img" height="220" style="border-radius: 20px; object-fit: cover;  max-width: 100%; max-height: 100%;" alt="">
+            <div class="card position-relative bg-transparent" style="border: 1px solid transparent; border-radius: 0;">
+              <div class="cardImg">
+                <RouterLink :to="`/products/${product.id}`" class="enlargeImg border-0">
+                  <img :src="product.imgUrl" class="card-img" height="220" style=" object-fit: cover;  max-width: 100%; max-height: 100%; border-radius: 0;" alt="">
                 </RouterLink>
               </div>
-              <h5 class="card-text">
+              <h5 class="card-text mb-0">
                 <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2" @click="()=>addBookmark(product)">
                   <img src="../../assets/images/image5.png">
                 </button>
-                <span v-if="product.isCheaper" style="pointer-events: none; " class="d-flex flex-column align-items-center text-white p-2 bg-red border position-absolute top-0 start-0 rounded">
+                <span v-if="product.isCheaper" style="pointer-events: none;" class="d-flex flex-column align-items-center text-white p-2 bg-red  position-absolute top-0 start-0">
                   {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                 </span>
                 <!-- 先轉成 string 再取得字串第一個字元 .charAt(0) -->
@@ -345,7 +352,7 @@ export default {
                   <img src="../../assets/images/icon-cart.png"  alt="" class="rounded-circle shadow-sm">
                 </button>
               </h5>
-              <RouterLink :to="`/products/${product.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown">
+              <RouterLink :to="`/products/${product.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown pt-lg-3">
                 <h5 class="fw-bold cardTextTitle">{{product.title}}</h5>
                 <div class="d-flex align-items-lg-center cardTextPrice" :class="{'align-items-end': product.isCheaper, 'align-items-center': !product.isCheaper}">
                   <div class="">

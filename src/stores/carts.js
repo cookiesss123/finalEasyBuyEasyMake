@@ -473,9 +473,6 @@ const cartStore = defineStore('cart', {
           onValue(dataRef, snapshot => {
             this.user = snapshot.val()
             console.log(this.user, '讀取的資料')
-            if (this.user.admin) {
-              console.log('管理者登場')
-            }
           })
         } else {
           // User is signed out

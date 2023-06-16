@@ -56,7 +56,7 @@ export default {
             <div class="col">
                 <div class="row">
                     <div class="col-12" v-for="(item, index) in cartItems" :key="index + 756345">
-                        <div class="card mb-3 border-0">
+                        <div class="card mb-3" style="border: none !important;">
                             <div class="row g-0">
                             <RouterLink :to="`/products/${item.product.id}`" class="col-4">
                                 <img :src="item.product.imgUrl" class="img-fluid rounded-start w-100" style="object-fit: cover; height: 150px;">
@@ -81,7 +81,7 @@ export default {
                         <hr>
                     </div>
                     <div class="col-12">
-                        <div class="card border-0">
+                        <div class="card "  style="border: none !important;">
                             <div class="card-body">
                                 <table class="table table-borderless">
                                     <thead>
@@ -114,7 +114,7 @@ export default {
                         </div>
                     </div>
                     <div class="col-12">
-                        <RouterLink to="/products" class="btn btn-outline-red mb-4 ms-3"><i class="bi bi-arrow-left"></i> 繼續選購</RouterLink>
+                        <RouterLink to="/products" class="rounded-0 hvr-sweep-to-left btn mb-4 ms-3 text-red border-red"><i class="bi bi-arrow-left"></i> 繼續選購</RouterLink>
                     </div>
                 </div>
             </div>
@@ -201,4 +201,10 @@ export default {
     </div>
 </template>
 <style>
+.hvr-sweep-to-left:hover{
+    color: white !important;
+}
+  .hvr-sweep-to-left::before {
+    background: #d04740;
+  }
 </style>

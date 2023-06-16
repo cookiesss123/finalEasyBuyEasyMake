@@ -349,7 +349,7 @@ export default {
         </div>
       </section>
 
-      <section class="bg-lightYellow my-5">
+      <section class="bg-lightPink my-5">
         <div class="container py-5 ">
           <h3>
             <span class="material-icons-outlined fs-3 ">menu_book</span>

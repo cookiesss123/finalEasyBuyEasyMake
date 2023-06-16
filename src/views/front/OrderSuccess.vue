@@ -67,12 +67,12 @@ export default {
             <div class="row">
             <h1 class="h4 text-center text-white w-100 bg-red py-2">恭喜您! 訂單建立完成</h1>
             <div class="col-12 d-flex align-items-center my-4">
-                <span class="">會員可到 <RouterLink to="/member" class="link-orange">會員專區</RouterLink> 查看訂單處理狀況</span>
+                <span class="">會員可到 <RouterLink to="/member" class="link-red">會員專區</RouterLink> 查看訂單處理狀況</span>
                 <span class="ms-auto"><RouterLink to="/products" class="btn btn-sm btn-red">繼續購物</RouterLink></span>
             </div>
-            <p class="mb-2">訂單建立時間：{{ new Date(myOrder.creatAt).toLocaleDateString() }}</p>
+            <p class="mb-2">訂單建立時間：{{ new Date(myOrder.creatAt).toLocaleDateString() }} {{ new Date(myOrder.creatAt).getHours() }}:{{ new Date(myOrder.creatAt).getMinutes() }} </p>
             <div class="col-12" v-for="(item, index) in myOrder.cart.items" :key="index + 756345">
-                <div class="card mb-3 border-0">
+                <div class="card mb-3" style="border: none !important;">
                     <div class="row g-0">
                     <div class="col-4">
                         <img :src="item.product.imgUrl" class="img-fluid rounded-start" style="object-fit: cover;  width: 200px; height: 100px;">
@@ -101,7 +101,7 @@ export default {
                 <hr>
             </div>
             <div class="col-12">
-                <div class="card border-0">
+                <div class="card" style="border: none !important;">
                     <div class="card-body">
                         <table class="table table-borderless">
                             <thead>
@@ -129,7 +129,7 @@ export default {
                 </div>
             </div>
             <div class="col-12">
-                <div class="card border-0">
+                <div class="card" style="border: none !important;">
                     <div class="card-body">
                         <table class="table table-borderless text-red">
                             <thead>

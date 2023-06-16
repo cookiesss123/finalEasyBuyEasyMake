@@ -232,67 +232,47 @@ export default {
 <template>
     <div class="my-7">
         <!-- Loading -->
-
-        <section class="bg-lightYellow mb-4 py-4 px-lg-5" style="overflow-x: hidden;">
-          <div class="container">
-            <div class="selectProductCategory row row-cols-lg-6 row-cols-3 ">
-            <button type="button" class="col d-flex flex-column align-items-center btn border-0" :class="{'selectedImg': selectCategory ==='全部'}" @click="() => selectCategory ='全部'">
-              <div class="cardImg mb-2" :class="{'opacity-100': selectItem === '全部'}">
-                <div class="enlargeImg rounded-circle " :class="{'selectImgBorder':selectItem === '全部'}" >
-                  <img v-if="selectCategory !=='全部'" src="../../assets/images/gettyimages-1268940871.jpg" alt="" class="rounded-circle"  style="object-fit: cover;" >
-                  <img v-else-if="selectCategory ==='全部'" src="../../assets/images/gettyimages-1268940871.jpg" alt="" class="rounded-circle"  style="object-fit: cover; transform:scale(1.2,1.2);" >
-                </div>
-              </div>
-              <span class="text-secondary" :class="{'text-red':selectItem === '全部' , 'fw-bold':selectItem === '全部'}">全部</span>
-              <!-- 一開始選擇active不會在 全部 => 不曉得為甚麼不能用 selectItem 初始得不到 必須用  selectCategory 才能得到 -->
+        <!-- bg-lightYellow -->
+       <!-- 一開始選擇active不會在 全部 => 不曉得為甚麼不能用 selectItem 初始得不到 必須用  selectCategory 才能得到 -->
               <!-- selectItem 是搜尋會影響 selectCategory是直接按 -->
-            </button>
-            <button type="button" class="col d-flex flex-column align-items-center btn border-0" :class="{'selectedImg': selectCategory ==='台式甜點'}" @click="() => selectCategory ='台式甜點'">
-              <div class="cardImg mb-2" :class="{'opacity-100': selectItem === '台式甜點'}">
-                <div class="enlargeImg rounded-circle " :class="{'selectImgBorder':selectItem === '台式甜點'}" >
-                  <img v-if="selectCategory !=='台式甜點'" src="../../assets/images/IMGP0051.jpg" alt="" class="rounded-circle"  style="object-fit: cover;" >
-                  <img v-else-if="selectCategory ==='台式甜點'" src="../../assets/images/IMGP0051.jpg" alt="" class="rounded-circle"  style="object-fit: cover; transform:scale(1.2,1.2);" >
-                </div>
-              </div>
-              <span class="text-secondary" :class="{'text-red':selectItem === '台式甜點', 'fw-bold':selectItem === '台式甜點'}" >台式甜點</span>
-            </button>
-            <button type="button" class="col d-flex flex-column align-items-center btn border-0" :class="{'selectedImg': selectCategory ==='法式甜點'}" @click="() => selectCategory ='法式甜點'">
-              <div class="cardImg mb-2" :class="{'opacity-100': selectItem === '法式甜點'}">
-                <div class="enlargeImg rounded-circle " :class="{'selectImgBorder':selectItem === '法式甜點'}" >
-                  <img v-if="selectCategory !=='法式甜點'" src="../../assets/images/popularimage4.png" alt="" class="rounded-circle"  style="object-fit: cover;" >
-                  <img v-else-if="selectCategory ==='法式甜點'" src="../../assets/images/popularimage4.png" alt="" class="rounded-circle"  style="object-fit: cover; transform:scale(1.2,1.2);" >
-                </div>
-              </div>
-              <span class="text-secondary" :class="{'text-red':selectItem === '法式甜點', 'fw-bold':selectItem === '法式甜點'}" >法式甜點</span>
-            </button>
-            <button type="button" class="col d-flex flex-column align-items-center btn border-0" :class="{'selectedImg': selectCategory ==='美式甜點'}" @click="() => selectCategory ='美式甜點'">
-              <div class="cardImg mb-2" :class="{'opacity-100': selectItem === '美式甜點'}">
-                <div class="enlargeImg rounded-circle " :class="{'selectImgBorder':selectItem === '美式甜點'}" >
-                  <img v-if="selectCategory !=='美式甜點'" src="../../assets/images/photo-1533910534207-90f31029a78e.jpg" alt="" class="rounded-circle"  style="object-fit: cover;" >
-                  <img v-else-if="selectCategory ==='美式甜點'" src="../../assets/images/photo-1533910534207-90f31029a78e.jpg" alt="" class="rounded-circle"  style="object-fit: cover; transform:scale(1.2,1.2);" >
-                </div>
-              </div>
-              <span class="text-secondary" :class="{'text-red':selectItem === '美式甜點', 'fw-bold':selectItem === '美式甜點'}" >美式甜點</span>
-            </button>
-            <button type="button" class="col d-flex flex-column align-items-center btn border-0" :class="{'selectedImg': selectCategory ==='日式甜點'}" @click="() => selectCategory ='日式甜點'">
-              <div class="cardImg mb-2" :class="{'opacity-100': selectItem === '日式甜點'}">
-                <div class="enlargeImg rounded-circle " :class="{'selectImgBorder':selectItem === '日式甜點'}" >
-                  <img v-if="selectCategory !=='日式甜點'" src="../../assets/images/421Cv1xH8BYP44T9V8aY241R2UYjhTsiYa7giw6d.jpeg" alt="" class="rounded-circle"  style="object-fit: cover;" >
-                  <img v-else-if="selectCategory ==='日式甜點'" src="../../assets/images/421Cv1xH8BYP44T9V8aY241R2UYjhTsiYa7giw6d.jpeg" alt="" class="rounded-circle"  style="object-fit: cover; transform:scale(1.2,1.2);" >
-                </div>
-              </div>
-              <span class="text-secondary" :class="{'text-red':selectItem === '日式甜點', 'fw-bold':selectItem === '日式甜點'}" >日式甜點</span>
-            </button>
-            <button type="button" class="col d-flex flex-column align-items-center btn border-0" :class="{'selectedImg': selectCategory ==='義式甜點'}" @click="() => selectCategory ='義式甜點'">
-              <div class="cardImg mb-2" :class="{'opacity-100': selectItem === '義式甜點'}">
-                <div class="enlargeImg rounded-circle " :class="{'selectImgBorder':selectItem === '義式甜點'}" >
-                  <img v-if="selectCategory !=='義式甜點'" src="../../assets/images/pastiera2.jpg" alt="" class="rounded-circle"  style="object-fit: cover;" >
-                  <img v-else-if="selectCategory ==='義式甜點'" src="../../assets/images/pastiera2.jpg" alt="" class="rounded-circle"  style="object-fit: cover; transform:scale(1.2,1.2);" >
-                </div>
-              </div>
-              <span class="text-secondary" :class="{'text-red':selectItem === '義式甜點', 'fw-bold':selectItem === '義式甜點'}" >義式甜點</span>
-            </button>
-          </div>
+        <section class="bg-lightPink mb-4 py-4 px-lg-5" style="overflow-x: hidden; background-position: center; background-size: cover;">
+          <div class="container">
+            <h3 class="text-center fw-bold text-red py-3">甜點種類</h3>
+            <ul class="categorySelector row row-cols-3 gy-4 row-cols-lg-6 list-unstyled">
+              <li class="col d-flex justify-content-center ">
+                <button style=" background-color: white;" class="text-red rounded-circle d-flex flex-column align-items-center justify-content-center border border-red" :class="{'text-white': selectItem === '全部', 'fw-bold': selectItem === '全部', 'border-red': selectItem === '全部','bg-red': selectItem === '全部'}"  type="button" @click="()=>selectCategory = '全部'"><span class="material-icons-outlined fs-1 mb-2">apps</span>全部</button>
+              </li>
+              <li class="col d-flex justify-content-center ">
+                <button style=" background-color: white;" class="text-red  rounded-circle d-flex flex-column align-items-center justify-content-center border border-red" :class="{'text-white': selectItem === '台式甜點', 'fw-bold': selectItem === '台式甜點', 'border-red': selectItem === '台式甜點','bg-red': selectItem === '台式甜點'}" type="button"  @click="()=>selectCategory = '台式甜點'">
+                <img v-if="selectItem !== '台式甜點'" src="../../assets/images/mooncake2.png"  class="mb-2" alt="">
+                <img v-else-if="selectItem === '台式甜點'" src="../../assets/images/moocake1.png"  class="mb-2" alt="">
+                台式甜點</button>
+              </li>
+              <li class="col d-flex justify-content-center ">
+                <button style=" background-color: white;" class="text-red  rounded-circle d-flex flex-column align-items-center justify-content-center border border-red" :class="{'text-white': selectItem === '法式甜點', 'fw-bold': selectItem === '法式甜點', 'border-red': selectItem === '法式甜點','bg-red': selectItem === '法式甜點'}" type="button" @click="()=>selectCategory = '法式甜點'">
+                <img v-if="selectItem !== '法式甜點'" src="../../assets/images/macaroon.png"  class="mb-2" alt="">
+                <img v-else-if="selectItem === '法式甜點'" src="../../assets/images/macaroon1.png"  class="mb-2" alt="">
+                法式甜點</button>
+              </li>
+              <li class="col d-flex justify-content-center">
+                <button style=" background-color: white;" class="text-red  rounded-circle d-flex flex-column align-items-center justify-content-center border border-red" :class="{'text-white': selectItem === '美式甜點', 'fw-bold': selectItem === '美式甜點', 'border-red': selectItem === '美式甜點','bg-red': selectItem === '美式甜點'}" type="button" @click="()=>selectCategory = '美式甜點'">
+                <img v-if="selectItem !== '美式甜點'" src="../../assets/images/donut1.png"  class="mb-2" alt="">
+                <img v-else-if="selectItem === '美式甜點'" src="../../assets/images/donut2.png"  class="mb-2" alt="">
+              美式甜點</button>
+              </li>
+             <li class="col d-flex justify-content-center">
+              <button style=" background-color: white;" class="text-red  rounded-circle d-flex flex-column align-items-center justify-content-center border border-red" :class="{'text-white': selectItem === '日式甜點', 'fw-bold': selectItem === '日式甜點', 'border-red': selectItem === '日式甜點','bg-red': selectItem === '日式甜點'}" type="button" @click="()=>selectCategory = '日式甜點'">
+                <img v-if="selectItem !== '日式甜點'" src="../../assets/images/mochi1.png"  class="mb-2" alt="">
+                <img v-else-if="selectItem === '日式甜點'" src="../../assets/images/mochi2.png"  class="mb-2" alt="">
+              日式甜點</button>
+             </li>
+             <li class="col d-flex justify-content-center">
+              <button style=" background-color: white;" class="text-red  rounded-circle d-flex flex-column align-items-center justify-content-center border border-red" :class="{'text-white': selectItem === '義式甜點', 'fw-bold': selectItem === '義式甜點', 'border-red': selectItem === '義式甜點','bg-red': selectItem === '義式甜點'}" type="button" @click="()=>selectCategory = '義式甜點'">
+                <img v-if="selectItem !== '義式甜點'" src="../../assets/images/tiramisu2.png"  class="mb-2" alt="">
+                <img v-else-if="selectItem === '義式甜點'" src="../../assets/images/tiramisu1.png"  class="mb-2" alt="">
+              義式甜點</button>
+             </li>
+            </ul>
           </div>
         </section>
         <section class="d-none d-lg-block container selectProduct my-5">
@@ -309,7 +289,7 @@ export default {
           <div class="row g-0" id="myGroup">
             <div class="col-2">
               <div ref="costOrRateCollapse" class="collapse">
-                <div class="card card-body border-0">
+                <div class="card card-body border-0" style="border: 0px !important;">
                   <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
                     <input type="radio" class="btn-check" value="成本" name="priceOrRate" id="selectprice" autocomplete="off"  v-model="priceOrRate">
                     <label class="btn btn-outline-red " for="selectprice">成本</label>
@@ -321,7 +301,7 @@ export default {
             </div>
             <div class="col-2">
               <div ref="highOrLowCollapse" class="collapse">
-                <div class="card card-body border-0">
+                <div class="card card-body border-0" style="border: 0px !important;">
                   <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
                     <input type="radio" class="btn-check" value="不拘" name="highOrLow" id="noDifference" autocomplete="off" checked="" v-model="highOrLow">
                     <label class="btn btn-outline-red" for="noDifference">不拘</label>
@@ -338,15 +318,16 @@ export default {
 
         <section class="container">
           <!-- 多了這個判斷 filterRecipes.length 至少要有一個存在 -->
+
           <div v-if="filterRecipes.length" class="row row-cols-lg-4 row-cols-2 gy-4">
             <div class="col text-decoration-none" v-for="recipe in this.$refs.pagination.pageProducts" :key="recipe.id">
-              <div class="card position-relative border-0 bg-transparent" style="border-radius: 20px;">
-                <div class="cardImg" style="border-radius: 20px;">
+              <div class="card position-relative bg-transparent" style="border-radius: 0; border: 1px solid transparent;">
+                <div class="cardImg" style="">
                   <RouterLink :to="`/recipes/${recipe.id}`" class="enlargeImg">
-                    <img :src="recipe.image" class="card-img" style="border-radius: 20px; object-fit: cover;  max-width: 100%; max-height: 100%;" alt="">
+                    <img :src="recipe.image" class="card-img" style=" object-fit: cover;  max-width: 100%; max-height: 100%; border-radius: 0;" alt="">
                   </RouterLink>
                 </div>
-                <h5 class="card-text">
+                <h5 class="card-text mb-0">
                     <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2" @click="()=>addBookmark(recipe)">
                       <img src="../../assets/images/image5.png">
                     </button>
@@ -358,7 +339,7 @@ export default {
                     </div>
                     <span style="pointer-events: none; " class="cardTextCategory badge rounded-pill bg-red mt-4 border-0 m-3 position-absolute start-0">{{ recipe.category }}</span>
                 </h5>
-                <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown">
+                <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent border-0 pt-lg-3 text-decoration-none link-darkBrown">
                   <h5 class="d-flex justify-content-between align-items-center fw-bold">
                     <span class="cardTextTitle">{{recipe.title}}</span>
                   </h5>
@@ -390,48 +371,8 @@ export default {
     </div>
 </template>
 <style>
+/* 改 placeholder 顏色 */
  ::placeholder {
-    color: #f39691 !important;
+    /* color: #f39691 !important; */
   }
-  #myTab .nav-item .active {
-    color: #d04740;
-  }
-  /* #be7106 這顏色很好看 */
-  .selectProductCategory .btn:hover span{
-    color: #d04740 !important;
-    font-weight: bold;
-  }
-  /* 不然會移動 */
-  .selectProductCategory .btn:hover .enlargeImg{
-    border: 2px solid #d04740;
-  }
-  .selectImgBorder{
-    border: 2px solid #d04740 !important;
-  }
-  .selectProductCategory button .cardImg{
-  opacity: 0.9;
-  overflow:hidden;
-}
-.selectProductCategory button:hover .cardImg{
-  opacity: 1;
-}
-.enlargeImg{
-  width: 100%;
-  overflow:hidden;
-  border: 2px solid transparent;
-}
-/* 未選定 縮小 到 放大 */
-.selectProductCategory button .cardImg img{
-  transform:scale(1,1);
-  transition: all .3s ease-out;
-}
-.selectProductCategory button:hover .enlargeImg img{
-  transform:scale(1.2,1.2);
-}
-
-/* 已選定 不能點擊 */
-.selectedImg{
-  pointer-events: none !important;
-}
-
 </style>

@@ -320,12 +320,14 @@ $theme-colors: (
   "dark":       $dark,
   "yellow":#F5AE4C, // 暫無
   "orange": #eb8b07, // redBrown #b15c17 原色 custom #c54e41
-  "lightYellow": #FBF8F3, // custom 背景
   "darkBrown":#493A25, // custom 文字顏色
   "red":#d04740, // custom 
   "lightBrown": #C0AB8E, // custom 不行當背景
   "lightBrownGray": #AFA89F, // custom
-  "lightGray": #d3ccc1, // custom 淺灰 用於 0
+  "lightGray": #d3ccc1, // custom 淺灰 用於 0 fff1f0 
+  "lightYellow": #faf3e6, // custom 背景 #FBF8F3
+  "lightPink": #fff1f0,
+  "pink": #fdb1ab
 ) !default;
 // scss-docs-end theme-colors-map
 

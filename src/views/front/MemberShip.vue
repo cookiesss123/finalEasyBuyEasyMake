@@ -223,7 +223,7 @@ export default {
 <template>
     <div class="mt-10">
       <LoadingModal ref="loadingModal" ></LoadingModal>
-      <section class="bg-lightYellow py-5">
+      <section class="bg-lightPink py-5">
         <div class="container">
           <h2 class="h3 fw-bold">會員資料</h2>
         <div class="row gy-5 my-4 row-cols-1 row-cols-lg-2  align-items-center">
@@ -238,7 +238,6 @@ export default {
                 <button type="button" class="btn btn-red" @click="selectFile">上傳本地圖片</button>
               </div>
           </div>
-          <!-- 新 -->
           <div class="col-12 col-lg-4">
             <!-- 暱稱 -->
             <div class="border-start border-red d-flex align-items-center">
@@ -282,7 +281,6 @@ export default {
               <button type="button" class="btn btn-sm btn-red ms-auto" @click="linkToLottery">立即抽獎</button>
             </div>
           </div>
-
         </div>
         </div>
       </section>
@@ -348,7 +346,7 @@ export default {
             <!-- 確保渲染前資料有填入 -->
             <div v-if="filterOrders.length">
               <div class="col" v-for="order in this.$refs.pagination.pageProducts" :key="order.creatAt">
-                <span>訂單建立時間：{{ new Date(order.creatAt).toLocaleDateString() }} </span><span class="ms-4">訂單編號：{{order.id}}</span>
+                <span>訂單建立時間：{{ new Date(order.creatAt).toLocaleDateString() }}  {{ new Date(order.creatAt).getHours() }}:{{ new Date(order.creatAt).getMinutes() }} </span><span class="ms-4">訂單編號：{{order.id}}</span>
                 <div class="row row-cols-lg-6 row-cols-2 align-items-center mt-2 position-relative">
                   <div class="col" v-for="(item, index) in order.cart.items" :key="item + 6603">
                     <!-- 只顯示 長度 4 以內 v-if="order.cart.items.length < 4" 前面不行會整個隱藏 => 應該說只顯示 index 到 3 -->

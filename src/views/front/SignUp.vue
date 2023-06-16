@@ -11,7 +11,7 @@
                 </nav>
                 <div class="row mt-3 gx-3 rounded py-3">
                     <div class="col d-none d-lg-block">
-                        <div class="card h-100 border-0 bg-lightYellow mt-9" style="border-radius: 30px;">
+                        <div class="card h-100 border-0 bg-lightYellow mt-9" style="border-radius: 30px; border: 0px !important;">
                             <img src="../../assets/images/hero-mobile.png" class="img-fluid card-img-top " alt="" style="border-radius: 30px;">
                             <div class="card-img-overlay" style="top:450px">
                                 <h2 class="text-darkBrown text-center mb-4 h1">
@@ -27,7 +27,7 @@
                     </div>
                     <div class="col">
                         <!-- border- -->
-                        <div class="signup-card card h-100 " style="border-radius: 20px; padding: 0 !important;">
+                        <div class="signup-card card h-100 " style="border-radius: 20px; padding: 0 !important; border: 0px !important;">
                             <div class="card-body p-0">
                                 <!-- border border-dark -->
                                 <div class="card-header bg-white py-0 "  style="border-radius: 20px 20px 0px 0px;">
@@ -114,13 +114,48 @@
                                 </VForm>
                             </div>
                             <!-- 手機6 電腦 8-->
-                            <div class="loginSignupImg card-footer d-flex justify-content-evenly bg-white border-0 py-4" style="border-radius: 30px;">
-                                <img src="../../assets/images/1410887.png">
-                                <img src="../../assets/images/2674777.png" >
-                                <img src="../../assets/images/5887767.png" >
-                                <img src="../../assets/images/8734574.png" >
-                                <img src="../../assets/images/726917.png" >
-                                <img src="../../assets/images/4771632.png" >
+                              <!-- 要循環只能 3 個 -->
+                            <div class="card-footer border-0 mb-4" style="border-radius: 20px; background-color: white !important; height: 90px;">
+                                <swiper :slides-per-view="3" :space-between="10"
+                                :loop="true"
+                                :modules="modules"
+                                :allowTouchMove="false"
+                                :autoplay="{
+                                delay: 500,
+                                disableOnInteraction: false,
+                            }"
+                                class="loginSignupSwiper"
+                                >
+                                <!-- 桌機 600px 手機 300px  圖 桌機 50 手機 30 -->
+                                <swiper-slide class="d-flex align-items-center">
+                                    <img src="../../assets/images/1410887.png" style="width: 50px; height: 50px" class="mx-auto">
+                                    <i class="bi bi-dot text-orange fs-1"></i>
+                                </swiper-slide>
+                                <swiper-slide class="d-flex align-items-center">
+                                    <img src="../../assets/images/2674777.png" style="width: 50px; height: 50px" class="mx-auto">
+                                    <i class="bi bi-dot text-orange fs-1"></i>
+                                </swiper-slide>
+                                <swiper-slide class="d-flex align-items-center">
+                                    <img class="mx-auto" src="../../assets/images/5887767.png" style="width: 50px; height: 50px">
+                                    <i class="bi bi-dot text-orange fs-1"></i>
+                                </swiper-slide>
+                                <swiper-slide class="d-flex align-items-center">
+                                    <img class="mx-auto" src="../../assets/images/8734574.png" style="width: 50px; height: 50px">
+                                    <i class="bi bi-dot text-orange fs-1"></i>
+                                </swiper-slide>
+                                <swiper-slide class="d-flex align-items-center">
+                                    <img class="mx-auto" src="../../assets/images/726917.png" style="width: 50px; height: 50px">
+                                    <i class="bi bi-dot text-orange fs-1"></i>
+                                </swiper-slide>
+                                <swiper-slide class="d-flex align-items-center">
+                                    <img class="mx-auto" src="../../assets/images/4771632.png" style="width: 50px; height: 50px">
+                                    <i class="bi bi-dot text-orange fs-1"></i>
+                                </swiper-slide>
+                                <swiper-slide class="d-flex align-items-center">
+                                    <img class="mx-auto" src="../../assets/images/biscuit.png" style="width: 50px; height: 50px">
+                                    <i class="bi bi-dot text-orange fs-1"></i>
+                                </swiper-slide>
+                                </swiper>
                             </div>
                         </div>
                     </div>
@@ -133,9 +168,24 @@ import { RouterLink } from 'vue-router'
 import { db, auth } from '../../firebase/db'
 import { ref, set } from 'firebase/database'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Navigation, Pagination, Autoplay } from 'swiper'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 export default {
   data () {
     return {
+      modules: [Navigation, Pagination, Autoplay],
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev'
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        bulletClass: 'my-bullet-class',
+        bulletActiveClass: 'my-bullet-active-class'
+      },
       user: {
         nickName: '',
         email: '',
@@ -148,7 +198,9 @@ export default {
     }
   },
   components: {
-    RouterLink
+    RouterLink,
+    Swiper,
+    SwiperSlide
   },
   methods: {
     // 註冊

@@ -281,7 +281,7 @@ export default {
 </div>
 </section>
 
-<section class="bg-lightYellow my-5" style="overflow-x: hidden;">
+<section class="bg-lightPink my-5" style="overflow-x: hidden;">
   <div class="container py-5">
     <div class="row row-cols-lg-2 row-cols-1 g-5">
       <div class="col">

@@ -1,6 +1,6 @@
 <template>
-    <div class="container my-10">
-      <ul class="navTitle nav nav-tabs" >
+    <div class=" my-10">
+      <ul class="navTitle nav nav-tabs container" >
         <li class="nav-item" @click="()=>tabName = '優惠折扣'">
           <button class="nav-link" :class="{'active': tabName === '優惠折扣', 'link-red':tabName === '優惠折扣'}"  type="button" >優惠折扣</button>
         </li>
@@ -8,9 +8,10 @@
           <button class="nav-link" :class="{'active': tabName === '抽獎回饋', 'link-red':tabName === '抽獎回饋'}" type="button">抽獎回饋</button>
         </li>
       </ul>
-      <section v-if="tabName === '優惠折扣'" class="text-red">
-        <h3 class="text-center py-3 py-lg-5 fw-bold bg-lightYellow mt-3">本月優惠</h3>
-        <div v-if="!loading" class="row row-cols-lg-4 g-4 py-3 text-darkBrown">
+      <section v-if="tabName === '優惠折扣'" class="text-red ">
+        <h3 class="text-center py-3 py-lg-5 fw-bold bg-lightPink mt-3"><i class="bi bi-currency-dollar"></i> 本月優惠</h3>
+        <div class="container">
+          <div v-if="!loading" class="row row-cols-lg-4 g-4 py-3 text-darkBrown">
           <div class="col" v-for="(coupon, index) in coupons" :key="index">
               <div class="card">
                   <div class="enlargeImg w-100 rounded">
@@ -29,9 +30,12 @@
           </div>
         </div>
         <LoadingComponent v-if="loading"></LoadingComponent>
+        </div>
+
       </section>
-      <section  v-else-if="tabName === '抽獎回饋'" >
-        <div class="py-3 text-darkBrown d-flex flex-column">
+      <section  v-else-if="tabName === '抽獎回饋'">
+        <div class="container">
+          <div class="py-3 text-darkBrown d-flex flex-column">
           <p class="">活動時間：{{ new Date(lottery.startDate).toLocaleDateString().split(' ')[0] }} ~ {{ new Date(lottery.dueDate).toLocaleString().split(' ')[0] }}</p>
 
           <p v-if="uid" :class="{'text-danger':user.lotteryTicket === 0}">剩餘抽獎券：{{ user.lotteryTicket }}</p>
@@ -43,7 +47,7 @@
             <p class="mb-0">本月指定抽獎食譜：</p>
             <div class="row row-cols-lg-3 row-cols-1 pt-4">
               <div v-for="(item, index) in drewProducts" :key="item" class="border border-red col">
-                <h3 class="text-center fw-bold my-3">{{ item[0] }}</h3>
+                <h4 class="text-center fw-bold my-3">{{ item[0] }}</h4>
                 <div class="row">
                   <div class="d-flex flex-column align-items-center position-relative col-4"
                   v-for="(product) in item[1]" :key="product.id">
@@ -67,13 +71,13 @@
           <!-- v-else-if="getPrize" -->
           <div v-if="lotteryResult && this.getPrize && this.getPrize.id" class="d-flex flex-column align-items-center">
             <h5 class="h3 text-center text-red fw-bold">恭喜您完成{{ getPrize.id === 1 ? '全部' : getPrize.id === 2 ? '2份' : '1份' }}食譜，獲得：</h5>
-            <div class="col-lg-6 col-12">
-                <div class="card position-relative border-0" style="border-radius: 20px;">
+            <div class="col-lg-4 col-12">
+                <div class="card position-relative" style="border-radius: 0px; border: none !important;">
                   <div class="card-header h4 fw-bold text-center mb-3 bg-white border-0" >
                     {{ getPrize.id === 1 ? '大獎' : getPrize.id === 2 ? '二獎' : '三獎' }}
                   </div>
-                  <img :src="getPrize.img" class="card-img border" style="border-radius: 20px; height:300px; object-fit: contain;" alt="">
-                  <div class="card-footer bg-transparent border-0">
+                  <img :src="getPrize.img" class="card-img border" style="border-radius: 0px; height:300px; object-fit: contain;" alt="">
+                  <div class="card-footer bg-transparent border-0" style="background-color: white !important;">
                     <h5 class="fw-bold">
                       {{ getPrize.title }}
                     </h5>
@@ -83,51 +87,51 @@
                 <p>本店會透過信箱與您聯絡獎品寄送時間，請時刻關注信件，並請留下電話、地址到@EasyMakeEasyBuy.gmail.com，感謝您的支持!<br>下期好禮更精彩，千萬別錯過!</p>
             </div>
           </div>
-          <section class="my-10">
-    <div class="container">
-      <h2 class="display-6 fw-bold d-flex align-items-center mb-4 d-flex flex-lg-row align-items-center mb-4 ">
-        <div class="d-flex align-items-center">
-          <div class="d-lg-block d-none me-4 rounded-circle text-center pt-2 position-relative" style="background-color: #FAE8D0; width: 64px; height: 64px; vertical-align: middle; font-size: 45px;">
-            本
-            <div class="position-absolute" style="background-color: #F5AE4C; width: 25px; height: 5px; top: 41px; right: 20px;">
-            </div>
+          <section class="py-10 "  data-aos="zoom-in">
+          <div class="container">
+            <h2 class="display-6 fw-bold d-flex align-items-center mb-4 d-flex flex-column-reverse flex-lg-row align-items-center mb-4 justify-content-center justify-content-lg-start">
+              <div class="d-flex align-items-center">
+                <img src="../../assets/images/title4.png" class="me-lg-4 me-2 titleImg " alt="">
+                <span class="recipeTitle">月獎品</span>
+              </div>
+              <span class="light-red mb-lg-0 mb-2 h6 ms-2 speakerText d-flex align-items-center">
+                <img src="../../assets/images/icon-speaker.png" class="speaker" alt="">
+                超值大獎一次帶回!
+              </span>
+            </h2>
+
           </div>
-          <div class="d-lg-none me-2 rounded-circle text-center pt-1 position-relative" style="background-color: #FAE8D0; width: 36px; height: 36px; font-size: 24px;">
-            本
-            <div class="position-absolute" style="background-color: #F5AE4C; width: 12px; height: 3px; top: 21px; right: 12px;">
+          <!-- 抽獎 -->
+
+            <div class="container">
+            <div class="prizes row row-cols-lg-3 row-cols-1 gy-4 ">
+              <div class="col" v-for="prize in lottery.prizes" :key="prize.id" data-aos="flip-right">
+                <div class="card position-relative" style="border-radius: 0; border: 1px transparent solid;">
+                  <div class="card-header border-0 h4 fw-bold text-center mb-3 bg-white" >
+                    {{ prize.id === 1 ? '大獎' : prize.id === 2 ? '二獎' : '三獎' }}
+                  </div>
+                  <!-- background: linear-gradient(45deg, rgb(252, 179, 78) 20%, rgb(253,164,72), rgb(255,113,75) 90% ); -->
+                  <!--  background: linear-gradient(45deg, #f9907e 20%, #f95767, #fee0a8 90% ); -->
+                  <div class="questionMark  position-absolute d-flex" style="top: 60px;  width: 100%; height: 220px;  background: linear-gradient(90deg, #ff9a9e ,#fad0c4);">
+                    <i class="bi bi-question-lg mx-auto text-white" style="font-size: 150px;"></i>
+                  </div>
+                  <img :src="prize.img" class="card-img border bg-white" style=" height:220px; object-fit: contain; border-radius: 0;" alt="">
+                  <div class="card-footer bg-transparent border-0">
+                    <h5 class="fw-bold">
+                      {{prize.title}}
+                    </h5>
+                    <p class="text-end">價值：NT$ {{numberComma(prize.price)}}</p>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          <span class="recipeTitle">月獎品一覽</span>
-        </div>
-      </h2>
-    </div>
-    <!-- 確保有渲染成功 -->
-    <div class="container">
-      <div class="prizes row row-cols-lg-3 row-cols-1 gy-4 ">
-        <div class="col" v-for="prize in lottery.prizes" :key="prize.img">
-          <div class="card position-relative border-0" style="border-radius: 20px;">
-            <div class="card-header border-0 h4 fw-bold text-center mb-3 bg-white" >
-              {{ prize.id === 1 ? '大獎' : prize.id === 2 ? '二獎' : '三獎' }}
             </div>
-            <div class="questionMark  position-absolute d-flex bg-lightYellow" style="top: 60px;  width: 100%; height: 220px; border-radius: 20px; background: linear-gradient(45deg, rgb(252, 179, 78) 20%, rgb(253,164,72), rgb(255,113,75) 90% );">
-              <i class="bi bi-question-lg mx-auto text-white" style="font-size: 150px;"></i>
-            </div>
-            <img :src="prize.img" class="card-img border bg-white" style="border-radius: 20px; height:220px; object-fit: contain;" alt="">
-            <div class="card-footer bg-transparent border-0">
-              <h5 class="fw-bold">
-                {{prize.title}}
-              </h5>
-              <p class="text-end">價值：NT$ {{numberComma(prize.price)}}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-          </section>
+        </section>
           <h5>規則：</h5>
             <ol>
               <li v-for="rule in lottery.rules" :key="rule + 20">{{ rule }}</li>
             </ol>
+        </div>
         </div>
       </section>
     </div>

@@ -1,9 +1,16 @@
 .card .cardImg{
-  opacity: 0.9;
+  // opacity: 0.9;
   overflow:hidden;
 }
 .card:hover .cardImg{
-  opacity: 1;
+  // opacity: 1;
+}
+// 僅限 食譜、產品物件 其他盡量不要是 card 結構
+.card:hover{
+  border: 1px solid #d04740 !important;
+}
+.card:hover .card-footer{
+  background: #fff1f0 !important;
 }
 .enlargeImg{
   width: 300px;
@@ -44,12 +51,21 @@
 .card-footer .starRates{
   font-size: 10px;
 }
-
 // 產品、優惠特報頁籤標題 文字大小 
 .navTitle{
   font-size: 14px;
 }
 
+// 選擇類別：食譜、產品
+.categorySelector button{
+  width: 80px;
+  height: 80px;
+  font-size: 10px;
+}
+.categorySelector button img{
+  width: 40px;
+  height: 40px;
+}
 // 桌機
 @include media-breakpoint-up(lg) {
   // 食譜和產品的圖片
@@ -80,5 +96,17 @@
 // 產品、優惠特報頁籤標題 文字大小 
 .navTitle{
   font-size: 16px;
+}
+
+
+// 選擇類別：食譜、產品
+.categorySelector button{
+  width: 120px;
+  height: 120px;
+  font-size: 16px;
+}
+.categorySelector button img{
+  width: 50px;
+  height: 50px;
 }
 }

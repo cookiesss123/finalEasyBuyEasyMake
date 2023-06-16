@@ -60,35 +60,34 @@ export default {
         <div v-if="!loadingItem">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item "><RouterLink to="/member" href="#" class="link-orange">會員專區</RouterLink></li>
+                    <li class="breadcrumb-item "><RouterLink to="/member" href="#" class="link-red">會員專區</RouterLink></li>
                     <li class="breadcrumb-item ">訂單狀況</li>
                     <li class="breadcrumb-item active " aria-current="page">{{ order.deliveryStatus }}</li>
                 </ol>
             </nav>
-            <span>訂單建立時間：{{ new Date(order.creatAt).toLocaleDateString() }}</span>
-            <span class="ms-4">訂單編號：{{ order.id }}</span>
+            <p>訂單建立時間：{{ new Date(order.creatAt).toLocaleDateString() }} {{ new Date(order.creatAt).getHours() }}:{{ new Date(order.creatAt).getMinutes() }}</p>
+            <p class="">訂單編號：{{ order.id }}</p>
             <div class="d-flex flex-column align-items-center mt-5">
                 <!-- justify-content-between  -->
-                <section class="col-12 col-lg-10 d-flex  text-lightBrown" id="orderProcess">
+                <section class="col-12 col-lg-10 d-flex" id="orderProcess" style="color: #f6b1ac">
                     <div class="d-flex flex-column align-items-center">
                         <i class=" fs-1 bi bi-box-seam text-red"></i>
-                        <!-- -->
                         <h5 class=" fw-bold text-red"  style="white-space: nowrap" >待出貨</h5>
                     </div>
-                    <div v-if="barWidth < 33" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #C0AB8E; width: 33%;"></div>
-                    <div v-else-if="barWidth >= 33" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #815B15; width: 33%;"></div>
+                    <div v-if="barWidth < 33" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #f6b1ac; width: 33%;"></div>
+                    <div v-else-if="barWidth >= 33" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #d04740; width: 33%;"></div>
                     <div class="d-flex flex-column align-items-center">
                         <i class="bi bi-truck  fs-1" :class="{'text-red': barWidth >= 33}"></i>
                         <h5 class=" fw-bold" :class="{'text-red': barWidth >= 33}" style="white-space: nowrap">運送中</h5>
                     </div>
-                    <div v-if="barWidth < 66" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #C0AB8E; width: 33%;"></div>
-                    <div v-else-if="barWidth >= 66" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #815B15; width: 33%;"></div>
+                    <div v-if="barWidth < 66" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #f6b1ac; width: 33%;"></div>
+                    <div v-else-if="barWidth >= 66" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #d04740; width: 33%;"></div>
                     <div class="d-flex flex-column align-items-center">
                         <i class="bi bi-house-check  fs-1" :class="{'text-red': barWidth >= 66}" ></i>
                         <h5 class=" fw-bold" :class="{'text-red': barWidth >= 66}" style="white-space: nowrap">已抵達</h5>
                     </div>
-                    <div v-if="barWidth < 100" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #C0AB8E; width: 33%;"></div>
-                    <div v-else-if="barWidth === 100" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #815B15; width: 33%;"></div>
+                    <div v-if="barWidth < 100" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #f6b1ac; width: 33%;"></div>
+                    <div v-else-if="barWidth === 100" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #d04740; width: 33%;"></div>
                     <div class="d-flex flex-column align-items-center">
                         <i class="bi bi-clipboard-check  fs-1" :class="{'text-red': barWidth === 100}" ></i>
                         <h5 class=" fw-bold" :class="{'text-red': barWidth === 100}" style="white-space: nowrap">訂單完成</h5>
@@ -101,7 +100,7 @@ export default {
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-12" v-for="(item, index) in order.cart.items" :key="index + 756345">
-                                <div class="card mb-3 border-0">
+                                <div class="card mb-3 border-0" style="border: 0px !important;">
                                     <div class="row g-0">
                                     <div class="col-4">
                                         <img :src="item.product.imgUrl" class="img-fluid rounded-start" style="object-fit: cover; height: 100px; width: 200px;">

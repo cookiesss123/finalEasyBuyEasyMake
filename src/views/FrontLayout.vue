@@ -26,7 +26,8 @@
                 </RouterLink>
 
                   <!-- searchCollapse 搜尋 -->
-                  <button v-if="this.$route.fullPath === '/home' || this.$route.fullPath.includes('/recipes') || this.$route.fullPath.includes('/products')" class="navbar-toggler btn border-0 p-2 ms-2" type="button" @click="()=>searchToggle = !searchToggle">
+                  <!-- v-if="this.$route.fullPath === '/home' || this.$route.fullPath.includes('/recipes') || this.$route.fullPath.includes('/products')" -->
+                  <button class="navbar-toggler btn border-0 p-2 ms-2" type="button" @click="()=>searchToggle = !searchToggle">
                     <img src="../assets/images/icon-searchMobile.png" style="height: 20px;" alt="">
                   </button>
 
@@ -67,7 +68,6 @@
                   <RouterLink to="/login" active-class="active-link" class="nav-link">登入</RouterLink>
                 </li>
                 <li class="signup nav-item me-lg-4 " style="white-space:nowrap">
-                  <!--  data-bs-toggle="tooltip" data-bs-placement="bottom" title="立即註冊抽獎去！" -->
                   <RouterLink to="/signup"  class="btn badge btn-red rounded-pill fs-6 px-4 py-3 text-white" >註冊</RouterLink>
                 </li>
               </ul>
@@ -108,7 +108,12 @@
           <div class="collapse navbar-collapse py-1" ref="searchCollapse">
               <!-- 桌面隱藏 d-lg-none -->
               <!-- 食譜搜尋 -->
-              <div v-if="this.$route.fullPath === '/home' || this.$route.fullPath.includes('/recipes')" class="m-4 d-lg-none">
+              <select name="" id="" class="form-select" v-model="searchItem">
+                <option value="食譜搜尋">食譜搜尋</option>
+                <option value="產品搜尋">產品搜尋</option>
+              </select>
+<!-- this.$route.fullPath === '/home' || this.$route.fullPath.includes('/recipes') -->
+              <div v-if="searchItem === '食譜搜尋'" class="m-4 d-lg-none">
                 <h5 class="text-center fw-bold">食譜搜尋</h5>
                 <ul class="list-unstyled">
                   <li class="text-center mb-3 d-flex flex-column border-bottom" style="border-color: #D3CCC1 !important;">
@@ -148,7 +153,8 @@
                 </div>
               </div>
               <!-- 產品搜尋 -->
-              <div class="m-4 d-lg-none" v-else-if="this.$route.fullPath.includes('/products')">
+              <!-- v-else-if="this.$route.fullPath.includes('/products')" -->
+              <div class="m-4 d-lg-none" v-if="searchItem === '產品搜尋'">
                 <h5 class="text-center fw-bold">產品搜尋</h5>
                 <ul class="list-unstyled">
                   <li class="text-center mb-3 d-flex flex-column border-bottom " style="border-color: #D3CCC1 !important;">
@@ -194,13 +200,21 @@
       <RouterView :key="$route.fullPath" style="flex-grow: 1;"></RouterView>
       <!-- cart選單 -->
       <CartModal ref="cartModal"></CartModal>
-
+      <!-- chat 聊天室 -->
+      <ChatModal ref="chatModal"></ChatModal>
       <!-- 向上箭頭 -->
       <button ref="upArrow" class="link-red bg-transparent" :class="{'fade': !showScrollArrow, 'show': showScrollArrow}"  @click="goToTop" style="position: fixed; bottom: 20px; right: 20px;  border: 0 !important;">
-        <i class="bi bi-arrow-up-circle-fill" style="font-size: 50px;"></i>
+        <i class="bi bi-arrow-up-circle-fill" style="font-size: 35px;"></i>
+      </button>
+      <!-- 數字 -->
+      <button type="button" v-if="uid" class="link-red bg-transparent" style="position: fixed; bottom: 20px; right: 100px;  border: 0 !important; z-index: 1;" @click="()=>this.$refs.chatModal.show()">
+        <span v-if="this.$refs.chatModal && this.$refs.chatModal.newChatNum !== 0" class="position-absolute bg-orange border text-white border-light" style="padding: 2px; border-radius: 25px; width: 25px; height: 25px; font-size: 12px; top: -10px; left: 30px;">
+          {{ this.$refs.chatModal.newChatNum }}
+        </span>
+        <i class="bi bi-chat-dots-fill" style="font-size: 35px;"></i>
       </button>
 
-      <footer class="" style=" margin-top: auto;" :class="{'bg-lightYellow': this.$route.fullPath !== '/login' || this.$route.fullPath !== '/signup', 'bg-white': this.$route.fullPath === '/login' || this.$route.fullPath === '/signup'}" >
+      <footer class="" style=" margin-top: auto;" :class="{'bg-lightPink': this.$route.fullPath !== '/login' || this.$route.fullPath !== '/signup', 'bg-white': this.$route.fullPath === '/login' || this.$route.fullPath === '/signup'}" >
           <div class="container d-flex flex-column flex-lg-row align-items-center" style="padding: 40px 0;">
             <img src="../assets/images/logo.png" class="logo mb-4 mb-lg-0 " alt="">
             <div class="ms-lg-auto d-flex flex-column align-items-lg-end align-items-center">
@@ -236,6 +250,11 @@ import Tooltip from 'bootstrap/js/dist/tooltip'
 import toggleBtn from '../assets/images/icon-menuMobile.png'
 import Collapse from 'bootstrap/js/dist/collapse'
 import CartModal from '../components/CartModal.vue'
+import ChatModal from '../components/ChatModal.vue'
+import { onAuthStateChanged } from 'firebase/auth'
+import { db, auth } from '../firebase/db'
+import { ref, onValue } from 'firebase/database'
+
 export default {
   data () {
     return {
@@ -257,13 +276,17 @@ export default {
       productPriceOrRate: '價格',
       pageStatus: '全部',
 
-      showScrollArrow: false
+      showScrollArrow: false,
+      searchItem: '食譜搜尋' // 搜尋可以選擇食譜或產品
+      // user: {},
+      // uid: ''
     }
   },
   components: {
     RouterLink,
     RouterView,
-    CartModal
+    CartModal,
+    ChatModal
   },
   methods: {
 
@@ -317,6 +340,34 @@ export default {
     },
     handleScroll () {
       this.showScrollArrow = window.scrollY > 1000
+    },
+    getMessages () {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          this.uid = user.uid
+          const dataRef = ref(db, 'users/' + user.uid)
+          onValue(dataRef, snapshot => {
+            this.user = snapshot.val()
+            if (this.user.admin) {
+              const dataRef = ref(db, 'chats/')
+              onValue(dataRef, snapshot => {
+                this.chats = snapshot.val()
+                console.log(this.chats, '管理者聊天室')
+              })
+              return
+            }
+            const dataRef = ref(db, `chats/${this.uid}/`)
+            onValue(dataRef, snapshot => {
+              this.chats = snapshot.val()
+              console.log(this.chats, '聊天')
+            })
+          })
+        } else {
+          console.log('並未登入')
+          this.uid = null
+          this.user = {}
+        }
+      })
     }
   },
   mounted () {
@@ -339,7 +390,8 @@ export default {
     })
   },
   computed: {
-    ...mapState(cartStore, ['uid', 'cartItems', 'cartNum', 'user'])
+    // 'uid',, 'user'
+    ...mapState(cartStore, ['user', 'uid', 'cartItems', 'cartNum'])
 
   },
   watch: {
@@ -362,9 +414,10 @@ export default {
         this.searchCollapse.hide()
       }
     },
-    // 換頁關閉 菜單
+    // 換頁關閉 菜單 還要關閉搜尋!!!!!
     '$route.fullPath' () {
       this.menuToggle = false
+      this.searchToggle = false
     }
   }
 }

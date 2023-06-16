@@ -186,7 +186,10 @@ export default {
 }
 </script>
 <template>
-    <div class="my-10">
+    <div class="my-7">
+        <div class="bg-lightPink py-5 mb-3" style="">
+          <h3 class="text-center fw-bold text-red"><i class="bi bi-heart-fill fs-4 link-red"></i> 我的收藏</h3>
+        </div>
         <section class="">
             <ul class="nav nav-tabs container">
             <li class="nav-item" @click="() => pageStatus = 'recipe'">
@@ -199,15 +202,21 @@ export default {
         </section>
         <div class="container py-4">
           <!-- 食譜 -->
+            <!-- 1. 取消所有 border-radius: 20px; -->
+                  <!-- 2. 卡片、圖片 border-radius: 0  -->
+                  <!-- 3. 卡片取消  border-0 加入 border: 1px solid transparent; -->
+                  <!-- 4. footer改成 padding-top: 230px; 食譜、材料 card-text 加入 mb-0 card-footer pt-lg-3 -->
+                  <!-- 折價 取消 border rounded  之後可考慮要不要加 shadow-->
+                  <!-- 折價手機 fs 改成 10  font-size: 10px; -->
           <div v-if="pageStatus === 'recipe' && bookMarks && !loadingItem" class="row row-cols-lg-4 row-cols-2 gy-4">
             <div class="col text-decoration-none" v-for="recipe in bookMarks" :key="recipe.id">
-              <div class="card position-relative border-0 bg-transparent" style="border-radius: 20px;">
-                <div class="cardImg" style="border-radius: 20px;">
+              <div class="card position-relative bg-transparent" style="border-radius: 0; border: 1px solid transparent;">
+                <div class="cardImg" style="">
                   <RouterLink :to="`/recipes/${recipe.id}`" class="enlargeImg">
-                    <img :src="recipe.image" class="card-img" style="border-radius: 20px; object-fit: cover;  max-width: 100%; max-height: 100%;" alt="">
+                    <img :src="recipe.image" class="card-img" style="border-radius: 0; object-fit: cover;  max-width: 100%; max-height: 100%;" alt="">
                   </RouterLink>
                 </div>
-                <h5 class="card-text">
+                <h5 class="card-text mb-0">
                   <div>
                     <button type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>openDeleteModal(recipe.id, recipe)">
                         <img src="../../assets/images/image4.png">
@@ -221,7 +230,7 @@ export default {
                     </div>
                     <span style="pointer-events: none; " class="cardTextCategory badge rounded-pill bg-red mt-4 border-0 m-3 position-absolute start-0">{{ recipe.category }}</span>
                 </h5>
-                <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown">
+                <RouterLink :to="`/recipes/${recipe.id}`" class="pt-lg-3 card-footer bg-transparent border-0 text-decoration-none link-darkBrown">
                   <h5 class="d-flex justify-content-between align-items-center fw-bold">
                     <span class="cardTextTitle">{{recipe.title}}</span>
                   </h5>
@@ -242,21 +251,27 @@ export default {
             </div>
           </div>
           <!-- 產品 -->
+             <!-- 1. 取消所有 border-radius: 20px; -->
+                  <!-- 2. 卡片、圖片 border-radius: 0  -->
+                  <!-- 3. 卡片取消  border-0 加入 border: 1px solid transparent; -->
+                  <!-- 4. footer改成 padding-top: 230px; 食譜、材料 card-text 加入 mb-0 card-footer pt-lg-3 -->
+                  <!-- 折價 取消 border rounded  之後可考慮要不要加 shadow-->
+                  <!-- 折價手機 fs 改成 10  font-size: 10px; -->
           <div v-else-if="pageStatus === 'product' && bookMarks && !loadingItem" class="row row-cols-lg-4 row-cols-2 gy-4">
             <div class="col text-decoration-none" v-for="product in bookMarks" :key="product.id">
-              <div class="card position-relative border-0 bg-transparent" style="border-radius: 20px;">
-                <div class="cardImg" style="border-radius: 20px;">
-                  <RouterLink :to="`/products/${product.id}`" class="enlargeImg">
-                    <img :src="product.imgUrl" class="card-img" height="220" style="border-radius: 20px; object-fit: cover;  max-width: 100%; max-height: 100%;" alt="">
+              <div class="card position-relative bg-transparent" style="border-radius: 0; border: 1px solid transparent;">
+                <div class="cardImg" style="">
+                  <RouterLink :to="`/products/${product.id}`" class="enlargeImg border-0">
+                    <img :src="product.imgUrl" class="card-img" height="220" style="border-radius: 0; object-fit: cover;  max-width: 100%; max-height: 100%;" alt="">
                   </RouterLink>
                 </div>
-                <h5 class="card-text">
+                <h5 class="card-text mb-0">
                   <div>
                     <button type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>openDeleteModal(product.id, product)">
                         <img src="../../assets/images/image4.png">
                     </button>
                   </div>
-                  <span v-if="product.isCheaper" style="pointer-events: none; " class="d-flex flex-column align-items-center text-white p-2 bg-red border position-absolute top-0 start-0 rounded">
+                  <span v-if="product.isCheaper" style="pointer-events: none;" class="d-flex flex-column align-items-center text-white p-2 bg-red  position-absolute top-0 start-0 ">
                     {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                   </span>
                   <!-- 先轉成 string 再取得字串第一個字元 .charAt(0) -->
@@ -270,7 +285,7 @@ export default {
                     <img src="../../assets/images/icon-cart.png"  alt="" class="rounded-circle shadow-sm">
                   </button>
                 </h5>
-                <RouterLink :to="`/products/${product.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown">
+                <RouterLink :to="`/products/${product.id}`" class="pt-lg-3 card-footer bg-transparent border-0 text-decoration-none link-darkBrown">
                 <h5 class="fw-bold cardTextTitle">{{product.title}}</h5>
                 <div class="d-flex align-items-lg-center cardTextPrice" :class="{'align-items-end': product.isCheaper, 'align-items-center': !product.isCheaper}">
                   <div class="">
