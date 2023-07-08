@@ -56,7 +56,7 @@ export default {
 }
 </script>
 <template>
-    <div class="mt-10 container">
+    <div class="mt-10 container" style="overflow-x: hidden;">
         <div v-if="!loadingItem">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
@@ -69,24 +69,24 @@ export default {
             <p class="">訂單編號：{{ order.id }}</p>
             <div class="d-flex flex-column align-items-center mt-5">
                 <!-- justify-content-between  -->
-                <section class="col-12 col-lg-10 d-flex" id="orderProcess" style="color: #f6b1ac">
+                <section class="col-12 col-lg-10 d-flex" id="orderProcess" style="color: #d3ccc1">
                     <div class="d-flex flex-column align-items-center">
                         <i class=" fs-1 bi bi-box-seam text-red"></i>
                         <h5 class=" fw-bold text-red"  style="white-space: nowrap" >待出貨</h5>
                     </div>
-                    <div v-if="barWidth < 33" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #f6b1ac; width: 33%;"></div>
+                    <div v-if="barWidth < 33" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #d3ccc1; width: 33%;"></div>
                     <div v-else-if="barWidth >= 33" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #d04740; width: 33%;"></div>
                     <div class="d-flex flex-column align-items-center">
                         <i class="bi bi-truck  fs-1" :class="{'text-red': barWidth >= 33}"></i>
                         <h5 class=" fw-bold" :class="{'text-red': barWidth >= 33}" style="white-space: nowrap">運送中</h5>
                     </div>
-                    <div v-if="barWidth < 66" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #f6b1ac; width: 33%;"></div>
+                    <div v-if="barWidth < 66" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #d3ccc1; width: 33%;"></div>
                     <div v-else-if="barWidth >= 66" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #d04740; width: 33%;"></div>
                     <div class="d-flex flex-column align-items-center">
                         <i class="bi bi-house-check  fs-1" :class="{'text-red': barWidth >= 66}" ></i>
                         <h5 class=" fw-bold" :class="{'text-red': barWidth >= 66}" style="white-space: nowrap">已抵達</h5>
                     </div>
-                    <div v-if="barWidth < 100" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #f6b1ac; width: 33%;"></div>
+                    <div v-if="barWidth < 100" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #d3ccc1; width: 33%;"></div>
                     <div v-else-if="barWidth === 100" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #d04740; width: 33%;"></div>
                     <div class="d-flex flex-column align-items-center">
                         <i class="bi bi-clipboard-check  fs-1" :class="{'text-red': barWidth === 100}" ></i>
@@ -95,7 +95,7 @@ export default {
                 </section>
                 <div class="row gx-5 row-cols-1 row-cols-lg-2 my-5">
                     <div class="col ">
-                        <h4 class="text-center">訂購商品資訊</h4>
+                        <h4 class="text-center fw-bold">訂購商品資訊</h4>
                         <div v-if="order.cart" class="row py-3">
                             <div class="col-12">
                                 <div class="row">
@@ -144,7 +144,7 @@ export default {
                                 <td>優惠券折扣</td>
                                 <td class="text-end">- NT$ {{ numberComma(Math.ceil(order.cart.total * (order.cart.coupon.discount / 100))) }}</td>
                             </tr>
-                            <tr class="border-top">
+                            <tr class="border-top bg-lightPink">
                                 <td class="fw-bold text-danger">總計金額</td>
                                 <td class="text-end fw-bold text-danger">NT$ {{ numberComma(order.cart.finalTotal) }}</td>
                             </tr>
@@ -154,8 +154,8 @@ export default {
                         </div>
                     </div>
                     <div class="col ">
-                        <h4  class="text-center">收件人資訊</h4>
-                        <table class="table table-borderless text-red">
+                        <h4  class="text-center fw-bold">收件人資訊</h4>
+                        <table class="table table-borderless table-striped">
                         <thead>
                         <tr>
                             <th class="fw-normal"><i class="bi bi-envelope-fill" ></i> 信箱</th>
@@ -181,7 +181,7 @@ export default {
                         </tr>
                         <tr>
                             <td><i class="bi bi-chat-left-text-fill"></i> 留言</td>
-                            <td>{{ order.message }}</td>
+                            <td>{{ order.message === '' ? '無' : order.message }}</td>
                         </tr>
                         </tbody>
                         </table>

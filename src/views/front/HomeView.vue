@@ -4,21 +4,21 @@ import { Navigation, Pagination, Autoplay } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import bannerImg from '../../assets/images/sdfscake.png'
-// mapState
 import { mapActions } from 'pinia'
 import cartStore from '../../stores/carts'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
-import LoadingModal from '../../components/LoadingModal.vue'
 import { db, auth } from '../../firebase/db'
-import { ref, onValue, push, set, remove } from 'firebase/database'
+import { ref, onValue, set, remove } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
+
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
 
 export default {
   components: {
     Swiper,
     SwiperSlide,
-    LoadingModal
+    Loading
   },
   mixins: [numberCommaMixin],
   data () {
@@ -42,7 +42,7 @@ export default {
       products: [],
       goodProducts: [], // 優選產品
       onSaleProducts: [], // 特價商品
-      bannerImg, // url 的網址都要這樣寫 banner圖片
+      // bannerImg, // url 的網址都要這樣寫 banner圖片
       recipeSearchName: '',
       selectItem: '全部',
       highOrLow: '不拘',
@@ -54,26 +54,19 @@ export default {
       productSearchName: '',
       productHighOrLow: '低到高',
       productPriceOrRate: '價格',
-      pageStatus: '全部'
-      // marked: false // 控制按下收藏的愛心點擊效果(hover.css)
+      pageStatus: '全部',
+      // loading
+      isLoading: false,
+      fullPage: true
     }
   },
   methods: {
     // 不用得知使用者是否按食譜讚!!!!!
     ...mapActions(cartStore, ['pleaseReLogin', 'toastMessage', 'addCart']),
 
-    // 改一改放在後台
-    addLotteries (dueDate, isEnabled, name, prizes, recipe, rules, startDate) {
-      const reference = ref(db, 'lotteries/')
-      // push 自動生成 亂數 id
-      const newUserRef = push(reference)
-
-      set(newUserRef, {
-        dueDate, isEnabled, name, prizes, recipe, rules, startDate
-      })
-    },
     // 取得食譜 前 10
     getPopularRecipes () {
+      this.isLoading = true
       const dataRef = ref(db, 'recipes/')
       onValue(dataRef, snapshot => {
         let recipes = snapshot.val()
@@ -107,10 +100,12 @@ export default {
           })
           this.popularRecipes = this.popularRecipes.slice(0, 10)
           console.log(this.popularRecipes, '熱門食譜')
+
+          this.isLoading = false
         })
       })
     },
-    // 取得產品 前 10 收藏還沒做
+    // 取得產品
     getProducts () {
       // 1. const dataRef = ref(db, 'users/') 取得 users 項下所有資料
       // 2. 取得 user s的特定子分支資料
@@ -304,38 +299,59 @@ export default {
   watch: {
     goodProducts () {
       if (this.goodProducts) {
-        this.$refs.loadingModal.hide()
+        // this.$refs.loadingModal.hide()
       }
     }
   }
 }
 </script>
 <template>
-  <!-- style="overflow-x: hidden;" -->
-  <!-- position-relative -->
     <div class="" style="overflow-x: hidden;">
-        <LoadingModal ref="loadingModal" ></LoadingModal>
+        <loading v-model:active="isLoading"
+                 :can-cancel="false"
+                 :is-full-page="fullPage"
+                 :lock-scroll="true">
+                 <div class="d-flex flex-column align-items-center py-10">
+      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
+      <h1 class="text-center fw-bold text-lightBrown">
+        <span class="me-1 animate-text">L</span>
+        <span class="mx-1 animate-text">o</span>
+        <span class="mx-1 animate-text">a</span>
+        <span class="mx-1 animate-text">d</span>
+        <span class="mx-1 animate-text">i</span>
+        <span class="mx-1 animate-text">n</span>
+        <span class="mx-1 animate-text">g</span>
+        <span class="mx-2 animate-text">.</span>
+        <span class="me-2 animate-text">.</span>
+        <span class="animate-text">.</span>
+      </h1>
+    </div>
+        </loading>
         <section class="">
           <!-- 桌機 -->
-          <div class="pt-6 d-none d-lg-block">
+          <!-- pt-6 -->
+          <div class=" d-none d-lg-block">
             <swiper :slides-per-view="1" :space-between="25"
             :modules="modules"
             :pagination="{
               dynamicBullets: true,
             }"
             navigation
-            style="height: 500px;"
+            style="height: 600px;"
             >
-              <swiper-slide style="background: linear-gradient(to right, #fff1f0 50%, white 50%);">
+              <swiper-slide style="background: linear-gradient(to right, #fff1f0 50%, white 50%);" class="py-5">
                 <div class="container">
                   <div class="row h-100">
                   <div class="col-6 bg-lightPink position-relative">
                     <!-- 圓形 -->
-                    <!-- style="background: linear-gradient(45deg, #f5c0b7 20%, #f5b1b8, #fedda8 90% );" -->
                     <div class="position-absolute rounded-circle" style="object-fit: cover; height: 450px; width: 450px; top:5%; right: 15%; z-index: 1; border: white 8px double; background: linear-gradient(45deg, #f9907e 20%, #f95767, #fee0a8 90% );"></div>
                     <div class="position-absolute rounded-circle" style="height: 470px; width: 470px; border: dashed 2px #d04740;  top:3%; right: 14%; "></div>
 
                     <!-- 長條圓形 -->
+                    <div class="rounded-pill position-absolute bg-lightPink" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -12%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -8%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-lightPink" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -4%; z-index: 1;" ></div>
+
                     <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: 0%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 4%; left: 80%; top: 0%; z-index: 1;" ></div>
 
                     <div class="rounded-pill position-absolute bg-lightPink" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 4%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-lightPink" style="object-fit: cover; height: 4%; width: 4%; left: 105%; top: 4%; z-index: 1;" ></div>
@@ -368,6 +384,9 @@ export default {
                     <div class="rounded-pill position-absolute bg-lightPink" style="object-fit: cover; height: 4%; width: 100px; left: 89%; top: 100%; z-index: 1;" ></div>
                     <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 170px; left: 75%; top: 104%; z-index: 1;" ></div>
                     <div class="rounded-pill position-absolute bg-lightPink" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 108%; z-index: 1;" ></div>
+
+                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 114%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-lightPink" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 120%; z-index: 1;" ></div>
 
                     <!-- 圖片 -->
                     <div class="box position-absolute"  style="height: 400px; width: 400px; top: 10%; left: 20%; z-index: 1;">
@@ -442,126 +461,130 @@ export default {
                 </div>
 
               </swiper-slide>
-              <swiper-slide  style="background: linear-gradient(to right, #faf3e6 50%, white 50%);">
+              <swiper-slide  style="background: linear-gradient(to right, #faf3e6 50%, white 50%);" class="py-5">
                 <div class="container">
                   <div class="row h-100">
-                  <div class="col-6 bg-lightYellow position-relative">
-                    <!-- 圓形 -->
-                    <!-- style="background: linear-gradient(45deg, #f9907e 20%, #f95767, #fedda8 90% );" -->
-                    <div class="position-absolute rounded-circle" style="object-fit: cover; height: 450px; width: 450px; top:5%; right: 15%; z-index: 1; border: white 8px double; background: linear-gradient(45deg, #f9907e 20%, #ffc19d, #ffd8a4 90% );"></div>
-                    <div class="position-absolute rounded-circle" style="height: 470px; width: 470px; border: dashed 2px #eb8b07;  top:3%; right: 14%;"></div>
+                    <div class="col-6 bg-lightYellow position-relative">
+                      <!-- 圓形 -->
+                      <!-- style="background: linear-gradient(45deg, #f9907e 20%, #f95767, #fedda8 90% );" -->
+                      <div class="position-absolute rounded-circle" style="object-fit: cover; height: 450px; width: 450px; top:5%; right: 15%; z-index: 1; border: white 8px double; background: linear-gradient(45deg, #f9907e 20%, #ffc19d, #ffd8a4 90% );"></div>
+                      <div class="position-absolute rounded-circle" style="height: 470px; width: 470px; border: dashed 2px #eb8b07;  top:3%; right: 14%;"></div>
 
-                    <!-- 長條圓形 -->
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: 0%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 4%; left: 80%; top: 0%; z-index: 1;" ></div>
+                      <!-- 長條圓形 -->
+                      <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -12%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -8%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -4%; z-index: 1;" ></div>
 
-                    <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 4%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 4%; left: 105%; top: 4%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: 0%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 4%; left: 80%; top: 0%; z-index: 1;" ></div>
 
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 8%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 7%; left: 75%; top: 8%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 4%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 4%; left: 105%; top: 4%; z-index: 1;" ></div>
 
-                    <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 120px; left: 83%; top: 12%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 89%; top: 16%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 20%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 83%; top: 24%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 120px; left: 90%; top: 28%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 80px; left: 97%; top: 32%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 120px; left: 86%; top: 36%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 86%; top: 40%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 100px; left: 87%; top: 44%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 89%; top: 48%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 100px; left: 90%; top: 52%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 90px; left: 95%; top: 56%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 100px; left: 86%; top: 60%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 90%; top: 64%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 100px; left: 92%; top: 68%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 85%; top: 72%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 100px; left: 90%; top: 76%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 100px; left: 92%; top: 80%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 100px; left: 87%; top: 84%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 140px; left: 80%; top: 88%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 100px; left: 89%; top: 92%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 100px; left: 92%; top: 96%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 7%; left: 80%; top: 96%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 8%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 7%; left: 75%; top: 8%; z-index: 1;" ></div>
 
-                    <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 100px; left: 89%; top: 100%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 170px; left: 75%; top: 104%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 108%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 120px; left: 83%; top: 12%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 89%; top: 16%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 20%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 83%; top: 24%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 120px; left: 90%; top: 28%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 80px; left: 97%; top: 32%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 120px; left: 86%; top: 36%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 86%; top: 40%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 100px; left: 87%; top: 44%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 89%; top: 48%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 100px; left: 90%; top: 52%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 90px; left: 95%; top: 56%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 100px; left: 86%; top: 60%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 90%; top: 64%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 100px; left: 92%; top: 68%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 85%; top: 72%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 100px; left: 90%; top: 76%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 100px; left: 92%; top: 80%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 100px; left: 87%; top: 84%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 140px; left: 80%; top: 88%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 100px; left: 89%; top: 92%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 100px; left: 92%; top: 96%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 7%; left: 80%; top: 96%; z-index: 1;" ></div>
 
-                    <!-- 圖片 -->
-                    <div class="box position-absolute"  style="height: 400px; width: 400px; top: 10%; left: 20%; z-index: 1;">
-                      <div class="spin-container">
-                        <div class="shape" style=" border: #d04740;">
-                          <!-- :style="{'backgroundImage':`url(${bannerImg})`}" -->
-                            <div class="bd" style="background-image:url('https://images.unsplash.com/photo-1623246123320-0d6636755796?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80')"></div>
+                      <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 4%; width: 100px; left: 89%; top: 100%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 170px; left: 75%; top: 104%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 108%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 114%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-lightYellow" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 120%; z-index: 1;" ></div>
+                      <!-- 圖片 -->
+                      <div class="box position-absolute"  style="height: 400px; width: 400px; top: 10%; left: 20%; z-index: 1;">
+                        <div class="spin-container">
+                          <div class="shape" style=" border: #d04740;">
+                            <!-- :style="{'backgroundImage':`url(${bannerImg})`}" -->
+                              <div class="bd" style="background-image:url('https://images.unsplash.com/photo-1623246123320-0d6636755796?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80')"></div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-6 bg-white ">
-                      <div class=" mt-5 mb-lg-5">
-                      <h1 class="ms-5 fw-bold lh-base h1Text text-orange " style="letter-spacing:10px;">
-                        <p class="d-flex align-items-center">
-                          <img src="../../assets/images/biscuit.png" class="me-3" style="width: 30px;" alt="">
-                          免費學習
-                        </p>
-                        <p class="d-flex  align-items-center">
-                          各國特色甜點食譜
-                          <img src="../../assets/images/croissant.png" class="ms-3"  style="width: 30px;" alt="">
-                        </p>
-                      </h1>
-                      <p class="text-center text-lg-start mb-0 ms-5">詳細的甜點教學<br class="d-block d-lg-none"> 保證您學到會</p>
-                      </div>
-                      <div class="ms-5 col-10 d-none d-lg-block">
-                        <p class="mb-0">立即搜索心儀食譜！</p>
-                        <div class="card" style="border: 1px solid #eb8b07 !important;">
-                          <div class="card-body">
-                            <div class="row">
-                              <div class="col-4 border-end border-orange">
-                                <p class="card-title mb-0" style="font-size: 14px;">種類</p>
-                                <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="selectItem">
-                                  <option selected >全部</option>
-                                  <option value="台式甜點">台式甜點</option>
-                                  <option value="法式甜點">法式甜點</option>
-                                  <option value="美式甜點">美式甜點</option>
-                                  <option value="日式甜點">日式甜點</option>
-                                  <option value="義式甜點">義式甜點</option>
-                                </select>
+                    <div class="col-6 bg-white ">
+                        <div class=" mt-5 mb-lg-5">
+                        <h1 class="ms-5 fw-bold lh-base h1Text text-orange " style="letter-spacing:10px;">
+                          <p class="d-flex align-items-center">
+                            <img src="../../assets/images/biscuit.png" class="me-3" style="width: 30px;" alt="">
+                            免費學習
+                          </p>
+                          <p class="d-flex  align-items-center">
+                            各國特色甜點食譜
+                            <img src="../../assets/images/croissant.png" class="ms-3"  style="width: 30px;" alt="">
+                          </p>
+                        </h1>
+                        <p class="text-center text-lg-start mb-0 ms-5">詳細的甜點教學<br class="d-block d-lg-none"> 保證您學到會</p>
+                        </div>
+                        <div class="ms-5 col-10 d-none d-lg-block">
+                          <p class="mb-0">立即搜索心儀食譜！</p>
+                          <div class="card" style="border: 1px solid #eb8b07 !important;">
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col-4 border-end border-orange">
+                                  <p class="card-title mb-0" style="font-size: 14px;">種類</p>
+                                  <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="selectItem">
+                                    <option selected >全部</option>
+                                    <option value="台式甜點">台式甜點</option>
+                                    <option value="法式甜點">法式甜點</option>
+                                    <option value="美式甜點">美式甜點</option>
+                                    <option value="日式甜點">日式甜點</option>
+                                    <option value="義式甜點">義式甜點</option>
+                                  </select>
+                                </div>
+                                <div class="col-4 border-end border-orange">
+                                  <p class="card-title mb-0" style="font-size: 14px;">成本或評價</p>
+                                  <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="priceOrRate">
+                                    <option value="成本">成本</option>
+                                    <option value="評價">評價</option>
+                                  </select>
+                                </div>
+                                <div class="col-4 border-orange">
+                                  <p class="card-title mb-0" style="font-size: 14px;">由高到低或由低到高</p>
+                                  <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="highOrLow">
+                                    <option value="不拘" selected>不拘</option>
+                                    <option value="高到低">高到低</option>
+                                    <option value="低到高">低到高</option>
+                                  </select>
+                                </div>
                               </div>
-                              <div class="col-4 border-end border-orange">
-                                <p class="card-title mb-0" style="font-size: 14px;">成本或評價</p>
-                                <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="priceOrRate">
-                                  <option value="成本">成本</option>
-                                  <option value="評價">評價</option>
-                                </select>
-                              </div>
-                              <div class="col-4 border-orange">
-                                <p class="card-title mb-0" style="font-size: 14px;">由高到低或由低到高</p>
-                                <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="highOrLow">
-                                  <option value="不拘" selected>不拘</option>
-                                  <option value="高到低">高到低</option>
-                                  <option value="低到高">低到高</option>
-                                </select>
-                              </div>
-                            </div>
 
-                          </div>
-                          <div class="card-footer bg-white border-0 position-relative" style="background-color: white !important;">
-                            <div class="border rounded-pill border-orange">
-                              <input type="search" class="form-control border-0 rounded-pill " placeholder="請輸入甜點名稱" v-model="recipeSearchName" @keyup.enter="searchRecipes" style="width: 90%;">
-                              <button type="submit" class="border-0 bg-transparent position-absolute translate-middle end-0" style="top:30px" @click="searchRecipes">
-                              <span class="material-icons-outlined text-orange">search</span>
-                              </button>
+                            </div>
+                            <div class="card-footer bg-white border-0 position-relative" style="background-color: white !important;">
+                              <div class="border rounded-pill border-orange">
+                                <input type="search" class="form-control border-0 rounded-pill " placeholder="請輸入甜點名稱" v-model="recipeSearchName" @keyup.enter="searchRecipes" style="width: 90%;">
+                                <button type="submit" class="border-0 bg-transparent position-absolute translate-middle end-0" style="top:30px" @click="searchRecipes">
+                                <span class="material-icons-outlined text-orange">search</span>
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
+                    </div>
                   </div>
-
-                </div>
                 </div>
               </swiper-slide>
             </swiper>
           </div>
           <!-- 手機 -->
-          <div class="d-lg-none bg-lightPink" style="padding-top: 60px;">
+          <div class="d-lg-none bg-white" style="padding-top: 60px;">
             <swiper :slides-per-view="1" :space-between="25"
             :modules="modules"
             :pagination="{
@@ -854,14 +877,16 @@ export default {
             </div>
             <div class="d-flex">
                 <RouterLink to="/recipes" type="button" class="d-lg-none btn btn-red rounded-pill px-4 mx-auto mt-3">
-                  更多食譜
+                  更多食譜 <i class="bi bi-journal-plus"></i>
                 </RouterLink>
               </div>
           </div>
         </section>
 
         <!-- bg-lightYellow -->
-        <section class="py-10 px-3 bg-lightPink ">
+      <!-- style="background-image: url('https://images.unsplash.com/photo-1624821478661-f069492fb5f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); background-repeat: no-repeat; background-size: cover; background-position: center; background-attachment: fixed;" -->
+
+        <section class="py-10 px-3 bg-lightPink">
           <div class="container bg-white py-lg-5 py-4" style="border-radius: 20px;"  data-aos="zoom-in-right">
             <h2 class="h4 fw-bold text-center mb-4 questionTitle">總是花錢花時間 尋找甜點材料嗎？</h2>
             <div class="px-5">
@@ -895,7 +920,7 @@ export default {
 
           </div>
           <div class="container pt-10">
-            <h2 data-aos="zoom-in" class="fw-bold fixedTitle mb-4 text-center">
+            <h2 data-aos="zoom-in" class="fw-bold fixedTitle mb-4 text-center ">
               一站解決你的所有問題
             </h2>
             <div class="fixedQ row g-4 row-cols-lg-2 justify-content-center">
@@ -904,7 +929,7 @@ export default {
                   <img src="../../assets/images/feature-image1.png" style="border-radius: 20px;" class="card-img" alt="...">
                   <div class="card-img-overlay d-flex flex-column justify-content-end" style=" border-radius: 20px;">
                     <h5 class="card-title fw-bold contentTitle">立即取得食譜材料</h5>
-                    <p class="card-text">使用首頁上方搜尋欄尋找食譜，所有食譜皆有列出製作材料、工具，點擊購買即可一次買齊。</p>
+                    <p class="card-text speakerText">使用首頁上方搜尋欄尋找食譜，所有食譜皆有列出製作材料、工具，點擊購買即可一次買齊。</p>
                   </div>
                 </div>
               </div>
@@ -913,7 +938,7 @@ export default {
                   <img src="../../assets/images/feature-image2.png" style="border-radius: 20px;" class="card-img" alt="...">
                   <div class="card-img-overlay d-flex flex-column justify-content-end" style="border-radius: 20px;">
                     <h5 class="card-title  fw-bold contentTitle">便宜且份量適中的食材</h5>
-                    <p class="card-text" >提供甜點食譜組合包，讓您輕鬆選購需要的材料數量，不須擔心買到過多的食材也省下很多錢。</p>
+                    <p class="card-text speakerText" >提供甜點食譜組合包，讓您輕鬆選購需要的材料數量，不須擔心買到過多的食材也省下很多錢。</p>
                   </div>
                 </div>
               </div>
@@ -922,7 +947,7 @@ export default {
                   <img src="../../assets/images/feature-image3.png" style="border-radius: 20px;" class="card-img" alt="...">
                   <div class="card-img-overlay d-flex flex-column justify-content-end" style=" border-radius: 20px;">
                     <h5 class="card-title  fw-bold contentTitle">甜點食譜＋影片教學</h5>
-                    <p class="card-text" >免費甜點食譜和完整講解的影片教學，一定帶你學到會！不上烘焙課也能有良好的製作體驗。</p>
+                    <p class="card-text speakerText" >免費甜點食譜和完整講解的影片教學，一定帶你學到會！不上烘焙課也能有良好的製作體驗。</p>
                   </div>
                 </div>
               </div>
@@ -931,7 +956,7 @@ export default {
                   <img src="../../assets/images/feature-image4.png" style="border-radius: 20px;" class="card-img" alt="...">
                   <div class="card-img-overlay d-flex flex-column justify-content-end" style=" border-radius: 20px;">
                     <h5 class="card-title fw-bold contentTitle">優惠不間斷</h5>
-                    <p class="card-text" >消費滿千元免運費！
+                    <p class="card-text speakerText" >消費滿千元免運費！
                       每月抽獎活動，享價值千元以上好禮！買越多賺越多！</p>
                   </div>
                 </div>
@@ -1076,7 +1101,7 @@ export default {
             </div>
             <div class="d-flex">
               <RouterLink to="/products" type="button" class="d-lg-none btn btn-red rounded-pill px-4 mx-auto mt-3">
-                更多商品
+                更多商品 <i class="bi bi-bag-plus"></i>
               </RouterLink>
             </div>
           </div>
@@ -1221,7 +1246,7 @@ export default {
             </div>
             <div class="d-flex">
               <RouterLink to="/products" type="button" class="d-lg-none btn btn-red rounded-pill px-4 mx-auto mt-3">
-                更多商品
+                更多商品 <i class="bi bi-bag-plus"></i>
               </RouterLink>
             </div>
           </div>
@@ -1244,7 +1269,7 @@ export default {
                 <img src="../../assets/images/icon-speaker.png" class="speaker" alt="">
                 超值大獎一次帶回!
                 <button class="ms-4 d-none d-lg-block btn btn-red rounded-pill" @click="linkToLottery">
-                  立即抽獎
+                  立即抽獎 <i class="bi bi-gift"></i>
                 </button>
               </span>
             </h2>
@@ -1277,7 +1302,7 @@ export default {
             </div>
             <div class="d-flex">
               <button type="button" class="d-lg-none btn btn-red rounded-pill px-4 mx-auto" @click="linkToLottery">
-                立即抽獎
+                立即抽獎 <i class="bi bi-gift"></i>
               </button>
             </div>
         </section>
@@ -1322,14 +1347,14 @@ export default {
   position: relative;
 }
 .fixedQ .card .card-img-overlay{
-  background-image: linear-gradient(180deg , transparent, rgba(0, 0, 0,0.1), rgba(249, 144, 126, 0.5));
+  background-image: linear-gradient(180deg , transparent, rgba(0, 0, 0,0.1), rgba(255, 255, 255, 0.9));
 }
 
 .fixedQ .card:hover .card-img-overlay{
   background-image: linear-gradient(180deg , transparent, rgba(255, 255, 255,0.2), rgba(255, 255, 255));
 }
 .fixedQ .card .card-img-overlay h5{
-  color: white;
+  color: #493A25;
   transition: all ease-in-out 0.4s;
 }
 .fixedQ .card:hover .card-img-overlay h5{

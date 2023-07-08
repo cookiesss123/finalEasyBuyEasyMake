@@ -73,7 +73,7 @@
                                               class="form-control border-0 border-bottom"
                                               :class="{ 'is-invalid': errors['密碼'], 'is-valid':!errors['密碼'] && user.password}"
                                               placeholder="請輸入您的密碼"
-                                              rules="min:6"
+                                              rules="required|min:6"
                                               v-model="user.password"
                                               autocomplete="current-password"
                                           ></VField>

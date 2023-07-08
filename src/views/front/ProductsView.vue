@@ -8,17 +8,18 @@ import Collapse from 'bootstrap/js/dist/collapse'
 import { db, auth } from '../../firebase/db'
 import { ref, onValue, set, remove } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
-import LoadingComponent from '../../components/LoadingComponent.vue'
 
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
 export default {
   components: {
     RouterLink,
     PaginationComponent,
-    LoadingComponent
+    Loading
+
   },
   data () {
     return {
-      loading: true,
       // 控制搜尋收合
       priceOrRateCollapse: {},
       highOrLowCollapse: {},
@@ -34,7 +35,9 @@ export default {
       pageStatus: '全部', // 頁面切到哪頁了?
       selectPage: '全部',
       search: false, // 在搜尋嗎? 用來判斷搜尋無值的狀況
-      uid: ''
+      uid: '',
+      isLoading: false,
+      fullPage: true
     }
   },
   mixins: [numberCommaMixin],
@@ -85,7 +88,7 @@ export default {
           console.log(this.products, '加了評分的產品')
 
           this.filterProducts = this.products
-          this.loading = false
+          this.isLoading = false
 
           if (!this.$route.query.pageStatus && this.$route.fullPath === '/products') { // 未傳值再渲染
           // 從單頁按讚後這裡會出現錯誤警告 因為觸發了最上方的得到讚 this.$route.fullPath === '/recipes' 用這個在食譜單頁就不會觸發了
@@ -196,7 +199,7 @@ export default {
     }
   },
   mounted () {
-    this.loading = true
+    this.isLoading = true
     // 先關閉
     // this.$refs.loadingModal.show()
     // 加了這個頁碼會不見 為何??? 因為沒使用變成 undefined 了 避免沒值
@@ -261,22 +264,67 @@ export default {
 }
 </script>
 <template>
-    <div class="my-7">
+    <div class="">
       <!--  bg-lightPink -->
-      <section class=" bg-lightPink mb-4 py-4 px-lg-5" style="overflow-x: hidden;">
+      <!-- <section class=" mb-4 px-lg-5 py-lg-10 py-5" style="overflow-x: hidden; background-position: center; background-size: cover; background-repeat: no-repeat; padding: 150px 0;  background-image: url('https://images.unsplash.com/photo-1624220330071-9df752d24688?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');" >
           <div class="container">
-            <h3 class="text-center fw-bold py-3 text-red">材料種類</h3>
-
-            <div class="categorySelector mx-lg-10 list-unstyled d-flex justify-content-evenly">
-              <button style="background-color: white;" class="text-red rounded-circle d-flex flex-column align-items-center justify-content-center border border-red" :class="{'text-white': pageStatus === '全部', 'fw-bold': pageStatus === '全部', 'border-red': pageStatus === '全部','bg-red': pageStatus === '全部'}"  type="button" @click="()=>selectPage = '全部'"><span class="material-icons-outlined fs-1 mb-lg-2 mb-1 mt-1 mt-lg-0">apps</span>全部</button>
-              <button style="background-color: white;" class="text-red  rounded-circle d-flex flex-column align-items-center justify-content-center border border-red" :class="{'text-white': pageStatus === '食材組合包', 'fw-bold': pageStatus === '食材組合包', 'border-red': pageStatus === '食材組合包','bg-red': pageStatus === '食材組合包'}" type="button"  @click="()=>selectPage = '食材組合包'"><i class="bi bi-bag-check-fill fs-3 mb-lg-2"></i> 食材組合包</button>
-              <button style="background-color: white;" class="text-red  rounded-circle d-flex flex-column align-items-center justify-content-center border border-red" :class="{'text-white': pageStatus === '熱銷單品', 'fw-bold': pageStatus === '熱銷單品', 'border-red': pageStatus === '熱銷單品','bg-red': pageStatus === '熱銷單品'}" type="button" @click="()=>selectPage = '熱銷單品'"><i class="bi bi-fire fs-3 mb-lg-2"></i> 熱銷單品</button>
-              <button style="background-color: white;" class="text-red  rounded-circle d-flex flex-column align-items-center justify-content-center border border-red" :class="{'text-white': pageStatus === '特價商品', 'fw-bold': pageStatus === '特價商品', 'border-red': pageStatus === '特價商品','bg-red': pageStatus === '特價商品'}" type="button" @click="()=>selectPage = '特價商品'">
-                <i class="bi bi-percent fs-3 mb-lg-2"></i>
-                特價商品</button>
-            </div>
-
+            <h2 class="text-center fw-bold text-white py-3 fs-1" style="letter-spacing: 10px;">材料種類</h2>
           </div>
+        </section> -->
+        <loading v-model:active="isLoading"
+                 :can-cancel="false"
+                 :is-full-page="fullPage"
+                 :lock-scroll="true">
+                 <div class="d-flex flex-column align-items-center py-10">
+      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
+      <h1 class="text-center fw-bold text-lightBrown">
+        <span class="me-1 animate-text">L</span>
+        <span class="mx-1 animate-text">o</span>
+        <span class="mx-1 animate-text">a</span>
+        <span class="mx-1 animate-text">d</span>
+        <span class="mx-1 animate-text">i</span>
+        <span class="mx-1 animate-text">n</span>
+        <span class="mx-1 animate-text">g</span>
+        <span class="mx-2 animate-text">.</span>
+        <span class="me-2 animate-text">.</span>
+        <span class="animate-text">.</span>
+      </h1>
+    </div>
+        </loading>
+        <section class="bannerBg">
+          <div class="mask">
+            <div class="text" style="">
+              材料種類
+            </div>
+          </div>
+        </section>
+        <section class="container mt-4">
+          <ul class="categorySelector row gy-4 row-cols-lg-4 row-cols-1 list-unstyled">
+            <li class="col d-flex border-end align-items-center justify-content-center">
+              <a href="#"  @click.prevent="()=>selectPage = '全部'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': pageStatus === '全部', 'link-red': pageStatus === '全部'}">
+                <span class="material-icons-outlined fs-2" style="border-bottom: 2px solid transparent !important;">apps</span>
+                <span class="fs-4" :class="{'dottedStyle': selectPage === '全部'}">全部</span>
+              </a>
+            </li>
+            <li class="col d-flex border-end align-items-center justify-content-center">
+              <a href="#"  @click.prevent="()=>selectPage = '食材組合包'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': pageStatus === '食材組合包', 'link-red': pageStatus === '食材組合包'}">
+                <i class="bi bi-bag-check-fill fs-3"></i>
+                <span class="fs-4 ms-1" :class="{'dottedStyle': selectPage === '食材組合包'}">食材組合包</span>
+              </a>
+            </li>
+            <li class="col d-flex border-end align-items-center justify-content-center">
+              <a href="#"  @click.prevent="()=>selectPage = '熱銷單品'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': pageStatus === '熱銷單品', 'link-red': pageStatus === '熱銷單品'}">
+                <i class="bi bi-fire fs-3"></i>
+                <span class="fs-4 ms-1" :class="{'dottedStyle': selectPage === '熱銷單品'}">熱銷單品</span>
+              </a>
+            </li>
+            <li class="col d-flex align-items-center justify-content-center">
+              <a href="#"  @click.prevent="()=>selectPage = '特價商品'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': pageStatus === '特價商品', 'link-red': pageStatus === '特價商品'}">
+                <i class="bi bi-percent fs-3"></i>
+                <span class="fs-4 ms-1" :class="{'dottedStyle': selectPage === '特價商品'}">特價商品</span>
+              </a>
+            </li>
+          </ul>
         </section>
       <!-- 搜尋 -->
       <div class="d-none d-lg-block container selectProduct pt-4">
@@ -327,7 +375,7 @@ export default {
                   <!-- 4. footer改成 padding-top: 230px; 食譜、材料 card-text 加入 mb-0 card-footer pt-lg-3 -->
                   <!-- 折價 取消 border rounded  之後可考慮要不要加 shadow-->
                   <!-- 折價手機 fs 改成 10  font-size: 10px; -->
-        <div v-if="filterProducts.length && !loading" class="row row-cols-lg-4 row-cols-2 gy-4">
+        <div v-if="filterProducts.length && !isLoading" class="row row-cols-lg-4 row-cols-2 gy-4">
           <div class="col text-decoration-none" v-for="product in this.$refs.pagination.pageProducts" :key="product.id">
             <div class="card position-relative bg-transparent" style="border: 1px solid transparent; border-radius: 0;">
               <div class="cardImg">
@@ -376,10 +424,8 @@ export default {
           </div>
         </div>
 
-        <LoadingComponent v-if="loading"></LoadingComponent>
-
           <!-- 查無產品 -->
-        <div v-else-if="!filterProducts.length && search && !loading" class="py-10">
+        <div v-else-if="!filterProducts.length && search && !isLoading" class="py-10">
           <img src="../../assets/images/undraw_Page_not_found_re_e9o6.png" class="mb-3" alt="" style="height: 250px; display: block; margin: auto;">
           <h2 class="text-center">查無商品，請您重新查詢</h2>
         </div>
@@ -396,9 +442,9 @@ export default {
 .Page ul li:hover{
   background-color: red !important;
 } */
- ::placeholder {
+ /* ::placeholder {
     color: #e89995 !important;
-  }
+  } */
 
   #myTab .nav-item .active {
     color: #d04740;

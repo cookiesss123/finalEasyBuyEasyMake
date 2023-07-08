@@ -5,7 +5,9 @@
      <div class="d-flex flex-column" style="min-height: 100vh;">
       <!-- 標頭 -->
       <header class="fixed-top">
-        <div class="bg-white">
+        <!-- bg-white -->
+        <!-- 滑下來才變白 手機展示toggle 變白 或是 orders 詳細頁面才變白 -->
+        <div class="" :class="{'bg-white': showNavbar || menuToggle || this.$route.fullPath.includes('orders') || this.$route.fullPath.includes('recipes/') || this.$route.fullPath.includes('products/') || this.$route.fullPath.includes('discounts/') || this.$route.fullPath.includes('products/') || this.$route.fullPath.includes('checkout') || this.$route.fullPath.includes('orderSuccess')}" style="background-color: transparent;">
           <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
               <div class="d-flex align-items-center">
@@ -17,9 +19,9 @@
               <div class="position-absolute end-0 ">
                 <!-- 手機購物車按鈕 -->
                 <button class="btn btn-sm position-relative p-0 d-lg-none border-0 me-3"  @click="()=>this.$refs.cartModal.show()">
-                  <span v-if="cartNum !== 0"  class="position-absolute top-0 start-100 translate-middle bg-orange border border-light text-white" style="padding: 2px; border-radius: 25px; width: 25px; height: 25px; font-size: 12px;">                    {{ cartNum }}
+                  <span v-if="cartNum !== 0"  class="position-absolute top-0 start-100 translate-middle  border border-red text-red fw-bold" style="padding: 2px; border-radius: 25px; width: 25px; height: 25px; font-size: 12px;">                    {{ cartNum }}
                 </span>
-                  <img src="../../src/assets/images/icon-cart.png" alt="" width="35">
+                  <img src="../../src/assets/images/menuCart.png" alt="" width="20">
                 </button>
                 <RouterLink to="/bookmarks" class="d-lg-none btn btn-sm position-relative mt-1 border-0 cancelBorder">
                   <i class="bi bi-heart-fill fs-2 link-red fs-6"></i>
@@ -40,7 +42,7 @@
               </div>
 
               <!-- 菜單桌機手機板 -->
-              <div id="navbarNav" class="collapse navbar-collapse" ref="menuCollapse" >
+              <div id="navbarNav" class="collapse navbar-collapse " ref="menuCollapse" >
                 <ul class="mainMenu navbar-nav mx-auto text-center text-lg-start">
                   <li class="nav-item me-lg-3" style="white-space:nowrap">
                     <!-- :class="{'link-orange':this.$route.fullPath === '/recipes'}" -->
@@ -95,10 +97,10 @@
               <!-- 桌面cart按鈕 -->
               <!-- :class="{'clickBuyBtn': !closeCart}" -->
               <button type="button" class="btn position-relative p-0 border-0 d-none d-lg-block"  @click="()=>this.$refs.cartModal.show()">
-                <span v-if="cartNum !== 0" class="position-absolute bg-orange border text-white border-light" style="padding: 2px; border-radius: 25px; width: 25px; height: 25px; font-size: 12px; top: -10px; left: 30px;">
+                <span v-if="cartNum !== 0" class="position-absolute border text-red border-red fw-bold" style="padding: 2px; border-radius: 25px; width: 25px; height: 25px; font-size: 12px; top: -15px; left: 20px;">
                   {{ cartNum }}
                 </span>
-                <img src="../../src/assets/images/icon-cart.png" alt="" width="50" class="rounded-circle">
+                <img src="../../src/assets/images/menuCart.png" alt="" width="25">
               </button>
               </div>
             </div>
@@ -203,33 +205,33 @@
       <!-- chat 聊天室 -->
       <ChatModal ref="chatModal"></ChatModal>
       <!-- 向上箭頭 -->
-      <button ref="upArrow" class="link-red bg-transparent" :class="{'fade': !showScrollArrow, 'show': showScrollArrow}"  @click="goToTop" style="position: fixed; bottom: 20px; right: 20px;  border: 0 !important;">
+      <button ref="upArrow" class="link-red bg-transparent hvr-float" :class="{'fade': !showScrollArrow, 'show': showScrollArrow}"  @click="goToTop" style="position: fixed; bottom: 20px; right: 20px;  border: 0 !important;">
         <i class="bi bi-arrow-up-circle-fill" style="font-size: 35px;"></i>
       </button>
       <!-- 數字 -->
       <button type="button" v-if="uid" class="link-red bg-transparent" style="position: fixed; bottom: 20px; right: 100px;  border: 0 !important; z-index: 1;" @click="()=>this.$refs.chatModal.show()">
-        <span v-if="this.$refs.chatModal && this.$refs.chatModal.newChatNum !== 0" class="position-absolute bg-orange border text-white border-light" style="padding: 2px; border-radius: 25px; width: 25px; height: 25px; font-size: 12px; top: -10px; left: 30px;">
+        <span v-if="this.$refs.chatModal && this.$refs.chatModal.newChatNum !== 0" class="position-absolute bg-lightPink text-red fw-bold  border border-red" style="padding: 2px; border-radius: 25px; width: 25px; height: 25px; font-size: 12px; top: -10px; left: 30px;">
           {{ this.$refs.chatModal.newChatNum }}
         </span>
         <i class="bi bi-chat-dots-fill" style="font-size: 35px;"></i>
       </button>
 
-      <footer class="" style=" margin-top: auto;" :class="{'bg-lightPink': this.$route.fullPath !== '/login' || this.$route.fullPath !== '/signup', 'bg-white': this.$route.fullPath === '/login' || this.$route.fullPath === '/signup'}" >
+      <footer class="" style=" margin-top: auto; " :class="{'bg-lightPink': this.$route.fullPath !== '/login' || this.$route.fullPath !== '/signup', 'bg-white': this.$route.fullPath === '/login' || this.$route.fullPath === '/signup'}" >
           <div class="container d-flex flex-column flex-lg-row align-items-center" style="padding: 40px 0;">
             <img src="../assets/images/logo.png" class="logo mb-4 mb-lg-0 " alt="">
             <div class="ms-lg-auto d-flex flex-column align-items-lg-end align-items-center">
               <ul id="contactInfo" class="list-unstyled d-flex">
-                <li class="me-4">
+                <li class="me-4 hvr-bob">
                   <a href="#" class="text-decoration-none link-red">
                     <i class="bi bi-instagram me-2" style="font-size: 34px;"></i>
                   </a>
                 </li>
-                <li class="me-4">
+                <li class="me-4 hvr-bob">
                   <a href="#" class="text-decoration-none link-red">
                     <i class="bi bi-facebook me-2" style="font-size: 34px;"></i>
                   </a>
                 </li>
-                <li>
+                <li class="hvr-bob">
                   <a href="#" class="text-decoration-none link-red">
                     <i class="bi bi-envelope me-2" style="font-size: 34px;"></i>
                   </a>
@@ -276,10 +278,9 @@ export default {
       productPriceOrRate: '價格',
       pageStatus: '全部',
 
-      showScrollArrow: false,
+      showScrollArrow: false, // 向上箭頭
+      showNavbar: false,
       searchItem: '食譜搜尋' // 搜尋可以選擇食譜或產品
-      // user: {},
-      // uid: ''
     }
   },
   components: {
@@ -340,6 +341,7 @@ export default {
     },
     handleScroll () {
       this.showScrollArrow = window.scrollY > 1000
+      this.showNavbar = window.scrollY > 300
     },
     getMessages () {
       onAuthStateChanged(auth, (user) => {
@@ -418,6 +420,12 @@ export default {
     '$route.fullPath' () {
       this.menuToggle = false
       this.searchToggle = false
+
+      if (this.$route.fullPath.match('products')) {
+        this.searchItem = '產品搜尋'
+      } else if (this.$route.fullPath.match('recipes')) {
+        this.searchItem = '食譜搜尋'
+      }
     }
   }
 }

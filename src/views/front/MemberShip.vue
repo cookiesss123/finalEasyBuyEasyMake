@@ -2,15 +2,16 @@
 import { mapActions } from 'pinia'
 import cartStore from '../../stores/carts'
 import PaginationComponent from '../../components/PaginationComponent.vue'
-import LoadingModal from '../../components/LoadingModal.vue'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
 import { db, auth } from '../../firebase/db'
 import { ref, onValue, update } from 'firebase/database'
 import { onAuthStateChanged, updatePassword } from 'firebase/auth'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
 export default {
   components: {
     PaginationComponent,
-    LoadingModal
+    Loading
   },
   mixins: [numberCommaMixin],
   data () {
@@ -28,7 +29,8 @@ export default {
       newPassword: '',
       nickName: '',
       pageOrders: [],
-      loading: true // 訂單部分 loading
+      isLoading: false,
+      fullPage: true
     }
   },
   methods: {
@@ -42,6 +44,7 @@ export default {
           onValue(dataRef, snapshot => {
             this.user = snapshot.val()
             console.log(this.user, '讀取的資料')
+            this.isLoading = false
           })
         } else {
           // User is signed out
@@ -67,7 +70,7 @@ export default {
           onValue(dataRef, snapshot => {
             const orders = snapshot.val()
             if (!orders) {
-              this.loading = false
+              // this.loading = false
               return
             }
             this.orders = Object.entries(orders).map(item => {
@@ -75,16 +78,15 @@ export default {
               return item[1]
             })
             this.filterOrders = this.orders
-            console.log(this.filterOrders, '我的訂單')
             this.orderArrived = this.orders.filter(order => {
               return order.deliveryStatus === '待取貨'
             })
             // 避免錯誤
-            if (this.filterOrders) {
+            if (this.filterOrders && this.$route.fullPath === '/member') {
               // 頁碼
               this.$refs.pagination.renderPage(1, this.filterOrders)
             }
-            this.loading = false
+            // this.loading = false
           })
         } else {
           console.log('並未登入')
@@ -143,6 +145,8 @@ export default {
       const { value: file } = await this.$swal({
         title: '選擇圖片',
         input: 'file',
+        confirmButtonColor: '#d04740',
+        confirmButtonText: '確定',
         inputAttributes: {
           accept: 'image/*',
           'aria-label': 'Upload your profile picture'
@@ -174,6 +178,8 @@ export default {
       const { value: file } = await this.$swal({
         title: '選擇圖片',
         input: 'text',
+        confirmButtonColor: '#d04740',
+        confirmButtonText: '確定',
         inputAttributes: {
           accept: 'image/*',
           'aria-label': 'Upload your profile picture'
@@ -198,6 +204,7 @@ export default {
   },
   mounted () {
     // 每個頁面都要再填入一次token 和 其它相關使用者資料 因為刷新就不見了
+    this.isLoading = true
     this.getUserInformation()
     this.getOrders()
   },
@@ -221,177 +228,188 @@ export default {
 }
 </script>
 <template>
-    <div class="mt-10">
-      <LoadingModal ref="loadingModal" ></LoadingModal>
-      <section class="bg-lightPink py-5">
-        <div class="container">
-          <h2 class="h3 fw-bold">會員資料</h2>
-        <div class="row gy-5 my-4 row-cols-1 row-cols-lg-2  align-items-center">
-          <div class="col d-flex flex-column align-items-center ">
-              <!-- 大頭貼 -->
-              <div v-if="!user.headshotImg" class="d-flex mb-4" style="width: 300px; height: 300px; border: 5px solid #ef6b5a;">
-                <i class="bi bi-person-fill m-auto text-red" style="font-size: 200px;"></i>
-              </div>
-              <img v-else-if="user.headshotImg" :src="user.headshotImg" width="300" height="300" style="object-fit: cover; border: 5px solid #ef6b5a;" class="mb-4" alt="">
-              <div class="">
-                <button type="button" class="btn btn-red text-white me-4" @click="selectImgUrl">上傳圖片網址</button>
-                <button type="button" class="btn btn-red" @click="selectFile">上傳本地圖片</button>
-              </div>
+    <div class="" style="overflow-x: hidden;">
+      <loading v-model:active="isLoading"
+                 :can-cancel="false"
+                 :is-full-page="fullPage"
+                 :lock-scroll="true">
+                 <div class="d-flex flex-column align-items-center py-10">
+      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
+      <h1 class="text-center fw-bold text-lightBrown">
+        <span class="me-1 animate-text">L</span>
+        <span class="mx-1 animate-text">o</span>
+        <span class="mx-1 animate-text">a</span>
+        <span class="mx-1 animate-text">d</span>
+        <span class="mx-1 animate-text">i</span>
+        <span class="mx-1 animate-text">n</span>
+        <span class="mx-1 animate-text">g</span>
+        <span class="mx-2 animate-text">.</span>
+        <span class="me-2 animate-text">.</span>
+        <span class="animate-text">.</span>
+      </h1>
+    </div>
+        </loading>
+      <section class="bannerBg">
+        <div class="mask">
+          <div class="text" style="">
+            會員資料
           </div>
-          <div class="col-12 col-lg-4">
-            <!-- 暱稱 -->
-            <div class="border-start border-red d-flex align-items-center">
-              <label for="nickName" class="form-label mb-0 fw-bold ms-1 ms-lg-3">暱稱</label>
+        </div>
+      </section>
+
+      <div class="container ">
+        <div class="row row-cols-1 row-cols-lg-2 gx-5">
+        <section class=" col-lg-4 py-5">
+          <div class="d-flex flex-column align-items-center position-relative  bg-lightPink pt-5">
+            <div v-if="!user.headshotImg" class="d-flex" style="height: 300px; width: 300px; ">
+              <i class="bi bi-person-fill m-auto text-red" style="font-size: 200px;"></i>
+            </div>
+            <img v-else-if="user.headshotImg" :src="user.headshotImg"  style="object-fit: cover;  height: 300px; width: 300px;" class="mb-4 " alt="">
+
+            <div class="d-flex align-items-center justify-content-evenly py-3 position-absolute w-100" style="bottom: 0px; background: rgba(255, 234, 234, 0.9);">
+              <a href="#" class="link-red fw-bold" @click.prevent="selectImgUrl">上傳圖片網址</a>
+              <div class="bg-red"  style="width: 2px; height: 20px;"></div>
+              <a href="#" class="link-orange fw-bold" @click.prevent="selectFile">上傳本地圖片</a>
+            </div>
+          </div>
+          <div class="border border-lightPink">
+            <div class="py-3 d-flex align-items-center">
+              <label for="nickName" class="form-label mb-0 fw-bold ms-1 ms-lg-3"><i class="bi bi-person-circle"></i> 暱稱</label>
               <span v-if="nickNameEdit" class="ms-4">{{ user.nickName }}</span>
               <div class="ms-auto">
-                <button v-if="nickNameEdit" type="button" class="btn btn-sm btn-red" @click="()=>nickNameEdit = !nickNameEdit">
-                    <span>修改暱稱</span>
-                </button>
+                <a href="#" v-if="nickNameEdit" class="link-red fw-bold me-3" @click.prevent="()=>nickNameEdit = !nickNameEdit">修改暱稱</a>
                 <div class="input-group" :class="{'d-none': nickNameEdit}">
-                  <input type="text" class="form-control" placeholder="請輸入新暱稱" id="nickName" v-model="newNickName">
+                  <input type="text" class="form-control" placeholder="請輸入新暱稱" id="nickName" v-model="newNickName" style="width: 180px;">
                   <button @click="()=>nickNameEdit = true" class="btn btn-outline-secondary btn-sm" type="button" id="button-addon2">取消</button>
                   <button @click="()=>changeEmail()" class="btn btn-sm btn-outline-red" type="button" id="button-addon2">確定</button>
                 </div>
               </div>
             </div>
             <!-- 信箱 -->
-            <div class="border-start border-red d-flex align-items-center mt-3 mt-lg-5">
-              <label for="email" class="form-label mb-0 fw-bold ms-1 ms-lg-3">信箱</label>
+            <!-- mt-3 mt-lg-5 -->
+            <div class="bg-lightPink py-3 d-flex align-items-center ">
+              <label for="email" class="form-label mb-0 fw-bold ms-1 ms-lg-3"><i class="bi bi-envelope-fill"></i> 信箱</label>
               <span class="ms-4">{{user.email}}</span>
             </div>
             <!-- 密碼 -->
-            <div class="border-start border-red d-flex align-items-center mt-3 mt-lg-5">
-              <label for="password" class="form-label mb-0 fw-bold ms-1 ms-lg-3">密碼</label>
+            <div class="py-3 d-flex align-items-center">
+              <label for="password" class="form-label mb-0 fw-bold ms-1 ms-lg-3"><i class="bi bi-lock-fill"></i> 密碼</label>
               <span v-if="passwordEdit" class="ms-4">* * * * * * * *</span>
               <div class="ms-auto">
-                <button v-if="passwordEdit" type="button" class="btn btn-sm btn-red"  @click="()=>passwordEdit = !passwordEdit">
-                  <span>變更密碼</span>
-                </button>
+                <a href="#" v-if="passwordEdit" class="link-red fw-bold me-3" @click.prevent="()=>passwordEdit = !passwordEdit">變更密碼</a>
                 <div class="input-group" :class="{'d-none': passwordEdit}">
-                  <input type="password" class="form-control" placeholder="請輸入新密碼" id="password" v-model="newPassword">
+                  <input type="password" class="form-control" placeholder="請輸入新密碼" id="password" v-model="newPassword" style="width: 180px;">
                   <button @click="()=>passwordEdit = true" class="btn btn-sm btn-outline-secondary" type="button" id="button-addon2">取消</button>
                   <button @click="()=>changePassword()" class="btn btn-sm btn-outline-red" type="button" id="button-addon2">確定</button>
                 </div>
               </div>
             </div>
               <!-- 我的抽獎券 -->
-            <div class="border-start border-red d-flex align-items-center mt-3 mt-lg-5">
-              <label for="ticket" class="form-label mb-0 fw-bold ms-1 ms-lg-3">我的抽獎券</label>
+            <div class="bg-lightPink py-3 d-flex align-items-center">
+              <label for="ticket" class="form-label mb-0 fw-bold ms-1 ms-lg-3"><i class="bi bi-ticket-perforated-fill"></i> 我的抽獎券</label>
               <span class="ms-4">{{ user.lotteryTicket }} 張</span>
-              <button type="button" class="btn btn-sm btn-red ms-auto" @click="linkToLottery">立即抽獎</button>
+              <button type="button" class="btn btn-sm btn-red ms-auto me-2" @click="linkToLottery"><i class="bi bi-gift"></i> 立即抽獎</button>
             </div>
           </div>
-        </div>
-        </div>
-      </section>
-      <section class="py-5 container">
-        <h2 class="h3 fw-bold">訂單狀況</h2>
-        <div class="selectOrderStatus py-3 d-flex justify-content-between justify-content-lg-start">
-          <button type="button" class="btn border-0 me-lg-5 hvr-rectangle-out bg-transparent" :class="{'activePage':selectItem === '全部'}" @click="() => selectItem ='全部'">
-              <span class="text-secondary d-none d-lg-block" :class="{'text-white':selectItem === '全部','fw-bold':selectItem === '全部'}">
+        </section>
+        <section class=" col-lg-8 py-5 ">
+          <h2 class="h3 fw-bold">訂單狀況</h2>
+          <div class="selectOrderStatus py-3 d-flex justify-content-between justify-content-lg-start">
+            <button type="button" class="d-flex btn border-0 me-lg-5 hvr-rectangle-out bg-transparent" :class="{'activePage':selectItem === '全部'}" @click="() => selectItem ='全部'">
+              <i class="bi bi-border-all" :class="{'text-white':selectItem === '全部','fw-bold':selectItem === '全部'}"></i>
+
+              <span class="text-secondary d-none d-lg-block ms-2" :class="{'text-white':selectItem === '全部','fw-bold':selectItem === '全部'}">
                 全部
               </span>
-              <!-- 手機版 -->
-              <div class=" d-lg-none">
-                <i class="bi bi-border-all" :class="{'text-white':selectItem === '全部','fw-bold':selectItem === '全部'}"></i>
-                <span class="text-white ms-2" v-if="selectItem === '全部'">全部</span>
-              </div>
-          </button>
-          <button type="button" class=" btn border-0 me-lg-5 hvr-rectangle-out bg-transparent"   :class="{'activePage':selectItem === '待出貨'}" @click="() => selectItem ='待出貨'">
-            <!-- 'text-red':selectItem === '待出貨' -->
-            <span class="text-secondary d-none d-lg-block" :class="{'text-white':selectItem === '待出貨','fw-bold':selectItem === '待出貨'}">待出貨</span>
-              <!-- 手機版 -->
-              <div class=" d-lg-none">
-                <i class="bi bi-box-seam" :class="{'text-white':selectItem === '待出貨','fw-bold':selectItem === '待出貨'}"></i>
-                <span class="text-white ms-2" v-if="selectItem === '待出貨'">待出貨</span>
-              </div>
-          </button>
-          <button type="button" class=" btn border-0 me-lg-5 hvr-rectangle-out bg-transparent" :class="{'activePage':selectItem === '運送中'}" @click="() => selectItem ='運送中'">
-            <span class="text-secondary d-none d-lg-block" :class="{'text-white':selectItem === '運送中', 'fw-bold':selectItem === '運送中'}">運送中</span>
-              <!-- 手機版 -->
-              <div class=" d-lg-none">
-                <i class="bi bi-truck" :class="{'text-white':selectItem === '運送中','fw-bold':selectItem === '運送中'}"></i>
-                <span class="text-white ms-2" v-if="selectItem === '運送中'">運送中</span>
-              </div>
-          </button>
-          <button type="button" class=" btn border-0 me-lg-5 position-relative hvr-rectangle-out bg-transparent" :class="{'activePage':selectItem === '待取貨'}" @click="() => selectItem ='待取貨'">
-              <span class="text-secondary d-none d-lg-block" :class="{'text-white':selectItem === '待取貨', 'fw-bold':selectItem === '待取貨'}">待取貨
-                <span v-if="orderArrived.length" class="badge bg-danger" style="font-size: 12px;">
-                  {{ orderArrived.length }}
-                </span>
+              <span v-if="selectItem === '全部'" class="text-secondary d-lg-none ms-2" :class="{'text-white':selectItem === '全部','fw-bold':selectItem === '全部'}">
+                全部
               </span>
-
-                <!-- 手機版 -->
-                <div class=" d-lg-none">
+            </button>
+            <button type="button" class="d-flex btn border-0 me-lg-5 hvr-rectangle-out bg-transparent"   :class="{'activePage':selectItem === '待出貨'}" @click="() => selectItem ='待出貨'">
+                <i class="bi bi-box-seam" :class="{'text-white':selectItem === '待出貨','fw-bold':selectItem === '待出貨'}"></i>
+                <span class="text-secondary d-none d-lg-block ms-2" :class="{'text-white':selectItem === '待出貨','fw-bold':selectItem === '待出貨'}">
+                待出貨
+              </span>
+              <span v-if="selectItem === '待出貨'" class="text-secondary d-lg-none ms-2" :class="{'text-white':selectItem === '待出貨','fw-bold':selectItem === '待出貨'}">
+                待出貨
+              </span>
+            </button>
+            <button type="button" class="d-flex btn border-0 me-lg-5 hvr-rectangle-out bg-transparent" :class="{'activePage':selectItem === '運送中'}" @click="() => selectItem ='運送中'">
+              <i class="bi bi-truck" :class="{'text-white':selectItem === '運送中','fw-bold':selectItem === '運送中'}"></i>
+              <span class="text-secondary d-none d-lg-block ms-2" :class="{'text-white':selectItem === '運送中','fw-bold':selectItem === '運送中'}">
+                運送中
+              </span>
+              <span v-if="selectItem === '運送中'" class="text-secondary d-lg-none ms-2" :class="{'text-white':selectItem === '運送中','fw-bold':selectItem === '運送中'}">
+                運送中
+              </span>
+            </button>
+            <button type="button" class="d-flex btn border-0 me-lg-5 position-relative hvr-rectangle-out bg-transparent" :class="{'activePage':selectItem === '待取貨'}" @click="() => selectItem ='待取貨'">
                 <i class="bi bi-house-check" :class="{'text-white':selectItem === '待取貨','fw-bold':selectItem === '待取貨'}"></i>
-                <span class="text-white ms-2" v-if="selectItem === '待取貨'">待取貨</span>
-                <span v-if="orderArrived.length" class="badge bg-danger ms-2" style="font-size: 12px;">
-                  {{ orderArrived.length }}
-                </span>
-              </div>
-          </button>
-          <button type="button" class=" btn border-0 me-lg-5 hvr-rectangle-out bg-transparent" :class="{'activePage':selectItem === '訂單完成'}" @click="() => selectItem ='訂單完成'">
-            <span class="text-secondary d-none d-lg-block" :class="{'text-white':selectItem === '訂單完成', 'fw-bold':selectItem === '訂單完成'}">訂單完成</span>
-              <!-- 手機版 -->
-              <div class="d-lg-none">
-                <i class="bi bi-clipboard-check" :class="{'text-white':selectItem === '訂單完成','fw-bold':selectItem === '訂單完成'}"></i>
-                <span class="text-white ms-2" v-if="selectItem === '訂單完成'">訂單完成</span>
-              </div>
-          </button>
-        </div>
-        <div class="row row-cols-1 py-3">
-            <h4 class="mb-3">
-                總共有 {{ filterOrders.length }} 筆
-            </h4>
-            <!-- 確保渲染前資料有填入 -->
-            <div v-if="filterOrders.length">
-              <div class="col" v-for="order in this.$refs.pagination.pageProducts" :key="order.creatAt">
-                <span>訂單建立時間：{{ new Date(order.creatAt).toLocaleDateString() }}  {{ new Date(order.creatAt).getHours() }}:{{ new Date(order.creatAt).getMinutes() }} </span><span class="ms-4">訂單編號：{{order.id}}</span>
-                <div class="row row-cols-lg-6 row-cols-2 align-items-center mt-2 position-relative">
-                  <div class="col" v-for="(item, index) in order.cart.items" :key="item + 6603">
-                    <!-- 只顯示 長度 4 以內 v-if="order.cart.items.length < 4" 前面不行會整個隱藏 => 應該說只顯示 index 到 3 -->
-                    <div v-if="index < 4">
-                      <img :src="item.product.imgUrl" alt="" height="100" width="150" style="object-fit: cover;">
-                      <p class="mb-0">
-                          {{ item.product.title }}
-                      </p>
-                      <p class="mb-0">x {{ numberComma(item.qty) }}</p>
+                <span class="text-secondary d-none d-lg-block ms-2" :class="{'text-white':selectItem === '待取貨','fw-bold':selectItem === '待取貨'}">
+                待取貨
+              </span>
+              <span v-if="selectItem === '待取貨'" class="text-secondary d-lg-none ms-2" :class="{'text-white':selectItem === '待取貨','fw-bold':selectItem === '待取貨'}">
+                待取貨
+              </span>
+            </button>
+            <button type="button" class="d-flex btn border-0 me-lg-5 hvr-rectangle-out bg-transparent" :class="{'activePage':selectItem === '訂單完成'}" @click="() => selectItem ='訂單完成'">
+              <i class="bi bi-clipboard-check" :class="{'text-white':selectItem === '訂單完成','fw-bold':selectItem === '訂單完成'}"></i>
+              <span class="text-secondary d-none d-lg-block ms-2" :class="{'text-white':selectItem === '訂單完成','fw-bold':selectItem === '訂單完成'}">
+                訂單完成
+              </span>
+              <span v-if="selectItem === '訂單完成'" class="text-secondary d-lg-none ms-2" :class="{'text-white':selectItem === '訂單完成','fw-bold':selectItem === '訂單完成'}">
+                訂單完成
+              </span>
+            </button>
+          </div>
+          <div class="row row-cols-1 py-3">
+              <h4 class="mb-3">
+                  總共有 {{ filterOrders.length }} 筆
+              </h4>
+              <!-- 確保渲染前資料有填入 -->
+              <div v-if="filterOrders.length">
+                <RouterLink :to="`/orders/${order.id}`" class=" col text-decoration-none link-dark" v-for="order in this.$refs.pagination.pageProducts" :key="order.creatAt">
+                  <span><i class="bi bi-clock"></i> {{ new Date(order.creatAt).toLocaleDateString() }}  {{ new Date(order.creatAt).getHours() }}:{{ new Date(order.creatAt).getMinutes() }} </span>
+                  <div class=" row row-cols-lg-4 row-cols-2 align-items-center mt-2" >
+                    <div class="col" v-for="(item, index) in order.cart.items" :key="item + 6603">
+                      <!-- 只顯示 長度 4 以內 v-if="order.cart.items.length < 4" 前面不行會整個隱藏 => 應該說只顯示 index 到 3 -->
+                      <!-- 最多顯示 7 個好了 ... -->
+                      <div v-if="index < 7"  class="">
+                        <img :src="item.product.imgUrl" alt="" height="100" class="w-100" style="object-fit: cover;">
+                        <p class="mb-0 mt-2 text-center">
+                          <span class="subTitle me-1">{{ item.product.title }}</span>
+                          <span class="text-red fw-bold">x{{ numberComma(item.qty) }}</span>
+                        </p>
+                      </div>
+                      <!-- 多出來顯示的商品 -->
+                      <div v-if="index === 7"  class="position-relative" style="top: -16px;">
+                        <img :src="item.product.imgUrl" alt="" height="100" class="w-100" style="object-fit: cover; opacity: .4;">
+                        <p class="mb-0 text-center position-absolute fs-1 text-secondary" style="top: 50%; left: 50%; transform: translateX(-50%) translateY(-50%);">{{ order.cart.items.length - 7 }} +
+                        </p>
+                      </div>
                     </div>
                   </div>
-                  <div v-if="order.cart.items.length > 4" class="col position-absolute" style="bottom: 20px; right: 200px;">
-                    <p class="fw-bold" style="font-size: 100px;">. . .</p>
+                  <div class="d-flex mt-4">
+                      <div class="ms-auto d-flex align-items-center">
+                          <span class="me-3 fw-bold"><i v-if="order.deliveryStatus === '待出貨'" class="bi bi-box-seam me-1"></i><i  v-if="order.deliveryStatus === '運送中'" class="bi bi-truck me-1"></i><i v-if="order.deliveryStatus === '待取貨'" class="bi bi-house-check me-1"></i><i v-if="order.deliveryStatus === '訂單完成'" class="bi bi-clipboard-check me-1"></i>{{order.deliveryStatus}}</span>
+                          <span class="text-red fw-bold">NT$ {{  numberComma(order.cart.finalTotal)  }}</span>
+                          <RouterLink :to="`/orders/${order.id}`" class="ms-3"><i class="bi bi-search text-red"></i></RouterLink>
+                      </div>
                   </div>
-                </div>
-                <div class="d-flex">
-                    <div class="ms-auto d-flex align-items-center">
-                        <span class="me-3 fw-bold">運送狀態：{{order.deliveryStatus}}</span>
-                        <span>總付款金額：NT$ {{  numberComma(order.cart.finalTotal)  }}</span>
-                        <RouterLink :to="`/orders/${order.id}`" class="btn btn-red ms-3">查看詳細訂單狀況</RouterLink>
-                    </div>
-                </div>
-                <hr>
-            </div>
-            </div>
-        </div>
-        <!-- 頁尾 -->
-        <PaginationComponent ref="pagination" :filter-orders="filterOrders"></PaginationComponent>
-      </section>
-       <!-- 初始載入畫面，不建議應該蓋住全部，才不能點選種類 -->
-      <div v-if="loading" class="d-flex flex-column align-items-center">
-          <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-          <h1 class="text-center fw-bold text-lightBrown">
-            <span class="me-1 animate-text">L</span>
-            <span class="mx-1 animate-text">o</span>
-            <span class="mx-1 animate-text">a</span>
-            <span class="mx-1 animate-text">d</span>
-            <span class="mx-1 animate-text">i</span>
-            <span class="mx-1 animate-text">n</span>
-            <span class="mx-1 animate-text">g</span>
-            <span class="mx-2 animate-text">.</span>
-            <span class="me-2 animate-text">.</span>
-            <span class="animate-text">.</span>
-          </h1>
+                  <hr>
+              </RouterLink>
+              </div>
+              <div v-else-if="!filterOrders.length" class=" d-flex flex-column align-items-center justify-content-center" >
+                <img src="../../assets/images/undraw_No_data_re_kwbl.png" style="width: 300px;" alt="">
+                <h3>無訂單</h3>
+              </div>
+          </div>
+          <!-- 頁尾 -->
+          <PaginationComponent ref="pagination" :filter-orders="filterOrders"></PaginationComponent>
+        </section>
       </div>
+      </div>
+
     </div>
 </template>
 <style>
@@ -409,4 +427,8 @@ export default {
   .activePage{
     background: #d04740 !important;
   }
+
+  /* 文字背景顏色測試 */
+  /* https://images.unsplash.com/photo-1464219551459-ac14ae01fbe0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80 */
+
 </style>

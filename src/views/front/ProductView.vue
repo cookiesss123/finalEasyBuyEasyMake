@@ -12,19 +12,18 @@ import numberCommaMixin from '../../mixins/numberCommaMixin'
 import { db, auth } from '../../firebase/db'
 import { ref, onValue, set, remove, push } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
-import LoadingComponent from '../../components/LoadingComponent.vue'
-
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
 export default {
   components: {
     Swiper,
     SwiperSlide,
-    LoadingComponent
+    Loading
   },
   mixins: [numberCommaMixin],
   // ../../assets/images/Line7(Stroke).png
   data () {
     return {
-      loading: true,
       product: {},
       recipes: [],
       relevantRecipesInfo: [],
@@ -48,7 +47,9 @@ export default {
       bookMark: {},
       qty: 1,
       user: {},
-      uid: ''
+      uid: '',
+      isLoading: false,
+      fullPage: true
     }
   },
   methods: {
@@ -170,7 +171,7 @@ export default {
             return this.product.relevantRecipes.includes(recipe.title)
           })
           console.log(this.relevantRecipesInfo, '相關食譜')
-          this.loading = false
+          this.isLoading = false
         })
       })
     },
@@ -223,7 +224,7 @@ export default {
     }
   },
   mounted () {
-    this.loading = true
+    this.isLoading = true
     // 如果刷新 uid 就得不到了 user 資料同樣也得不到 但是user 是渲染所以晚點沒關係
     // this.checkLogin() 在書籤寫了 這裡就不用了
     this.getProduct()
@@ -273,7 +274,27 @@ export default {
 </script>
 <template>
   <div>
-    <div v-if="!loading" class="mt-10" style="overflow-x: hidden;">
+    <loading v-model:active="isLoading"
+                 :can-cancel="false"
+                 :is-full-page="fullPage"
+                 :lock-scroll="true">
+                 <div class="d-flex flex-column align-items-center py-10">
+      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
+      <h1 class="text-center fw-bold text-lightBrown">
+        <span class="me-1 animate-text">L</span>
+        <span class="mx-1 animate-text">o</span>
+        <span class="mx-1 animate-text">a</span>
+        <span class="mx-1 animate-text">d</span>
+        <span class="mx-1 animate-text">i</span>
+        <span class="mx-1 animate-text">n</span>
+        <span class="mx-1 animate-text">g</span>
+        <span class="mx-2 animate-text">.</span>
+        <span class="me-2 animate-text">.</span>
+        <span class="animate-text">.</span>
+      </h1>
+    </div>
+        </loading>
+    <div class="mt-10" style="overflow-x: hidden;">
       <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -472,7 +493,6 @@ export default {
         </div>
       </section>
     </div>
-    <LoadingComponent v-else-if="loading"></LoadingComponent>
   </div>
 </template>
 <style>

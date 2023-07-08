@@ -7,10 +7,12 @@ import cartStore from '../../stores/carts'
 import { db, auth } from '../../firebase/db'
 import { ref, onValue, set } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
 export default {
   components: {
     RouterLink,
-    // DeleteTest
+    Loading,
     DeleteBookmarksModal
   },
   mixins: [numberCommaMixin],
@@ -25,14 +27,15 @@ export default {
       rates: {},
       recipeThumbs: [],
       thumbs: {},
-      loadingItem: true // 載入中
+      isLoading: false,
+      fullPage: true
     }
   },
   methods: {
     ...mapActions(cartStore, ['addCart', 'toastMessage']),
     // 取得個別使用者收藏 - 食譜、產品、文章(還沒)
     getBookmarks (dataName) {
-      this.loadingItem = true
+      this.isLoading = true
       onAuthStateChanged(auth, (user) => {
         if (user) {
           this.uid = user.uid
@@ -45,7 +48,7 @@ export default {
             onValue(dataRef, snapshot => {
               this.bookMarks = snapshot.val()
               if (!this.bookMarks) {
-                this.loadingItem = false
+                this.isLoading = false
                 return
               }
               this.bookMarks = Object.values(this.bookMarks)
@@ -109,7 +112,7 @@ export default {
                   console.log(this.bookMarks, '加了評分的產品')
                 })
               }
-              this.loadingItem = false
+              this.isLoading = false
             })
           })
         } else {
@@ -186,21 +189,52 @@ export default {
 }
 </script>
 <template>
-    <div class="my-7">
-        <div class="bg-lightPink py-5 mb-3" style="">
-          <h3 class="text-center fw-bold text-red"><i class="bi bi-heart-fill fs-4 link-red"></i> 我的收藏</h3>
-        </div>
-        <section class="">
-            <ul class="nav nav-tabs container">
-            <li class="nav-item" @click="() => pageStatus = 'recipe'">
-                <button class="nav-link " :class="{'link-red': pageStatus === 'recipe', 'active': pageStatus === 'recipe'}" type="button" :disabled="loadingItem" ><i class="bi bi-book-half"></i> 食譜收藏</button>
-            </li>
-            <li class="nav-item" @click="() => pageStatus = 'product'">
-                <button class="nav-link" :class="{'link-red': pageStatus === 'product', 'active': pageStatus === 'product'}" type="button" :disabled="loadingItem" ><i class="bi bi-bag-check-fill"></i> 材料收藏</button>
-            </li>
-            </ul>
+    <div class="">
+      <loading v-model:active="isLoading"
+                 :can-cancel="false"
+                 :is-full-page="fullPage"
+                 :lock-scroll="true">
+                 <div class="d-flex flex-column align-items-center py-10">
+      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
+      <h1 class="text-center fw-bold text-lightBrown">
+        <span class="me-1 animate-text">L</span>
+        <span class="mx-1 animate-text">o</span>
+        <span class="mx-1 animate-text">a</span>
+        <span class="mx-1 animate-text">d</span>
+        <span class="mx-1 animate-text">i</span>
+        <span class="mx-1 animate-text">n</span>
+        <span class="mx-1 animate-text">g</span>
+        <span class="mx-2 animate-text">.</span>
+        <span class="me-2 animate-text">.</span>
+        <span class="animate-text">.</span>
+      </h1>
+    </div>
+        </loading>
+        <section class="bannerBg">
+          <div class="mask">
+            <div class="text" style="">
+              我的收藏
+            </div>
+          </div>
         </section>
-        <div class="container py-4">
+        <section class="container  mt-4">
+          <ul class="categorySelector row gy-4 row-cols-lg-2 row-cols-1 list-unstyled">
+            <li class="col d-flex border-end align-items-center justify-content-center">
+              <a href="#"  @click.prevent="()=>pageStatus = 'recipe'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': pageStatus === 'recipe', 'link-red': pageStatus === 'recipe'}">
+                <i class="bi bi-book-half fs-3"></i>
+                <span class="fs-4 ms-1" :class="{'dottedStyle': pageStatus === 'recipe'}">食譜收藏</span>
+              </a>
+            </li>
+            <li class="col d-flex align-items-center justify-content-center">
+              <a href="#"  @click.prevent="()=>pageStatus = 'product'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': pageStatus === 'product', 'link-red': pageStatus === 'product'}">
+                <i class="bi bi-bag-check-fill fs-3"></i>
+                <span class="fs-4 ms-1" :class="{'dottedStyle': pageStatus === 'product'}">材料收藏</span>
+              </a>
+            </li>
+          </ul>
+      </section>
+
+        <div class="container  py-4">
           <!-- 食譜 -->
             <!-- 1. 取消所有 border-radius: 20px; -->
                   <!-- 2. 卡片、圖片 border-radius: 0  -->
@@ -208,7 +242,7 @@ export default {
                   <!-- 4. footer改成 padding-top: 230px; 食譜、材料 card-text 加入 mb-0 card-footer pt-lg-3 -->
                   <!-- 折價 取消 border rounded  之後可考慮要不要加 shadow-->
                   <!-- 折價手機 fs 改成 10  font-size: 10px; -->
-          <div v-if="pageStatus === 'recipe' && bookMarks && !loadingItem" class="row row-cols-lg-4 row-cols-2 gy-4">
+          <div v-if="pageStatus === 'recipe' && bookMarks && !isLoading" class="row row-cols-lg-4 row-cols-2 gy-4">
             <div class="col text-decoration-none" v-for="recipe in bookMarks" :key="recipe.id">
               <div class="card position-relative bg-transparent" style="border-radius: 0; border: 1px solid transparent;">
                 <div class="cardImg" style="">
@@ -257,7 +291,7 @@ export default {
                   <!-- 4. footer改成 padding-top: 230px; 食譜、材料 card-text 加入 mb-0 card-footer pt-lg-3 -->
                   <!-- 折價 取消 border rounded  之後可考慮要不要加 shadow-->
                   <!-- 折價手機 fs 改成 10  font-size: 10px; -->
-          <div v-else-if="pageStatus === 'product' && bookMarks && !loadingItem" class="row row-cols-lg-4 row-cols-2 gy-4">
+          <div v-else-if="pageStatus === 'product' && bookMarks && !isLoading" class="row row-cols-lg-4 row-cols-2 gy-4">
             <div class="col text-decoration-none" v-for="product in bookMarks" :key="product.id">
               <div class="card position-relative bg-transparent" style="border-radius: 0; border: 1px solid transparent;">
                 <div class="cardImg" style="">
@@ -281,7 +315,7 @@ export default {
                     </button>
                   </div>
                   <!-- top: 155px; -->
-                  <button :disabled="loadingItem === 'loading'" @click="()=>addCart(product)" type="button" class="buyBtn border-0 bg-transparent me-lg-2 me-1 position-absolute end-0" >
+                  <button :disabled="isLoading === 'loading'" @click="()=>addCart(product)" type="button" class="buyBtn border-0 bg-transparent me-lg-2 me-1 position-absolute end-0" >
                     <img src="../../assets/images/icon-cart.png"  alt="" class="rounded-circle shadow-sm">
                   </button>
                 </h5>
@@ -308,24 +342,8 @@ export default {
               </div>
             </div>
           </div>
-            <!-- 載入中 -->
-            <div v-else-if="loadingItem" class="d-flex flex-column align-items-center py-10">
-              <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-              <h1 class="text-center fw-bold text-lightBrown">
-                <span class="me-1 animate-text">L</span>
-                <span class="mx-1 animate-text">o</span>
-                <span class="mx-1 animate-text">a</span>
-                <span class="mx-1 animate-text">d</span>
-                <span class="mx-1 animate-text">i</span>
-                <span class="mx-1 animate-text">n</span>
-                <span class="mx-1 animate-text">g</span>
-                <span class="mx-2 animate-text">.</span>
-                <span class="me-2 animate-text">.</span>
-                <span class="animate-text">.</span>
-              </h1>
-            </div>
             <!-- 沒有書籤 -->
-            <div v-if="!loadingItem && !bookMarks" class="py-5 d-flex flex-column align-items-center">
+            <div v-if="!isLoading && !bookMarks" class="py-5 d-flex flex-column align-items-center">
               <img src="../../assets/images/undraw_Appreciation_r2a1.png" class="" alt="" style="height: 250px;">
               <h2 >您尚無任何<span v-if="pageStatus === 'recipe'">食譜</span><span v-else-if="pageStatus === 'product'">材料</span>收藏</h2>
               <RouterLink to="/recipes" v-if="pageStatus === 'recipe'" class="link-red h5">前往瀏覽食譜</RouterLink>

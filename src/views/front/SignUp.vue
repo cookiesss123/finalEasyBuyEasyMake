@@ -19,9 +19,6 @@
                                     <span class="text-orange"> 食譜材料 </span>
                                     都在這裡
                                 </h2>
-                                <!-- <div class="d-flex">
-                                    <img src="../../assets/images/logo.png" class="mx-auto" alt="" width="310">
-                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -87,7 +84,7 @@
                                                 class="form-control border-0 border-bottom"
                                                 :class="{ 'is-invalid': errors['密碼'], 'is-valid':!errors['密碼'] && user.password}"
                                                 placeholder="請輸入密碼"
-                                                rules="min:6"
+                                                rules="required|min:6"
                                                 v-model="user.password"
                                             ></VField>
                                             <ErrorMessage name="密碼" class="invalid-feedback"></ErrorMessage>
@@ -101,7 +98,7 @@
                                                 class="form-control border-0 border-bottom"
                                                 :class="{ 'is-invalid': errors['確認密碼'], 'is-valid':!errors['確認密碼'] && user.confirmPassword}"
                                                 placeholder="請再次輸入密碼"
-                                                rules="confirmed:@密碼"
+                                                rules="required|confirmed:@密碼"
                                                 v-model="user.confirmPassword"
                                             ></VField>
                                             <ErrorMessage name="確認密碼" class="invalid-feedback"></ErrorMessage>
@@ -229,7 +226,8 @@ export default {
           showConfirmButton: false,
           timer: 1500
         })
-        this.$router.push('/login')
+        // 註冊完直接登入了 所以變成到home
+        this.$router.push('/home')
       } catch (e) { // 應該不可能註冊不成功 因為 vee validate會先擋掉 不過還是預防一下
         console.log(e.message, '錯誤')
         this.$swal({

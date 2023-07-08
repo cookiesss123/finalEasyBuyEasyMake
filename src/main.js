@@ -8,8 +8,10 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueSweetalert2 from 'vue-sweetalert2'
+// VUE LOADING
 // import { LoadingPlugin } from 'vue-loading-overlay'
 // import 'vue-loading-overlay/dist/css/index.css'
+
 import 'sweetalert2/dist/sweetalert2.min.css'
 import 'hover.css/css/hover-min.css'
 
@@ -50,8 +52,9 @@ setLocale('zh_TW')
 app.use(router)
 app.use(VueAxios, axios)
 app.use(VueSweetalert2)
+// LOADING
 // app.use(LoadingPlugin, {
-//   color: '#F5AE4C',
+//   color: '#d04740',
 //   loader: 'dots'
 // })
 app.component('VForm', Form)

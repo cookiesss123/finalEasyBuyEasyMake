@@ -10,18 +10,17 @@ import numberCommaMixin from '../../mixins/numberCommaMixin'
 import { db, auth } from '../../firebase/db'
 import { ref, onValue, set, remove, push } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
-import LoadingComponent from '../../components/LoadingComponent.vue'
-
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
 export default {
   components: {
     Swiper,
     SwiperSlide,
-    LoadingComponent
+    Loading
   },
   mixins: [numberCommaMixin],
   data () {
     return {
-      loading: true,
       recipe: {},
       modules: [Navigation, Pagination],
       navigation: {
@@ -42,7 +41,9 @@ export default {
       qty: 1,
       groupProduct: {},
       user: {},
-      uid: ''
+      uid: '',
+      isLoading: false,
+      fullPage: true
     }
   },
   methods: {
@@ -119,7 +120,7 @@ export default {
           return product.category === '組合包'
         })
         this.groupProduct = this.groupProduct[0]
-        this.loading = false
+        this.isLoading = false
       })
     },
     // 取得所有食譜留言
@@ -196,7 +197,7 @@ export default {
     }
   },
   mounted () {
-    this.loading = true
+    this.isLoading = true
     this.getAllThumbs()
     this.getMyThumb()
     this.getBookmark()
@@ -210,7 +211,27 @@ export default {
 </script>
 <template>
   <div>
-    <div v-if="!loading" class="mt-10" style="overflow-x: hidden;">
+    <loading v-model:active="isLoading"
+                 :can-cancel="false"
+                 :is-full-page="fullPage"
+                 :lock-scroll="true">
+                 <div class="d-flex flex-column align-items-center py-10">
+      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
+      <h1 class="text-center fw-bold text-lightBrown">
+        <span class="me-1 animate-text">L</span>
+        <span class="mx-1 animate-text">o</span>
+        <span class="mx-1 animate-text">a</span>
+        <span class="mx-1 animate-text">d</span>
+        <span class="mx-1 animate-text">i</span>
+        <span class="mx-1 animate-text">n</span>
+        <span class="mx-1 animate-text">g</span>
+        <span class="mx-2 animate-text">.</span>
+        <span class="me-2 animate-text">.</span>
+        <span class="animate-text">.</span>
+      </h1>
+    </div>
+        </loading>
+    <div class="mt-10" style="overflow-x: hidden;">
 
 <div class="container">
   <nav aria-label="breadcrumb">
@@ -379,7 +400,6 @@ export default {
   </div>
 </section>
     </div>
-    <LoadingComponent v-else-if="loading"></LoadingComponent>
   </div>
 </template>
 <style>

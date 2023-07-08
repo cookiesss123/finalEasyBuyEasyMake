@@ -10,22 +10,18 @@ import Collapse from 'bootstrap/js/dist/collapse'
 import { db, auth } from '../../firebase/db'
 import { ref, set, remove, onValue } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
-// import LoadingComponent from '../../components/LoadingComponent.vue'
-import bannerImg from '../../assets/images/SDSS.png'
+import LoadingComponent from '../../components/LoadingComponent.vue'
 
-import Loading from 'vue-loading-overlay'
-import 'vue-loading-overlay/dist/css/index.css'
 export default {
   components: {
     RouterLink,
     PaginationComponent,
-    Loading
-    // LoadingComponent
+    LoadingComponent
   },
   mixins: [numberCommaMixin],
   data () {
     return {
-      // loading: true,
+      loading: true,
       costOrRateCollapse: {},
       highOrLowCollapse: {},
       recipes: [],
@@ -38,10 +34,7 @@ export default {
       bookMarks: [],
       thumbs: {}, // 所有人按讚分類
       uid: '',
-      search: false, // 在搜尋嗎? 用來判斷搜尋無值的狀況
-      bannerImg,
-      isLoading: false,
-      fullPage: true
+      search: false // 在搜尋嗎? 用來判斷搜尋無值的狀況
     }
   },
   methods: {
@@ -81,7 +74,7 @@ export default {
           console.log(this.recipes, '食譜')
 
           this.filterRecipes = this.recipes
-          this.isLoading = false
+          this.loading = false
 
           if (!this.$route.query.category && this.$route.fullPath === '/recipes') { // 未傳值再渲染
           // 從單頁按讚後這裡會出現錯誤警告 因為觸發了最上方的得到讚 this.$route.fullPath === '/recipes' 用這個在食譜單頁就不會觸發了
@@ -177,7 +170,7 @@ export default {
   mounted () {
     // 暫時關閉
     // this.$refs.loadingModal.show()
-    this.isLoading = true
+    this.loading = true
 
     this.costOrRateCollapse = new Collapse(this.$refs.costOrRateCollapse, {
       toggle: false,
@@ -237,86 +230,51 @@ export default {
 }
 </script>
 <template>
-    <div class="">
-      <loading v-model:active="isLoading"
-                 :can-cancel="false"
-                 :is-full-page="fullPage"
-                 :lock-scroll="true">
-                 <div class="d-flex flex-column align-items-center py-10">
-      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <h1 class="text-center fw-bold text-lightBrown">
-        <span class="me-1 animate-text">L</span>
-        <span class="mx-1 animate-text">o</span>
-        <span class="mx-1 animate-text">a</span>
-        <span class="mx-1 animate-text">d</span>
-        <span class="mx-1 animate-text">i</span>
-        <span class="mx-1 animate-text">n</span>
-        <span class="mx-1 animate-text">g</span>
-        <span class="mx-2 animate-text">.</span>
-        <span class="me-2 animate-text">.</span>
-        <span class="animate-text">.</span>
-      </h1>
-    </div>
-        </loading>
-        <!--  background-image: url('https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); -->
-        <!-- <section class=" mb-4 px-lg-5 py-lg-10 py-5" style="overflow-x: hidden; background-position: center; background-size: cover; background-repeat: no-repeat; padding: 150px 0;  background-image: url('https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');" >
+    <div class="my-7">
+        <!-- Loading -->
+        <!-- bg-lightYellow -->
+       <!-- 一開始選擇active不會在 全部 => 不曉得為甚麼不能用 selectItem 初始得不到 必須用  selectCategory 才能得到 -->
+              <!-- selectItem 是搜尋會影響 selectCategory是直接按 -->
+        <section class="bg-lightPink mb-4 py-4 px-lg-5" style="overflow-x: hidden; background-position: center; background-size: cover;">
           <div class="container">
-            <h2 class="text-center fw-bold text-white py-3 fs-1" style="letter-spacing: 10px;">甜點種類</h2>
-          </div>
-        </section> -->
-        <section class="bannerBg">
-          <div class="mask">
-            <div class="text" style="">
-              甜點種類
-            </div>
+            <h3 class="text-center fw-bold text-red py-3">甜點種類</h3>
+            <ul class="categorySelector row row-cols-3 gy-4 row-cols-lg-6 list-unstyled">
+              <li class="col d-flex justify-content-center ">
+                <button style=" background-color: white;" class="text-red rounded-circle d-flex flex-column align-items-center justify-content-center border border-red" :class="{'text-white': selectItem === '全部', 'fw-bold': selectItem === '全部', 'border-red': selectItem === '全部','bg-red': selectItem === '全部'}"  type="button" @click="()=>selectCategory = '全部'"><span class="material-icons-outlined fs-1 mb-2">apps</span>全部</button>
+              </li>
+              <li class="col d-flex justify-content-center ">
+                <button style=" background-color: white;" class="text-red  rounded-circle d-flex flex-column align-items-center justify-content-center border border-red" :class="{'text-white': selectItem === '台式甜點', 'fw-bold': selectItem === '台式甜點', 'border-red': selectItem === '台式甜點','bg-red': selectItem === '台式甜點'}" type="button"  @click="()=>selectCategory = '台式甜點'">
+                <img v-if="selectItem !== '台式甜點'" src="../../assets/images/mooncake2.png"  class="mb-2" alt="">
+                <img v-else-if="selectItem === '台式甜點'" src="../../assets/images/moocake1.png"  class="mb-2" alt="">
+                台式甜點</button>
+              </li>
+              <li class="col d-flex justify-content-center ">
+                <button style=" background-color: white;" class="text-red  rounded-circle d-flex flex-column align-items-center justify-content-center border border-red" :class="{'text-white': selectItem === '法式甜點', 'fw-bold': selectItem === '法式甜點', 'border-red': selectItem === '法式甜點','bg-red': selectItem === '法式甜點'}" type="button" @click="()=>selectCategory = '法式甜點'">
+                <img v-if="selectItem !== '法式甜點'" src="../../assets/images/macaroon.png"  class="mb-2" alt="">
+                <img v-else-if="selectItem === '法式甜點'" src="../../assets/images/macaroon1.png"  class="mb-2" alt="">
+                法式甜點</button>
+              </li>
+              <li class="col d-flex justify-content-center">
+                <button style=" background-color: white;" class="text-red  rounded-circle d-flex flex-column align-items-center justify-content-center border border-red" :class="{'text-white': selectItem === '美式甜點', 'fw-bold': selectItem === '美式甜點', 'border-red': selectItem === '美式甜點','bg-red': selectItem === '美式甜點'}" type="button" @click="()=>selectCategory = '美式甜點'">
+                <img v-if="selectItem !== '美式甜點'" src="../../assets/images/donut1.png"  class="mb-2" alt="">
+                <img v-else-if="selectItem === '美式甜點'" src="../../assets/images/donut2.png"  class="mb-2" alt="">
+              美式甜點</button>
+              </li>
+             <li class="col d-flex justify-content-center">
+              <button style=" background-color: white;" class="text-red  rounded-circle d-flex flex-column align-items-center justify-content-center border border-red" :class="{'text-white': selectItem === '日式甜點', 'fw-bold': selectItem === '日式甜點', 'border-red': selectItem === '日式甜點','bg-red': selectItem === '日式甜點'}" type="button" @click="()=>selectCategory = '日式甜點'">
+                <img v-if="selectItem !== '日式甜點'" src="../../assets/images/mochi1.png"  class="mb-2" alt="">
+                <img v-else-if="selectItem === '日式甜點'" src="../../assets/images/mochi2.png"  class="mb-2" alt="">
+              日式甜點</button>
+             </li>
+             <li class="col d-flex justify-content-center">
+              <button style=" background-color: white;" class="text-red  rounded-circle d-flex flex-column align-items-center justify-content-center border border-red" :class="{'text-white': selectItem === '義式甜點', 'fw-bold': selectItem === '義式甜點', 'border-red': selectItem === '義式甜點','bg-red': selectItem === '義式甜點'}" type="button" @click="()=>selectCategory = '義式甜點'">
+                <img v-if="selectItem !== '義式甜點'" src="../../assets/images/tiramisu2.png"  class="mb-2" alt="">
+                <img v-else-if="selectItem === '義式甜點'" src="../../assets/images/tiramisu1.png"  class="mb-2" alt="">
+              義式甜點</button>
+             </li>
+            </ul>
           </div>
         </section>
-        <section class="container mt-4">
-          <ul class="categorySelector row row-cols-1 gy-2 row-cols-lg-6 list-unstyled">
-              <li class="col d-flex border-end align-items-center justify-content-center ">
-                <a href="#"  @click.prevent="()=>selectCategory = '全部'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': selectItem === '全部', 'link-red': selectItem === '全部'}">
-                  <span class="material-icons-outlined fs-1" style="border-bottom: 2px solid transparent !important;">apps</span>
-                  <span :class="{'dottedStyle': selectItem === '全部'}" class="fs-4 ">全部</span>
-                </a>
-              </li>
-              <li class="col d-flex border-end align-items-center justify-content-center ">
-                <a href="#"  @click.prevent="()=>selectCategory = '台式甜點'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': selectItem === '台式甜點', 'link-red': selectItem === '台式甜點'}">
-                  <img class="categoryImg2" v-if="selectItem !== '台式甜點'" src="../../assets/images/mooncake1.png" style="width: 40px;" alt="">
-                  <img v-else-if="selectItem === '台式甜點'" src="../../assets/images/mooncake2.png" style="width: 40px;" alt="">
-                  <span :class="{'dottedStyle': selectItem === '台式甜點'}" class="fs-4 ms-1" >台式甜點</span>
-                </a>
-              </li>
-              <li class="col d-flex border-end align-items-center justify-content-center">
-                <a href="#"  @click.prevent="()=>selectCategory = '法式甜點'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': selectItem === '法式甜點', 'link-red': selectItem === '法式甜點'}">
-                  <img class="categoryImg3" v-if="selectItem !== '法式甜點'" src="../../assets/images/macaroon1.png" style="width: 40px;" alt="">
-                  <img v-else-if="selectItem === '法式甜點'" src="../../assets/images/macaroon2.png" style="width: 40px;" alt="">
-                  <span :class="{'dottedStyle': selectItem === '法式甜點'}" class="fs-4 ms-1">法式甜點</span>
-                </a>
-              </li>
-              <li class="col d-flex border-end align-items-center justify-content-center">
-                <a href="#"  @click.prevent="()=>selectCategory = '美式甜點'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': selectItem === '美式甜點', 'link-red': selectItem === '美式甜點'}">
-                  <img class="categoryImg4" v-if="selectItem !== '美式甜點'" src="../../assets/images/donut1.png" style="width: 40px;" alt="">
-                  <img v-else-if="selectItem === '美式甜點'" src="../../assets/images/donut2.png" style="width: 40px;" alt="">
-                  <span :class="{'dottedStyle': selectItem === '美式甜點'}" class="fs-4 ms-1">美式甜點</span>
-                </a>
-              </li>
-              <li class="col d-flex border-end align-items-center justify-content-center">
-                <a href="#"  @click.prevent="()=>selectCategory = '日式甜點'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': selectItem === '日式甜點', 'link-red': selectItem === '日式甜點'}">
-                  <img class="categoryImg5" v-if="selectItem !== '日式甜點'" src="../../assets/images/mochi1.png" style="width: 40px;" alt="">
-                  <img v-else-if="selectItem === '日式甜點'" src="../../assets/images/mochi2.png" style="width: 40px;" alt="">
-                  <span :class="{'dottedStyle': selectItem === '日式甜點'}" class="fs-4 ms-1">日式甜點</span>
-                </a>
-              </li>
-              <li class="col d-flex align-items-center justify-content-center">
-                <a href="#"  @click.prevent="()=>selectCategory = '義式甜點'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': selectItem === '義式甜點', 'link-red': selectItem === '義式甜點'}">
-                  <img class="categoryImg6" v-if="selectItem !== '義式甜點'" src="../../assets/images/tiramisu1.png" style="width: 40px;" alt="">
-                  <img v-else-if="selectItem === '義式甜點'" src="../../assets/images/tiramisu2.png" style="width: 40px;" alt="">
-                  <span :class="{'dottedStyle': selectItem === '義式甜點'}" class="fs-4 ms-1">義式甜點</span>
-                </a>
-              </li>
-          </ul>
-        </section>
-
         <section class="d-none d-lg-block container selectProduct my-5">
           <div class="input-group">
             <a class="btn btn-outline-red px-5" @click="()=> this.costOrRateCollapse.toggle()">篩選對象 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{priceOrRate}}</span></a>
@@ -401,7 +359,7 @@ export default {
               </div>
             </div>
           </div>
-          <!-- <LoadingComponent v-if="loading"></LoadingComponent> -->
+          <LoadingComponent v-if="loading"></LoadingComponent>
           <!-- 查無食譜 -->
           <div v-else-if="!filterRecipes.length && search" class="py-10">
             <img src="../../assets/images/undraw_Page_not_found_re_e9o6.png" class="mb-3" alt="" style="height: 250px; display: block; margin: auto;">
@@ -416,38 +374,5 @@ export default {
 /* 改 placeholder 顏色 */
  ::placeholder {
     /* color: #f39691 !important; */
-  }
-  .categorySelector li a{
-    padding-bottom: 10px;
-    /* transition: all .4 ease-in-out; */
-  }
-  .categorySelector li a:hover{
-    color: #d04740 !important;
-  }
-  .categorySelector li a span{
-    border-bottom: 2px transparent dotted;
-    transition: all .3s ease-in-out;
-  }
-
-  .categorySelector li a:hover span{
-    border-bottom: 2px dotted #d04740;
-  }
-  .dottedStyle{
-    border-bottom: 2px dotted #d04740 !important;
-  }
-  .categorySelector li a:hover .categoryImg2 {
-    content: url('@/assets/images/mooncake2.png');
-  }
-  .categorySelector li a:hover .categoryImg3 {
-    content: url('@/assets/images/macaroon2.png');
-  }
-  .categorySelector li a:hover .categoryImg4 {
-    content: url('@/assets/images/donut2.png');
-  }
-  .categorySelector li a:hover .categoryImg5 {
-    content: url('@/assets/images/mochi2.png');
-  }
-  .categorySelector li a:hover .categoryImg6 {
-    content: url('@/assets/images/tiramisu2.png');
   }
 </style>

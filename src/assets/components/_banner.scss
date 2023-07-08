@@ -1,5 +1,6 @@
 // 手機
 // navbar
+
 .logo{
     height: 54px;
 }
@@ -33,21 +34,21 @@
   // hover 對線條
   #navbarNav .nav-link:hover{
     color: #d04740;
-    background: white;
+    // background: white;
     width: 100%;
 } 
 
 #navbarNav .mainMenu .active-link {
     color: #d04740 !important;
     border-bottom: 2px solid #d04740 !important;
-    background: white;
+    // background: white; 不是這個
     width: 20%; // !important
     margin: 0 auto;
 }
 #navbarNav .login .active-link {
     color: #d04740 !important;
     border-bottom: 2px solid #d04740 !important;
-    background: white;
+    // background: white; 不是這個
 }
 
 
@@ -128,6 +129,37 @@
     opacity: 1;
   }
   
+  // 每頁 banner
+  .bannerBg {
+    width: 100vw;
+    height: 50vh;
+    background-image: url("https://images.unsplash.com/photo-1670790734657-9680589fae49?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+    .mask {
+    background-color: rgba(255, 255, 255, 0.6);
+    width: 90vw;
+    height: 25vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .text {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    font-size: 40px;
+    text-align: center;
+    color: #d04740; /* 文字顏色設定透明 */
+    letter-spacing: 15px; /* 這個不能太大否則無法置中 */
+    font-weight: bold;
+  }
+
 // 桌機
 @include media-breakpoint-up(lg) {
     .logo{
@@ -160,7 +192,7 @@
       
       #navbarNav .nav-link:hover{
         color: #d04740;
-        background: white;
+        // background: white;
     } 
     
     // 桌機 menu link
@@ -168,7 +200,7 @@
     #navbarNav .mainMenu .active-link {
         color: #d04740 !important;
         border-bottom: 2px solid #d04740 !important;
-        background: white;
+        // background: white;
         width: 100%;
     }
 
@@ -207,4 +239,15 @@
       font-size: 20px;
     }
 
+  // 每頁 banner
+    .text {
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+      font-size: 40px;
+      text-align: center;
+      color: #d04740; /* 文字顏色設定透明 */
+      letter-spacing: 40px;
+      font-weight: bold;
+    }
 }

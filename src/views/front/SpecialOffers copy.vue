@@ -1,64 +1,30 @@
 <template>
-    <div class="">
-      <loading v-model:active="isLoading"
-                 :can-cancel="false"
-                 :is-full-page="fullPage"
-                 :lock-scroll="true">
-                 <div class="d-flex flex-column align-items-center py-10">
-      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <h1 class="text-center fw-bold text-lightBrown">
-        <span class="me-1 animate-text">L</span>
-        <span class="mx-1 animate-text">o</span>
-        <span class="mx-1 animate-text">a</span>
-        <span class="mx-1 animate-text">d</span>
-        <span class="mx-1 animate-text">i</span>
-        <span class="mx-1 animate-text">n</span>
-        <span class="mx-1 animate-text">g</span>
-        <span class="mx-2 animate-text">.</span>
-        <span class="me-2 animate-text">.</span>
-        <span class="animate-text">.</span>
-      </h1>
-    </div>
-        </loading>
-      <!-- <section class=" mb-4 px-lg-5 py-lg-10 py-5" style="overflow-x: hidden; background-position: center; background-size: cover; background-repeat: no-repeat; padding: 150px 0;  background-image: url('https://images.unsplash.com/photo-1622838982253-495392336bf0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');" >
+    <div class="my-7">
+      <section class=" mb-4 px-lg-5 py-lg-10 py-5" style="overflow-x: hidden; background-position: center; background-size: cover; background-repeat: no-repeat; padding: 150px 0;  background-image: url('https://images.unsplash.com/photo-1622838982253-495392336bf0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');" >
           <div class="container d-flex flex-column align-items-center">
             <h2 class="text-center fw-bold text-white py-3 fs-1" style="letter-spacing: 10px;">優惠特報</h2>
           </div>
-      </section> -->
-      <section class="bannerBg">
-          <div class="mask">
-            <div class="text" style="">
-              優惠特報
-            </div>
-          </div>
-        </section>
-      <section class="container mt-4">
-          <ul class="categorySelector row gy-4 row-cols-lg-2 row-cols-1 list-unstyled">
-            <li class="col d-flex border-end align-items-center justify-content-center">
-              <a href="#"  @click.prevent="()=>tabName = '優惠折扣'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': tabName === '優惠折扣', 'link-red': tabName === '優惠折扣'}">
-                <i class="bi bi-percent fs-2"></i>
-                <span class="fs-4" :class="{'dottedStyle': tabName === '優惠折扣'}">優惠折扣</span>
-              </a>
-            </li>
-            <li class="col d-flex align-items-center justify-content-center">
-              <a href="#"  @click.prevent="()=>tabName = '抽獎回饋'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': tabName === '抽獎回饋', 'link-red': tabName === '抽獎回饋'}">
-                <i class="bi bi-gift fs-3"></i>
-                <span class="fs-4 ms-1" :class="{'dottedStyle': tabName === '抽獎回饋'}">抽獎回饋</span>
-              </a>
-            </li>
-          </ul>
       </section>
+
+      <ul class="navTitle nav nav-tabs container" >
+        <li class="nav-item" @click="()=>tabName = '優惠折扣'">
+          <button class="nav-link" :class="{'active': tabName === '優惠折扣', 'link-red':tabName === '優惠折扣'}"  type="button" >優惠折扣</button>
+        </li>
+        <li class="nav-item" @click="()=>tabName = '抽獎回饋'">
+          <button class="nav-link" :class="{'active': tabName === '抽獎回饋', 'link-red':tabName === '抽獎回饋'}" type="button">抽獎回饋</button>
+        </li>
+      </ul>
       <section v-if="tabName === '優惠折扣'" class="text-red ">
         <div class="container">
-          <div v-if="!isLoading" class="row row-cols-lg-4 g-4 py-3 text-darkBrown">
-          <div class="col hvr-hang" v-for="(coupon, index) in coupons" :key="index">
+          <div v-if="!loading" class="row row-cols-lg-4 g-4 py-3 text-darkBrown">
+          <div class="col" v-for="(coupon, index) in coupons" :key="index">
               <div class="card">
                   <div class="enlargeImg w-100 rounded">
                     <div class="cardImg">
                       <img :src="coupon.image" class="card-img-top" alt="..." height="200" style="object-fit: cover;">
                     </div>
                     <div class="card-body">
-                      <h5 class="card-title h4 fw-bold">{{  coupon.title }}</h5>
+                      <h5 class="card-title h3">{{  coupon.title }}</h5>
                       <p class="card-text text-truncate">{{ coupon.description }}</p>
                       <div class="d-flex">
                           <RouterLink :to="`/discounts/${index}`" href="#" class="stretched-link btn btn-red ms-auto">查看完整優惠資訊</RouterLink>
@@ -68,24 +34,24 @@
               </div>
           </div>
         </div>
+        <LoadingComponent v-if="loading"></LoadingComponent>
         </div>
 
       </section>
       <section  v-else-if="tabName === '抽獎回饋'">
         <div class="container">
           <div class="py-3 text-darkBrown d-flex flex-column">
-          <p class=""><i class="bi bi-clock-fill me-1"></i>活動時間：{{ new Date(lottery.startDate).toLocaleDateString().split(' ')[0] }} ~ {{ new Date(lottery.dueDate).toLocaleString().split(' ')[0] }}</p>
+          <p class="">活動時間：{{ new Date(lottery.startDate).toLocaleDateString().split(' ')[0] }} ~ {{ new Date(lottery.dueDate).toLocaleString().split(' ')[0] }}</p>
 
-          <p v-if="uid" :class="{'text-danger':user.lotteryTicket === 0}"><i class="bi bi-ticket-perforated-fill me-1"></i>剩餘抽獎券：{{ user.lotteryTicket }}張</p>
+          <p v-if="uid" :class="{'text-danger':user.lotteryTicket === 0}">剩餘抽獎券：{{ user.lotteryTicket }}</p>
 
           <!-- 食譜尚未完成 -->
           <!-- getPrize.id !== '1' 不能用 因為 id 讀不到 -->
           <!-- v-if="!getPrize" 要改成不是 '1' -->
           <div v-if="!getPrize || (getPrize && getPrize.id !== 1)" class="col-lg-12 align-self-center">
-            <h4 class="mb-0 text-center fw-bold">本月指定抽獎食譜</h4>
+            <p class="mb-0">本月指定抽獎食譜：</p>
             <div class="row row-cols-lg-3 row-cols-1 pt-4">
-              <!-- border border-red -->
-              <div v-for="(item, index) in drewProducts" :key="item" class="border border-red bg-lightPink col" >
+              <div v-for="(item, index) in drewProducts" :key="item" class="border border-red col">
                 <h4 class="text-center fw-bold my-3">{{ item[0] }}</h4>
                 <div class="row">
                   <div class="d-flex flex-column align-items-center position-relative col-4"
@@ -183,8 +149,7 @@ import numberCommaMixin from '../../mixins/numberCommaMixin'
 import { db, auth } from '../../firebase/db'
 import { ref, onValue, update, set } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
-import Loading from 'vue-loading-overlay'
-import 'vue-loading-overlay/dist/css/index.css'
+import LoadingComponent from '../../components/LoadingComponent.vue'
 export default {
   mixins: [numberCommaMixin],
   data () {
@@ -199,12 +164,11 @@ export default {
       getPrize: {},
       tabName: '優惠折扣', // 判斷在哪個頁籤
       articles: [],
-      isLoading: false,
-      fullPage: true
+      loading: true
     }
   },
   components: {
-    Loading
+    LoadingComponent
   },
   methods: {
     ...mapActions(cartStore, ['checkLogin', 'toastMessage']),
@@ -214,7 +178,7 @@ export default {
       onValue(dataRef, snapshot => {
         this.coupons = snapshot.val()
         console.log(this.coupons, '折價券')
-        this.isLoading = false
+        this.loading = false
       })
     },
     // 取得抽獎
@@ -415,7 +379,7 @@ export default {
   },
   mounted () {
     // this.$refs.loadingModal.show()
-    this.isLoading = true
+    this.loading = true
     if (this.$route.query.tabName) {
       this.tabName = this.$route.query.tabName
     }
