@@ -149,6 +149,16 @@
     align-items: center;
     justify-content: center;
   }
+
+  // checkoutMask 結帳半透明白色遮罩
+  .checkoutMask{
+    background-color: rgba(255, 255, 255, 0.6);
+    width: 90vw;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .text {
     background-repeat: no-repeat;
     background-position: center center;
@@ -250,4 +260,15 @@
       letter-spacing: 40px;
       font-weight: bold;
     }
+
+    
+  // checkoutMask 結帳半透明白色遮罩
+  .checkoutMask{
+    background-color: rgba(255, 255, 255, 0.6);
+    width: 90vw;
+    height: 25vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

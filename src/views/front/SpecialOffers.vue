@@ -1,12 +1,12 @@
 <template>
-    <div class="">
+    <div class=""  style="overflow-x: hidden;">
       <loading v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"
                  :lock-scroll="true">
                  <div class="d-flex flex-column align-items-center py-10">
       <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <h1 class="text-center fw-bold text-lightBrown">
+      <h1 class="text-center fw-bold text-red">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -50,6 +50,7 @@
       </section>
       <section v-if="tabName === '優惠折扣'" class="text-red ">
         <div class="container">
+          <h3><span class="rounded-circle bg-red px-2 text-white">6</span> 月</h3>
           <div v-if="!isLoading" class="row row-cols-lg-4 g-4 py-3 text-darkBrown">
           <div class="col hvr-hang" v-for="(coupon, index) in coupons" :key="index">
               <div class="card">
@@ -60,8 +61,10 @@
                     <div class="card-body">
                       <h5 class="card-title h4 fw-bold">{{  coupon.title }}</h5>
                       <p class="card-text text-truncate">{{ coupon.description }}</p>
+                      <p class="detail d-none d-lg-block position-absolute fw-bold" style="top: 30%; left: 50%; transform: translateX(-50%); letter-spacing: 5px;">查看優惠資訊</p>
+
                       <div class="d-flex">
-                          <RouterLink :to="`/discounts/${index}`" href="#" class="stretched-link btn btn-red ms-auto">查看完整優惠資訊</RouterLink>
+                          <RouterLink :to="`/discounts/${index}`" href="#" class="stretched-link btn btn-outline-red rounded-0 ms-auto">查看完整優惠資訊</RouterLink>
                       </div>
                     </div>
                   </div>

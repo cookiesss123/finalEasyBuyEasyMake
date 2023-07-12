@@ -217,7 +217,7 @@ export default {
                  :lock-scroll="true">
                  <div class="d-flex flex-column align-items-center py-10">
       <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <h1 class="text-center fw-bold text-lightBrown">
+      <h1 class="text-center fw-bold text-red">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -324,10 +324,12 @@ export default {
         <h3 class="mb-4 fw-bold"><i class="bi bi-bag-check-fill"></i> 相關產品</h3>
         <div class="row">
           <div class="col-12 relativeProducts">
-            <div v-for="product in recipe.relativeProducts" :key="product.id + 456496">
+            <div v-for="product in recipe.relativeProducts" :key="product.id + 456496" class="subImg">
               <RouterLink :to="`/products/${product.id}`"  class="link-red d-flex flex-column align-items-center cardImg" v-if="product.category === '組合包'">
-                <div class="enlargeImg" style="width: 50% !important;">
+                <!-- position-relative -->
+                <div class="enlargeImg position-relative" style="width: 50% !important;">
                   <img :src="product.imgUrl" alt="" class="w-100" height="150" style="object-fit: cover;">
+                  <p class="subDetail d-none d-lg-block position-absolute fw-bold text-darkBrown" style="top: 40%; left: 50%; transform: translateX(-50%); letter-spacing: 5px;">查看商品資訊</p>
                 </div>
                 <p class="fw-bold mt-2">{{ product.title }}</p>
               </RouterLink>
@@ -347,10 +349,11 @@ export default {
           </div>
         </div>
         <div class="row mt-5 row-cols-lg-3 row-cols-2 relativeProducts">
-          <div class="col" v-for="product in recipe.relativeProducts" :key="product.id + 456496">
+          <div class="col subImg" v-for="product in recipe.relativeProducts" :key="product.id + 456496">
             <RouterLink :to="`/products/${product.id}`"  class="link-red d-flex flex-column align-items-center cardImg" v-if="product.category === '單一產品'">
-              <div class="enlargeImg">
+              <div class="enlargeImg position-relative">
                 <img :src="product.imgUrl" alt="" height="150" style="object-fit: cover;" class="w-100">
+                <p class="subDetail d-none d-lg-block position-absolute fw-bold text-darkBrown" style="top: 40%; left: 50%; transform: translateX(-50%);">查看商品資訊</p>
               </div>
               <p class="fw-bold mt-2">{{ product.title }}</p>
             </RouterLink>

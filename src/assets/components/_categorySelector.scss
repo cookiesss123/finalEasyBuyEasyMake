@@ -1,0 +1,98 @@
+// 甜點頁面 種類欄位
+.categorySelector li a span.titleSize{
+    font-size: 10px;
+    // margin-top: 5px;
+  }
+// 單獨 "全部"圖示的大小(因為是span)
+.categorySelector li a .textImg{
+    font-size: 18px;
+}
+// 全部的圖示大小
+.categorySelector li a img{
+    width: 20px;
+}
+
+/* 若要選定才有滑行效果 那就要 做一個 active 不能直接在redLine 寫  */
+
+  /* 滑行測試 */
+  .redLine{
+    transition: all .3s ease-in-out ;
+    width: 24px;
+  }
+
+  .activeAll{
+    left: 5% !important;
+  }
+  /*1 全部 */
+  
+    /* 2 台式甜點 */
+  .activeT{
+    left: 21.8% !important;
+  }
+
+
+  /* 3 法式甜點 */
+  .activeF{
+    left: 38.5% !important;
+  }
+
+    /* 4 美式甜點 */
+    .activeA{
+    left: 55% !important;
+  }
+
+    /* 5 日式甜點 */
+    .activeJ{
+    left: 71.5% !important;
+  }
+
+    /* 6 義式甜點 */
+    .activeI{
+    left: 88.5% !important;
+  }
+/* 選定禁止點擊 */
+  .liDisabled{
+    pointer-events: none;
+  }
+
+@include media-breakpoint-up(lg) {
+     .categorySelector li a span.titleSize{
+       font-size: 20px;
+     }
+     .categorySelector li a img{
+        width: 40px;
+    }
+     // 單獨 "全部"圖示的大小(因為是span)
+     .categorySelector li a .textImg{
+        font-size: 36px;
+    }
+
+    .redLine{
+        width: 84px;
+    }
+
+    .categorySelector li:nth-child(1):hover ~ .redLine{
+        left: 5% !important;
+        background-color: #6c757d !important;
+      }
+      .categorySelector li:nth-child(2):hover ~ .redLine{
+        left: 21.8% !important;
+        background-color: #6c757d !important;
+      }
+      .categorySelector li:nth-child(3):hover ~ .redLine{
+        left: 38.5% !important;
+        background-color: #6c757d !important;
+      }
+      .categorySelector li:nth-child(4):hover ~ .redLine{
+        left: 55% !important;
+        background-color: #6c757d !important;
+      }
+      .categorySelector li:nth-child(5):hover ~ .redLine{
+        left: 71.5% !important;
+        background-color: #6c757d !important;
+      }
+      .categorySelector li:nth-child(6):hover ~ .redLine{
+        left: 88.5% !important;
+        background-color: #6c757d !important;
+      }
+ }

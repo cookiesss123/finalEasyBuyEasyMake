@@ -189,14 +189,14 @@ export default {
 }
 </script>
 <template>
-    <div class="">
+    <div class=""  style="overflow-x: hidden;">
       <loading v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"
                  :lock-scroll="true">
                  <div class="d-flex flex-column align-items-center py-10">
       <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <h1 class="text-center fw-bold text-lightBrown">
+      <h1 class="text-center fw-bold text-red">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -252,6 +252,8 @@ export default {
                 </div>
                 <h5 class="card-text mb-0">
                   <div>
+                    <p class="detail d-none d-lg-block position-absolute fw-bold" style="top: 35%; left: 50%; transform: translateX(-50%); letter-spacing: 5px;">查看詳細食譜</p>
+
                     <button type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>openDeleteModal(recipe.id, recipe)">
                         <img src="../../assets/images/image4.png">
                     </button>
@@ -301,6 +303,7 @@ export default {
                 </div>
                 <h5 class="card-text mb-0">
                   <div>
+                    <p class="detail d-none d-lg-block position-absolute fw-bold" style="top: 35%; left: 50%; transform: translateX(-50%); letter-spacing: 5px;">查看商品資訊</p>
                     <button type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>openDeleteModal(product.id, product)">
                         <img src="../../assets/images/image4.png">
                     </button>

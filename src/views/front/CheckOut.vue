@@ -39,28 +39,51 @@ export default {
 }
 </script>
 <template>
-    <div class="my-10">
-      <div class="container">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item fs-5">
-                    購物車
-                    <!-- <RouterLink to="/" class="link-orange  d-none d-lg-block">購物車</RouterLink> -->
-                </li>
-                <li class="breadcrumb-item active fs-5" aria-current="page">填寫訂單資訊</li>
-            </ol>
-        </nav>
-      </div>
-      <section class="container mt-5">
+    <div class="" style="overflow-x: hidden;">
+        <section class="py-9 d-flex" style="background-image:url('https://images.unsplash.com/photo-1616968173983-cc56f09d8279?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80'); background-position: center; background-size: cover; background-repeat: no-repeat;">
+            <div class="checkoutMask mx-auto ">
+                <div class="container">
+                <ul class="list-unstyled d-lg-flex  fs-5 align-items-center">
+                    <li class=" text-center" style="flex: 1;">
+                        <i class="bi bi-check-circle-fill text-red  fs-2"></i>
+                        <p>
+                            <span class="fw-bold">確認購物車品項</span>
+                        </p>
+                    </li>
+                    <li class="bg-red d-none d-lg-block " style="width: 200px; height: 3px; flex: 2;"></li>
+                    <li class="bg-red d-lg-none my-2" style="width: 3px; height: 40px;  margin: 0 auto;"></li>
+
+                    <li class=" text-center" style="flex: 1;">
+                        <i class="bi bi-2-circle text-red fs-2 rounded-circle" style="padding: 3px 5px; border: 2px dotted #d04740;"></i>
+                        <p class="">
+                            <span class="text-red fw-bold">填寫訂單資訊</span>
+                        </p>
+                    </li>
+                    <li class="d-none d-lg-block" style="width: 200px; height: 3px; flex: 2; border-top: 3px dashed #fdb1ab;"></li>
+                    <li class="d-lg-none my-4" style="width: 40px; height: 3px; margin: 0 auto; transform: rotate(90deg); border-top: 3px dashed #fdb1ab;"></li>
+
+                    <li class=" text-center" style="flex: 1;">
+                        <i class="bi bi-3-circle-fill  fs-2 text-pink"></i>
+                        <p>
+                            <span class="text-pink fw-bold">成功下訂</span>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            </div>
+        </section>
+
+        <section class="container mt-5">
         <div class="row row-cols-1 row-cols-lg-2 g-5">
             <div class="col">
+                <h4 class="text-center fw-bold mb-4 bg-lightPink py-2">商品確認</h4>
                 <div class="row">
                     <div class="col-12" v-for="(item, index) in cartItems" :key="index + 756345">
                         <div class="card mb-3" style="border: none !important;">
                             <div class="row g-0">
-                            <RouterLink :to="`/products/${item.product.id}`" class="col-4">
-                                <img :src="item.product.imgUrl" class="img-fluid rounded-start w-100" style="object-fit: cover; height: 150px;">
-                            </RouterLink>
+                            <div class="col-4">
+                                <img :src="item.product.imgUrl" class="img-fluid  w-100" style="object-fit: cover; height: 130px;">
+                            </div>
                             <div class="col-8">
                                 <div class="card-body d-flex flex-column h-100">
                                     <h5 class="card-title d-flex mb-auto subTitle">{{ item.product.title }}
@@ -101,7 +124,7 @@ export default {
                                         <td>優惠券折扣</td>
                                         <td class="text-end">- NT$ {{ numberComma(Math.ceil(cart.total * (cart.coupon.discount / 100))) }}</td>
                                     </tr>
-                                    <tr class="border-top">
+                                    <tr class="border-top bg-lightPink">
                                         <td class="fw-bold text-danger">總計金額</td>
                                         <td class="text-end fw-bold text-danger">
                                             <span v-if="cart.total < 1000">NT$ {{ numberComma(cart.finalTotal) }}</span>
@@ -119,6 +142,8 @@ export default {
                 </div>
             </div>
             <div class="col">
+                <h4 class="text-center fw-bold mb-4 bg-lightPink py-2">填寫收件人資訊</h4>
+
                 <!-- 要在form寫 submit 才會把不符合表單的內容擋下 -->
                 <VForm ref="form" class="" v-slot="{ errors }" @submit="()=>addOrder (user.email, user.name, user.phoneNum, user.address, user.message)">
                     <div class="row gy-4 d-flex">

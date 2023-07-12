@@ -2,8 +2,27 @@
   // opacity: 0.9;
   overflow:hidden;
 }
-.card:hover .cardImg{
-  // opacity: 1;
+.card:hover .cardImg,.card:hover .cardTextCategory{
+  opacity: .5;
+}
+.detail{
+  opacity: 0;
+  // 有時候不能點購物車 不知道為甚麼
+  pointer-events: none;
+}
+.card:hover .detail{
+  opacity: 1;
+}
+// 單一產品或食譜關聯食譜、產品資訊
+.subDetail{
+  opacity: 0;
+  pointer-events: none;
+}
+.subImg:hover img{
+  opacity: .5;
+}
+.subImg:hover .subDetail{
+  opacity: 1;
 }
 // 僅限 食譜、產品物件 其他盡量不要是 card 結構
 // .card:hover{

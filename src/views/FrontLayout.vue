@@ -7,7 +7,9 @@
       <header class="fixed-top">
         <!-- bg-white -->
         <!-- 滑下來才變白 手機展示toggle 變白 或是 orders 詳細頁面才變白 -->
-        <div class="" :class="{'bg-white': showNavbar || menuToggle || this.$route.fullPath.includes('orders') || this.$route.fullPath.includes('recipes/') || this.$route.fullPath.includes('products/') || this.$route.fullPath.includes('discounts/') || this.$route.fullPath.includes('products/') || this.$route.fullPath.includes('checkout') || this.$route.fullPath.includes('orderSuccess')}" style="background-color: transparent;">
+        <!-- this.$route.fullPath.includes('checkout') ||  -->
+        <!-- || this.$route.fullPath.includes('orderSuccess') -->
+        <div class="" :class="{'bg-white': showNavbar || menuToggle || this.$route.fullPath.includes('orders') || this.$route.fullPath.includes('recipes/') || this.$route.fullPath.includes('products/') || this.$route.fullPath.includes('discounts/') || this.$route.fullPath.includes('products/') }" style="background-color: transparent;">
           <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
               <div class="d-flex align-items-center">

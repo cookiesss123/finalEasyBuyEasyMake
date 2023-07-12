@@ -3,20 +3,26 @@ import numberCommaMixin from '../../mixins/numberCommaMixin'
 import { db, auth } from '../../firebase/db'
 import { ref, onValue } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
 export default {
   data () {
     return {
       user: {},
       order: {},
       barWidth: 0,
-      loadingItem: true,
-      uid: ''
+      uid: '',
+      isLoading: false,
+      fullPage: true
     }
+  },
+  components: {
+    Loading
   },
   mixins: [numberCommaMixin],
   methods: {
     getOrder () { // 訂單完成
-      this.loadingItem = true
+      this.isLoading = true
       const { id } = this.$route.params
       onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -36,7 +42,7 @@ export default {
             } else if (this.order.deliveryStatus === '訂單完成') {
               this.barWidth = 100
             }
-            this.loadingItem = false
+            this.isLoading = false
           })
         } else {
           console.log('並未登入')
@@ -57,7 +63,27 @@ export default {
 </script>
 <template>
     <div class="mt-10 container" style="overflow-x: hidden;">
-        <div v-if="!loadingItem">
+        <loading v-model:active="isLoading"
+                 :can-cancel="false"
+                 :is-full-page="fullPage"
+                 :lock-scroll="true">
+                 <div class="d-flex flex-column align-items-center py-10">
+      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
+      <h1 class="text-center fw-bold text-red">
+        <span class="me-1 animate-text">L</span>
+        <span class="mx-1 animate-text">o</span>
+        <span class="mx-1 animate-text">a</span>
+        <span class="mx-1 animate-text">d</span>
+        <span class="mx-1 animate-text">i</span>
+        <span class="mx-1 animate-text">n</span>
+        <span class="mx-1 animate-text">g</span>
+        <span class="mx-2 animate-text">.</span>
+        <span class="me-2 animate-text">.</span>
+        <span class="animate-text">.</span>
+      </h1>
+    </div>
+    </loading>
+        <div>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item "><RouterLink to="/member" href="#" class="link-red">會員專區</RouterLink></li>
@@ -69,26 +95,29 @@ export default {
             <p class="">訂單編號：{{ order.id }}</p>
             <div class="d-flex flex-column align-items-center mt-5">
                 <!-- justify-content-between  -->
-                <section class="col-12 col-lg-10 d-flex" id="orderProcess" style="color: #d3ccc1">
-                    <div class="d-flex flex-column align-items-center">
+                <section class="col-12 col-lg-10 d-flex " id="orderProcess" style="color: #d3ccc1">
+                    <!-- 如果是加圈圈 -->
+
+                    <div class="d-flex flex-column align-items-center" :class="{'orderStatus': barWidth === 0}">
                         <i class=" fs-1 bi bi-box-seam text-red"></i>
                         <h5 class=" fw-bold text-red"  style="white-space: nowrap" >待出貨</h5>
                     </div>
+                    <!-- 線條 -->
                     <div v-if="barWidth < 33" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #d3ccc1; width: 33%;"></div>
                     <div v-else-if="barWidth >= 33" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #d04740; width: 33%;"></div>
-                    <div class="d-flex flex-column align-items-center">
+                    <div class="d-flex flex-column align-items-center" :class="{'orderStatus': barWidth === 33}">
                         <i class="bi bi-truck  fs-1" :class="{'text-red': barWidth >= 33}"></i>
                         <h5 class=" fw-bold" :class="{'text-red': barWidth >= 33}" style="white-space: nowrap">運送中</h5>
                     </div>
                     <div v-if="barWidth < 66" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #d3ccc1; width: 33%;"></div>
                     <div v-else-if="barWidth >= 66" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #d04740; width: 33%;"></div>
-                    <div class="d-flex flex-column align-items-center">
+                    <div class="d-flex flex-column align-items-center" :class="{'orderStatus': barWidth === 66}">
                         <i class="bi bi-house-check  fs-1" :class="{'text-red': barWidth >= 66}" ></i>
                         <h5 class=" fw-bold" :class="{'text-red': barWidth >= 66}" style="white-space: nowrap">已抵達</h5>
                     </div>
                     <div v-if="barWidth < 100" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #d3ccc1; width: 33%;"></div>
                     <div v-else-if="barWidth === 100" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #d04740; width: 33%;"></div>
-                    <div class="d-flex flex-column align-items-center">
+                    <div class="d-flex flex-column align-items-center" :class="{'orderStatus-finished': barWidth === 100}">
                         <i class="bi bi-clipboard-check  fs-1" :class="{'text-red': barWidth === 100}" ></i>
                         <h5 class=" fw-bold" :class="{'text-red': barWidth === 100}" style="white-space: nowrap">訂單完成</h5>
                     </div>
@@ -189,26 +218,20 @@ export default {
                 </div>
             </div>
         </div>
-        <!-- 載入中 -->
-        <div v-else-if="loadingItem" class="d-flex flex-column align-items-center py-10">
-              <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-              <h1 class="text-center fw-bold text-lightBrown">
-                <span class="me-1 animate-text">L</span>
-                <span class="mx-1 animate-text">o</span>
-                <span class="mx-1 animate-text">a</span>
-                <span class="mx-1 animate-text">d</span>
-                <span class="mx-1 animate-text">i</span>
-                <span class="mx-1 animate-text">n</span>
-                <span class="mx-1 animate-text">g</span>
-                <span class="mx-2 animate-text">.</span>
-                <span class="me-2 animate-text">.</span>
-                <span class="animate-text">.</span>
-              </h1>
-        </div>
     </div>
 </template>
 <style>
  .w-1000{
     width: 1000px;
+ }
+ .orderStatus{
+    border-radius: 50%;
+    padding: 0 15px;
+    background-color: #fff1f0;
+ }
+ .orderStatus-finished{
+    border-radius: 50%;
+    padding: 0 10px;
+    background-color: #fff1f0;
  }
 </style>

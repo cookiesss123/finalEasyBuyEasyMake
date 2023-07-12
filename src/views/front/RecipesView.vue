@@ -237,14 +237,14 @@ export default {
 }
 </script>
 <template>
-    <div class="">
+    <div class=""  style="overflow-x: hidden;">
       <loading v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"
                  :lock-scroll="true">
                  <div class="d-flex flex-column align-items-center py-10">
       <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <h1 class="text-center fw-bold text-lightBrown">
+      <h1 class="text-center fw-bold text-red">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -272,48 +272,53 @@ export default {
           </div>
         </section>
         <section class="container mt-4">
-          <ul class="categorySelector row row-cols-1 gy-2 row-cols-lg-6 list-unstyled">
-              <li class="col d-flex border-end align-items-center justify-content-center ">
-                <a href="#"  @click.prevent="()=>selectCategory = '全部'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': selectItem === '全部', 'link-red': selectItem === '全部'}">
-                  <span class="material-icons-outlined fs-1" style="border-bottom: 2px solid transparent !important;">apps</span>
-                  <span :class="{'dottedStyle': selectItem === '全部'}" class="fs-4 ">全部</span>
+          <!-- border-bottom -->
+          <ul class="position-relative categorySelector row row-cols-6 gy-2 row-cols-lg-6 list-unstyled border-bottom">
+            <!-- d-flex align-items-center justify-content-center -->
+              <li class="col " :class="{'liDisabled': selectItem === '全部'}">
+                <a href="#"  @click.prevent="()=>selectCategory = '全部'" class="text-decoration-none d-flex flex-column align-items-center  link-secondary " :class="{'fw-bold': selectItem === '全部', 'link-red': selectItem === '全部'}">
+                  <!-- fs-1 桌面 -->
+                  <!-- titleImg -->
+                  <span class="material-icons-outlined textImg">apps</span>
+                  <span class="titleSize">全部</span>
                 </a>
               </li>
-              <li class="col d-flex border-end align-items-center justify-content-center ">
-                <a href="#"  @click.prevent="()=>selectCategory = '台式甜點'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': selectItem === '台式甜點', 'link-red': selectItem === '台式甜點'}">
-                  <img class="categoryImg2" v-if="selectItem !== '台式甜點'" src="../../assets/images/mooncake1.png" style="width: 40px;" alt="">
-                  <img v-else-if="selectItem === '台式甜點'" src="../../assets/images/mooncake2.png" style="width: 40px;" alt="">
-                  <span :class="{'dottedStyle': selectItem === '台式甜點'}" class="fs-4 ms-1" >台式甜點</span>
+              <li class="col d-flex  align-items-center justify-content-center ">
+                <a href="#"  @click.prevent="()=>selectCategory = '台式甜點'" class="text-decoration-none d-flex flex-column align-items-center link-secondary " :class="{'fw-bold': selectItem === '台式甜點', 'link-red': selectItem === '台式甜點'}">
+                  <img class="categoryImg2" v-if="selectItem !== '台式甜點'" src="../../assets/images/mooncake1.png"  alt="">
+                  <img v-else-if="selectItem === '台式甜點'" src="../../assets/images/mooncake2.png"  alt="">
+                  <span class="titleSize " >台式<br class="d-lg-none">甜點</span>
                 </a>
               </li>
-              <li class="col d-flex border-end align-items-center justify-content-center">
-                <a href="#"  @click.prevent="()=>selectCategory = '法式甜點'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': selectItem === '法式甜點', 'link-red': selectItem === '法式甜點'}">
-                  <img class="categoryImg3" v-if="selectItem !== '法式甜點'" src="../../assets/images/macaroon1.png" style="width: 40px;" alt="">
-                  <img v-else-if="selectItem === '法式甜點'" src="../../assets/images/macaroon2.png" style="width: 40px;" alt="">
-                  <span :class="{'dottedStyle': selectItem === '法式甜點'}" class="fs-4 ms-1">法式甜點</span>
+              <li class="col d-flex  align-items-center justify-content-center">
+                <a href="#"  @click.prevent="()=>selectCategory = '法式甜點'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': selectItem === '法式甜點', 'link-red': selectItem === '法式甜點'}">
+                  <img class="categoryImg3" v-if="selectItem !== '法式甜點'" src="../../assets/images/macaroon1.png"  alt="">
+                  <img v-else-if="selectItem === '法式甜點'" src="../../assets/images/macaroon2.png"  alt="">
+                  <span  class="titleSize ">法式<br class="d-lg-none">甜點</span>
                 </a>
               </li>
-              <li class="col d-flex border-end align-items-center justify-content-center">
-                <a href="#"  @click.prevent="()=>selectCategory = '美式甜點'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': selectItem === '美式甜點', 'link-red': selectItem === '美式甜點'}">
-                  <img class="categoryImg4" v-if="selectItem !== '美式甜點'" src="../../assets/images/donut1.png" style="width: 40px;" alt="">
-                  <img v-else-if="selectItem === '美式甜點'" src="../../assets/images/donut2.png" style="width: 40px;" alt="">
-                  <span :class="{'dottedStyle': selectItem === '美式甜點'}" class="fs-4 ms-1">美式甜點</span>
+              <li class="col d-flex  align-items-center justify-content-center">
+                <a href="#"  @click.prevent="()=>selectCategory = '美式甜點'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': selectItem === '美式甜點', 'link-red': selectItem === '美式甜點'}">
+                  <img class="categoryImg4" v-if="selectItem !== '美式甜點'" src="../../assets/images/donut1.png"  alt="">
+                  <img v-else-if="selectItem === '美式甜點'" src="../../assets/images/donut2.png"  alt="">
+                  <span  class="titleSize ">美式<br class="d-lg-none">甜點</span>
                 </a>
               </li>
-              <li class="col d-flex border-end align-items-center justify-content-center">
-                <a href="#"  @click.prevent="()=>selectCategory = '日式甜點'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': selectItem === '日式甜點', 'link-red': selectItem === '日式甜點'}">
-                  <img class="categoryImg5" v-if="selectItem !== '日式甜點'" src="../../assets/images/mochi1.png" style="width: 40px;" alt="">
-                  <img v-else-if="selectItem === '日式甜點'" src="../../assets/images/mochi2.png" style="width: 40px;" alt="">
-                  <span :class="{'dottedStyle': selectItem === '日式甜點'}" class="fs-4 ms-1">日式甜點</span>
+              <li class="col d-flex  align-items-center justify-content-center">
+                <a href="#"  @click.prevent="()=>selectCategory = '日式甜點'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': selectItem === '日式甜點', 'link-red': selectItem === '日式甜點'}">
+                  <img class="categoryImg5" v-if="selectItem !== '日式甜點'" src="../../assets/images/mochi1.png"  alt="">
+                  <img v-else-if="selectItem === '日式甜點'" src="../../assets/images/mochi2.png"  alt="">
+                  <span  class="titleSize ">日式<br class="d-lg-none">甜點</span>
                 </a>
               </li>
               <li class="col d-flex align-items-center justify-content-center">
-                <a href="#"  @click.prevent="()=>selectCategory = '義式甜點'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': selectItem === '義式甜點', 'link-red': selectItem === '義式甜點'}">
-                  <img class="categoryImg6" v-if="selectItem !== '義式甜點'" src="../../assets/images/tiramisu1.png" style="width: 40px;" alt="">
-                  <img v-else-if="selectItem === '義式甜點'" src="../../assets/images/tiramisu2.png" style="width: 40px;" alt="">
-                  <span :class="{'dottedStyle': selectItem === '義式甜點'}" class="fs-4 ms-1">義式甜點</span>
+                <a href="#"  @click.prevent="()=>selectCategory = '義式甜點'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': selectItem === '義式甜點', 'link-red': selectItem === '義式甜點'}">
+                  <img class="categoryImg6" v-if="selectItem !== '義式甜點'" src="../../assets/images/tiramisu1.png"  alt="">
+                  <img v-else-if="selectItem === '義式甜點'" src="../../assets/images/tiramisu2.png"  alt="">
+                  <span class="titleSize ">義式<br class="d-lg-none">甜點</span>
                 </a>
               </li>
+              <li class="redLine bg-red position-absolute" style="height: 2px; bottom: 0px; left: 5.5%" :class="{'activeAll': selectItem === '全部', 'activeT': selectItem === '台式甜點', 'activeF': selectItem === '法式甜點', 'activeA': selectItem === '美式甜點', 'activeJ': selectItem === '日式甜點', 'activeI': selectItem === '義式甜點'}"></li>
           </ul>
         </section>
 
@@ -370,6 +375,8 @@ export default {
                   </RouterLink>
                 </div>
                 <h5 class="card-text mb-0">
+                  <p class="detail d-none d-lg-block position-absolute fw-bold" style="top: 35%; left: 50%; transform: translateX(-50%); letter-spacing: 5px;">查看詳細食譜</p>
+
                     <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2" @click="()=>addBookmark(recipe)">
                       <img src="../../assets/images/image5.png">
                     </button>
@@ -419,22 +426,11 @@ export default {
   }
   .categorySelector li a{
     padding-bottom: 10px;
-    /* transition: all .4 ease-in-out; */
   }
   .categorySelector li a:hover{
     color: #d04740 !important;
   }
-  .categorySelector li a span{
-    border-bottom: 2px transparent dotted;
-    transition: all .3s ease-in-out;
-  }
 
-  .categorySelector li a:hover span{
-    border-bottom: 2px dotted #d04740;
-  }
-  .dottedStyle{
-    border-bottom: 2px dotted #d04740 !important;
-  }
   .categorySelector li a:hover .categoryImg2 {
     content: url('@/assets/images/mooncake2.png');
   }

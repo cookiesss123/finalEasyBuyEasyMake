@@ -280,7 +280,7 @@ export default {
                  :lock-scroll="true">
                  <div class="d-flex flex-column align-items-center py-10">
       <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <h1 class="text-center fw-bold text-lightBrown">
+      <h1 class="text-center fw-bold text-red">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -293,7 +293,7 @@ export default {
         <span class="animate-text">.</span>
       </h1>
     </div>
-        </loading>
+    </loading>
     <div class="mt-10" style="overflow-x: hidden;">
       <div class="container">
         <nav aria-label="breadcrumb">
@@ -382,10 +382,12 @@ export default {
             :modules="modules"
             navigation
             >
-              <swiper-slide v-for="recipe in relevantRecipesInfo"  :key="recipe.id + 15345" style="cursor: pointer;">
+              <swiper-slide class="subImg" v-for="recipe in relevantRecipesInfo"  :key="recipe.id + 15345" style="cursor: pointer;">
                 <RouterLink :to="`/recipes/${recipe.id}`" class="link-red cardImg">
-                  <div class="enlargeImg">
+                  <div class="enlargeImg position-relative">
                     <img :src="recipe.image" alt="" style="object-fit: cover; height: 130px;">
+                    <p class="subDetail d-none d-lg-block position-absolute fw-bold text-darkBrown" style="top: 40%; left: 50%; transform: translateX(-50%); ">查看詳細食譜</p>
+
                   </div>
                   <p class="fw-bold mt-2 text-center">{{ recipe.title }}</p>
                 </RouterLink>

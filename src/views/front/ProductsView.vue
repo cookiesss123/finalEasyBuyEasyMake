@@ -264,7 +264,7 @@ export default {
 }
 </script>
 <template>
-    <div class="">
+    <div class="" style="overflow-x: hidden;">
       <!--  bg-lightPink -->
       <!-- <section class=" mb-4 px-lg-5 py-lg-10 py-5" style="overflow-x: hidden; background-position: center; background-size: cover; background-repeat: no-repeat; padding: 150px 0;  background-image: url('https://images.unsplash.com/photo-1624220330071-9df752d24688?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');" >
           <div class="container">
@@ -277,7 +277,7 @@ export default {
                  :lock-scroll="true">
                  <div class="d-flex flex-column align-items-center py-10">
       <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <h1 class="text-center fw-bold text-lightBrown">
+      <h1 class="text-center fw-bold text-red">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -384,6 +384,8 @@ export default {
                 </RouterLink>
               </div>
               <h5 class="card-text mb-0">
+                <p class="detail d-none d-lg-block position-absolute fw-bold" style="top: 35%; left: 50%; transform: translateX(-50%); letter-spacing: 5px;">查看商品資訊</p>
+
                 <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2" @click="()=>addBookmark(product)">
                   <img src="../../assets/images/image5.png">
                 </button>

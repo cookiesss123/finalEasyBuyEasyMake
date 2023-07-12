@@ -14,21 +14,24 @@
                 <!-- 非結帳頁面 -->
                 <div v-if="this.$route.fullPath !== '/checkout'">
                   <div v-if="cartItems.length !== 0" class="row gy-3 row-cols-1 px-3">
-                  <div class="col-12 d-flex">
-                    <button type="button" class="ms-auto btn btn-outline-red" @click="clearAllCarts" :disabled="loadingItem === 'loading'">
-                      清空購物車
+                  <div class="col-12 d-flex ">
+                    <button type="button" class="ms-auto btn  rounded-0 hvr-sweep-to-right border border-red text-red" @click="clearAllCarts" :disabled="loadingItem === 'loading'">
+                      <i class="bi bi-cart-x-fill"></i> 清空購物車
                       <font-awesome-icon v-if="loadingItem === 'loading'" icon="fa-solid fa-spinner" spin />
                     </button>
                   </div>
                     <div class="col-12" v-for="(item, index) in cartItems" :key="index + 756345">
-                      <div class="card mb-3" style="max-width: 540px;">
+                      <div class="card border-0 mb-3" style="max-width: 540px; height: 130px;">
                         <div class="row g-0">
-                          <RouterLink :to="`/products/${item.product.id}`" class="col-md-4">
-                            <img :src="item.product.imgUrl" class="img-fluid rounded-start h-100" style="object-fit: cover; max-width: 100%; max-height: 100%;">
+                          <RouterLink :to="`/products/${item.product.id}`" class="col-4">
+                            <img :src="item.product.imgUrl" class="img-fluid  h-100 w-100" style="object-fit: cover; max-height: 130px;">
                           </RouterLink>
-                          <div class="col-md-8">
+                          <div class="col-8">
                             <div class="card-body">
-                              <h5 class="card-title d-flex" style="font-size: 16px;">{{ item.product.title }}
+                              <h5 class="card-title d-flex" style="font-size: 16px;">
+                                <RouterLink :to="`/products/${item.product.id}`" class="link-darkBrown">
+                                  {{ item.product.title }}
+                                </RouterLink>
                                 <button @click="()=>deleteCart(item.product)" type="button" class="p-0 ms-auto btn-close m-0" aria-label="Close" style="width: 15px;"></button>
                               </h5>
                               <div class="card-text d-flex justify-content-end">
@@ -57,8 +60,9 @@
                           </div>
                         </div>
                       </div>
+                      <div class="border"></div>
                     </div>
-                  <hr>
+                  <!-- <hr> -->
                   <div class="col-12">
                     <label for="code" class="col-3 form-label">優惠碼</label>
                     <div class="input-group mb-3" v-if="cart.total + cart.deliveryCharge === cart.finalTotal">
@@ -99,7 +103,7 @@
                       </tbody>
                     </table>
                   </div>
-                  <RouterLink to="/checkout" type="button" class="btn btn-red">前往結帳</RouterLink>
+                  <RouterLink to="/checkout" type="button" class="btn btn-red rounded-0"><i class="bi bi-cart-check-fill"></i> 前往結帳</RouterLink>
                 </div>
                 <div v-else-if="cartNum === 0" class="mt-6 d-flex flex-column align-items-center" >
                   <img src="../../src/assets/images/undraw_shopping_app_flsj.png" width="300" class="mb-3 " alt="" >
@@ -215,4 +219,10 @@ export default {
     transform: translateX(250px);
     right: 0;
 }
+.hvr-sweep-to-right:hover{
+    color: white !important;
+}
+  .hvr-sweep-to-right::before {
+    background: #d04740;
+  }
 </style>
