@@ -6,38 +6,52 @@
       <!-- 標頭 -->
       <header class="fixed-top">
         <!-- bg-white -->
-        <!-- 滑下來才變白 手機展示toggle 變白 或是 orders 詳細頁面才變白 -->
-        <!-- this.$route.fullPath.includes('checkout') ||  -->
-        <!-- || this.$route.fullPath.includes('orderSuccess') -->
-        <div class="" :class="{'bg-white': showNavbar || menuToggle || this.$route.fullPath.includes('orders') || this.$route.fullPath.includes('recipes/') || this.$route.fullPath.includes('products/') || this.$route.fullPath.includes('discounts/') || this.$route.fullPath.includes('products/') }" style="background-color: transparent;">
+        <!-- 滑下來才變白 手機展示toggle 變白 或是 orders 詳細頁面才變白 為甚麼設計這樣是因為 通常都是好看的背景 -->
+
+        <!-- :class="{'bg-white': showNavbar || menuToggle || searchToggle || this.$route.fullPath.includes('orders') || this.$route.fullPath.includes('recipes/') || this.$route.fullPath.includes('products/') || this.$route.fullPath.includes('discounts/') || this.$route.fullPath.includes('products/') || this.$route.fullPath.includes('home')}" -->
+        <div class=""  style="background-color: rgba(255, 255, 255, .4); backdrop-filter: blur(10px);" >
+          <!-- background-color: transparent; -->
           <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
               <div class="d-flex align-items-center">
-                <!-- cancelBorder -->
-              <RouterLink to="/home" class="navbar-brand ">
-                <img src="../assets/images/logo.png" style="height: 35px;" class="logo" alt="">
+              <RouterLink to="/home" class="navbar-brand d-flex align-items-center">
+                <img src="../assets/images/loadingLogo.png" style="height: 40px;" class="logo me-1" alt="">
+                <div>
+                  <!--  -->
+                  <p class="text-darkBrown mb-0"  style="font-size: 16px;" >甜點食譜一鍵購</p>
+                  <!-- :class="{'lightEnglishLogo': !showNavbar && !menuToggle && this.$route.fullPath.includes('home') === false && this.$route.fullPath.includes('recipes/') === false && this.$route.fullPath.includes('products/') === false && this.$route.fullPath.includes('discounts/') === false && this.$route.fullPath.includes('orders/') === false,  'darkEnglishLogo':showNavbar || menuToggle || this.$route.fullPath.includes('home') || this.$route.fullPath.includes('recipes/') || this.$route.fullPath.includes('products/') || this.$route.fullPath.includes('discounts/') || this.$route.fullPath.includes('orders/')}" -->
+                  <p class="fw-light  mb-0"  style="font-family: 'Rajdhani', sans-serif;font-size: 10px; margin-top: -6px; color: #5a5ad0;" >Easy Buy Easy Make</p>
+                </div>
               </RouterLink>
               <!-- 手機 bar -->
               <div class="position-absolute end-0 ">
                 <!-- 手機購物車按鈕 -->
                 <button class="btn btn-sm position-relative p-0 d-lg-none border-0 me-3"  @click="()=>this.$refs.cartModal.show()">
-                  <span v-if="cartNum !== 0"  class="position-absolute top-0 start-100 translate-middle  border border-red text-red fw-bold" style="padding: 2px; border-radius: 25px; width: 25px; height: 25px; font-size: 12px;">                    {{ cartNum }}
+                  <!-- :class="{'text-white': !showNavbar &&  this.$route.fullPath.includes('home') === false, 'border-white': !showNavbar &&  this.$route.fullPath.includes('home') === false,  'text-blue':showNavbar || this.$route.fullPath.includes('home'), 'border-blue':showNavbar || this.$route.fullPath.includes('home')}" -->
+                  <span v-if="cartNum !== 0"  class="position-absolute top-0 start-100 translate-middle  border border-blue text-blue fw-bold" style="padding: 2px; border-radius: 25px; width: 25px; height: 25px; font-size: 12px;" >
+                    {{ cartNum }}
                 </span>
-                  <img src="../../src/assets/images/menuCart.png" alt="" width="20">
+                <!-- :class="{'text-white': !showNavbar &&  this.$route.fullPath.includes('home') === false && this.$route.fullPath.includes('recipes/') === false && this.$route.fullPath.includes('products/') === false,  'text-blue':showNavbar || this.$route.fullPath.includes('home') || this.$route.fullPath.includes('recipes/') || this.$route.fullPath.includes('products/')}" -->
+                <span class="material-icons mt-1 text-blue" >shopping_cart</span>
+
                 </button>
+                <!-- :class="{'text-white': !showNavbar &&  this.$route.fullPath.includes('home') === false && this.$route.fullPath.includes('recipes/') === false && this.$route.fullPath.includes('products/') === false,  'text-blue':showNavbar || this.$route.fullPath.includes('home') || this.$route.fullPath.includes('recipes/') || this.$route.fullPath.includes('products/')}" -->
                 <RouterLink to="/bookmarks" class="d-lg-none btn btn-sm position-relative mt-1 border-0 cancelBorder">
-                  <i class="bi bi-heart-fill fs-2 link-red fs-6"></i>
+                  <i class="bi bi-heart-fill fs-2 link-blue fs-6" ></i>
                 </RouterLink>
 
                   <!-- searchCollapse 搜尋 -->
-                  <!-- v-if="this.$route.fullPath === '/home' || this.$route.fullPath.includes('/recipes') || this.$route.fullPath.includes('/products')" -->
-                  <button class="navbar-toggler btn border-0 p-2 ms-2" type="button" @click="()=>searchToggle = !searchToggle">
-                    <img src="../assets/images/icon-searchMobile.png" style="height: 20px;" alt="">
+                  <!-- :class="{'text-white': !showNavbar &&  this.$route.fullPath.includes('home') === false && this.$route.fullPath.includes('recipes/') === false && this.$route.fullPath.includes('products/') === false,  'text-blue':showNavbar || this.$route.fullPath.includes('home') || this.$route.fullPath.includes('recipes/') || this.$route.fullPath.includes('products/')}" -->
+                  <button class="navbar-toggler btn border-0 p-2 ms-2 link-blue" type="button" @click="()=>searchToggle = !searchToggle">
+                    <span class="material-icons-outlined" >search</span>
                   </button>
 
                 <!-- 手機菜單按鈕 -->
-                <button class="navbar-toggler btn border-0" type="button" @click="()=>menuToggle = !menuToggle">
-                  <span class="navbar-toggler-icon" style="width: 20px; height: 20px;" :style="{'background-image':`url(${toggleBtn})`}" ></span>
+                <!-- :class="{'text-white': !showNavbar &&  this.$route.fullPath.includes('home') === false && this.$route.fullPath.includes('recipes/') === false && this.$route.fullPath.includes('products/') === false,  'text-blue':showNavbar || this.$route.fullPath.includes('home') || this.$route.fullPath.includes('recipes/') || this.$route.fullPath.includes('products/')}" -->
+                <button class="navbar-toggler btn border-0 link-blue" type="button" @click="()=>menuToggle = !menuToggle">
+                  <span class="material-icons-outlined" >
+menu
+</span>
                 </button>
 
               </div>
@@ -47,34 +61,32 @@
               <div id="navbarNav" class="collapse navbar-collapse " ref="menuCollapse" >
                 <ul class="mainMenu navbar-nav mx-auto text-center text-lg-start">
                   <li class="nav-item me-lg-3" style="white-space:nowrap">
-                    <!-- :class="{'link-orange':this.$route.fullPath === '/recipes'}" -->
                     <!-- d-inline-block 避免手機線條占滿 -->
-                    <RouterLink to="/recipes" active-class="active-link" class="nav-link d-inline-block">甜點食譜</RouterLink>
+                    <RouterLink to="/recipes" active-class="active-link" class="nav-link d-inline-block ">甜點食譜</RouterLink>
                   </li>
                   <li class="nav-item mx-lg-3" style="white-space:nowrap">
-                    <!--   :class="{'link-orange':this.$route.fullPath === '/products', 'navActive': this.$route.fullPath === '/products'}" -->
-                    <RouterLink to="/products" active-class="active-link"  class="nav-link d-inline-block">材料購買</RouterLink>
+                    <RouterLink to="/products" active-class="active-link"  class="nav-link d-inline-block " >材料購買</RouterLink>
                   </li>
                   <li class="nav-item mx-lg-3" style="white-space:nowrap">
-                    <!--  :class="{'link-orange':this.$route.fullPath === '/discounts', 'navActive': this.$route.fullPath === '/discounts'}" -->
-                    <RouterLink to="/discounts" active-class="active-link"  class="nav-link d-inline-block">優惠特報</RouterLink>
+                    <RouterLink to="/discounts" active-class="active-link"  class="nav-link d-inline-block " >優惠特報</RouterLink>
                   </li>
                   <li class="nav-item ms-lg-3" style="white-space:nowrap">
-                    <!-- :class="{'link-orange':this.$route.fullPath === '/member', 'navActive': this.$route.fullPath === '/member'}" -->
-                    <RouterLink to="/member" active-class="active-link" class="nav-link d-inline-block" >會員專區</RouterLink>
+                    <RouterLink to="/member" active-class="active-link" class="nav-link d-inline-block " >會員專區</RouterLink>
                   </li>
                 </ul>
-              <!-- ms-auto -->
-              <ul class="navbar-nav d-flex align-items-center" v-if="!uid">
-                <!-- 手機 -->
-                <!-- style="white-space:nowrap" 這個沒用 -->
-                <li class="login nav-item me-lg-3 mb-2 mb-lg-0" style="white-space:nowrap">
-                  <RouterLink to="/login" active-class="active-link" class="nav-link">登入</RouterLink>
-                </li>
-                <li class="signup nav-item me-lg-4 " style="white-space:nowrap">
-                  <RouterLink to="/signup"  class="btn badge btn-red rounded-pill fs-6 px-4 py-3 text-white" >註冊</RouterLink>
-                </li>
-              </ul>
+                <ul class="navbar-nav d-flex align-items-center" v-if="!uid">
+                  <!-- 手機 -->
+                  <!-- style="white-space:nowrap" 這個沒用 -->
+                  <li class="login nav-item me-lg-3 mb-2 mb-lg-0" style="white-space:nowrap">
+                    <RouterLink to="/login" active-class="active-link" class="nav-link" >登入</RouterLink>
+                  </li>
+                  <li class="signup nav-item me-lg-4" style="white-space:nowrap">
+                    <!-- btn btn-outline-blue -->
+                    <!-- background-color: rgba(255,255,255, .6); backdrop-filter: blur(10px); -->
+                    <!-- 首頁都是藍色框框 沒白色 -->
+                    <RouterLink to="/signup"  class="text-decoration-none badge  btn btn-blue rounded-pill fs-6 px-4 py-3 fw-bold" style="">註冊</RouterLink>
+                  </li>
+                </ul>
               <!-- ms-auto -->
               <ul class="navbar-nav d-lg-flex align-items-lg-center" v-else-if="uid">
                 <li class="nav-item me-lg-3" v-if="user.admin" style="white-space:nowrap">
@@ -82,34 +94,33 @@
                 </li>
                 <li class="nav-item fs-5 me-4 d-flex align-items-center justify-content-center justify-content-lg-start">
                   <img v-if="user.headshotImg" :src="user.headshotImg" alt="" height="50" width="50" class="me-3 rounded-circle" style="object-fit: cover;">
-                  <i v-else-if="!user.headshotImg" class="bi bi-person-circle me-3 fs-1 text-red"></i>
+                  <i v-else-if="!user.headshotImg" class="bi bi-person-circle me-3 fs-1 text-blue"></i>
 
-                  <span class="fw-bold" style="white-space:nowrap; font-size: 16px;">
+                  <span class="fw-bold" style="white-space:nowrap; font-size: 16px; " >
                     {{ user.nickName }}
                   </span>
                 </li>
                 <!-- 桌機 -->
                 <li class="nav-item me-lg-3" style="white-space:nowrap">
-                  <a href="#" class="nav-link text-center text-lg-start" @click.prevent="logout">登出</a>
+                  <a href="#" class="nav-link text-center text-lg-start" @click.prevent="logout"  >登出</a>
                 </li>
               </ul>
-              <RouterLink to="/bookmarks" class="btn btn-sm position-relative me-3 mt-1 border-0 hvr-push d-none d-lg-block" style="border: none !important;">
-                <i class="bi bi-heart-fill fs-4 link-red"></i>
+              <RouterLink to="/bookmarks" class=" me-4 link-blue hvr-push d-none d-lg-block">
+                <i class="bi bi-heart-fill fs-4"></i>
               </RouterLink>
               <!-- 桌面cart按鈕 -->
-              <!-- :class="{'clickBuyBtn': !closeCart}" -->
-              <button type="button" class="btn position-relative p-0 border-0 d-none d-lg-block"  @click="()=>this.$refs.cartModal.show()">
-                <span v-if="cartNum !== 0" class="position-absolute border text-red border-red fw-bold" style="padding: 2px; border-radius: 25px; width: 25px; height: 25px; font-size: 12px; top: -15px; left: 20px;">
+              <button type="button" class=" btn position-relative p-0 border-0 d-none d-lg-block"  @click="()=>this.$refs.cartModal.show()">
+                <span v-if="cartNum !== 0" class="position-absolute border fw-bold border-blue text-blue" style="padding: 2px; border-radius: 25px; width: 25px; height: 25px; font-size: 12px; top: -12px; left: 10px;">
                   {{ cartNum }}
                 </span>
-                <img src="../../src/assets/images/menuCart.png" alt="" width="25">
+                <span class="material-icons mt-1 link-blue" >shopping_cart</span>
               </button>
               </div>
             </div>
           </nav>
 
           <!-- 搜尋 -->
-          <div class="collapse navbar-collapse py-1" ref="searchCollapse">
+          <div class="bg-white collapse navbar-collapse py-1" ref="searchCollapse">
               <!-- 桌面隱藏 d-lg-none -->
               <!-- 食譜搜尋 -->
               <select name="" id="" class="form-select" v-model="searchItem">
@@ -207,34 +218,40 @@
       <!-- chat 聊天室 -->
       <ChatModal ref="chatModal"></ChatModal>
       <!-- 向上箭頭 -->
-      <button ref="upArrow" class="link-red bg-transparent hvr-float" :class="{'fade': !showScrollArrow, 'show': showScrollArrow}"  @click="goToTop" style="position: fixed; bottom: 20px; right: 20px;  border: 0 !important;">
+      <button ref="upArrow" class="link-blue bg-transparent hvr-float" :class="{'fade': !showScrollArrow, 'show': showScrollArrow}"  @click="goToTop" style="position: fixed; bottom: 20px; right: 20px;  border: 0 !important;">
         <i class="bi bi-arrow-up-circle-fill" style="font-size: 35px;"></i>
       </button>
       <!-- 數字 -->
-      <button type="button" v-if="uid" class="link-red bg-transparent" style="position: fixed; bottom: 20px; right: 100px;  border: 0 !important; z-index: 1;" @click="()=>this.$refs.chatModal.show()">
-        <span v-if="this.$refs.chatModal && this.$refs.chatModal.newChatNum !== 0" class="position-absolute bg-lightPink text-red fw-bold  border border-red" style="padding: 2px; border-radius: 25px; width: 25px; height: 25px; font-size: 12px; top: -10px; left: 30px;">
+      <button type="button" v-if="uid" class="link-blue bg-transparent" style="position: fixed; bottom: 20px; right: 100px;  border: 0 !important; z-index: 1;" @click="()=>this.$refs.chatModal.show()">
+        <span v-if="this.$refs.chatModal && this.$refs.chatModal.newChatNum !== 0" class="position-absolute bg-lightBlue text-blue fw-bold  border border-blue" style="padding: 2px; border-radius: 25px; width: 25px; height: 25px; font-size: 12px; top: -10px; left: 30px;">
           {{ this.$refs.chatModal.newChatNum }}
         </span>
         <i class="bi bi-chat-dots-fill" style="font-size: 35px;"></i>
       </button>
 
-      <footer class="" style=" margin-top: auto; " :class="{'bg-lightPink': this.$route.fullPath !== '/login' || this.$route.fullPath !== '/signup', 'bg-white': this.$route.fullPath === '/login' || this.$route.fullPath === '/signup'}" >
+      <footer class="" style=" margin-top: auto; " :class="{'bg-lightBlue': this.$route.fullPath !== '/login' || this.$route.fullPath !== '/signup', 'bg-white': this.$route.fullPath === '/login' || this.$route.fullPath === '/signup'}" >
           <div class="container d-flex flex-column flex-lg-row align-items-center" style="padding: 40px 0;">
-            <img src="../assets/images/logo.png" class="logo mb-4 mb-lg-0 " alt="">
+            <div class="d-flex justify-content-center align-items-center mt-2">
+                <img src="../assets/images/loadingLogo.png" style="height: 60px;" class="logo me-1" alt="">
+                <div>
+                  <p class="text-darkBrown mb-0 text-start"  style="font-size: 24px;">甜點食譜一鍵購</p>
+                  <p class="fw-light mb-0 text-start" style="font-family: 'Rajdhani', sans-serif; color: #5a5ad0; font-size: 18px; margin-top: -6px;">Easy Buy Easy Make</p>
+                </div>
+            </div>
             <div class="ms-lg-auto d-flex flex-column align-items-lg-end align-items-center">
               <ul id="contactInfo" class="list-unstyled d-flex">
                 <li class="me-4 hvr-bob">
-                  <a href="#" class="text-decoration-none link-red">
+                  <a href="#" class="text-decoration-none link-blue">
                     <i class="bi bi-instagram me-2" style="font-size: 34px;"></i>
                   </a>
                 </li>
                 <li class="me-4 hvr-bob">
-                  <a href="#" class="text-decoration-none link-red">
+                  <a href="#" class="text-decoration-none link-blue">
                     <i class="bi bi-facebook me-2" style="font-size: 34px;"></i>
                   </a>
                 </li>
                 <li class="hvr-bob">
-                  <a href="#" class="text-decoration-none link-red">
+                  <a href="#" class="text-decoration-none link-blue">
                     <i class="bi bi-envelope me-2" style="font-size: 34px;"></i>
                   </a>
                 </li>
@@ -251,7 +268,6 @@ import { mapActions, mapState } from 'pinia'
 import cartStore from '../stores/carts'
 import { RouterView, RouterLink } from 'vue-router'
 import Tooltip from 'bootstrap/js/dist/tooltip'
-import toggleBtn from '../assets/images/icon-menuMobile.png'
 import Collapse from 'bootstrap/js/dist/collapse'
 import CartModal from '../components/CartModal.vue'
 import ChatModal from '../components/ChatModal.vue'
@@ -262,7 +278,6 @@ import { ref, onValue } from 'firebase/database'
 export default {
   data () {
     return {
-      toggleBtn, // url 的網址都要這樣寫 banner圖片
       // 禁止同時展開 menu 和 搜尋框
       menuToggle: false,
       searchToggle: false,
@@ -343,7 +358,8 @@ export default {
     },
     handleScroll () {
       this.showScrollArrow = window.scrollY > 1000
-      this.showNavbar = window.scrollY > 300
+      // navbar
+      this.showNavbar = window.scrollY > 100
     },
     getMessages () {
       onAuthStateChanged(auth, (user) => {
@@ -467,5 +483,14 @@ input[type=number]::-webkit-inner-spin-button {
 /* 移除logo的線條 */
 .cancelBorder{
   border:none !important;
+}
+.text-shadow{
+  text-shadow: 2px 2px 4px #000
+}
+.lightEnglishLogo{
+  color:#dedeff
+}
+.darkEnglishLogo{
+  color:#5a5ad0
 }
 </style>

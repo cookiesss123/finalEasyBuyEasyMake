@@ -40,32 +40,37 @@ export default {
 </script>
 <template>
     <div class="" style="overflow-x: hidden;">
-        <section class="py-9 d-flex" style="background-image:url('https://images.unsplash.com/photo-1616968173983-cc56f09d8279?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80'); background-position: center; background-size: cover; background-repeat: no-repeat;">
-            <div class="checkoutMask mx-auto ">
+        <!-- bannerBg -->
+        <section class="py-lg-9  d-flex " style="background-image: url('https://images.unsplash.com/photo-1678465952838-c9d7f5daaa65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80'); background-repeat: no-repeat; background-position: center center; background-size: cover; height: 50vh;">
+            <div class="checkoutMask mx-auto mt-4">
                 <div class="container">
                 <ul class="list-unstyled d-lg-flex  fs-5 align-items-center">
                     <li class=" text-center" style="flex: 1;">
-                        <i class="bi bi-check-circle-fill text-red  fs-2"></i>
+                        <i class="bi bi-check-circle-fill text-blue  fs-2"></i>
                         <p>
-                            <span class="fw-bold">確認購物車品項</span>
+                            <span class="fw-bold ">確認購物車品項</span>
                         </p>
                     </li>
-                    <li class="bg-red d-none d-lg-block " style="width: 200px; height: 3px; flex: 2;"></li>
-                    <li class="bg-red d-lg-none my-2" style="width: 3px; height: 40px;  margin: 0 auto;"></li>
+                    <li class="bg-blue d-none d-lg-block " style="width: 200px; height: 3px; flex: 2;"></li>
+                    <li class="bg-blue d-lg-none my-2" style="width: 3px; height: 40px;  margin: 0 auto;"></li>
 
-                    <li class=" text-center" style="flex: 1;">
-                        <i class="bi bi-2-circle text-red fs-2 rounded-circle" style="padding: 3px 5px; border: 2px dotted #d04740;"></i>
+                    <li class=" text-center position-relative" style="flex: 1;">
+                        <!-- <img src="../../assets/images/donut4.png" class="" style="width: 45px; top: -28px; right: 41px;" alt=""> -->
+
+                        <i class="bi bi-2-circle-fill text-blue fs-2 rounded-circle" style="padding: 3px 5px; border: 2px dotted #4572c2;"></i>
+                        <!-- <i class="bi bi-2-circle text-white fs-2 position-absolute" style="padding: 3px 5px; left: 71px; top: -5px; text-shadow: 2px 2px 5px black;"></i> -->
+
                         <p class="">
-                            <span class="text-red fw-bold">填寫訂單資訊</span>
+                            <span class="text-blue fw-bold ">填寫訂單資訊</span>
                         </p>
                     </li>
-                    <li class="d-none d-lg-block" style="width: 200px; height: 3px; flex: 2; border-top: 3px dashed #fdb1ab;"></li>
-                    <li class="d-lg-none my-4" style="width: 40px; height: 3px; margin: 0 auto; transform: rotate(90deg); border-top: 3px dashed #fdb1ab;"></li>
+                    <li class="d-none d-lg-block" style="width: 200px; height: 3px; flex: 2; border-top: 3px dashed #6c757d;"></li>
+                    <li class="d-lg-none my-4" style="width: 40px; height: 3px; margin: 0 auto; transform: rotate(90deg); border-top: 3px dashed #6c757d;"></li>
 
                     <li class=" text-center" style="flex: 1;">
-                        <i class="bi bi-3-circle-fill  fs-2 text-pink"></i>
+                        <i class="bi bi-3-circle fs-2 text-secondary"></i>
                         <p>
-                            <span class="text-pink fw-bold">成功下訂</span>
+                            <span class="text-secondary fw-bold">成功下訂</span>
                         </p>
                     </li>
                 </ul>
@@ -73,10 +78,10 @@ export default {
             </div>
         </section>
 
-        <section class="container mt-5">
+        <section class="container my-5">
         <div class="row row-cols-1 row-cols-lg-2 g-5">
             <div class="col">
-                <h4 class="text-center fw-bold mb-4 bg-lightPink py-2">商品確認</h4>
+                <h4 class="text-center fw-bold mb-4 bg-lightBlue py-2">商品確認</h4>
                 <div class="row">
                     <div class="col-12" v-for="(item, index) in cartItems" :key="index + 756345">
                         <div class="card mb-3" style="border: none !important;">
@@ -124,7 +129,7 @@ export default {
                                         <td>優惠券折扣</td>
                                         <td class="text-end">- NT$ {{ numberComma(Math.ceil(cart.total * (cart.coupon.discount / 100))) }}</td>
                                     </tr>
-                                    <tr class="border-top bg-lightPink">
+                                    <tr class="border-top bg-lightBlue">
                                         <td class="fw-bold text-danger">總計金額</td>
                                         <td class="text-end fw-bold text-danger">
                                             <span v-if="cart.total < 1000">NT$ {{ numberComma(cart.finalTotal) }}</span>
@@ -137,18 +142,18 @@ export default {
                         </div>
                     </div>
                     <div class="col-12">
-                        <RouterLink to="/products" class="rounded-0 hvr-sweep-to-left btn mb-4 ms-3 text-red border-red"><i class="bi bi-arrow-left"></i> 繼續選購</RouterLink>
+                        <RouterLink to="/products" class="rounded-0 hvr-sweep-to-left btn mb-4 ms-3 text-blue border-blue"><i class="bi bi-arrow-left"></i> 繼續選購</RouterLink>
                     </div>
                 </div>
             </div>
             <div class="col">
-                <h4 class="text-center fw-bold mb-4 bg-lightPink py-2">填寫收件人資訊</h4>
+                <h4 class="text-center fw-bold mb-4 bg-lightYellow py-2">填寫收件人資訊</h4>
 
                 <!-- 要在form寫 submit 才會把不符合表單的內容擋下 -->
-                <VForm ref="form" class="" v-slot="{ errors }" @submit="()=>addOrder (user.email, user.name, user.phoneNum, user.address, user.message)">
+                <VForm ref="form" class="" v-slot="{ errors }" @submit="()=>addOrder(user.email, user.name, user.phoneNum, user.address, user.message)">
                     <div class="row gy-4 d-flex">
                         <div class="col-12 fs-5">
-                            <label for="email" class="form-label text-secondary" :class="{'text-red':user.email && !errors['信箱']}"><i class="bi bi-envelope-fill" ></i> 信箱<span class="text-danger h4 ms-2">*</span></label>
+                            <label for="email" class="form-label text-secondary" :class="{'text-blue':user.email && !errors['信箱']}"><i class="bi bi-envelope-fill" ></i> 信箱<span class="text-danger h4 ms-2">*</span></label>
                             <VField
                                 id="email"
                                 name="信箱"
@@ -162,7 +167,7 @@ export default {
                             <ErrorMessage name="信箱" class="invalid-feedback"></ErrorMessage>
                         </div>
                         <div class="col-12 fs-5">
-                            <label for="name" class="form-label text-secondary" :class="{'text-red':user.name && !errors['收件人姓名']}"><i class="bi bi-person-fill"></i> 收件人姓名<span class="text-danger h4 ms-2">*</span></label>
+                            <label for="name" class="form-label text-secondary" :class="{'text-blue':user.name && !errors['收件人姓名']}"><i class="bi bi-person-fill"></i> 收件人姓名<span class="text-danger h4 ms-2">*</span></label>
                             <VField
                                 id="name"
                                 name="收件人姓名"
@@ -176,7 +181,7 @@ export default {
                             <ErrorMessage name="收件人姓名" class="invalid-feedback"></ErrorMessage>
                         </div>
                         <div class="col-12 fs-5">
-                            <label for="phoneNum" class="form-label text-secondary" :class="{'text-red':user.phoneNum && !errors['收件人電話']}"><i class="bi bi-telephone-fill"></i> 收件人電話<span class="text-danger h4 ms-2">*</span></label>
+                            <label for="phoneNum" class="form-label text-secondary" :class="{'text-blue':user.phoneNum && !errors['收件人電話']}"><i class="bi bi-telephone-fill"></i> 收件人電話<span class="text-danger h4 ms-2">*</span></label>
                             <VField
                                 id="phoneNum"
                                 name="收件人電話"
@@ -190,7 +195,7 @@ export default {
                             <ErrorMessage name="收件人電話" class="invalid-feedback"></ErrorMessage>
                         </div>
                         <div class="col-12 fs-5">
-                            <label for="address" class="form-label text-secondary" :class="{'text-red':user.address && !errors['收件人地址']}"><i class="bi bi-house-fill"></i> 收件人地址<span class="text-danger h4 ms-2">*</span></label>
+                            <label for="address" class="form-label text-secondary" :class="{'text-blue':user.address && !errors['收件人地址']}"><i class="bi bi-house-fill"></i> 收件人地址<span class="text-danger h4 ms-2">*</span></label>
                             <VField
                                 id="address"
                                 name="收件人地址"
@@ -204,19 +209,19 @@ export default {
                             <ErrorMessage name="收件人地址" class="invalid-feedback"></ErrorMessage>
                         </div>
                         <div class="col-12 fs-5 position-relative">
-                            <label for="payWay" class="form-label text-red"><i class="bi bi-wallet-fill"></i> 付款方式<span class="text-danger h4 ms-2">*</span></label>
+                            <label for="payWay" class="form-label text-blue"><i class="bi bi-wallet-fill"></i> 付款方式<span class="text-danger h4 ms-2">*</span></label>
                             <input type="text" class="form-control" id="payWay" value="貨到付款" disabled>
                             <i class="fs-4 text-success bi bi-check-lg position-absolute" style="top:40px; right: 20px"></i>
                             <p class="text-muted" style="font-size: 14px;">注意：本店一律採貨到付款的方式喔!</p>
                         </div>
                         <div class="col-12 fs-5">
-                            <label for="message" class="form-label text-secondary" :class="{'text-red':user.message}"><i class="bi bi-chat-left-text-fill"></i> 留言</label>
+                            <label for="message" class="form-label text-secondary" :class="{'text-blue':user.message}"><i class="bi bi-chat-left-text-fill"></i> 留言</label>
                             <span class="text-muted ms-2" style="font-size: 14px;">(可不填寫)</span>
                             <textarea id="message" class="form-control" cols="30" rows="10" v-model="user.message"></textarea>
                             <p class="text-muted" style="font-size: 14px;">有任何問題或是貨品相關注意事項都歡迎與我們聯繫~</p>
                         </div>
                         <div class="col-12 mt-4" >
-                            <button type="submit" class="btn btn-red w-100" >確認建立訂單</button>
+                            <button type="submit" class="hvr-sweep-to-right btn btn-blue fw-bold rounded-0 px-4 shadow-lg w-100" >確認建立訂單</button>
                         </div>
                     </div>
                 </VForm>
@@ -226,10 +231,23 @@ export default {
     </div>
 </template>
 <style>
+.hvr-sweep-to-left::before{
+  background: #4572c2;
+  color: white;
+}
 .hvr-sweep-to-left:hover{
+  color: white !important;
+}
+/* .hvr-sweep-to-right::before{
+    background: #008391;
+  } */
+/* .hvr-sweep-to-right:hover {
+    color: white !important;
+} */
+/* .hvr-sweep-to-left:hover{
     color: white !important;
 }
   .hvr-sweep-to-left::before {
     background: #d04740;
-  }
+  } */
 </style>

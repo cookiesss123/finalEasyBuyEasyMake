@@ -4,7 +4,7 @@
         <div class="modal-dialog modal-fullscreen-md-down w-100" style="margin-right: 0; margin-top: 0;">
           <!-- v-if="cart" 避免錯誤 -->
             <div class="modal-content" style="height: 100vh; overflow-y:auto">
-              <div class="modal-header bg-red" style="border-radius: 0;">
+              <div class="modal-header bg-blue" style="border-radius: 0;">
                   <h5 class="modal-title text-white" v-if="uid">
                     <img src="https://plus.unsplash.com/premium_photo-1672192166439-f20d9ec1dbbc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" style="height: 40px; width: 40px;" class="rounded-circle me-1" alt="">
 
@@ -13,7 +13,7 @@
                   <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <!-- style="background-image:url('https://images.unsplash.com/photo-1518691340140-512e66ce957b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1165&q=80');" -->
-              <div class="modal-body d-flex flex-column bg-lightPink" >
+              <div class="modal-body d-flex flex-column bg-lightBlue" >
                 <!-- 顧客聊天室 -->
                 <div v-if="!user.admin">
                   <div v-for="chat in chats" :key="chat" class="">
@@ -27,7 +27,7 @@
                   </div>
                   <div v-else-if="chat.nickName !== '甜點食譜一鍵購客服'" class="d-flex flex-column">
                     <div class="mb-2 ms-auto d-flex flex-column align-items-end" style="max-width: 90%;">
-                      <p class="mb-0 speech-bubble right bg-red text-white px-3 py-1 d-inline-block rounded-4" style="  word-break: break-all;">{{ chat.message }}</p>
+                      <p class="mb-0 speech-bubble right bg-blue text-white px-3 py-1 d-inline-block rounded-4" style="  word-break: break-all;">{{ chat.message }}</p>
                       <p class="text-muted me-1" style="font-size: 14px;">{{ new Date(chat.time).toLocaleDateString() }} {{ new Date(chat.time).getHours() }}：{{ new Date(chat.time).getMinutes() }} </p>
                     </div>
                   </div>
@@ -36,12 +36,12 @@
                 <!-- 管理者聊天室 -->
                 <div v-else-if="user.admin">
                   <div v-for="(item, index) in chats" :key="index">
-                    <a href="#" class="text-decoration-none link-red d-block border-bottom border-red py-2 d-flex align-items-center">
+                    <a href="#" class="text-decoration-none link-blue d-block border-bottom border-blue py-2 d-flex align-items-center">
                       <p class="mb-0 w-100" @click.prevent="getInfo(index)">
                         {{ index }}
-                        <span v-if="item.newChatNum" class="ms-2 badge bg-red">{{ item.newChatNum }}</span>
+                        <span v-if="item.newChatNum" class="ms-2 badge bg-blue">{{ item.newChatNum }}</span>
                       </p>
-                      <button class="btn btn-red ms-auto" type="button" @click.prevent="openId = ''"><i class="bi bi-x"></i></button>
+                      <button class="btn btn-blue ms-auto" type="button" @click.prevent="openId = ''"><i class="bi bi-x"></i></button>
                     </a>
                     <div v-if="openId === index" class="pt-3">
                       <div v-for="chat in item" :key="chat" class="">
@@ -54,20 +54,20 @@
                           </div>
                         </div>
                         <div v-else-if="chat.nickName === '甜點食譜一鍵購客服'" class="d-flex flex-column">
-                          <p class="mb-0 ms-auto speech-bubble right bg-red text-white px-3 py-1 d-inline-block rounded-4" style="max-width: 90%; word-break: break-all;">{{ chat.message }}</p>
+                          <p class="mb-0 ms-auto speech-bubble right bg-blue text-white px-3 py-1 d-inline-block rounded-4" style="max-width: 90%; word-break: break-all;">{{ chat.message }}</p>
                           <p class="ms-auto me-1 text-muted" style="font-size: 14px;">{{ new Date(chat.time).toLocaleDateString() }} {{ new Date(chat.time).getHours() }}:{{ new Date(chat.time).getMinutes() }} </p>
                         </div>
                       </div>
                       <div class="input-group mt-5 mb-3">
-                        <input type="text" @keyup.enter="sendCustomerMessage(index)" class="form-control border-red " placeholder="您有什麼疑問呢？" v-model="message">
-                        <button @click="sendCustomerMessage(index)" class="btn btn-outline-red" type="button"><i class="bi bi-send-fill"></i></button>
+                        <input type="text" @keyup.enter="sendCustomerMessage(index)" class="form-control border-blue " placeholder="您有什麼疑問呢？" v-model="message">
+                        <button @click="sendCustomerMessage(index)" class="btn btn-outline-blue" type="button"><i class="bi bi-send-fill"></i></button>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div v-if="!user.admin" class="input-group mt-auto">
-                  <input type="text" @keyup.enter="sendMessage" class="form-control border-red " placeholder="您有什麼疑問呢？" v-model="message">
-                  <button @click="sendMessage"   class="btn btn-outline-red" type="button"><i class="bi bi-send-fill"></i></button>
+                  <input type="text" @keyup.enter="sendMessage" class="form-control border-blue " placeholder="您有什麼疑問呢？" v-model="message">
+                  <button @click="sendMessage"   class="btn btn-outline-blue" type="button"><i class="bi bi-send-fill"></i></button>
                 </div>
               </div>
             </div>
@@ -249,7 +249,7 @@ export default {
     margin-left: -4px;
     transform: rotate(150deg)
 }
-/* 改好的 d04740  */
+/* 改好的 4572c2  */
 .speech-bubble.right:after {
     content: '';
     position: absolute;
@@ -258,7 +258,7 @@ export default {
     width: 0;
     height: 0;
     border: 8px solid transparent;
-    border-right-color: #d04740;
+    border-right-color: #4572c2;
     border-left: 0;
     transform: rotate(40deg)
 }

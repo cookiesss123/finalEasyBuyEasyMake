@@ -280,7 +280,7 @@ export default {
                  :lock-scroll="true">
                  <div class="d-flex flex-column align-items-center py-10">
       <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <h1 class="text-center fw-bold text-red">
+      <h1 class="text-center fw-bold text-blue">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -299,7 +299,7 @@ export default {
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item">
-              <RouterLink to="/products" class="link-red">材料購買</RouterLink>
+              <RouterLink to="/products" class="link-blue">材料購買</RouterLink>
               </li>
               <li class="breadcrumb-item active" aria-current="page">{{ product.title }}</li>
             </ol>
@@ -318,12 +318,12 @@ export default {
               >
                 <swiper-slide style="cursor: pointer; " @click="()=>mainImg = product.imgUrl" class="">
                   <div>
-                    <img :src="product.imgUrl" alt="" style="object-fit: cover; height: 100px !important;" :class="{'border': mainImg === product.imgUrl, 'border-3': mainImg === product.imgUrl, 'border-red': mainImg === product.imgUrl}">
+                    <img :src="product.imgUrl" alt="" style="object-fit: cover; height: 100px !important;" :class="{'border': mainImg === product.imgUrl, 'border-3': mainImg === product.imgUrl, 'border-blue': mainImg === product.imgUrl}">
                   </div>
                 </swiper-slide>
                 <swiper-slide v-for="pic in product.imgsUrl" :key="pic + 45345" style="cursor: pointer; "  @click="()=>mainImg = pic">
                   <div>
-                    <img :src="pic" alt="" style="object-fit: cover; height: 100px !important;" :class="{'border': mainImg === pic, 'border-3': mainImg === pic, 'border-red': mainImg === pic}">
+                    <img :src="pic" alt="" style="object-fit: cover; height: 100px !important;" :class="{'border': mainImg === pic, 'border-3': mainImg === pic, 'border-blue': mainImg === pic}">
                   </div>
                 </swiper-slide>
               </swiper>
@@ -332,7 +332,7 @@ export default {
           </div>
           <div class="col d-flex flex-column">
               <div class="d-flex align-items-center mb-3">
-                <span v-if="product.isCheaper" style="pointer-events: none;" class="badgeSize badge rounded-pill px-lg-3 px-2 py-2 bg-red border-0 me-1 me-lg-2">
+                <span v-if="product.isCheaper" style="pointer-events: none;" class="badgeSize badge rounded-pill px-lg-3 px-2 py-2 bg-blue border-0 me-1 me-lg-2">
                   {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }}
                 折
                 </span>
@@ -340,7 +340,7 @@ export default {
                   {{ product.title }}
                 </h1>
                 <div class="ms-auto">
-                <button v-if="!bookMark" type="button" class="border-0 bg-transparent text-red fs-4" @click="()=>addBookmark(product.id)">
+                <button v-if="!bookMark" type="button" class="border-0 bg-transparent text-blue fs-4" @click="()=>addBookmark(product.id)">
                   <i class="bi bi-heart"></i>
                 </button>
                 <button v-else-if="bookMark" type="button" class=" border-0 bg-transparent fs-4" @click="deleteBookmark" style="color: #fa6e42">
@@ -358,7 +358,7 @@ export default {
                     <select name="" id="" class="form-select text-center" v-model="qty" style="width: 70px;">
                       <option :value="number" v-for="number in 30" :key="number + 4596945">{{ number}}</option>
                     </select>
-                    <button :disabled="loadingItem === 'loading'" class="btn btn-red" type="button" @click="()=>addCart(product, qty)">
+                    <button :disabled="loadingItem === 'loading'" class="btn btn-blue" type="button" @click="()=>addCart(product, qty)">
                       購買
                       <font-awesome-icon v-if="loadingItem === 'loading'" icon="fa-solid fa-spinner" spin />
                     </button>
@@ -370,7 +370,7 @@ export default {
         </div>
       </section>
 
-      <section class="bg-lightPink my-5">
+      <section class="bg-lightBlue my-5">
         <div class="container py-5 ">
           <h3>
             <span class="material-icons-outlined fs-3 ">menu_book</span>
@@ -383,7 +383,7 @@ export default {
             navigation
             >
               <swiper-slide class="subImg" v-for="recipe in relevantRecipesInfo"  :key="recipe.id + 15345" style="cursor: pointer;">
-                <RouterLink :to="`/recipes/${recipe.id}`" class="link-red cardImg">
+                <RouterLink :to="`/recipes/${recipe.id}`" class="link-blue cardImg">
                   <div class="enlargeImg position-relative">
                     <img :src="recipe.image" alt="" style="object-fit: cover; height: 130px;">
                     <p class="subDetail d-none d-lg-block position-absolute fw-bold text-darkBrown" style="top: 40%; left: 50%; transform: translateX(-50%); ">查看詳細食譜</p>
@@ -401,7 +401,7 @@ export default {
             navigation
             >
             <swiper-slide v-for="recipe in relevantRecipesInfo" :key="recipe.id + 15345" style="cursor: pointer;">
-              <RouterLink :to="`/recipes/${recipe.id}`" class="link-red cardImg">
+              <RouterLink :to="`/recipes/${recipe.id}`" class="link-blue cardImg">
                 <div class="enlargeImg">
                   <img :src="recipe.image" alt="" style="object-fit: cover; height: 130px;">
                 </div>
@@ -415,20 +415,20 @@ export default {
       <section class="container py-5">
         <h3 class="mb-4 d-flex align-items-center">
           <i class="bi bi-stars me-1"></i>顧客評價
-          <div class="ms-2 badge border rounded-pill bg-white" :class="{'text-orange': productRates.length, 'text-lightBrownGray': !productRates.length,'border-orange': productRates.length, 'border-lightBrownGray': !productRates.length}" style="font-size: 16px;">
+          <div class="ms-2 badge border rounded-pill bg-white" :class="{'text-yellow': productRates.length, 'text-lightBrownGray': !productRates.length,'border-yellow': productRates.length, 'border-lightBrownGray': !productRates.length}" style="font-size: 16px;">
             {{ productRates.length }} 則
           </div>
           <span class="ms-3 me-2">平均評價</span>
-          <div class="badge border rounded-pill bg-white" :class="{'text-orange': averageRate, 'text-lightBrownGray': !averageRate,'border-orange': averageRate, 'border-lightBrownGray': !averageRate}" style="font-size: 16px;">
+          <div class="badge border rounded-pill bg-white" :class="{'text-yellow': averageRate, 'text-lightBrownGray': !averageRate,'border-yellow': averageRate, 'border-lightBrownGray': !averageRate}" style="font-size: 16px;">
             {{ averageRate ? averageRate : 0}}
             <i class="bi bi-star-fill"></i>
           </div>
           <!-- 桌機 -->
-          <RouterLink to="/login" class="ms-lg-3 btn btn-red btn-sm d-none d-lg-block" v-if="!this.uid">我要登入寫評價</RouterLink>
+          <RouterLink to="/login" class="ms-lg-3 btn btn-blue btn-sm d-none d-lg-block" v-if="!this.uid">我要登入寫評價</RouterLink>
         </h3>
         <!-- 手機 -->
         <div class="d-flex">
-          <RouterLink to="/login" class="btn btn-red btn-sm d-lg-none ms-auto" v-if="!this.uid">我要登入寫評價</RouterLink>
+          <RouterLink to="/login" class="btn btn-blue btn-sm d-lg-none ms-auto" v-if="!this.uid">我要登入寫評價</RouterLink>
         </div>
         <div class="my-5">
           <form ref="form" @submit.prevent="addProductRate" class="mt-2" v-if="this.uid">
@@ -471,7 +471,7 @@ export default {
             </div>
             <textarea class="form-control" name="" id="" cols="30" rows="10" v-model="rateMessage"></textarea>
             <div class="d-flex">
-              <button type="submit" class="ms-auto btn btn-red my-3">送出</button>
+              <button type="submit" class="ms-auto btn btn-blue my-3">送出</button>
             </div>
           </form>
           <div class="row gy-5">
@@ -483,11 +483,11 @@ export default {
               </h5>
               <p class="mb-0">{{ `${new Date(rate.createAt).toLocaleDateString()}` }}</p>
               <p>
-                <i class="bi bi-star-fill me-1" :class="{'text-orange':rate.score >= 1, 'text-lightGray':rate.score < 1}"></i>
-                <i class="bi bi-star-fill me-1" :class="{'text-orange':rate.score >= 2, 'text-lightGray':rate.score < 2}"></i>
-                <i class="bi bi-star-fill me-1" :class="{'text-orange':rate.score >= 3,'text-lightGray':rate.score < 3}"></i>
-                <i class="bi bi-star-fill me-1" :class="{'text-orange':rate.score >= 4,'text-lightGray':rate.score < 4}"></i>
-                <i class="bi bi-star-fill me-1" :class="{'text-orange':rate.score >= 5,'text-lightGray':rate.score < 5}"></i>
+                <i class="bi bi-star-fill me-1" :class="{'text-yellow':rate.score >= 1, 'text-lightGray':rate.score < 1}"></i>
+                <i class="bi bi-star-fill me-1" :class="{'text-yellow':rate.score >= 2, 'text-lightGray':rate.score < 2}"></i>
+                <i class="bi bi-star-fill me-1" :class="{'text-yellow':rate.score >= 3,'text-lightGray':rate.score < 3}"></i>
+                <i class="bi bi-star-fill me-1" :class="{'text-yellow':rate.score >= 4,'text-lightGray':rate.score < 4}"></i>
+                <i class="bi bi-star-fill me-1" :class="{'text-yellow':rate.score >= 5,'text-lightGray':rate.score < 5}"></i>
               </p>
               <p>{{ rate.message }}</p>
             </div>
@@ -519,7 +519,7 @@ export default {
   border: 3px solid transparent;
 }
 .productSwiper img:hover{
-  border: 3px solid #e48e83;
+  border: 3px solid #a6bcfe;
 }
 .relativeRecipes .swiper-button-next{
   top:85%;

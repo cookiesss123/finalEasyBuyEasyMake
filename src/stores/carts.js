@@ -446,10 +446,10 @@ const cartStore = defineStore('cart', {
         if (ticketQty !== 0) {
           this.toastMessage(`恭喜您獲得${ticketQty}張抽獎券`) // 這個不會顯示
         }
-        // 清空購物車
-        this.deleteAllCarts()
-        router.push('/orderSuccess') // 跳轉到結帳完成頁面 必須先跳頁 再重渲染 也沒有 不知道剛剛為什麼有錯
       }
+      // 清空購物車
+      this.deleteAllCarts()
+      router.push('/orderSuccess') // 跳轉到結帳完成頁面 必須先跳頁 再重渲染 也沒有 不知道剛剛為什麼有錯
     },
     // 最好都寫在這 這樣nickName狀態才一致 過期的時候nickName才會清除
     getUserInfo () {

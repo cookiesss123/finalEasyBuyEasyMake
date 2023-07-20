@@ -13,10 +13,10 @@ const routes = [
         path: 'orders',
         component: () => import('../views/admin/AdminOrders.vue')
       },
-      {
-        path: 'posts',
-        component: () => import('../views/admin/AdminPosts.vue')
-      },
+      // {
+      //   path: 'posts',
+      //   component: () => import('../views/admin/AdminPosts.vue')
+      // },
       {
         path: 'products',
         component: () => import('../views/admin/AdminProducts.vue')

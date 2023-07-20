@@ -69,7 +69,7 @@ export default {
                  :lock-scroll="true">
                  <div class="d-flex flex-column align-items-center py-10">
       <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <h1 class="text-center fw-bold text-red">
+      <h1 class="text-center fw-bold text-blue">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -86,7 +86,7 @@ export default {
         <div>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item "><RouterLink to="/member" href="#" class="link-red">會員專區</RouterLink></li>
+                    <li class="breadcrumb-item "><RouterLink to="/member" href="#" class="link-blue">會員專區</RouterLink></li>
                     <li class="breadcrumb-item ">訂單狀況</li>
                     <li class="breadcrumb-item active " aria-current="page">{{ order.deliveryStatus }}</li>
                 </ol>
@@ -99,32 +99,33 @@ export default {
                     <!-- 如果是加圈圈 -->
 
                     <div class="d-flex flex-column align-items-center" :class="{'orderStatus': barWidth === 0}">
-                        <i class=" fs-1 bi bi-box-seam text-red"></i>
-                        <h5 class=" fw-bold text-red"  style="white-space: nowrap" >待出貨</h5>
+                        <i class=" fs-1 bi bi-box-seam text-blue"></i>
+                        <h5 class=" fw-bold text-blue"  style="white-space: nowrap" >待出貨</h5>
                     </div>
                     <!-- 線條 -->
                     <div v-if="barWidth < 33" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #d3ccc1; width: 33%;"></div>
-                    <div v-else-if="barWidth >= 33" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #d04740; width: 33%;"></div>
+                    <div v-else-if="barWidth >= 33" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #4572c2; width: 33%;"></div>
                     <div class="d-flex flex-column align-items-center" :class="{'orderStatus': barWidth === 33}">
-                        <i class="bi bi-truck  fs-1" :class="{'text-red': barWidth >= 33}"></i>
-                        <h5 class=" fw-bold" :class="{'text-red': barWidth >= 33}" style="white-space: nowrap">運送中</h5>
+                        <i class="bi bi-truck  fs-1" :class="{'text-blue': barWidth >= 33}"></i>
+                        <h5 class=" fw-bold" :class="{'text-blue': barWidth >= 33}" style="white-space: nowrap">運送中</h5>
                     </div>
                     <div v-if="barWidth < 66" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #d3ccc1; width: 33%;"></div>
-                    <div v-else-if="barWidth >= 66" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #d04740; width: 33%;"></div>
+                    <div v-else-if="barWidth >= 66" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #4572c2; width: 33%;"></div>
                     <div class="d-flex flex-column align-items-center" :class="{'orderStatus': barWidth === 66}">
-                        <i class="bi bi-house-check  fs-1" :class="{'text-red': barWidth >= 66}" ></i>
-                        <h5 class=" fw-bold" :class="{'text-red': barWidth >= 66}" style="white-space: nowrap">已抵達</h5>
+                        <i class="bi bi-house-check  fs-1" :class="{'text-blue': barWidth >= 66}" ></i>
+                        <h5 class=" fw-bold" :class="{'text-blue': barWidth >= 66}" style="white-space: nowrap">已抵達</h5>
                     </div>
                     <div v-if="barWidth < 100" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #d3ccc1; width: 33%;"></div>
-                    <div v-else-if="barWidth === 100" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #d04740; width: 33%;"></div>
+                    <div v-else-if="barWidth === 100" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #4572c2; width: 33%;"></div>
                     <div class="d-flex flex-column align-items-center" :class="{'orderStatus-finished': barWidth === 100}">
-                        <i class="bi bi-clipboard-check  fs-1" :class="{'text-red': barWidth === 100}" ></i>
-                        <h5 class=" fw-bold" :class="{'text-red': barWidth === 100}" style="white-space: nowrap">訂單完成</h5>
+                        <i class="bi bi-clipboard-check  fs-1" :class="{'text-blue': barWidth === 100}" ></i>
+                        <h5 class=" fw-bold" :class="{'text-blue': barWidth === 100}" style="white-space: nowrap">訂單完成</h5>
                     </div>
                 </section>
                 <div class="row gx-5 row-cols-1 row-cols-lg-2 my-5">
                     <div class="col ">
-                        <h4 class="text-center fw-bold">訂購商品資訊</h4>
+                        <h4  class="text-center fw-bold bg-lightBlue py-2">訂購商品資訊</h4>
+                        <!-- <h4 class="text-center fw-bold">訂購商品資訊</h4> -->
                         <div v-if="order.cart" class="row py-3">
                             <div class="col-12">
                                 <div class="row">
@@ -173,7 +174,7 @@ export default {
                                 <td>優惠券折扣</td>
                                 <td class="text-end">- NT$ {{ numberComma(Math.ceil(order.cart.total * (order.cart.coupon.discount / 100))) }}</td>
                             </tr>
-                            <tr class="border-top bg-lightPink">
+                            <tr class="border-top bg-lightBlue">
                                 <td class="fw-bold text-danger">總計金額</td>
                                 <td class="text-end fw-bold text-danger">NT$ {{ numberComma(order.cart.finalTotal) }}</td>
                             </tr>
@@ -183,7 +184,8 @@ export default {
                         </div>
                     </div>
                     <div class="col ">
-                        <h4  class="text-center fw-bold">收件人資訊</h4>
+                        <h4  class="text-center fw-bold bg-lightYellow py-2">收件人資訊</h4>
+                        <!-- <h4  class="text-center fw-bold">收件人資訊</h4> -->
                         <table class="table table-borderless table-striped">
                         <thead>
                         <tr>
@@ -227,11 +229,11 @@ export default {
  .orderStatus{
     border-radius: 50%;
     padding: 0 15px;
-    background-color: #fff1f0;
+    background-color: #e8edfc;
  }
  .orderStatus-finished{
     border-radius: 50%;
     padding: 0 10px;
-    background-color: #fff1f0;
+    background-color: #e8edfc;
  }
 </style>

@@ -265,7 +265,7 @@ export default {
 </script>
 <template>
     <div class="" style="overflow-x: hidden;">
-      <!--  bg-lightPink -->
+      <!--  bg-lightBlue -->
       <!-- <section class=" mb-4 px-lg-5 py-lg-10 py-5" style="overflow-x: hidden; background-position: center; background-size: cover; background-repeat: no-repeat; padding: 150px 0;  background-image: url('https://images.unsplash.com/photo-1624220330071-9df752d24688?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');" >
           <div class="container">
             <h2 class="text-center fw-bold text-white py-3 fs-1" style="letter-spacing: 10px;">材料種類</h2>
@@ -277,7 +277,7 @@ export default {
                  :lock-scroll="true">
                  <div class="d-flex flex-column align-items-center py-10">
       <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <h1 class="text-center fw-bold text-red">
+      <h1 class="text-center fw-bold text-blue">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -291,49 +291,55 @@ export default {
       </h1>
     </div>
         </loading>
-        <section class="bannerBg">
+        <section class="bannerBg" style="background-image: url('https://images.unsplash.com/photo-1678465952860-422bf820209b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
           <div class="mask">
-            <div class="text" style="">
+            <div class="text" style="background: linear-gradient(to bottom, white 50% , #4572c2 50%); -webkit-background-clip: text;">
               材料種類
             </div>
           </div>
         </section>
         <section class="container mt-4">
-          <ul class="categorySelector row gy-4 row-cols-lg-4 row-cols-1 list-unstyled">
-            <li class="col d-flex border-end align-items-center justify-content-center">
-              <a href="#"  @click.prevent="()=>selectPage = '全部'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': pageStatus === '全部', 'link-red': pageStatus === '全部'}">
-                <span class="material-icons-outlined fs-2" style="border-bottom: 2px solid transparent !important;">apps</span>
-                <span class="fs-4" :class="{'dottedStyle': selectPage === '全部'}">全部</span>
-              </a>
-            </li>
-            <li class="col d-flex border-end align-items-center justify-content-center">
-              <a href="#"  @click.prevent="()=>selectPage = '食材組合包'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': pageStatus === '食材組合包', 'link-red': pageStatus === '食材組合包'}">
-                <i class="bi bi-bag-check-fill fs-3"></i>
-                <span class="fs-4 ms-1" :class="{'dottedStyle': selectPage === '食材組合包'}">食材組合包</span>
-              </a>
-            </li>
-            <li class="col d-flex border-end align-items-center justify-content-center">
-              <a href="#"  @click.prevent="()=>selectPage = '熱銷單品'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': pageStatus === '熱銷單品', 'link-red': pageStatus === '熱銷單品'}">
-                <i class="bi bi-fire fs-3"></i>
-                <span class="fs-4 ms-1" :class="{'dottedStyle': selectPage === '熱銷單品'}">熱銷單品</span>
-              </a>
-            </li>
-            <li class="col d-flex align-items-center justify-content-center">
-              <a href="#"  @click.prevent="()=>selectPage = '特價商品'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': pageStatus === '特價商品', 'link-red': pageStatus === '特價商品'}">
-                <i class="bi bi-percent fs-3"></i>
-                <span class="fs-4 ms-1" :class="{'dottedStyle': selectPage === '特價商品'}">特價商品</span>
-              </a>
-            </li>
+          <ul class="position-relative categorySelector row row-cols-4 gy-2 list-unstyled border-bottom">
+              <li class="col d-flex  align-items-center justify-content-center " :class="{'liDisabled': pageStatus === '全部'}">
+                <a href="#"  @click.prevent="()=>selectPage = '全部'" class="text-decoration-none d-flex flex-column align-items-center link-secondary " :class="{'fw-bold': pageStatus === '全部', 'link-blue': pageStatus === '全部'}">
+                  <img class="productImg1" v-if="pageStatus !== '全部'" src="../../assets/images/fruit1.png"  alt="">
+                  <img v-else-if="pageStatus === '全部'" src="../../assets/images/fruit3.png"  alt="">
+                  <span class="titleSize " >所有<br class="d-lg-none">材料</span>
+                </a>
+              </li>
+              <li class="col d-flex  align-items-center justify-content-center " :class="{'liDisabled': pageStatus === '食材組合包'}">
+                <a href="#"  @click.prevent="()=>selectPage = '食材組合包'" class="text-decoration-none d-flex flex-column align-items-center link-secondary " :class="{'fw-bold': pageStatus === '食材組合包', 'link-blue': pageStatus === '食材組合包'}">
+                  <img class="productImg2" v-if="pageStatus !== '食材組合包'" src="../../assets/images/food1.png"  alt="">
+                  <img v-else-if="pageStatus === '食材組合包'" src="../../assets/images/food3.png"  alt="">
+                  <span class="titleSize text-center" >食材<br class="d-lg-none">組合包</span>
+                </a>
+              </li>
+              <li class="col d-flex  align-items-center justify-content-center" :class="{'liDisabled': pageStatus === '熱銷單品'}">
+                <a href="#"  @click.prevent="()=>selectPage = '熱銷單品'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': pageStatus === '熱銷單品', 'link-blue': pageStatus === '熱銷單品'}">
+                  <img class="productImg3" v-if="pageStatus !== '熱銷單品'" src="../../assets/images/strawberry1.png"  alt="">
+                  <img v-else-if="pageStatus === '熱銷單品'" src="../../assets/images/strawberry3.png"  alt="">
+                  <span  class="titleSize ">熱銷<br class="d-lg-none">單品</span>
+                </a>
+              </li>
+              <li class="col d-flex  align-items-center justify-content-center" :class="{'liDisabled': pageStatus === '特價商品'}">
+                <a href="#"  @click.prevent="()=>selectPage = '特價商品'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': pageStatus === '特價商品', 'link-blue': pageStatus === '特價商品'}">
+                  <img class="productImg4" v-if="pageStatus !== '特價商品'" src="../../assets/images/discount1.png"  alt="">
+                  <img v-else-if="pageStatus === '特價商品'" src="../../assets/images/discount3.png"  alt="">
+                  <span  class="titleSize ">特價<br class="d-lg-none">商品</span>
+                </a>
+              </li>
+              <li class="redLine bg-blue position-absolute" style="height: 2px; bottom: 0px; left: 5.5%" :class="{'activeAllIngredient': pageStatus === '全部', 'activePackage': pageStatus === '食材組合包', 'activeHot': pageStatus === '熱銷單品', 'activeSale': pageStatus === '特價商品'}"></li>
           </ul>
         </section>
+
       <!-- 搜尋 -->
       <div class="d-none d-lg-block container selectProduct pt-4">
         <div class="input-group">
-          <a class="btn btn-outline-red px-5" @click="()=> this.priceOrRateCollapse.toggle()">篩選對象 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{priceOrRate}}</span></a>
-          <button class="btn btn-outline-red px-5" type="button" @click="()=> this.highOrLowCollapse.toggle()">篩選值 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{highOrLow}}</span> </button>
-          <input type="search" class="form-control border-red border-end-0" placeholder="請輸入食材名稱" aria-label="Example text with two button addons" v-model="productSearchName" @keyup.enter="searchProducts">
-          <button type="submit" class="btn border border-red border-start-0 bg-transparent" @click.prevent="searchProducts">
-            <img src="../../assets/images/icon-searchMobile.png" style="height: 25px;" alt="">
+          <a class="btn btn-outline-blue px-5" @click="()=> this.priceOrRateCollapse.toggle()">篩選對象 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{priceOrRate}}</span></a>
+          <button class="btn btn-outline-blue px-5" type="button" @click="()=> this.highOrLowCollapse.toggle()">篩選值 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{highOrLow}}</span> </button>
+          <input type="search" class="form-control border-blue border-end-0" placeholder="請輸入食材名稱" aria-label="Example text with two button addons" v-model="productSearchName" @keyup.enter="searchProducts">
+          <button type="submit" class="btn border border-blue border-start-0 bg-transparent d-flex" @click.prevent="searchProducts">
+            <span class="material-icons-outlined text-blue ">search</span>
           </button>
         </div>
         <!-- 參考： https://stackoverflow.com/questions/72345809/only-show-one-collapse-open-vue-3-bootstrap-5 -->
@@ -344,9 +350,9 @@ export default {
               <div class="card card-body border-0" style="border: 0px !important;">
                 <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
                   <input type="radio" class="btn-check" value="價格" name="priceOrRate" id="selectprice" autocomplete="off"  v-model="priceOrRate">
-                  <label class="btn btn-outline-red " for="selectprice">價格</label>
+                  <label class="btn btn-outline-blue " for="selectprice">價格</label>
                   <input type="radio" class="btn-check"  value="評價" name="priceOrRate" id="selectRate" autocomplete="off" v-model="priceOrRate">
-                  <label class="btn btn-outline-red " for="selectRate">評價</label>
+                  <label class="btn btn-outline-blue " for="selectRate">評價</label>
                 </div>
               </div>
             </div>
@@ -356,11 +362,11 @@ export default {
               <div class="card card-body border-0" style="border: 0px !important;">
                 <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
                   <input type="radio" class="btn-check" value="不拘" name="highOrLow" id="noDifference" autocomplete="off" checked="" v-model="highOrLow">
-                  <label class="btn btn-outline-red" for="noDifference">不拘</label>
+                  <label class="btn btn-outline-blue" for="noDifference">不拘</label>
                   <input type="radio" class="btn-check" value="高到低" name="highOrLow" id="highToLow" autocomplete="off" v-model="highOrLow">
-                  <label class="btn btn-outline-red" for="highToLow">高到低</label>
+                  <label class="btn btn-outline-blue" for="highToLow">高到低</label>
                   <input type="radio" class="btn-check" value="低到高" name="highOrLow" id="lowToHigh" autocomplete="off" v-model="highOrLow">
-                  <label class="btn btn-outline-red" for="lowToHigh">低到高</label>
+                  <label class="btn btn-outline-blue" for="lowToHigh">低到高</label>
                 </div>
               </div>
             </div>
@@ -389,7 +395,7 @@ export default {
                 <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2" @click="()=>addBookmark(product)">
                   <img src="../../assets/images/image5.png">
                 </button>
-                <span v-if="product.isCheaper" style="pointer-events: none;" class="d-flex flex-column align-items-center text-white p-2 bg-red  position-absolute top-0 start-0">
+                <span v-if="product.isCheaper" style="pointer-events: none;" class="d-flex flex-column align-items-center text-white p-2 bg-blue  position-absolute top-0 start-0">
                   {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                 </span>
                 <!-- 先轉成 string 再取得字串第一個字元 .charAt(0) -->
@@ -413,7 +419,7 @@ export default {
                     </span>
                   </div>
                   <h5 class="mb-0 ms-auto starRates">
-                    <div class=" badge border rounded-pill bg-white" :class="{'text-orange': product.averageRate, 'border-orange': product.averageRate, 'text-lightBrownGray': !product.averageRate, 'border-lightBrownGray': !product.averageRate}">
+                    <div class=" badge border rounded-pill bg-white" :class="{'text-yellow': product.averageRate, 'border-yellow': product.averageRate, 'text-lightBrownGray': !product.averageRate, 'border-lightBrownGray': !product.averageRate}">
                       <span class="me-1">
                       {{ product.averageRate }}
                       </span>
@@ -434,19 +440,26 @@ export default {
       </div>
 
       <!-- 頁尾 -->
-      <PaginationComponent ref="pagination" :price-or-rate="priceOrRate" :filter-products="filterProducts"></PaginationComponent>
+      <PaginationComponent ref="pagination" :price-or-rate="priceOrRate" :filter-products="filterProducts"  class="mb-5"></PaginationComponent>
     </div>
 </template>
 <style>
-  /* .Page ul .active a {
-  background-color: red !important;
-}
-.Page ul li:hover{
-  background-color: red !important;
-} */
- /* ::placeholder {
-    color: #e89995 !important;
-  } */
+
+  .categorySelector li a .productImg1, .productImg2, .productImg3, .productImg4{
+    opacity: .5; /* 把紅色 變粉 */
+  }
+  .categorySelector li a:hover .productImg1 {
+    content: url('@/assets/images/fruit2.png');
+  }
+  .categorySelector li a:hover .productImg2 {
+    content: url('@/assets/images/food2.png');
+  }
+  .categorySelector li a:hover .productImg3 {
+    content: url('@/assets/images/strawberry2.png');
+  }
+  .categorySelector li a:hover .productImg4 {
+    content: url('@/assets/images/discount2.png');
+  }
 
   #myTab .nav-item .active {
     color: #d04740;

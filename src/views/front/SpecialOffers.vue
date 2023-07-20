@@ -6,7 +6,7 @@
                  :lock-scroll="true">
                  <div class="d-flex flex-column align-items-center py-10">
       <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <h1 class="text-center fw-bold text-red">
+      <h1 class="text-center fw-bold text-blue">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -20,37 +20,34 @@
       </h1>
     </div>
         </loading>
-      <!-- <section class=" mb-4 px-lg-5 py-lg-10 py-5" style="overflow-x: hidden; background-position: center; background-size: cover; background-repeat: no-repeat; padding: 150px 0;  background-image: url('https://images.unsplash.com/photo-1622838982253-495392336bf0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');" >
-          <div class="container d-flex flex-column align-items-center">
-            <h2 class="text-center fw-bold text-white py-3 fs-1" style="letter-spacing: 10px;">優惠特報</h2>
-          </div>
-      </section> -->
-      <section class="bannerBg">
+      <section class="bannerBg" style="background-image: url('https://images.unsplash.com/photo-1678465952975-85cc1a08b2d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');">
           <div class="mask">
-            <div class="text" style="">
+            <div class="text" style="background: linear-gradient(to bottom, white 50% , #4572c2 50%); -webkit-background-clip: text;">
               優惠特報
             </div>
           </div>
         </section>
       <section class="container mt-4">
-          <ul class="categorySelector row gy-4 row-cols-lg-2 row-cols-1 list-unstyled">
-            <li class="col d-flex border-end align-items-center justify-content-center">
-              <a href="#"  @click.prevent="()=>tabName = '優惠折扣'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': tabName === '優惠折扣', 'link-red': tabName === '優惠折扣'}">
-                <i class="bi bi-percent fs-2"></i>
-                <span class="fs-4" :class="{'dottedStyle': tabName === '優惠折扣'}">優惠折扣</span>
-              </a>
-            </li>
-            <li class="col d-flex align-items-center justify-content-center">
-              <a href="#"  @click.prevent="()=>tabName = '抽獎回饋'" class="text-decoration-none d-flex align-items-center link-secondary" :class="{'fw-bold': tabName === '抽獎回饋', 'link-red': tabName === '抽獎回饋'}">
-                <i class="bi bi-gift fs-3"></i>
-                <span class="fs-4 ms-1" :class="{'dottedStyle': tabName === '抽獎回饋'}">抽獎回饋</span>
-              </a>
-            </li>
+          <ul class="position-relative categorySelector row row-cols-2 gy-2 list-unstyled border-bottom">
+              <li class="col d-flex  align-items-center justify-content-center" :class="{'liDisabled': tabName === '優惠折扣'}">
+                <a href="#"  @click.prevent="()=>tabName = '優惠折扣'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': tabName === '優惠折扣', 'link-blue': tabName === '優惠折扣'}">
+                  <img class="discountImg1" v-if="tabName !== '優惠折扣'" src="../../assets/images/discount1.png"  alt="">
+                  <img v-else-if="tabName === '優惠折扣'" src="../../assets/images/discount3.png"  alt="">
+                  <span  class="titleSize ">優惠折扣</span>
+                </a>
+              </li>
+              <li class="col d-flex  align-items-center justify-content-center" :class="{'liDisabled': tabName === '抽獎回饋'}">
+                <a href="#"  @click.prevent="()=>tabName = '抽獎回饋'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': tabName === '抽獎回饋', 'link-blue': tabName === '抽獎回饋'}">
+                  <img class="discountImg2" v-if="tabName !== '抽獎回饋'" src="../../assets/images/giftBox1.png"  alt="">
+                  <img v-else-if="tabName === '抽獎回饋'" src="../../assets/images/giftBox3.png"  alt="">
+                  <span  class="titleSize ">抽獎回饋</span>
+                </a>
+              </li>
+              <li class="redLine bg-blue position-absolute" style="height: 2px; bottom: 0px; left: 5.5%" :class="{'activeDiscount': tabName === '優惠折扣', 'activeGift': tabName === '抽獎回饋'}"></li>
           </ul>
       </section>
-      <section v-if="tabName === '優惠折扣'" class="text-red ">
+      <section v-if="tabName === '優惠折扣'" class="text-blue ">
         <div class="container">
-          <h3><span class="rounded-circle bg-red px-2 text-white">6</span> 月</h3>
           <div v-if="!isLoading" class="row row-cols-lg-4 g-4 py-3 text-darkBrown">
           <div class="col hvr-hang" v-for="(coupon, index) in coupons" :key="index">
               <div class="card">
@@ -59,12 +56,13 @@
                       <img :src="coupon.image" class="card-img-top" alt="..." height="200" style="object-fit: cover;">
                     </div>
                     <div class="card-body">
+                      <p class="">{{ new Date(coupon.startDate).toLocaleDateString() }} - {{ new Date(coupon.dueDate).toLocaleDateString() }}</p>
                       <h5 class="card-title h4 fw-bold">{{  coupon.title }}</h5>
                       <p class="card-text text-truncate">{{ coupon.description }}</p>
                       <p class="detail d-none d-lg-block position-absolute fw-bold" style="top: 30%; left: 50%; transform: translateX(-50%); letter-spacing: 5px;">查看優惠資訊</p>
 
                       <div class="d-flex">
-                          <RouterLink :to="`/discounts/${index}`" href="#" class="stretched-link btn btn-outline-red rounded-0 ms-auto">查看完整優惠資訊</RouterLink>
+                          <RouterLink :to="`/discounts/${index}`" href="#" class="stretched-link btn btn-outline-blue rounded-0 ms-auto">查看完整優惠資訊</RouterLink>
                       </div>
                     </div>
                   </div>
@@ -86,9 +84,9 @@
           <!-- v-if="!getPrize" 要改成不是 '1' -->
           <div v-if="!getPrize || (getPrize && getPrize.id !== 1)" class="col-lg-12 align-self-center">
             <h4 class="mb-0 text-center fw-bold">本月指定抽獎食譜</h4>
-            <div class="row row-cols-lg-3 row-cols-1 pt-4">
-              <!-- border border-red -->
-              <div v-for="(item, index) in drewProducts" :key="item" class="border border-red bg-lightPink col" >
+            <div class="row row-cols-lg-3 row-cols-1 mt-4">
+              <!-- border border-blue -->
+              <div v-for="(item, index) in drewProducts" :key="item" class="border border-blue bg-lightBlue col" >
                 <h4 class="text-center fw-bold my-3">{{ item[0] }}</h4>
                 <div class="row">
                   <div class="d-flex flex-column align-items-center position-relative col-4"
@@ -105,14 +103,14 @@
               </div>
             </div>
             <div class="d-flex">
-              <button type="button" class="mx-auto mt-3 btn btn-red" @click="addtLotteryResult">立即抽獎</button>
+              <button type="button" class="hvr-sweep-to-right mx-auto mt-3 btn btn-blue" @click="addtLotteryResult" style="border-radius: 0px;">立即抽獎</button>
             </div>
             <p class="text-end">抽一次消耗一張抽獎券</p>
           </div>
           <!-- 完成食譜 -->
           <!-- v-else-if="getPrize" -->
           <div v-if="lotteryResult && this.getPrize && this.getPrize.id" class="d-flex flex-column align-items-center">
-            <h5 class="h3 text-center text-red fw-bold">恭喜您完成{{ getPrize.id === 1 ? '全部' : getPrize.id === 2 ? '2份' : '1份' }}食譜，獲得：</h5>
+            <h5 class="h3 text-center text-blue fw-bold">恭喜您完成{{ getPrize.id === 1 ? '全部' : getPrize.id === 2 ? '2份' : '1份' }}食譜，獲得：</h5>
             <div class="col-lg-4 col-12">
                 <div class="card position-relative" style="border-radius: 0px; border: none !important;">
                   <div class="card-header h4 fw-bold text-center mb-3 bg-white border-0" >
@@ -136,7 +134,7 @@
                 <img src="../../assets/images/title4.png" class="me-lg-4 me-2 titleImg " alt="">
                 <span class="recipeTitle">月獎品</span>
               </div>
-              <span class="light-red mb-lg-0 mb-2 h6 ms-2 speakerText d-flex align-items-center">
+              <span class="light-blue mb-lg-0 mb-2 h6 ms-2 speakerText d-flex align-items-center">
                 <img src="../../assets/images/icon-speaker.png" class="speaker" alt="">
                 超值大獎一次帶回!
               </span>
@@ -152,9 +150,7 @@
                   <div class="card-header border-0 h4 fw-bold text-center mb-3 bg-white" >
                     {{ prize.id === 1 ? '大獎' : prize.id === 2 ? '二獎' : '三獎' }}
                   </div>
-                  <!-- background: linear-gradient(45deg, rgb(252, 179, 78) 20%, rgb(253,164,72), rgb(255,113,75) 90% ); -->
-                  <!--  background: linear-gradient(45deg, #f9907e 20%, #f95767, #fee0a8 90% ); -->
-                  <div class="questionMark  position-absolute d-flex" style="top: 60px;  width: 100%; height: 220px;  background: linear-gradient(90deg, #ff9a9e ,#fad0c4);">
+                  <div class="questionMark  position-absolute d-flex" style="top: 60px;  width: 100%; height: 220px;  background: linear-gradient(90deg, #6ea3fe ,#cab8ff);">
                     <i class="bi bi-question-lg mx-auto text-white" style="font-size: 150px;"></i>
                   </div>
                   <img :src="prize.img" class="card-img border bg-white" style=" height:220px; object-fit: contain; border-radius: 0;" alt="">
@@ -297,9 +293,9 @@ export default {
             '<p>單筆金額滿  <b>NT$2,000</b> 即可獲得一張抽獎券</p>' +
             '<p>單筆金額滿  <b>NT$5,000</b> 即可獲得三張抽獎券</p>' +
             '<p>單筆金額滿  <b>NT$10,000</b> 即可獲得七張抽獎券</p>' +
-            '<a href="/finalEasyBuyEasyMake/#/products" class="link-red">前往選購商品</a>',
+            '<a href="/finalEasyBuyEasyMake/#/products" class="link-blue">前往選購商品</a>',
           showConfirmButton: true,
-          confirmButtonColor: '#d04740',
+          confirmButtonColor: '#4572c2',
           confirmButtonText: '確定'
         })
         return
@@ -445,4 +441,10 @@ export default {
   background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.7));
 }
 
+.categorySelector li a:hover .discountImg1 {
+    content: url('@/assets/images/discount2.png');
+  }
+  .categorySelector li a:hover .discountImg2 {
+    content: url('@/assets/images/giftBox2.png');
+  }
 </style>

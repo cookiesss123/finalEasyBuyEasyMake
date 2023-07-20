@@ -145,7 +145,7 @@ export default {
       const { value: file } = await this.$swal({
         title: '選擇圖片',
         input: 'file',
-        confirmButtonColor: '#d04740',
+        confirmButtonColor: '#4572c2',
         confirmButtonText: '確定',
         inputAttributes: {
           accept: 'image/*',
@@ -178,7 +178,7 @@ export default {
       const { value: file } = await this.$swal({
         title: '選擇圖片',
         input: 'text',
-        confirmButtonColor: '#d04740',
+        confirmButtonColor: '#4572c2',
         confirmButtonText: '確定',
         inputAttributes: {
           accept: 'image/*',
@@ -235,7 +235,7 @@ export default {
                  :lock-scroll="true">
                  <div class="d-flex flex-column align-items-center py-10">
       <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <h1 class="text-center fw-bold text-red">
+      <h1 class="text-center fw-bold text-blue">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -249,9 +249,9 @@ export default {
       </h1>
     </div>
         </loading>
-      <section class="bannerBg">
+      <section class="bannerBg" style="background-image: url('https://images.unsplash.com/photo-1678465952850-0eb0bb982835?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
         <div class="mask">
-          <div class="text" style="">
+          <div class="text" style="background: linear-gradient(to bottom, white 50% , #4572c2 50%); -webkit-background-clip: text;">
             會員資料
           </div>
         </div>
@@ -260,34 +260,36 @@ export default {
       <div class="container ">
         <div class="row row-cols-1 row-cols-lg-2 gx-5">
         <section class=" col-lg-4 py-5">
-          <div class="d-flex flex-column align-items-center position-relative  bg-lightPink pt-5">
+          <div class="d-flex flex-column align-items-center position-relative  bg-lightBlue pt-5">
             <div v-if="!user.headshotImg" class="d-flex" style="height: 300px; width: 300px; ">
-              <i class="bi bi-person-fill m-auto text-red" style="font-size: 200px;"></i>
+              <i class="bi bi-person-fill m-auto text-blue" style="font-size: 200px;"></i>
             </div>
             <img v-else-if="user.headshotImg" :src="user.headshotImg"  style="object-fit: cover;  height: 300px; width: 300px;" class="mb-4 " alt="">
-
-            <div class="d-flex align-items-center justify-content-evenly py-3 position-absolute w-100" style="bottom: 0px; background: rgba(255, 234, 234, 0.9);">
-              <a href="#" class="link-red fw-bold" @click.prevent="selectImgUrl">上傳圖片網址</a>
-              <div class="bg-red"  style="width: 2px; height: 20px;"></div>
-              <a href="#" class="link-orange fw-bold" @click.prevent="selectFile">上傳本地圖片</a>
+            <div class="headshotImgBtn row align-items-center position-absolute w-100" style="bottom: 0px; background: rgba(209, 219, 255, 0.9);">
+              <div class="col d-flex py-3 border border-white"  @click.prevent="selectImgUrl">
+                <a href="#" class="link-blue fw-bold mx-auto">上傳圖片網址</a>
+              </div>
+              <div class="col d-flex  py-3 border border-white" @click.prevent="selectFile">
+                <a href="#" class="link-blue fw-bold mx-auto">上傳本地圖片</a>
+              </div>
             </div>
           </div>
-          <div class="border border-lightPink">
+          <div class="border border-lightBlue">
             <div class="py-3 d-flex align-items-center">
               <label for="nickName" class="form-label mb-0 fw-bold ms-1 ms-lg-3"><i class="bi bi-person-circle"></i> 暱稱</label>
               <span v-if="nickNameEdit" class="ms-4">{{ user.nickName }}</span>
               <div class="ms-auto">
-                <a href="#" v-if="nickNameEdit" class="link-red fw-bold me-3" @click.prevent="()=>nickNameEdit = !nickNameEdit">修改暱稱</a>
+                <a href="#" v-if="nickNameEdit" class="link-blue fw-bold me-3" @click.prevent="()=>nickNameEdit = !nickNameEdit">修改暱稱</a>
                 <div class="input-group" :class="{'d-none': nickNameEdit}">
                   <input type="text" class="form-control" placeholder="請輸入新暱稱" id="nickName" v-model="newNickName" style="width: 180px;">
                   <button @click="()=>nickNameEdit = true" class="btn btn-outline-secondary btn-sm" type="button" id="button-addon2">取消</button>
-                  <button @click="()=>changeEmail()" class="btn btn-sm btn-outline-red" type="button" id="button-addon2">確定</button>
+                  <button @click="()=>changeEmail()" class="btn btn-sm btn-outline-blue" type="button" id="button-addon2">確定</button>
                 </div>
               </div>
             </div>
             <!-- 信箱 -->
             <!-- mt-3 mt-lg-5 -->
-            <div class="bg-lightPink py-3 d-flex align-items-center ">
+            <div class="bg-lightBlue py-3 d-flex align-items-center ">
               <label for="email" class="form-label mb-0 fw-bold ms-1 ms-lg-3"><i class="bi bi-envelope-fill"></i> 信箱</label>
               <span class="ms-4">{{user.email}}</span>
             </div>
@@ -296,24 +298,24 @@ export default {
               <label for="password" class="form-label mb-0 fw-bold ms-1 ms-lg-3"><i class="bi bi-lock-fill"></i> 密碼</label>
               <span v-if="passwordEdit" class="ms-4">* * * * * * * *</span>
               <div class="ms-auto">
-                <a href="#" v-if="passwordEdit" class="link-red fw-bold me-3" @click.prevent="()=>passwordEdit = !passwordEdit">變更密碼</a>
+                <a href="#" v-if="passwordEdit" class="link-blue fw-bold me-3" @click.prevent="()=>passwordEdit = !passwordEdit">變更密碼</a>
                 <div class="input-group" :class="{'d-none': passwordEdit}">
                   <input type="password" class="form-control" placeholder="請輸入新密碼" id="password" v-model="newPassword" style="width: 180px;">
                   <button @click="()=>passwordEdit = true" class="btn btn-sm btn-outline-secondary" type="button" id="button-addon2">取消</button>
-                  <button @click="()=>changePassword()" class="btn btn-sm btn-outline-red" type="button" id="button-addon2">確定</button>
+                  <button @click="()=>changePassword()" class="btn btn-sm btn-outline-blue" type="button" id="button-addon2">確定</button>
                 </div>
               </div>
             </div>
               <!-- 我的抽獎券 -->
-            <div class="bg-lightPink py-3 d-flex align-items-center">
+            <div class="bg-lightBlue py-3 d-flex align-items-center">
               <label for="ticket" class="form-label mb-0 fw-bold ms-1 ms-lg-3"><i class="bi bi-ticket-perforated-fill"></i> 我的抽獎券</label>
               <span class="ms-4">{{ user.lotteryTicket }} 張</span>
-              <button type="button" class="btn btn-sm btn-red ms-auto me-2" @click="linkToLottery"><i class="bi bi-gift"></i> 立即抽獎</button>
+              <button type="button" class="btn btn-sm btn-outline-blue ms-auto me-2" @click="linkToLottery" style="border-radius: 0px;">立即抽獎</button>
             </div>
           </div>
         </section>
         <section class=" col-lg-8 py-5 ">
-          <h2 class="h3 fw-bold">訂單狀況</h2>
+          <h2 class="h3 fw-bold text-center py-3 bg-lightBlue text-blue">訂單狀況</h2>
           <div class="selectOrderStatus py-3 d-flex justify-content-between justify-content-lg-start">
             <button type="button" class="d-flex btn border-0 me-lg-5 hvr-rectangle-out bg-transparent" :class="{'activePage':selectItem === '全部'}" @click="() => selectItem ='全部'">
               <i class="bi bi-border-all" :class="{'text-white':selectItem === '全部','fw-bold':selectItem === '全部'}"></i>
@@ -369,22 +371,23 @@ export default {
               <!-- 確保渲染前資料有填入 -->
               <div v-if="filterOrders.length">
                 <RouterLink :to="`/orders/${order.id}`" class=" col text-decoration-none link-dark" v-for="order in this.$refs.pagination.pageProducts" :key="order.creatAt">
-                  <span><i class="bi bi-clock"></i> {{ new Date(order.creatAt).toLocaleDateString() }}  {{ new Date(order.creatAt).getHours() }}:{{ new Date(order.creatAt).getMinutes() }} </span>
+                  <div class="orderSelect p-3">
+                    <span><i class="bi bi-clock"></i> {{ new Date(order.creatAt).toLocaleDateString() }}  {{ new Date(order.creatAt).getHours() }}:{{ new Date(order.creatAt).getMinutes() }} </span>
                   <div class=" row row-cols-lg-4 row-cols-2 align-items-center mt-2" >
                     <div class="col" v-for="(item, index) in order.cart.items" :key="item + 6603">
                       <!-- 只顯示 長度 4 以內 v-if="order.cart.items.length < 4" 前面不行會整個隱藏 => 應該說只顯示 index 到 3 -->
                       <!-- 最多顯示 7 個好了 ... -->
-                      <div v-if="index < 7"  class="">
+                      <div v-if="index < 7 || (order.cart.items.length === 8 && index === 7)"  class="">
                         <img :src="item.product.imgUrl" alt="" height="100" class="w-100" style="object-fit: cover;">
                         <p class="mb-0 mt-2 text-center">
-                          <span class="subTitle me-1">{{ item.product.title }}</span>
-                          <span class="text-red fw-bold">x{{ numberComma(item.qty) }}</span>
+                          <span class="subTitle me-1">{{ item.product.title.length > 9 ? (item.product.title).slice(0, 8) + '...' : item.product.title }}</span>
+                          <span class="text-blue fw-bold">x{{ numberComma(item.qty) }}</span>
                         </p>
                       </div>
                       <!-- 多出來顯示的商品 -->
-                      <div v-if="index === 7"  class="position-relative" style="top: -16px;">
+                      <div v-if="index === 7 && order.cart.items.length !== 8"  class="position-relative" style="top: -16px; background-color: rgba(0, 0, 0, .4)">
                         <img :src="item.product.imgUrl" alt="" height="100" class="w-100" style="object-fit: cover; opacity: .4;">
-                        <p class="mb-0 text-center position-absolute fs-1 text-secondary" style="top: 50%; left: 50%; transform: translateX(-50%) translateY(-50%);">{{ order.cart.items.length - 7 }} +
+                        <p class="mb-0 text-center position-absolute fs-1 text-white" style="top: 50%; left: 50%; transform: translateX(-50%) translateY(-50%); text-shadow: 2px 2px 2px rgb(71, 71, 71);">{{ order.cart.items.length - 7 }} +
                         </p>
                       </div>
                     </div>
@@ -392,12 +395,13 @@ export default {
                   <div class="d-flex mt-4">
                       <div class="ms-auto d-flex align-items-center">
                           <span class="me-3 fw-bold"><i v-if="order.deliveryStatus === '待出貨'" class="bi bi-box-seam me-1"></i><i  v-if="order.deliveryStatus === '運送中'" class="bi bi-truck me-1"></i><i v-if="order.deliveryStatus === '待取貨'" class="bi bi-house-check me-1"></i><i v-if="order.deliveryStatus === '訂單完成'" class="bi bi-clipboard-check me-1"></i>{{order.deliveryStatus}}</span>
-                          <span class="text-red fw-bold">NT$ {{  numberComma(order.cart.finalTotal)  }}</span>
-                          <RouterLink :to="`/orders/${order.id}`" class="ms-3"><i class="bi bi-search text-red"></i></RouterLink>
+                          <span class="text-blue fw-bold">NT$ {{  numberComma(order.cart.finalTotal)  }}</span>
+                          <RouterLink :to="`/orders/${order.id}`" class="ms-3"><i class="bi bi-search text-blue"></i></RouterLink>
                       </div>
                   </div>
+                  </div>
                   <hr>
-              </RouterLink>
+                </RouterLink>
               </div>
               <div v-else-if="!filterOrders.length" class=" d-flex flex-column align-items-center justify-content-center" >
                 <img src="../../assets/images/undraw_No_data_re_kwbl.png" style="width: 300px;" alt="">
@@ -422,12 +426,30 @@ export default {
     font-weight: bold;
   }
   .hvr-rectangle-out::before {
-    background: #d04740;
+    background: #4572c2;
   }
   .activePage{
-    background: #d04740 !important;
+    background: #4572c2 !important;
   }
-
+  .headshotImgBtn .col{
+    cursor:pointer;
+    transition: all .3s ease-in-out;
+  }
+  .headshotImgBtn .col:hover{
+    background-color: #4572c2;
+  }
+  .headshotImgBtn .col a{
+    transition: all .3s ease-in-out;
+  }
+  .headshotImgBtn .col:hover a{
+    color: white !important;
+  }
+  .orderSelect{
+    transition: all .3s ease-in-out;
+  }
+  .orderSelect:hover{
+    background-color: #e8edfc;
+  }
   /* 文字背景顏色測試 */
   /* https://images.unsplash.com/photo-1464219551459-ac14ae01fbe0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80 */
 

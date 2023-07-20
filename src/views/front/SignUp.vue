@@ -1,54 +1,50 @@
 <template>
-       <main class="mt-5 d-flex align-items-center bg-lightYellow">
-            <div class="container my-7">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                      <li class="breadcrumb-item fs-5">
-                        <RouterLink to="/home" class="link-red  d-none d-lg-block">首頁</RouterLink>
-                        </li>
-                      <li class="breadcrumb-item active fs-5 d-none d-lg-block" aria-current="page">註冊</li>
-                    </ol>
-                </nav>
-                <div class="row mt-3 gx-3 rounded py-3">
-                    <div class="col d-none d-lg-block">
-                        <div class="card h-100 border-0 bg-lightYellow mt-9" style="border-radius: 30px; border: 0px !important;">
-                            <img src="../../assets/images/hero-mobile.png" class="img-fluid card-img-top " alt="" style="border-radius: 30px;">
-                            <div class="card-img-overlay" style="top:450px">
-                                <h2 class="text-darkBrown text-center mb-4 h1">
-                                    您在找的
-                                    <span class="text-orange"> 食譜材料 </span>
-                                    都在這裡
-                                </h2>
-                            </div>
-                        </div>
+    <!-- bg-lightYellow -->
+    <main class="py-7"  style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); background-position: right; background-repeat: no-repeat; background-size: 130%; background-attachment: fixed;">
+            <div class="container">
+                <ul class="list-unstyled d-flex mt-4">
+                  <li class="me-2">
+                    <RouterLink to="/home" class="link-blue  d-none d-lg-block">首頁</RouterLink>
+                  </li>
+                  <li class="text-white">
+                    / <span  class="me-2">註冊</span>
+                  </li>
+                </ul>
+                <div class="row">
+                    <div class="col d-none d-lg-block" style="margin: auto">
+                      <h2 class="text-white text-center h1 fw-bold ">
+                          您在找的
+                          <span class="text-blue"> 食譜材料 </span>
+                          都在這裡
+                      </h2>
                     </div>
-                    <div class="col">
-                        <!-- border- -->
-                        <div class="signup-card card h-100 " style="border-radius: 20px; padding: 0 !important; border: 0px !important;">
-                            <div class="card-body p-0">
-                                <!-- border border-dark -->
-                                <div class="card-header bg-white py-0 "  style="border-radius: 20px 20px 0px 0px;">
+                    <div class="col-lg-6" style="">
+                        <div class="card h-100 border border-2 border-white" style="border-radius: 20px; padding: 0 !important; background-color: transparent !important; backdrop-filter: blur(20px); background-color: rgba(255, 255, 255, .5);">
+                            <div class="card-body p-0" >
+                                <div class="card-header bg-white py-0 border-0"  style="border-radius: 20px 20px 0px 0px;">
                                     <div class="row " style="margin: 0 -18px;">
-                                        <h2 class="h5 col mb-0 text-center py-3 position-relative" style="padding-bottom: 10px; border-radius: 20px 0 0 0;">
-                                            <RouterLink to="/login" class="link-dark stretched-link text-decoration-none fw-bold link-orange ">登入</RouterLink>
+                                        <h2 class="blueBottomLine h5 col mb-0 text-center py-3 position-relative" style="padding-bottom: 10px; border-radius: 20px 0 0 0;">
+                                            <RouterLink to="/login" class="link-dark stretched-link text-decoration-none fw-bold link-blue ">登入</RouterLink>
                                         </h2>
-                                        <h2 class="h5 col mb-0 text-center py-3 position-relative bg-orange text-decoration-none fw-bold text-white" style="padding-bottom: 10px; border-radius: 0 20px 0 0;">
+                                        <h2 class="h5 col mb-0 text-center py-3 position-relative bg-blue text-decoration-none fw-bold text-white" style="padding-bottom: 10px; border-radius: 0 20px 0 0;">
                                             註冊
                                         </h2>
                                     </div>
                                 </div>
-                                <!--  d-flex flex-column -->
-                                <h1 class="text-orange text-center h3 mt-4">
+                                <h1 class="text-blue text-center h3 mt-4">
                                     歡迎來到
-                                    <!-- <span class="text-orange">甜點食譜一鍵購</span> -->
-                                    <div class="d-flex mt-2">
-                                        <img src="../../assets/images/logo.png" class="mx-auto" alt="" width="280">
+                                    <div class="d-flex justify-content-center align-items-center mt-2">
+                                      <img src="../../assets/images/loadingLogo.png" style="height: 60px;" class="logo me-1" alt="">
+                                      <div>
+                                        <p class="text-darkBrown mb-0 text-start"  style="font-size: 24px;">甜點食譜一鍵購</p>
+                                        <p class="fw-light mb-0 text-start" style="font-family: 'Rajdhani', sans-serif; color: #5a5ad0; font-size: 18px; margin-top: -6px;">Easy Buy Easy Make</p>
+                                      </div>
                                     </div>
                                 </h1>
                                 <VForm ref="form" class="mx-5 card-body" v-slot="{ errors }" @submit="signUp">
                                     <div class="row gy-4 d-flex">
                                         <div class="col-12 fs-5">
-                                            <label for="nickName" class="form-label text-secondary" :class="{'text-orange':user.nickName && !errors['暱稱']}"><i class="bi bi-person-circle"></i> 暱稱</label>
+                                            <label for="nickName" class="form-label text-secondary" :class="{'text-blue':user.nickName && !errors['暱稱']}"><i class="bi bi-person-circle"></i> 暱稱</label>
                                             <VField
                                                 id="nickName"
                                                 name="暱稱"
@@ -62,7 +58,7 @@
                                             <ErrorMessage name="暱稱" class="invalid-feedback"></ErrorMessage>
                                         </div>
                                         <div class="col-12 fs-5">
-                                            <label for="email" class="form-label text-secondary" :class="{'text-orange':user.email && !errors['信箱']}"><i class="bi bi-envelope-fill" ></i> 信箱</label>
+                                            <label for="email" class="form-label text-secondary" :class="{'text-blue':user.email && !errors['信箱']}"><i class="bi bi-envelope-fill" ></i> 信箱</label>
                                             <VField
                                                 id="email"
                                                 name="信箱"
@@ -76,7 +72,7 @@
                                             <ErrorMessage name="信箱" class="invalid-feedback"></ErrorMessage>
                                         </div>
                                         <div class="col-12 fs-5">
-                                            <label for="password" class="form-label text-secondary" :class="{'text-orange':user.password && !errors['密碼']}"><i class="bi bi-unlock-fill"></i> 密碼</label>
+                                            <label for="password" class="form-label text-secondary" :class="{'text-blue':user.password && !errors['密碼']}"><i class="bi bi-unlock-fill"></i> 密碼</label>
                                             <VField
                                                 id="password"
                                                 name="密碼"
@@ -90,7 +86,7 @@
                                             <ErrorMessage name="密碼" class="invalid-feedback"></ErrorMessage>
                                         </div>
                                         <div class="col-12 fs-5">
-                                            <label for="confirmPassword" class="form-label text-secondary" :class="{'text-orange':user.confirmPassword && !errors['確認密碼']}"><i class="bi bi-lock-fill" ></i> 確認密碼</label>
+                                            <label for="confirmPassword" class="form-label text-secondary" :class="{'text-blue':user.confirmPassword && !errors['確認密碼']}"><i class="bi bi-lock-fill" ></i> 確認密碼</label>
                                             <VField
                                                 id="confirmPassword"
                                                 name="確認密碼"
@@ -105,14 +101,15 @@
                                         </div>
                                         <div class="col-12" >
                                             <!--  @click.prevent="signUp" -->
-                                            <button type="submit" class="btn btn-orange w-100 text-white">註冊</button>
+                                            <button type="submit" class="btn btn-blue w-100 text-white">註冊</button>
                                         </div>
                                     </div>
                                 </VForm>
                             </div>
                             <!-- 手機6 電腦 8-->
                               <!-- 要循環只能 3 個 -->
-                            <div class="card-footer border-0 mb-4" style="border-radius: 20px; background-color: white !important; height: 90px;">
+                              <!-- background-color: white !important;  -->
+                              <div class="card-footer border-0 mb-4" style="border-radius: 20px; height: 90px; background-color:transparent;">
                                 <swiper :slides-per-view="3" :space-between="10"
                                 :loop="true"
                                 :modules="modules"
@@ -125,35 +122,35 @@
                                 >
                                 <!-- 桌機 600px 手機 300px  圖 桌機 50 手機 30 -->
                                 <swiper-slide class="d-flex align-items-center">
-                                    <img src="../../assets/images/1410887.png" style="width: 50px; height: 50px" class="mx-auto">
-                                    <i class="bi bi-dot text-orange fs-1"></i>
+                                    <img src="../../assets/images/cake17.png" style="width: 50px; height: 50px" class="mx-auto">
+                                    <i class="bi bi-dot text-blue fs-1"></i>
                                 </swiper-slide>
                                 <swiper-slide class="d-flex align-items-center">
-                                    <img src="../../assets/images/2674777.png" style="width: 50px; height: 50px" class="mx-auto">
-                                    <i class="bi bi-dot text-orange fs-1"></i>
+                                    <img src="../../assets/images/dessert22.png" style="width: 50px; height: 50px" class="mx-auto">
+                                    <i class="bi bi-dot text-blue fs-1"></i>
                                 </swiper-slide>
                                 <swiper-slide class="d-flex align-items-center">
-                                    <img class="mx-auto" src="../../assets/images/5887767.png" style="width: 50px; height: 50px">
-                                    <i class="bi bi-dot text-orange fs-1"></i>
+                                    <img class="mx-auto" src="../../assets/images/cottonCandy16.png" style="width: 50px; height: 50px">
+                                    <i class="bi bi-dot text-blue fs-1"></i>
                                 </swiper-slide>
                                 <swiper-slide class="d-flex align-items-center">
-                                    <img class="mx-auto" src="../../assets/images/8734574.png" style="width: 50px; height: 50px">
-                                    <i class="bi bi-dot text-orange fs-1"></i>
+                                    <img class="mx-auto" src="../../assets/images/dessert21.png" style="width: 50px; height: 50px">
+                                    <i class="bi bi-dot text-blue fs-1"></i>
                                 </swiper-slide>
                                 <swiper-slide class="d-flex align-items-center">
-                                    <img class="mx-auto" src="../../assets/images/726917.png" style="width: 50px; height: 50px">
-                                    <i class="bi bi-dot text-orange fs-1"></i>
+                                    <img class="mx-auto" src="../../assets/images/cookie20.png" style="width: 50px; height: 50px">
+                                    <i class="bi bi-dot text-blue fs-1"></i>
                                 </swiper-slide>
                                 <swiper-slide class="d-flex align-items-center">
-                                    <img class="mx-auto" src="../../assets/images/4771632.png" style="width: 50px; height: 50px">
-                                    <i class="bi bi-dot text-orange fs-1"></i>
+                                    <img class="mx-auto" src="../../assets/images/dessert22.png" style="width: 50px; height: 50px">
+                                    <i class="bi bi-dot text-blue fs-1"></i>
                                 </swiper-slide>
                                 <swiper-slide class="d-flex align-items-center">
-                                    <img class="mx-auto" src="../../assets/images/biscuit.png" style="width: 50px; height: 50px">
-                                    <i class="bi bi-dot text-orange fs-1"></i>
+                                    <img class="mx-auto" src="../../assets/images/dessert13.png" style="width: 50px; height: 50px">
+                                    <i class="bi bi-dot text-blue fs-1"></i>
                                 </swiper-slide>
                                 </swiper>
-                            </div>
+                          </div>
                         </div>
                     </div>
                 </div>
@@ -242,12 +239,14 @@ export default {
 }
 </script>
 <style>
-.signup-card .card-header h2:hover {
-    /* border-bottom: 3px solid #493A25;  */
-    background-color: #d04740;
-    color: white;
+
+.blueBottomLine{
+  width: 0px;
+  border-bottom: 2px solid transparent;
+  transition: all .4s ease-in-out;
 }
-.signup-card .card-header h2:hover a {
-    color: white !important;
+.blueBottomLine:hover{
+  width: 100%;
+  border-bottom: 2px solid #4572c2;
 }
 </style>

@@ -319,15 +319,14 @@ $theme-colors: (
   "light":      $light,
   "dark":       $dark,
   "yellow":#F5AE4C, // 暫無
-  "orange": #eb8b07, // redBrown #b15c17 原色 custom #c54e41
+  "orange": #008391, //原色 custom #c54e41
   "darkBrown":#493A25, // custom 文字顏色
-  "red":#d04740, // custom 
+  "blue":#4572c2, // custom 6157ff d04740 紫色965fba  原色 008391
   "lightBrown": #C0AB8E, // custom 不行當背景
   "lightBrownGray": #AFA89F, // custom
   "lightGray": #d3ccc1, // custom 淺灰 用於 0 fff1f0 
-  "lightYellow": #faf3e6, // custom 背景 #FBF8F3
-  "lightPink": #fff1f0,
-  "pink": #fdb1ab
+  "lightYellow": #d0fdfd, // custom 背景 #faf3e6 #83e2e2
+  "lightBlue": #e8edfc, // 原色淺粉 fff1f0 後淺紫 f3e2ff 最新 d0fdfd  #a4c2f7
 ) !default;
 // scss-docs-end theme-colors-map
 
@@ -1219,12 +1218,12 @@ $pagination-focus-bg:               $gray-200 !default;
 $pagination-focus-box-shadow:       $input-btn-focus-box-shadow !default;
 $pagination-focus-outline:          0 !default;
 
-$pagination-hover-color:            #FCBD67; // var(--#{$prefix}link-hover-color) !default; custom
-$pagination-hover-bg:               #f9e9d1; // $gray-200 !default; custom
+$pagination-hover-color:            #4572c2; // var(--#{$prefix}link-hover-color) !default; custom
+$pagination-hover-bg:               #e8edfc; // $gray-200 !default; custom
 $pagination-hover-border-color:     $gray-300 !default;
 
-$pagination-active-color:           #f9e9d1; // $component-active-color !default; custom
-$pagination-active-bg:              #FCBD67; // $component-active-bg !default; custom
+$pagination-active-color:           #e8edfc; // $component-active-color !default; custom
+$pagination-active-bg:              #4572c2; // $component-active-bg !default; custom
 $pagination-active-border-color:    $pagination-active-bg !default;
 
 $pagination-disabled-color:         $gray-600 !default;
