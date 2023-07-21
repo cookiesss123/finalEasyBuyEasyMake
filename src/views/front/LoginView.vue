@@ -1,10 +1,10 @@
 <template>
   <!--  background-size: 130%; 手機板 要變成 cover！！ -->
-      <main class="py-7"  style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); background-position: right; background-repeat: no-repeat; background-size: 130%; background-attachment: fixed;">
+      <main class="py-7 loginBg"  style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); background-position: right; background-repeat: no-repeat; background-attachment: fixed;">
             <div class="container">
               <ul class="list-unstyled d-flex mt-4">
                   <li class="me-2">
-                    <RouterLink to="/home" class="link-blue  d-none d-lg-block">首頁</RouterLink>
+                    <RouterLink to="/home" class="link-lightBlue">首頁</RouterLink>
                   </li>
                   <li class="text-white">
                     / <span  class="me-2">登入</span>
@@ -22,12 +22,12 @@
                     <div class="col-lg-6">
                         <div class="login-card card h-100 border border-2 border-white" style="border-radius: 20px; padding: 0 !important; background-color: transparent !important; backdrop-filter: blur(20px); background-color: rgba(255, 255, 255, .5);">
                           <div class="card-body border-0 p-0">
-                              <div class="card-header bg-white py-0 border-0"  style="border-radius: 20px 20px 0px 0px;">
+                              <div class="card-header bg-white py-0 border-0"  style="border-radius: 15px 15px 0px 0px;">
                                   <div class="row " style="margin: 0 -18px;">
-                                        <h2 class="h5 col mb-0 text-center py-3 position-relative text-white bg-blue" style="padding-bottom: 10px; border-radius: 20px 0 0 0;">
-                                           登入
+                                        <h2 class="h5 col mb-0 text-center py-3 bg-blue text-decoration-none fw-bold text-white border-start border-white" style="padding-bottom: 10px; border-radius: 20px 0 0 0;">
+                                          登入
                                         </h2>
-                                        <h2 class="blueBottomLine h5 col mb-0 text-center py-3 position-relative text-decoration-none fw-bold " style="padding-bottom: 10px; border-radius: 0 20px 0 0;">
+                                        <h2 class="blueBottomLine h5 col mb-0 text-center py-3 position-relative " style="padding-bottom: 10px; border-radius: 0 20px 0 0;">
                                           <RouterLink to="/signup" class="link-dark stretched-link text-decoration-none fw-bold link-blue ">註冊</RouterLink>
                                         </h2>
                                     </div>
@@ -141,7 +141,6 @@ import { Navigation, Pagination, Autoplay } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-
 export default {
   data () {
     return {
@@ -210,7 +209,6 @@ export default {
     }
   },
   mounted () {
-
   }
 }
 </script>

@@ -18,6 +18,7 @@ export default {
   mixins: [numberCommaMixin],
   data () {
     return {
+      uid: '',
       bookMarks: [],
       pageStatus: 'recipe',
       deleteId: '',
@@ -39,7 +40,6 @@ export default {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           this.uid = user.uid
-          console.log(this.uid, '使用者已登入取得 uid')
 
           const dataRef = ref(db, 'users/' + user.uid)
           onValue(dataRef, snapshot => {
@@ -52,7 +52,6 @@ export default {
                 return
               }
               this.bookMarks = Object.values(this.bookMarks)
-              console.log(this.bookMarks, '書籤')
               // 得到食譜讚數
               if (this.pageStatus === 'recipe') {
                 const dataRef = ref(db, 'recipeThumbs')
@@ -61,7 +60,6 @@ export default {
                   Object.keys(recipeThumbs).forEach(item => {
                     this.thumbs[item] = Object.values(recipeThumbs[item]).length
                   })
-                  console.log(this.thumbs, '所有讚')
 
                   // 把讚數填入
                   this.bookMarks.forEach((recipe, index) => {
@@ -76,7 +74,6 @@ export default {
                       this.bookMarks[index].thumbs = 0
                     }
                   })
-                  console.log(this.bookMarks, '食譜')
                 })
               } else if (this.pageStatus === 'product') { // 得到產品評價
                 // 得到星星評價數
@@ -88,7 +85,6 @@ export default {
                     return Object.values(item)
                   })
                   rates = rates.flat()
-                  console.log(rates, '全部產品的評價還未分類產品')
                   this.bookMarks.forEach((product, index) => {
                     rates.forEach(item => {
                       if (product.id === item.productId && !this.bookMarks[index].scores) {
@@ -109,7 +105,6 @@ export default {
                       this.bookMarks[index].averageRate = 0
                     }
                   })
-                  console.log(this.bookMarks, '加了評分的產品')
                 })
               }
               this.isLoading = false
@@ -118,14 +113,12 @@ export default {
         } else {
           // User is signed out
           // ...
-          console.log('並未登入')
           this.uid = null
           this.user = {}
           if (!this.uid) {
             this.toastMessage('登入才可使用收藏功能', 'error')
             this.$router.push('/login')
           }
-          console.log('並未登入')
         }
       })
     },
@@ -152,9 +145,7 @@ export default {
         const recipeThumbs = snapshot.val()
         Object.keys(recipeThumbs).forEach(item => {
           this.thumbs[item] = Object.values(recipeThumbs[item]).length
-          // console.log(item, Object.values(recipeThumbs[item]), '單個')
         })
-        console.log(this.thumbs, '所有讚')
 
         // 把讚數填入
         this.recipes.forEach((recipe, index) => {
@@ -169,7 +160,6 @@ export default {
             this.recipes[index].thumbs = 0
           }
         })
-        console.log(this.recipes, '食譜')
       })
     }
   },
@@ -178,7 +168,6 @@ export default {
   },
   watch: {
     pageStatus () {
-      console.log(this.pageStatus, '有變化')
       if (this.pageStatus === 'product') {
         this.getBookmarks('productBookmarks')
       } else if (this.pageStatus === 'recipe') {
@@ -190,7 +179,7 @@ export default {
 </script>
 <template>
     <div class=""  style="overflow-x: hidden;">
-      <loading v-model:active="isLoading"
+      <loading v-if="uid" v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"
                  :lock-scroll="true">

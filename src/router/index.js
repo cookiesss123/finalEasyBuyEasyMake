@@ -13,10 +13,6 @@ const routes = [
         path: 'orders',
         component: () => import('../views/admin/AdminOrders.vue')
       },
-      // {
-      //   path: 'posts',
-      //   component: () => import('../views/admin/AdminPosts.vue')
-      // },
       {
         path: 'products',
         component: () => import('../views/admin/AdminProducts.vue')
@@ -40,10 +36,6 @@ const routes = [
         name: 'homePage',
         path: 'home',
         component: () => import('../views/front/HomeView.vue')
-      },
-      {
-        path: 'blog',
-        component: () => import('../views/front/BlogView.vue')
       },
       {
         path: 'checkout',

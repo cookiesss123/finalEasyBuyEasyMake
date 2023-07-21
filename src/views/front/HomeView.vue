@@ -864,7 +864,7 @@ export default {
             </div>
             <div class="d-flex">
                 <RouterLink to="/recipes" type="button" class="d-lg-none btn btn-blue rounded-pill px-4 mx-auto mt-3">
-                  更多食譜 <i class="bi bi-journal-plus"></i>
+                  更多食譜
                 </RouterLink>
               </div>
           </div>
@@ -1113,7 +1113,7 @@ export default {
             </div>
             <div class="d-flex">
               <RouterLink to="/products" type="button" class="d-lg-none btn btn-blue rounded-pill px-4 mx-auto mt-3">
-                更多商品 <i class="bi bi-bag-plus"></i>
+                更多商品
               </RouterLink>
             </div>
           </div>

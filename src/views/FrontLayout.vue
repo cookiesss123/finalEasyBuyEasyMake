@@ -9,7 +9,7 @@
         <!-- 滑下來才變白 手機展示toggle 變白 或是 orders 詳細頁面才變白 為甚麼設計這樣是因為 通常都是好看的背景 -->
 
         <!-- :class="{'bg-white': showNavbar || menuToggle || searchToggle || this.$route.fullPath.includes('orders') || this.$route.fullPath.includes('recipes/') || this.$route.fullPath.includes('products/') || this.$route.fullPath.includes('discounts/') || this.$route.fullPath.includes('products/') || this.$route.fullPath.includes('home')}" -->
-        <div class=""  style="background-color: rgba(255, 255, 255, .4); backdrop-filter: blur(10px);" >
+        <div class="" :class="{'bg-white': searchToggle}" style="background-color: rgba(255, 255, 255, .4); backdrop-filter: blur(10px);" >
           <!-- background-color: transparent; -->
           <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
@@ -26,32 +26,29 @@
               <!-- 手機 bar -->
               <div class="position-absolute end-0 ">
                 <!-- 手機購物車按鈕 -->
-                <button class="btn btn-sm position-relative p-0 d-lg-none border-0 me-3"  @click="()=>this.$refs.cartModal.show()">
-                  <!-- :class="{'text-white': !showNavbar &&  this.$route.fullPath.includes('home') === false, 'border-white': !showNavbar &&  this.$route.fullPath.includes('home') === false,  'text-blue':showNavbar || this.$route.fullPath.includes('home'), 'border-blue':showNavbar || this.$route.fullPath.includes('home')}" -->
-                  <span v-if="cartNum !== 0"  class="position-absolute top-0 start-100 translate-middle  border border-blue text-blue fw-bold" style="padding: 2px; border-radius: 25px; width: 25px; height: 25px; font-size: 12px;" >
+                <button class="btn btn-sm position-relative d-lg-none border-0 me-3"  @click="()=>this.$refs.cartModal.show()">
+                  <span v-if="cartNum !== 0"  class="position-absolute border border-blue text-blue fw-bold" style="padding: 2px; border-radius: 25px; width: 25px; height: 25px; font-size: 12px; top: -10px; left: 20px;" >
                     {{ cartNum }}
                 </span>
-                <!-- :class="{'text-white': !showNavbar &&  this.$route.fullPath.includes('home') === false && this.$route.fullPath.includes('recipes/') === false && this.$route.fullPath.includes('products/') === false,  'text-blue':showNavbar || this.$route.fullPath.includes('home') || this.$route.fullPath.includes('recipes/') || this.$route.fullPath.includes('products/')}" -->
-                <span class="material-icons mt-1 text-blue" >shopping_cart</span>
+                <span class="material-icons text-blue fs-4" >shopping_cart</span>
 
                 </button>
-                <!-- :class="{'text-white': !showNavbar &&  this.$route.fullPath.includes('home') === false && this.$route.fullPath.includes('recipes/') === false && this.$route.fullPath.includes('products/') === false,  'text-blue':showNavbar || this.$route.fullPath.includes('home') || this.$route.fullPath.includes('recipes/') || this.$route.fullPath.includes('products/')}" -->
-                <RouterLink to="/bookmarks" class="d-lg-none btn btn-sm position-relative mt-1 border-0 cancelBorder">
-                  <i class="bi bi-heart-fill fs-2 link-blue fs-6" ></i>
+                <RouterLink to="/bookmarks" class="d-lg-none btn btn-sm position-relative cancelBorder">
+                  <span class="material-icons link-blue fs-4">
+                    favorite
+                    </span>
                 </RouterLink>
 
                   <!-- searchCollapse 搜尋 -->
-                  <!-- :class="{'text-white': !showNavbar &&  this.$route.fullPath.includes('home') === false && this.$route.fullPath.includes('recipes/') === false && this.$route.fullPath.includes('products/') === false,  'text-blue':showNavbar || this.$route.fullPath.includes('home') || this.$route.fullPath.includes('recipes/') || this.$route.fullPath.includes('products/')}" -->
-                  <button class="navbar-toggler btn border-0 p-2 ms-2 link-blue" type="button" @click="()=>searchToggle = !searchToggle">
-                    <span class="material-icons-outlined" >search</span>
+                  <button class="navbar-toggler btn border-0 p-2  ms-2 link-blue" type="button" @click="()=>searchToggle = !searchToggle">
+                    <span class="material-icons-outlined fs-4" >search</span>
                   </button>
 
                 <!-- 手機菜單按鈕 -->
-                <!-- :class="{'text-white': !showNavbar &&  this.$route.fullPath.includes('home') === false && this.$route.fullPath.includes('recipes/') === false && this.$route.fullPath.includes('products/') === false,  'text-blue':showNavbar || this.$route.fullPath.includes('home') || this.$route.fullPath.includes('recipes/') || this.$route.fullPath.includes('products/')}" -->
                 <button class="navbar-toggler btn border-0 link-blue" type="button" @click="()=>menuToggle = !menuToggle">
-                  <span class="material-icons-outlined" >
-menu
-</span>
+                  <span class="material-icons-outlined fs-4" >
+                    menu
+                  </span>
                 </button>
 
               </div>
@@ -105,15 +102,17 @@ menu
                   <a href="#" class="nav-link text-center text-lg-start" @click.prevent="logout"  >登出</a>
                 </li>
               </ul>
-              <RouterLink to="/bookmarks" class=" me-4 link-blue hvr-push d-none d-lg-block">
-                <i class="bi bi-heart-fill fs-4"></i>
+              <RouterLink to="/bookmarks" class="me-4 link-blue hvr-push d-none d-lg-block  ">
+                <span class="material-icons link-blue fs-4">
+                  favorite
+                </span>
               </RouterLink>
               <!-- 桌面cart按鈕 -->
               <button type="button" class=" btn position-relative p-0 border-0 d-none d-lg-block"  @click="()=>this.$refs.cartModal.show()">
                 <span v-if="cartNum !== 0" class="position-absolute border fw-bold border-blue text-blue" style="padding: 2px; border-radius: 25px; width: 25px; height: 25px; font-size: 12px; top: -12px; left: 10px;">
                   {{ cartNum }}
                 </span>
-                <span class="material-icons mt-1 link-blue" >shopping_cart</span>
+                <span class="material-icons link-blue " >shopping_cart</span>
               </button>
               </div>
             </div>
@@ -231,7 +230,7 @@ menu
 
       <footer class="" style=" margin-top: auto; " :class="{'bg-lightBlue': this.$route.fullPath !== '/login' || this.$route.fullPath !== '/signup', 'bg-white': this.$route.fullPath === '/login' || this.$route.fullPath === '/signup'}" >
           <div class="container d-flex flex-column flex-lg-row align-items-center" style="padding: 40px 0;">
-            <div class="d-flex justify-content-center align-items-center mt-2">
+            <div class="d-flex justify-content-center align-items-center mt-2 mb-3 mb-lg-0">
                 <img src="../assets/images/loadingLogo.png" style="height: 60px;" class="logo me-1" alt="">
                 <div>
                   <p class="text-darkBrown mb-0 text-start"  style="font-size: 24px;">甜點食譜一鍵購</p>

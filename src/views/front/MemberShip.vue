@@ -229,7 +229,7 @@ export default {
 </script>
 <template>
     <div class="" style="overflow-x: hidden;">
-      <loading v-model:active="isLoading"
+      <loading v-if="uid" v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"
                  :lock-scroll="true">

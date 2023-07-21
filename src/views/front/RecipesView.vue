@@ -18,12 +18,10 @@ export default {
     RouterLink,
     PaginationComponent,
     Loading
-    // LoadingComponent
   },
   mixins: [numberCommaMixin],
   data () {
     return {
-      // loading: true,
       costOrRateCollapse: {},
       highOrLowCollapse: {},
       recipes: [],
@@ -44,9 +42,6 @@ export default {
   methods: {
     ...mapActions(cartStore, ['toastMessage']),
     getRecipes () {
-      // 1. const dataRef = ref(db, 'users/') 取得 users 項下所有資料
-      // 2. 取得 user s的特定子分支資料
-
       const dataRef = ref(db, 'recipes/')
       onValue(dataRef, snapshot => {
         this.recipes = snapshot.val()
@@ -147,8 +142,6 @@ export default {
             })
           })
         } else {
-          // User is signed out
-          // ...
           console.log('並未登入')
           this.uid = null
           this.user = {}
@@ -173,7 +166,6 @@ export default {
   },
   mounted () {
     // 暫時關閉
-    // this.$refs.loadingModal.show()
     this.isLoading = true
 
     this.costOrRateCollapse = new Collapse(this.$refs.costOrRateCollapse, {
@@ -202,9 +194,6 @@ export default {
     selectCategory () { // selectCategory ： 本頁點選 selectItem ： 他頁搜尋
       // 改變就清空搜尋內容 切換自動到不拘
       this.recipeSearchName = ''
-      // 先不改
-      // this.priceOrRate = '成本'
-      // this.highOrLow = '不拘'
       if (this.selectCategory === '全部') {
         this.selectItem = '全部'
         this.filterRecipes = this.recipes
