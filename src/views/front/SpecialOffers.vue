@@ -49,7 +49,7 @@
       <section v-if="tabName === '優惠折扣'" class="text-blue ">
         <div class="container">
           <div v-if="!isLoading" class="row row-cols-lg-4 g-4 py-3 text-darkBrown">
-          <div class="col hvr-hang" v-for="(coupon, index) in coupons" :key="index">
+          <div class="col hvr-hang" v-for="coupon in coupons" :key="coupon.id">
               <div class="card">
                   <div class="enlargeImg w-100 rounded">
                     <div class="cardImg">
@@ -62,7 +62,7 @@
                       <p class="detail d-none d-lg-block position-absolute fw-bold" style="top: 30%; left: 50%; transform: translateX(-50%); letter-spacing: 5px;">查看優惠資訊</p>
 
                       <div class="d-flex">
-                          <RouterLink :to="`/discounts/${index}`" href="#" class="stretched-link btn btn-outline-blue rounded-0 ms-auto">查看完整優惠資訊</RouterLink>
+                          <RouterLink :to="`/discounts/${coupon.id}`" href="#" class="stretched-link btn btn-outline-blue rounded-0 ms-auto">查看完整優惠資訊</RouterLink>
                       </div>
                     </div>
                   </div>
@@ -199,7 +199,8 @@ export default {
       tabName: '優惠折扣', // 判斷在哪個頁籤
       articles: [],
       isLoading: false,
-      fullPage: true
+      fullPage: true,
+      couponIds: []
     }
   },
   components: {
@@ -212,7 +213,11 @@ export default {
       const dataRef = ref(db, 'coupons/')
       onValue(dataRef, snapshot => {
         this.coupons = snapshot.val()
-        console.log(this.coupons, '折價券')
+        Object.values(this.coupons).forEach((coupon, index) => {
+          coupon.id = Object.keys(this.coupons)[index]
+        })
+        this.coupons = Object.values(this.coupons).filter(coupon => coupon.isEnabled)
+        console.log(this.coupons, '可使用的折價券')
         this.isLoading = false
       })
     },
@@ -413,6 +418,8 @@ export default {
     }
   },
   mounted () {
+    window.scrollTo(0, 0)
+
     // this.$refs.loadingModal.show()
     this.isLoading = true
     if (this.$route.query.tabName) {
@@ -422,12 +429,6 @@ export default {
     this.getCoupons()
     this.getLottery()
     this.getLotteryResult()
-  },
-  computed: {
-    // ...mapState(cartStore, ['uid'])
-  },
-  watch: {
-
   }
 }
 </script>

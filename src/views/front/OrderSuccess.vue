@@ -35,6 +35,8 @@ export default {
 
   },
   mounted () {
+    window.scrollTo(0, 0)
+
     this.toastMessage('恭喜您! 訂單建立完成')
     this.token = document.cookie.replace(/(?:(?:^|.*;\s*)myToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
     this.userId = localStorage.getItem('userId')

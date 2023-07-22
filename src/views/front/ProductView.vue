@@ -224,6 +224,8 @@ export default {
     }
   },
   mounted () {
+    window.scrollTo(0, 0)
+
     this.isLoading = true
     // 如果刷新 uid 就得不到了 user 資料同樣也得不到 但是user 是渲染所以晚點沒關係
     // this.checkLogin() 在書籤寫了 這裡就不用了

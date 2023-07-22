@@ -197,6 +197,8 @@ export default {
     }
   },
   mounted () {
+    window.scrollTo(0, 0)
+
     this.isLoading = true
     this.getAllThumbs()
     this.getMyThumb()

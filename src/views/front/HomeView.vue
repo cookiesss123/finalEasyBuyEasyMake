@@ -38,17 +38,15 @@ export default {
       thumbs: {}, // 所有人按讚分類
       recipeBookMarks: [],
       productBookmarks: [],
-      averageRate: [], // ??????
+      averageRate: [],
       rates: {},
       products: [],
       goodProducts: [], // 優選產品
-      onSaleProducts: [], // 特價商品
       // bannerImg, // url 的網址都要這樣寫 banner圖片
       recipeSearchName: '',
       selectItem: '全部',
       highOrLow: '不拘',
       priceOrRate: '成本',
-      lottery: {},
       popularRecipes: [],
       uid: '',
       // 產品搜尋值
@@ -151,19 +149,7 @@ export default {
           console.log(this.products, '加了評分的產品')
           // 優選食材
           this.goodProducts = this.products.filter(product => product.averageRate >= 4)
-          // 特價商品
-          this.onSaleProducts = this.products.filter(product => product.isCheaper === true)
         })
-      })
-    },
-    // 取得抽獎
-    getLotteries () {
-      const dataRef = ref(db, 'lotteries/')
-      onValue(dataRef, snapshot => {
-        const lotteries = snapshot.val()
-        this.lottery = Object.values(lotteries).filter(lottery => lottery.isEnabled === true)
-        this.lottery = this.lottery[0]
-        console.log(this.lottery, '抽獎資料')
       })
     },
     // 取得食譜收藏
@@ -224,8 +210,6 @@ export default {
             })
           })
         } else {
-          // User is signed out
-          // ...
           console.log('並未登入')
           this.uid = null
           this.user = {}
@@ -287,21 +271,11 @@ export default {
     }
   },
   mounted () {
+    window.scrollTo(0, 0)
     this.getRecipeBookmarks()
     this.getProductBookmarks()
-    // this.$refs.loadingModal.show()
     this.getPopularRecipes()
-    // getRecipes
-    this.getLotteries()
     this.getProducts()
-  },
-  // 透過watch 取得值 就關閉 modal
-  watch: {
-    goodProducts () {
-      if (this.goodProducts) {
-        // this.$refs.loadingModal.hide()
-      }
-    }
   }
 }
 </script>
@@ -759,7 +733,6 @@ export default {
 
             </h2>
           </div>
-          <!-- style="overflow-x: hidden;" -->
           <div class="d-flex flex-column align-items-center" >
             <div class="d-none d-md-none d-lg-block container horizontalSwiper">
               <swiper :slides-per-view="4" :space-between="25"
@@ -869,11 +842,7 @@ export default {
               </div>
           </div>
           </section>
-        <!--  bg-lightBlue -->
-        <!-- 左上角 右下角 可以+ 放大的甜甜圈 -->
-        <!-- background-image: url('https://images.unsplash.com/photo-1562023692-18827bd11f4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); -->
         <section class="" style="background-position: center; background-repeat: no-repeat; background-size: cover; background-attachment: fixed; background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
-          <!-- background-color: rgba(244, 240, 234, 0.2); -->
           <div class="w-100 " style=" padding: 100px 0; height: 100%;">
             <div class="container py-lg-5 py-4 border border-white" style="border-radius: 20px; backdrop-filter: blur(10px); background-color: rgba(255, 255, 255, 0.2); "  data-aos="zoom-in-right">
             <h2 class="h4 fw-bold text-center mb-4 questionTitle text-white" style="text-shadow: 2px 2px 4px #000">總是花錢花時間 尋找甜點材料嗎？</h2>
@@ -882,7 +851,6 @@ export default {
                 <div class="col ps-lg-5 d-flex flex-column flex-lg-row  align-items-center">
                   <div class="mb-2 me-lg-3">
                     <i class="bi bi-coin fs-2 text-white"></i>
-                    <!-- <img src="../../assets/images/icon-money.png" style="height: 48px;" alt=""> -->
                   </div>
                   <span class="h5 questions text-white">
                     花了錢卻買不到好食材...
@@ -890,7 +858,6 @@ export default {
                 </div>
                 <div class="col ps-lg-5 d-flex flex-column flex-lg-row  align-items-center">
                   <div class="mb-2 me-lg-3">
-                    <!-- <img src="../../assets/images/icon-time.png" style="height: 48px;" alt=""> -->
                     <i class="bi bi-clock fs-2 text-white"></i>
                   </div>
                   <span class="h5 questions text-white">
@@ -915,12 +882,12 @@ export default {
 
         <section class="mt-5">
           <div class="container " style="border-radius: 20px; backdrop-filter: blur(10px); z-index: 1; ">
-            <h2 class="fw-bold fixedTitle mb-4 text-center mb-5 ">
+            <h2 class="fw-bold fixedTitle mb-4 text-center mb-5 "  data-aos="fade-up" data-aos-anchor-placement="center-center">
               <p><i class="bi bi-chevron-double-down"></i></p>
               一站解決你的所有問題
             </h2>
             <ul class="list-unstyled " style="">
-              <li class="row mb-5">
+              <li class="row mb-5"  data-aos="fade-up" data-aos-anchor-placement="center-center">
                 <div class="col d-none d-lg-block"></div>
                 <div class="col">
                   <img src="../../assets/images/feature-image1.png" style="border-radius: 20px; object-fit: cover; height: 240px;" class="card-img" alt="...">
@@ -930,7 +897,7 @@ export default {
                     <p class="card-text speakerText">使用首頁上方搜尋欄尋找食譜，所有食譜皆有列出製作材料、工具，點擊購買即可一次買齊。</p>
                   </div>
               </li>
-              <li class="row mb-5">
+              <li class="row mb-5" data-aos="fade-up" data-aos-anchor-placement="center-center">
                 <div class="col">
                   <img src="../../assets/images/feature-image2.png" style="border-radius: 20px; object-fit: cover; height: 240px;" class="card-img" alt="...">
                 </div>
@@ -940,7 +907,7 @@ export default {
                   </div>
                 <div class="col d-none d-lg-block"></div>
               </li>
-              <li class="row mb-5">
+              <li class="row mb-5"  data-aos="fade-up" data-aos-anchor-placement="center-center">
                 <div class="col d-none d-lg-block"></div>
                 <div class="col">
                   <img src="../../assets/images/feature-image3.png" style="border-radius: 20px; object-fit: cover; height: 240px;" class="card-img" alt="...">
@@ -950,7 +917,7 @@ export default {
                     <p class="card-text speakerText">免費甜點食譜和完整講解的影片教學，一定帶你學到會！不上烘焙課也能有良好的製作體驗。</p>
                   </div>
               </li>
-              <li class="row">
+              <li class="row"  data-aos="fade-up" data-aos-anchor-placement="center-center">
                 <div class="col">
                   <img src="../../assets/images/feature-image4.png" style="border-radius: 20px; object-fit: cover; height: 240px;" class="card-img" alt="...">
                 </div>
@@ -965,7 +932,6 @@ export default {
         </section>
 
         <section class="mt-10" style=" background-attachment: fixed; background-repeat: no-repeat; background-size: cover; background-position:center; background-image: url('https://images.unsplash.com/photo-1678465952975-85cc1a08b2d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');">
-          <!-- text-white -->
           <div class="w-100 d-flex flex-column justify-content-center align-items-center" style="background-color: rgba(244, 240, 234, 0.2); padding: 100px 0; height: 100%;">
             <h3 class="text-center text-white fw-bold mb-4" style="letter-spacing: 10px; text-shadow: 2px 2px 4px #000
 ; line-height: 1.5;">每個月都有新好禮<br>超值大獎一次帶回</h3>
@@ -990,12 +956,6 @@ export default {
             </h2>
           </div>
           <div class="d-flex flex-column align-items-center" >
-            <!-- 桌面 橫向 -->
-              <!-- 1. 取消所有 border-radius: 20px; -->
-                  <!-- 2. 卡片、圖片 border-radius: 0  -->
-                  <!-- 3. 卡片取消  border-0 加入 border: 1px solid transparent; -->
-                  <!-- 4. footer改成 padding-top: 230px; -->
-                  <!-- 折價 取消 border rounded  之後可考慮要不要加 shadow 手機折價 fs 10 -->
             <div class="d-none d-md-none d-lg-block container horizontalSwiper">
                 <swiper :slides-per-view="4" :space-between="25"
                 :modules="modules"

@@ -39,16 +39,16 @@ export default {
       console.log(this.pageProducts, firstIndex, lastIndex, '分頁好的訂單')
 
       // 換頁到最上方
-      if (this.$route.fullPath !== '/member') {
-        window.scrollTo(0, 0)
-      }
-    },
-    // 改變訂單頁面
-    changeOrderPage (pageNumber, products) {
-      this.renderPage(pageNumber, products)
-      // 因為切換種類 會影響到所以放這
-      window.scrollTo(0, 700)
+      // if (this.$route.fullPath !== '/member') {
+      window.scrollTo(0, 0)
+      // }
     }
+    // 改變訂單頁面
+    // changeOrderPage (pageNumber, products) {
+    //   this.renderPage(pageNumber, products)
+    //   // 因為切換種類 會影響到所以放這
+    //   window.scrollTo(0, 700)
+    // }
   }
 }
 </script>
@@ -100,16 +100,16 @@ export default {
      <nav v-else-if="this.$route.fullPath === '/member' && filterOrders.length">
         <ul class="pagination d-flex justify-content-center align-items-center mt-5">
           <li v-if="activePage !== 1" class="page-item mx-1">
-            <a class="page-link border-0  rounded-circle d-flex" href="#" aria-label="Previous"  @click.prevent="() => changeOrderPage(activePage - 1, filterOrders)" style="padding: 8px 12px;">
+            <a class="page-link border-0  rounded-circle d-flex" href="#" aria-label="Previous"  @click.prevent="() => renderPage(activePage - 1, filterOrders)" style="padding: 8px 12px;">
               <i class="bi bi-chevron-left mx-auto"></i>
             </a>
           </li>
           <li class="page-item mx-1" :class="{'active': activePage === number}" v-for="number in Math.ceil(filterOrders.length / 8)" :key="number + 23423" >
-            <a v-if="activePage !== number" @click.prevent="() => changeOrderPage(number, filterOrders)" class="page-link border-0 rounded-circle px-lg-3 py-lg-2"  href="#">{{number}}</a>
+            <a v-if="activePage !== number" @click.prevent="() => renderPage(number, filterOrders)" class="page-link border-0 rounded-circle px-lg-3 py-lg-2"  href="#">{{number}}</a>
             <span v-else-if="activePage === number" class="page-link border-0 rounded-circle px-lg-3 py-lg-2 active" style="pointer-events:none">{{ number }}</span>
           </li>
           <li v-if="activePage !== Math.ceil(filterOrders.length / 8)" class="page-item mx-1">
-            <a @click.prevent="() => changeOrderPage(activePage + 1, filterOrders)" class="page-link border-0  rounded-circle d-flex" href="#" aria-label="Next" style="padding: 8px 12px;">
+            <a @click.prevent="() => renderPage(activePage + 1, filterOrders)" class="page-link border-0  rounded-circle d-flex" href="#" aria-label="Next" style="padding: 8px 12px;">
               <i class="bi bi-chevron-right mx-auto"></i>
             </a>
           </li>

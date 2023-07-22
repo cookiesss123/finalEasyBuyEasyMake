@@ -31,11 +31,12 @@
             <div class="card">
                 <img :src="coupon.image" class="card-img-top" alt="..." height="300" style="object-fit: cover;">
                 <div class="card-body">
-                    <span>優惠時間：{{ new Date(coupon.startDate).toLocaleDateString() }}</span> ~
+                    <span>【優惠時間】：{{ new Date(coupon.startDate).toLocaleDateString() }}</span> ~
                     <span>{{new Date(coupon.dueDate).toLocaleDateString()  }}</span>
-                    <h5 class="card-title h2 text-center">{{  coupon.title }}</h5>
-                    <p class="card-text">{{ coupon.description }}</p>
-                    <span>活動優惠碼{{ coupon.code }}</span>
+                    <h5 class="card-title h2 text-center mb-4">{{  coupon.title }}</h5>
+                    <p class="card-text " style="text-indent: 2em;">{{ coupon.description }}</p>
+                    <span>【活動優惠碼】：{{ coupon.code }}</span>
+                    <p> *此優惠不可與其他優惠同時使用</p>
                 </div>
             </div>
         </div>
@@ -71,6 +72,8 @@ export default {
     }
   },
   mounted () {
+    window.scrollTo(0, 0)
+
     this.isLoading = true
     this.getCoupon()
   }

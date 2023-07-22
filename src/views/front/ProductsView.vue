@@ -226,10 +226,6 @@ export default {
     selectPage () {
       // loading pageStatus 外部傳入  selectPage 點擊
       this.pageStatus = this.selectPage
-      // 先不改
-      // this.priceOrRate = '價格'
-      // this.highOrLow = '不拘'
-
       // 換頁把搜尋欄位清除
       this.productSearchName = ''
 
@@ -265,12 +261,6 @@ export default {
 </script>
 <template>
     <div class="" style="overflow-x: hidden;">
-      <!--  bg-lightBlue -->
-      <!-- <section class=" mb-4 px-lg-5 py-lg-10 py-5" style="overflow-x: hidden; background-position: center; background-size: cover; background-repeat: no-repeat; padding: 150px 0;  background-image: url('https://images.unsplash.com/photo-1624220330071-9df752d24688?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');" >
-          <div class="container">
-            <h2 class="text-center fw-bold text-white py-3 fs-1" style="letter-spacing: 10px;">材料種類</h2>
-          </div>
-        </section> -->
         <loading v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"

@@ -37,6 +37,7 @@ export default {
       search: false, // 在搜尋嗎? 用來判斷搜尋無值的狀況
       isLoading: false,
       fullPage: true
+      // 先前傳入的 參數 對比目前參數 如果相同要 reload
     }
   },
   methods: {
