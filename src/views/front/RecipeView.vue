@@ -367,7 +367,7 @@ export default {
   <h3 class="d-flex align-items-center">
     <i class="bi bi-stars"></i>
     顧客評價
-    <div class="ms-2 badge border rounded-pill bg-white" :class="{'text-orange': recipeComments.length, 'text-lightBrownGray': !recipeComments.length,'border-orange': recipeComments.length, 'border-lightBrownGray': !recipeComments.length}" style="font-size: 16px;">
+    <div class="ms-2 badge border rounded-pill bg-white" :class="{'text-blue': recipeComments.length, 'text-lightBrownGray': !recipeComments.length,'border-blue': recipeComments.length, 'border-lightBrownGray': !recipeComments.length}" style="font-size: 16px;">
       {{ recipeComments.length }} 則
     </div>
     <RouterLink to="/login" class="ms-3 btn btn-blue d-none d-lg-block" v-if="!uid">我要登入寫評價</RouterLink>
