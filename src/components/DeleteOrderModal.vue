@@ -56,7 +56,6 @@ export default {
         this.show()
         this.deleteId = this.id
         this.customerId = this.uid
-        // 這裡被清空了當然讀不到... 所以要再另外存
         this.openDeleteModal('', '')
       }
     }

@@ -59,7 +59,6 @@ export default {
         this.show()
         this.bookMark = this.item
         this.deleteId = this.id
-        // 這裡被清空了當然讀不到... 所以要再另外存
         this.openDeleteModal('', '')
       }
     }
@@ -71,14 +70,3 @@ export default {
   }
 }
 </script>
-<style>
-/* .modal {
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-dialog {
-  width: 300px;
-} */
-</style>

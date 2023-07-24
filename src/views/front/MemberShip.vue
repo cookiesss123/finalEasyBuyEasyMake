@@ -21,7 +21,6 @@ export default {
       orders: [],
       filterOrders: [],
       selectItem: '全部',
-      // selectPage: '會員資料',
       orderArrived: [],
       nickNameEdit: true, // 預設關閉
       passwordEdit: true, // 預設關閉
@@ -39,17 +38,12 @@ export default {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           this.uid = user.uid
-          console.log(this.uid, '使用者已登入取得 uid 有在作用嗎')
           const dataRef = ref(db, 'users/' + user.uid)
           onValue(dataRef, snapshot => {
             this.user = snapshot.val()
-            console.log(this.user, '讀取的資料')
             this.isLoading = false
           })
         } else {
-          // User is signed out
-          // ...
-          console.log('並未登入')
           this.uid = null
           this.user = {}
           this.$swal({
@@ -89,7 +83,6 @@ export default {
             // this.loading = false
           })
         } else {
-          console.log('並未登入')
           this.uid = null
           this.user = {}
           if (!this.uid) {
@@ -162,7 +155,6 @@ export default {
             imageAlt: 'The uploaded picture',
             imageHeight: 300
           })
-          console.log(e.target.result, '印出什麼')
           // 更改 img
           update(ref(db), {
             [`users/${this.uid}/headshotImg/`]: e.target.result
@@ -187,7 +179,6 @@ export default {
       })
 
       if (file) {
-        console.log(file, '檔案')
         this.$swal({
           title: '圖片上傳成功',
           imageUrl: file,

@@ -1,8 +1,6 @@
 <template>
-    <!-- fade -->
     <div class="modal right" ref="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style=" overflow-y: hidden;">
         <div class="modal-dialog modal-fullscreen-md-down w-100" style="margin-right: 0; margin-top: 0;">
-          <!-- v-if="cart" 避免錯誤 -->
             <div class="modal-content" style="height: 100vh; overflow-y:auto">
               <div class="modal-header bg-blue" style="border-radius: 0;">
                   <h5 class="modal-title text-white" v-if="uid">
@@ -12,7 +10,6 @@
                   </h5>
                   <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <!-- style="background-image:url('https://images.unsplash.com/photo-1518691340140-512e66ce957b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1165&q=80');" -->
               <div class="modal-body d-flex flex-column bg-lightBlue" >
                 <!-- 顧客聊天室 -->
                 <div v-if="!user.admin">
@@ -81,7 +78,6 @@ import cartStore from '../stores/carts'
 import numberCommaMixin from '../mixins/numberCommaMixin'
 import { db, auth } from '../firebase/db'
 import { onAuthStateChanged } from 'firebase/auth'
-// push update
 import { ref, set, onValue } from 'firebase/database'
 export default {
   data () {
@@ -98,7 +94,6 @@ export default {
   mixins: [modalMixin, numberCommaMixin],
   methods: {
     ...mapActions(cartStore, ['updateCartNum', 'toastMessage']),
-    // 管理者要得到最新提示 先得到最後一個消息是誰? 判斷是消費者嗎? 如果是 就先把陣列反轉 最先的消息會在第一個 再用 findIndex?? 比對是在第幾個 算出數量
     getMessages () {
       onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -110,7 +105,6 @@ export default {
               const dataRef = ref(db, 'chats/')
               onValue(dataRef, snapshot => {
                 this.chats = snapshot.val()
-                console.log(this.chats, '管理者聊天室')
                 let newChatNum = 0
                 if (!this.chats) {
                   this.newChatNum = 0
@@ -136,7 +130,6 @@ export default {
             const dataRef = ref(db, `chats/${this.uid}/`)
             onValue(dataRef, snapshot => {
               this.chats = snapshot.val()
-              console.log(this.chats, '與管理員的對話')
 
               if (!this.chats) {
                 this.newChatNum = 0
@@ -153,7 +146,6 @@ export default {
             })
           })
         } else {
-          console.log('並未登入')
           this.uid = null
           this.user = {}
         }
@@ -200,7 +192,6 @@ export default {
       const dataRef = ref(db, `chats/${uid}/`)
       onValue(dataRef, snapshot => {
         this.oneChats = snapshot.val()
-        console.log(this.oneChats, '聊天長度')
       })
     }
   },

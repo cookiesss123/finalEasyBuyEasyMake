@@ -318,15 +318,13 @@ $theme-colors: (
   "danger":     $danger,
   "light":      $light,
   "dark":       $dark,
-  "yellow":#F5AE4C, // 暫無
-  "orange": #008391, //原色 custom #c54e41
-  "darkBrown":#493A25, // custom 文字顏色
-  "blue":#4572c2, // custom 6157ff d04740 紫色965fba  原色 008391
-  "lightBrown": #C0AB8E, // custom 不行當背景
+  "yellow":#F5AE4C,// custom
+  "darkBrown":#493A25,// custom
+  "blue":#4572c2,// custom
   "lightBrownGray": #AFA89F, // custom
-  "lightGray": #d3ccc1, // custom 淺灰 用於 0 fff1f0 
-  "lightYellow": #d0fdfd, // custom 背景 #faf3e6 #83e2e2
-  "lightBlue": #e8edfc, // 原色淺粉 fff1f0 後淺紫 f3e2ff 最新 d0fdfd  #a4c2f7
+  "lightGray": #d3ccc1, // custom 
+  "cyan": #d0fdfd, // custom
+  "lightBlue": #e8edfc, // custom
 ) !default;
 // scss-docs-end theme-colors-map
 

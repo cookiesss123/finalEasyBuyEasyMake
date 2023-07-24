@@ -21,7 +21,6 @@ export default {
     Loading
   },
   mixins: [numberCommaMixin],
-  // ../../assets/images/Line7(Stroke).png
   data () {
     return {
       product: {},
@@ -69,7 +68,6 @@ export default {
         this.productRates = rates.filter(rate => {
           return rate.productId === id
         })
-        console.log(this.productRates, '個別評價')
         // 篩選分數
         let scores = 0
         this.productRates.forEach(item => {
@@ -154,7 +152,6 @@ export default {
       onValue(dataRef, snapshot => {
         this.product = snapshot.val()
         this.product.id = id
-        console.log(this.product, '讀取的資料')
         this.mainImg = this.product.imgUrl // 控制圖片一開始是主圖
 
         // 相關食譜
@@ -170,7 +167,6 @@ export default {
           this.relevantRecipesInfo = this.recipes.filter(recipe => {
             return this.product.relevantRecipes.includes(recipe.title)
           })
-          console.log(this.relevantRecipesInfo, '相關食譜')
           this.isLoading = false
         })
       })
@@ -180,27 +176,16 @@ export default {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           this.uid = user.uid
-          console.log(this.uid, '使用者已登入取得 uid')
           const dataRef = ref(db, 'users/' + user.uid)
           onValue(dataRef, snapshot => {
             this.user = snapshot.val()
-            console.log(this.user, '讀取的資料')
-            if (this.user.admin) {
-              console.log('管理者登場')
-            }
-
-            console.log(this.uid, '存在嗎?')
             const { id } = this.$route.params
             const dataRef = ref(db, `productBookmarks/${this.uid}/${id}`)
             onValue(dataRef, snapshot => {
               this.bookMark = snapshot.val()
-              console.log(this.bookMark, '書籤')
             })
           })
         } else {
-          // User is signed out
-          // ...
-          console.log('並未登入')
           this.uid = null
           this.user = {}
           this.bookMark = null
@@ -227,8 +212,6 @@ export default {
     window.scrollTo(0, 0)
 
     this.isLoading = true
-    // 如果刷新 uid 就得不到了 user 資料同樣也得不到 但是user 是渲染所以晚點沒關係
-    // this.checkLogin() 在書籤寫了 這裡就不用了
     this.getProduct()
     this.getAllProductRates()
     this.getBookmark()
@@ -365,8 +348,6 @@ export default {
                       <font-awesome-icon v-if="loadingItem === 'loading'" icon="fa-solid fa-spinner" spin />
                     </button>
                   </div>
-                  <!-- <div class="col-3">
-                  </div> -->
               </div>
           </div>
         </div>
@@ -378,7 +359,6 @@ export default {
             <span class="material-icons-outlined fs-3 ">menu_book</span>
             相關食譜
           </h3>
-          <!-- 電腦 -->
           <div class="swiperRelativeRecipes relativeRecipes d-none d-lg-block  position-relative">
             <swiper :slides-per-view="6" :space-between="15" class="w-100" style="height: 250px;"
             :modules="modules"
@@ -425,10 +405,8 @@ export default {
             {{ averageRate ? averageRate : 0}}
             <i class="bi bi-star-fill"></i>
           </div>
-          <!-- 桌機 -->
           <RouterLink to="/login" class="ms-lg-3 btn btn-blue btn-sm d-none d-lg-block" v-if="!this.uid">我要登入寫評價</RouterLink>
         </h3>
-        <!-- 手機 -->
         <div class="d-flex">
           <RouterLink to="/login" class="btn btn-blue btn-sm d-lg-none ms-auto" v-if="!this.uid">我要登入寫評價</RouterLink>
         </div>
@@ -566,11 +544,4 @@ export default {
   transform:scale(1.2,1.2);
 }
 
-/* 舊的箭頭寫法 */
-/* .swiper-button-next,
-.swiper-button-prev {
-  color: #C0AB8E;
-  padding: 0px;
-  position: fixed;
-} */
 </style>

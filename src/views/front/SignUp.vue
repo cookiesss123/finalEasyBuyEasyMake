@@ -1,5 +1,4 @@
 <template>
-    <!-- bg-lightYellow -->
     <main class="py-7 loginBg" style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); background-position: right; background-repeat: no-repeat; background-attachment: fixed;">
             <div class="container">
                 <ul class="list-unstyled d-flex mt-4">
@@ -100,15 +99,11 @@
                                             <ErrorMessage name="確認密碼" class="invalid-feedback"></ErrorMessage>
                                         </div>
                                         <div class="col-12" >
-                                            <!--  @click.prevent="signUp" -->
                                             <button type="submit" class="btn btn-blue w-100 text-white">註冊</button>
                                         </div>
                                     </div>
                                 </VForm>
                             </div>
-                            <!-- 手機6 電腦 8-->
-                              <!-- 要循環只能 3 個 -->
-                              <!-- background-color: white !important;  -->
                               <div class="card-footer border-0 mb-4" style="border-radius: 20px; height: 90px; background-color:transparent;">
                                 <swiper :slides-per-view="3" :space-between="10"
                                 :loop="true"
@@ -120,7 +115,6 @@
                             }"
                                 class="loginSignupSwiper"
                                 >
-                                <!-- 桌機 600px 手機 300px  圖 桌機 50 手機 30 -->
                                 <swiper-slide class="d-flex align-items-center">
                                     <img src="../../assets/images/cake17.png" style="width: 50px; height: 50px" class="mx-auto">
                                     <i class="bi bi-dot text-blue fs-1"></i>
@@ -204,12 +198,7 @@ export default {
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password)
         const loginUser = userCredential.user
-        console.log(loginUser, '取得user 資料')
-
-        // 寫入user 資料到資料庫
         const reference = ref(db, 'users/' + loginUser.uid)
-        // push 自動生成 亂數 id
-
         set(reference, {
           email,
           nickName: this.user.nickName,
@@ -223,9 +212,8 @@ export default {
           showConfirmButton: false,
           timer: 1500
         })
-        // 註冊完直接登入了 所以變成到home
         this.$router.push('/home')
-      } catch (e) { // 應該不可能註冊不成功 因為 vee validate會先擋掉 不過還是預防一下
+      } catch (e) {
         console.log(e.message, '錯誤')
         this.$swal({
           icon: 'error',

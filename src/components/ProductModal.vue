@@ -64,7 +64,6 @@
                         </div>
                         <div class="col-12">
                           <div class="form-check">
-                            <!-- :v-true="1" :v-false="0" -->
                           <input class="form-check-input" type="checkbox" value=""  id="isCheaper" v-model="tempProduct.isCheaper">
                           <label class="form-check-label" for="isCheaper">
                             是否打折
@@ -108,9 +107,6 @@ import cartStore from '../stores/carts'
 export default {
   data () {
     return {
-      // [Vue warn]: <select multiple v-model> expects an Array or Set value for its binding, but got Undefined.
-      // 意思是在使用<select multiple v-model>時，它的綁定值必須是陣列或集合，但是你傳入了一個未定義（Undefined）的值。
-      // 解決方式：在 tempProduct 裡 定義 relevantRecipes: []
       tempProduct: {
         relevantRecipes: [],
         imgsUrl: [],
@@ -153,7 +149,6 @@ export default {
         this.toastMessage('更改成功', 'success')
       } else if (this.status === 'new') {
         const reference = ref(db, 'products/')
-        // push 自動生成 亂數 id
         const newUserRef = push(reference)
 
         set(newUserRef, {

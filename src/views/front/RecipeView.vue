@@ -57,10 +57,8 @@ export default {
           const dataRef = ref(db, `recipePersonalThumbs/${this.uid}/${id}`)
           onValue(dataRef, snapshot => {
             this.myThumb = snapshot.val()
-            console.log(this.myThumb, '個人按讚')
           })
         } else {
-          console.log('並未登入')
           this.uid = null
           this.user = {}
           this.myThumb = null
@@ -78,7 +76,6 @@ export default {
         } else {
           this.allThumbNum = 0
         }
-        console.log(this.allThumbNum, !this.allThumbNum, '所有讚')
       })
     },
     // 增加讚 recipeThumbs/食譜id/使用者id 這樣比較方便
@@ -113,7 +110,6 @@ export default {
       onValue(dataRef, snapshot => {
         this.recipe = snapshot.val()
         this.recipe.id = id
-        console.log(this.recipe, '讀取的資料')
         this.mainImg = this.recipe.image // 控制圖片一開始是主圖
         // 得到組合產品
         this.groupProduct = this.recipe.relativeProducts.filter(product => {
@@ -134,12 +130,10 @@ export default {
           item.id = Object.keys(item)[index]
           return item
         })
-        console.log(comments, '全部食譜的留言')
         // 再篩選個別食譜的留言
         this.recipeComments = comments.filter(comment => {
           return comment.recipeId === id
         })
-        console.log(this.recipeComments, '個別留言')
       })
     },
     addComments () {
@@ -160,20 +154,16 @@ export default {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           this.uid = user.uid
-          console.log(this.uid, '使用者已登入取得 uid')
           const dataRef = ref(db, 'users/' + user.uid)
           onValue(dataRef, snapshot => {
             this.user = snapshot.val()
-            console.log(this.user, '讀取的資料')
             const { id } = this.$route.params
             const dataRef = ref(db, `recipeBookmarks/${this.uid}/${id}`)
             onValue(dataRef, snapshot => {
               this.bookMark = snapshot.val()
-              console.log(this.bookMark, '書籤')
             })
           })
         } else {
-          console.log('並未登入')
           this.uid = null
           this.user = {}
           this.bookMark = null
@@ -206,9 +196,6 @@ export default {
     this.getRecipe()
     this.getAllComments()
   }
-  // computed: {
-  //   ...mapState(cartStore, ['uid', 'user'])
-  // }
 }
 </script>
 <template>
@@ -248,7 +235,6 @@ export default {
 <section class="container mt-lg-5">
 <div class="row row-cols-lg-2 row-cols-1 gx-5">
   <div class="col">
-    <!-- 大圖位置 -->
     <div class="d-flex recipeMainImg mb-4">
       <img :src="mainImg" style="object-fit: cover; max-height: 300px;" class="w-100" alt="">
     </div>
@@ -328,7 +314,6 @@ export default {
           <div class="col-12 relativeProducts">
             <div v-for="product in recipe.relativeProducts" :key="product.id + 456496" class="subImg">
               <RouterLink :to="`/products/${product.id}`"  class="link-blue d-flex flex-column align-items-center cardImg" v-if="product.category === '組合包'">
-                <!-- position-relative -->
                 <div class="enlargeImg position-relative" style="width: 50% !important;">
                   <img :src="product.imgUrl" alt="" class="w-100" height="150" style="object-fit: cover;">
                   <p class="subDetail d-none d-lg-block position-absolute fw-bold text-darkBrown" style="top: 40%; left: 50%; transform: translateX(-50%); letter-spacing: 5px;">查看商品資訊</p>
@@ -380,7 +365,6 @@ export default {
   <div class="my-5">
     <form action="" v-if="uid">
       <h5 class="mb-3 fw-bold d-flex align-items-center">
-        <!-- <i class="bi bi-person-circle fs-1 me-3"></i> -->
         <img v-if="user.headshotImg" :src="user.headshotImg" alt="" width="50" height="50" style="object-fit: cover;" class="rounded-circle me-3">
         <i v-else-if="!user.headshotImg" class="bi bi-person-circle me-3" style="font-size: 45px;"></i>
         {{ user.nickName }}
@@ -393,7 +377,6 @@ export default {
     <div class="row gy-5">
       <div class="col-12 border-bottom" v-for="comment in recipeComments" :key="comment + 3657">
         <h5 class="mb-2 fw-bold d-flex align-items-center">
-          <!-- <i class="bi bi-person-circle fs-1 me-3"></i> -->
           <img v-if="comment.userImg" :src="comment.userImg" alt="" width="50" height="50" style="object-fit: cover;" class="rounded-circle me-3">
           <i  v-else-if="!comment.userImg" class="bi bi-person-circle me-3" style="font-size: 45px;"></i>
           {{ comment.username }}
@@ -414,15 +397,6 @@ export default {
   .rates .form-check .labelRate1:hover img{
     content: url('./src/assets/images/icon-star-filled.png');
   }
-
-/* 要特別設定是 recipeSwiper 不然會影響到另外一頁 */
-/* .recipeSwiper .swiper-button-prev{
-  left: 0%;
-}
-.recipeSwiper .swiper-button-next{
-  right: 0%;
-} */
-
 /* 桌面手機 產品小圖 箭頭*/
 .recipeSwiper .swiper-button-next{
   top:90%;

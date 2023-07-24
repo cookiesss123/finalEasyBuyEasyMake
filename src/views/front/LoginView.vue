@@ -174,7 +174,6 @@ export default {
       try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password)
         const loginUser = userCredential.user
-        console.log(loginUser, '登入結果')
         this.$swal({
           icon: 'success',
           title: '登入成功',
@@ -187,7 +186,6 @@ export default {
         onValue(dataRef, snapshot => {
           const data = snapshot.val()
           if (data.admin) {
-            console.log('管理者登場')
             this.$router.push('/admin/recipes')
           } else {
             this.$router.push('/home')

@@ -217,7 +217,6 @@ export default {
           coupon.id = Object.keys(this.coupons)[index]
         })
         this.coupons = Object.values(this.coupons).filter(coupon => coupon.isEnabled)
-        console.log(this.coupons, '可使用的折價券')
         this.isLoading = false
       })
     },
@@ -245,9 +244,7 @@ export default {
             }
           })
         })
-        // 暫時這樣
         this.drewProducts = Object.entries(this.drewProducts)
-        console.log(this.drewProducts, this.lottery.prizes, '抽獎標的')
       })
     },
     // 個人抽獎結果
@@ -255,12 +252,9 @@ export default {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           this.uid = user.uid
-          console.log(this.uid, '使用者已登入取得 uid')
-
           const dataRef = ref(db, 'users/' + user.uid)
           onValue(dataRef, snapshot => {
             this.user = snapshot.val()
-            console.log(this.user, '使用者資料')
             const dataRef = ref(db, `lotteryResults/${this.uid}`)
             onValue(dataRef, snapshot => {
               this.lotteryResult = snapshot.val()
@@ -271,11 +265,9 @@ export default {
                 this.drewArr = []
                 this.getPrize = {}
               }
-              // console.log(this.lotteryResult, this.getPrize, !this.getPrize.id, '抽獎結果')
             })
           })
         } else {
-          console.log('並未登入')
           this.uid = null
           this.user = {}
           this.drewArr = []
@@ -312,7 +304,6 @@ export default {
       // 0 ~ 1隨機數 x 產品陣列
       const firstNum = Math.floor(Math.random() * this.drewProducts.length)
       const secondNum = Math.floor(Math.random() * this.drewProducts[firstNum][1].length)
-      console.log(this.drewProducts, firstNum, secondNum, '抽獎資料')
 
       // 1. 首次抽獎
       if (!this.drewArr.length) {
@@ -322,7 +313,6 @@ export default {
           this.drewArr[index] = [item[0], []]
         })
         this.drewArr[firstNum][1].push(this.drewProducts[firstNum][1][secondNum])
-        console.log(this.drewArr, firstNum, this.drewArr[firstNum][0], '放入什麼')
         this.$swal({
           title: `恭喜您抽中 ${this.drewProducts[firstNum][1][secondNum].title}`,
           iconHtml: `<img src="${this.drewProducts[firstNum][1][secondNum].imgUrl}" width="100">`,
@@ -337,7 +327,6 @@ export default {
           drewArr: this.drewArr,
           getPrize: {}
         })
-        console.log('首次抽獎')
       } else if (this.drewArr.length) { // 非首抽
         // 先定義抽獎結構
         this.drewProducts.forEach((item, index) => {
@@ -353,12 +342,10 @@ export default {
           this.drewArr[firstNum][1].forEach(item => {
             if (item.title === this.drewProducts[firstNum][1][secondNum].title) {
               repeatItem = true
-              console.log(this.drewProducts[firstNum][0], item.title, '這個重複了')
             }
           })
         }
-        console.log(repeatItem, '有重複嗎')
-        // //   // 檢查是否重複
+        // 檢查是否重複
         if (repeatItem) {
           this.$swal({
             title: '抽到重複的東西囉~ 非常sorry',
@@ -381,13 +368,10 @@ export default {
           update(ref(db), {
             [`lotteryResults/${this.uid}/drewArr/`]: this.drewArr
           })
-          // console.log(this.drewArr, this.drewProducts[firstNum][1][secondNum].title, '沒有重複恭喜')
 
           let index = ''
           // 一獎 全部收集完
-          // 先把空的刪除
           if (!this.drewArr[0][1] || !this.drewArr[1][1] || !this.drewArr[2][1]) {
-            console.log('不用看了沒中獎')
             return
           }
           if (this.drewArr[0][1].length === this.drewProducts[0][1].length && this.drewArr[1][1].length === this.drewProducts[1][1].length && this.drewArr[2][1].length === this.drewProducts[2][1].length) {
@@ -404,28 +388,17 @@ export default {
             update(ref(db), {
               [`lotteryResults/${this.uid}/getPrize/`]: this.lottery.prizes[index]
             })
-            // 先隱藏 會提示兩次??? 必須設定有變化再更新
           }
-          // this.$swal({
-          //   title: `恭喜您獲得${this.lottery.prizes[index].title}`,
-          //   iconHtml: `<img src="${this.lottery.prizes[index].img}" width="100">`,
-          //   customClass: {
-          //     icon: 'no-border'
-          //   }
-          // })
         }
       }
     }
   },
   mounted () {
     window.scrollTo(0, 0)
-
-    // this.$refs.loadingModal.show()
     this.isLoading = true
     if (this.$route.query.tabName) {
       this.tabName = this.$route.query.tabName
     }
-    // // 優惠折扣
     this.getCoupons()
     this.getLottery()
     this.getLotteryResult()

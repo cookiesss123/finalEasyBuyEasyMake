@@ -22,7 +22,7 @@
               <span class="material-icons text-blue fs-4" >shopping_cart</span>
 
               </button>
-              <RouterLink  @click="reload('/bookmarks')" to="/bookmarks" class="d-lg-none btn btn-sm position-relative cancelBorder">
+              <RouterLink  @click="reload('/bookmarks')" to="/bookmarks" class="d-lg-none btn btn-sm position-relative border-0">
                 <span class="material-icons link-blue fs-4">
                   favorite
                   </span>
@@ -247,13 +247,12 @@
 import { mapActions, mapState } from 'pinia'
 import cartStore from '../stores/carts'
 import { RouterView, RouterLink } from 'vue-router'
-import Tooltip from 'bootstrap/js/dist/tooltip'
 import Collapse from 'bootstrap/js/dist/collapse'
 import CartModal from '../components/CartModal.vue'
 import ChatModal from '../components/ChatModal.vue'
-import { onAuthStateChanged } from 'firebase/auth'
-import { db, auth } from '../firebase/db'
-import { ref, onValue } from 'firebase/database'
+// import { onAuthStateChanged } from 'firebase/auth'
+// import { db, auth } from '../firebase/db'
+// import { ref, onValue } from 'firebase/database'
 
 export default {
   data () {
@@ -276,8 +275,8 @@ export default {
       pageStatus: '全部',
 
       showScrollArrow: false, // 向上箭頭
-      showNavbar: false,
       searchItem: '食譜搜尋' // 搜尋可以選擇食譜或產品
+      // 先前傳入的 參數 對比目前參數 如果相同要 reload
     }
   },
   components: {
@@ -287,8 +286,9 @@ export default {
     ChatModal
   },
   methods: {
-    ...mapActions(cartStore, ['checkLogin', 'getUserInfo', 'logout']),
+    ...mapActions(cartStore, ['checkLogin', 'logout']),
     // 取出token 存到 headers 這裡的nickName必須和其他介面取得的nickName相同狀態 這樣當許可證過期才會不見
+
     // 判斷當前頁面是否重整
     reload (path) {
       if (this.$route.fullPath === path) {
@@ -343,35 +343,6 @@ export default {
     },
     handleScroll () {
       this.showScrollArrow = window.scrollY > 1000
-      this.showNavbar = window.scrollY > 100
-    },
-    getMessages () {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          this.uid = user.uid
-          const dataRef = ref(db, 'users/' + user.uid)
-          onValue(dataRef, snapshot => {
-            this.user = snapshot.val()
-            if (this.user.admin) {
-              const dataRef = ref(db, 'chats/')
-              onValue(dataRef, snapshot => {
-                this.chats = snapshot.val()
-                console.log(this.chats, '管理者聊天室')
-              })
-              return
-            }
-            const dataRef = ref(db, `chats/${this.uid}/`)
-            onValue(dataRef, snapshot => {
-              this.chats = snapshot.val()
-              console.log(this.chats, '聊天')
-            })
-          })
-        } else {
-          console.log('並未登入')
-          this.uid = null
-          this.user = {}
-        }
-      })
     }
   },
   mounted () {
@@ -385,12 +356,6 @@ export default {
 
     this.searchCollapse = new Collapse(this.$refs.searchCollapse, {
       toggle: false
-    })
-
-    // // 選取所有元素包含data-bs-toggle="tooltip"
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    tooltipTriggerList.map(function (tooltipTriggerEl) {
-      return new Tooltip(tooltipTriggerEl)
     })
   },
   computed: {
@@ -443,18 +408,5 @@ input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
-/* 移除logo的線條 */
-.cancelBorder{
-  border:none !important;
-}
-.text-shadow{
-  text-shadow: 2px 2px 4px #000
-}
-.lightEnglishLogo{
-  color:#dedeff
-}
-.darkEnglishLogo{
-  color:#5a5ad0
 }
 </style>

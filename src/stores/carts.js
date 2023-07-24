@@ -387,13 +387,15 @@ const cartStore = defineStore('cart', {
       const dataRef = ref(db, `orders/${uid}`)
       onValue(dataRef, snapshot => {
         this.orders = snapshot.val()
-        this.orders = Object.entries(this.orders).map(item => {
-          item[1].id = item[0]
-          return item[1]
-        })
-        console.log(this.orders, '取得我的訂單')
-        this.myOrder = this.orders[this.orders.length - 1]
-        console.log(this.myOrder, '我的訂單')
+        if (this.orders) {
+          this.orders = Object.entries(this.orders).map(item => {
+            item[1].id = item[0]
+            return item[1]
+          })
+          console.log(this.orders, '取得我的訂單')
+          this.myOrder = this.orders[this.orders.length - 1]
+          console.log(this.myOrder, '我的訂單')
+        }
       })
     },
     // 建立訂單

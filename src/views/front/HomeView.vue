@@ -42,7 +42,6 @@ export default {
       rates: {},
       products: [],
       goodProducts: [], // 優選產品
-      // bannerImg, // url 的網址都要這樣寫 banner圖片
       recipeSearchName: '',
       selectItem: '全部',
       highOrLow: '不拘',
@@ -73,12 +72,10 @@ export default {
           item[1].id = item[0]
           return item[1]
         })
-        console.log(recipes, '食譜資料')
         // 得到讚數
         const dataRef = ref(db, 'recipeThumbs/')
         onValue(dataRef, snapshot => {
           this.thumbs = snapshot.val()
-          console.log(this.thumbs, '所有讚')
 
           // 把讚數填入
           recipes.forEach((recipe, index) => {
@@ -97,7 +94,6 @@ export default {
             return b.thumbs - a.thumbs
           })
           this.popularRecipes = this.popularRecipes.slice(0, 10)
-          console.log(this.popularRecipes, '熱門食譜')
 
           this.isLoading = false
         })
@@ -105,8 +101,6 @@ export default {
     },
     // 取得產品
     getProducts () {
-      // 1. const dataRef = ref(db, 'users/') 取得 users 項下所有資料
-      // 2. 取得 user s的特定子分支資料
       const dataRef = ref(db, 'products/')
       onValue(dataRef, snapshot => {
         this.products = snapshot.val()
@@ -125,7 +119,6 @@ export default {
             rate.id = Object.keys(rates)[index]
             return rate
           })
-          console.log(rates, this.products, '全部產品的評價還未分類產品')
           this.products.forEach((product, index) => {
             rates.forEach(item => {
               if (product.id === item.productId && !this.products[index].scores) {
@@ -146,7 +139,6 @@ export default {
               this.products[index].averageRate = 0
             }
           })
-          console.log(this.products, '加了評分的產品')
           // 優選食材
           this.goodProducts = this.products.filter(product => product.averageRate >= 4)
         })
@@ -158,15 +150,9 @@ export default {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           this.uid = user.uid
-          console.log(this.uid, '使用者已登入取得 uid')
-
           const dataRef = ref(db, 'users/' + user.uid)
           onValue(dataRef, snapshot => {
             this.user = snapshot.val()
-            console.log(this.user, '讀取的資料')
-            if (this.user.admin) {
-              console.log('管理者登場')
-            }
             const dataRef = ref(db, `recipeBookmarks/${this.uid}`)
             onValue(dataRef, snapshot => {
               this.recipeBookMarks = snapshot.val()
@@ -174,13 +160,9 @@ export default {
                 // 只取 id
                 this.recipeBookMarks = Object.keys(this.recipeBookMarks)
               }
-              console.log(this.recipeBookMarks, '食譜書籤')
             })
           })
         } else {
-          // User is signed out
-          // ...
-          console.log('並未登入')
           this.uid = null
           this.user = {}
         }
@@ -190,15 +172,9 @@ export default {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           this.uid = user.uid
-          console.log(this.uid, '使用者已登入取得 uid')
-
           const dataRef = ref(db, 'users/' + user.uid)
           onValue(dataRef, snapshot => {
             this.user = snapshot.val()
-            console.log(this.user, '讀取的資料')
-            if (this.user.admin) {
-              console.log('管理者登場')
-            }
             const dataRef = ref(db, `productBookmarks/${this.uid}`)
             onValue(dataRef, snapshot => {
               this.productBookmarks = snapshot.val()
@@ -206,19 +182,15 @@ export default {
                 // 只取 id
                 this.productBookmarks = Object.keys(this.productBookmarks)
               }
-              console.log(this.productBookmarks, '產品書籤')
             })
           })
         } else {
-          console.log('並未登入')
           this.uid = null
           this.user = {}
         }
       })
     },
     // 增加所有收藏
-    // 食譜 recipeBookmarks
-    // 產品 productBookmarks
     addBookmark (bookMark, item) {
       if (!this.uid) {
         this.toastMessage('登入才可使用收藏功能', 'error')
@@ -303,7 +275,6 @@ export default {
         </loading>
         <section class="">
           <!-- 桌機 -->
-          <!-- pt-6 -->
           <div class=" d-none d-lg-block pt-6">
             <swiper :slides-per-view="1" :space-between="25"
             :modules="modules"
@@ -373,7 +344,6 @@ export default {
                   </div>
                   <div class="col-6 bg-white ">
                       <div class=" mt-5 mb-lg-5">
-                        <!--  -->
                       <h1 class="ms-5 fw-bold lh-base h1Text text-blue " style="letter-spacing:10px;">
                         <p class="d-flex align-items-center">
                           <img src="../../assets/images/makeCupcake.png" class="me-3" style="width: 35px;" alt="">

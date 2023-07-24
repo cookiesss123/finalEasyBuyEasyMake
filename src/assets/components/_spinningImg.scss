@@ -1,9 +1,5 @@
 /* 移動的封面 */
 .box {
-    // width: 40vmin;
-    // height: 40vmin;
-    // width: 500px;
-    // height: 500px;
     position: relative;
   
     &::before {
@@ -42,7 +38,6 @@
     position: absolute;
     left: -21%;
     top: -21%;
-    // background: url(https://images.unsplash.com/photo-1650419424455-d0513aaf0dd6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80);
     background-size: 100%;
     background-position: center center;
     display: flex;

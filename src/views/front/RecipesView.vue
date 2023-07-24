@@ -1,12 +1,10 @@
 <script>
 import { RouterLink } from 'vue-router'
-// mapState
 import { mapActions } from 'pinia'
 import cartStore from '../../stores/carts'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
 import PaginationComponent from '../../components/PaginationComponent.vue'
 import Collapse from 'bootstrap/js/dist/collapse'
-// auth
 import { db, auth } from '../../firebase/db'
 import { ref, set, remove, onValue } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
@@ -33,11 +31,11 @@ export default {
       filterRecipes: [], // 選擇後改變的值 一定要變這個才可以
       bookMarks: [],
       thumbs: {}, // 所有人按讚分類
+      user: {},
       uid: '',
       search: false, // 在搜尋嗎? 用來判斷搜尋無值的狀況
       isLoading: false,
       fullPage: true
-      // 先前傳入的 參數 對比目前參數 如果相同要 reload
     }
   },
   methods: {
@@ -51,13 +49,10 @@ export default {
           item[1].id = item[0]
           return item[1]
         })
-        console.log(this.recipes, '食譜資料')
         // 得到讚數
         const dataRef = ref(db, 'recipeThumbs/')
         onValue(dataRef, snapshot => {
           this.thumbs = snapshot.val()
-          console.log(this.thumbs, '所有讚')
-
           // 把讚數填入
           this.recipes.forEach((recipe, index) => {
             Object.keys(this.thumbs).forEach(thumbId => {
@@ -71,8 +66,6 @@ export default {
               this.recipes[index].thumbs = 0
             }
           })
-          console.log(this.recipes, '食譜')
-
           this.filterRecipes = this.recipes
           this.isLoading = false
 
@@ -127,23 +120,18 @@ export default {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           this.uid = user.uid
-          console.log(this.uid, '使用者已登入取得 uid')
-
           const dataRef = ref(db, 'users/' + user.uid)
           onValue(dataRef, snapshot => {
             this.user = snapshot.val()
-            console.log(this.user, '讀取的資料')
             const dataRef = ref(db, `recipeBookmarks/${this.uid}`)
             onValue(dataRef, snapshot => {
               this.bookMarks = snapshot.val()
               if (this.bookMarks) {
                 this.bookMarks = Object.keys(this.bookMarks)
               }
-              console.log(this.bookMarks, '書籤')
             })
           })
         } else {
-          console.log('並未登入')
           this.uid = null
           this.user = {}
         }
@@ -185,25 +173,20 @@ export default {
       this.highOrLow = this.$route.query.valueHighOrLow
       this.priceOrRate = this.$route.query.valuePriceOrRate
       this.recipeSearchName = this.$route.query.searchName
-      // this.$route.query.category = undefined // 刷新會不見
     }
     this.getBookmarks()
     this.getRecipes()
   },
   watch: {
-    // 為了解決從首頁搜尋連到食譜頁面 會更動到 selectItem 進而觸發重新渲染頁面導致搜尋沒正確顯示的問題 搜尋類別必須不同 不能用 selectItem
-    selectCategory () { // selectCategory ： 本頁點選 selectItem ： 他頁搜尋
-      // 改變就清空搜尋內容 切換自動到不拘
+    selectCategory () {
       this.recipeSearchName = ''
       if (this.selectCategory === '全部') {
         this.selectItem = '全部'
         this.filterRecipes = this.recipes
-        // 變成只有成本有
         this.$refs.pagination.renderPage(1, this.filterRecipes)
       } else if (this.selectCategory !== '全部') {
         this.selectItem = this.selectCategory
         this.filterRecipes = this.recipes.filter(recipe => recipe.category === this.selectItem)
-        console.log(this.filterRecipes, '篩選結果')
       }
       this.$refs.pagination.renderPage(1, this.filterRecipes)
     },
@@ -247,7 +230,6 @@ export default {
       </loading>
         <section class="bannerBg" style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
           <div class="mask">
-            <!-- 做文字漸層 上到下 深紅 深藍 -->
             <div class="text" style="background: linear-gradient(to bottom, white 50% , #4572c2 50%); -webkit-background-clip: text;">
               甜點種類
             </div>
@@ -310,8 +292,6 @@ export default {
               <span class="material-icons-outlined text-blue ">search</span>
             </button>
           </div>
-        <!-- 參考： https://stackoverflow.com/questions/72345809/only-show-one-collapse-open-vue-3-bootstrap-5 -->
-        <!-- 控制折疊開啟一個 另一個就關閉  在最外層加上 id="myGroup" 摺疊分別加上 data-bs-parent="#myGroup" -->
           <div class="row g-0" id="myGroup">
             <div class="col-2">
               <div ref="costOrRateCollapse" class="collapse">
@@ -343,8 +323,6 @@ export default {
         </section>
 
         <section class="container">
-          <!-- 多了這個判斷 filterRecipes.length 至少要有一個存在 -->
-
           <div v-if="filterRecipes.length" class="row row-cols-lg-4 row-cols-2 gy-4">
             <div class="col text-decoration-none" v-for="recipe in this.$refs.pagination.pageProducts" :key="recipe.id">
               <div class="card position-relative bg-transparent" style="border-radius: 0; border: 1px solid transparent;">
@@ -387,7 +365,6 @@ export default {
               </div>
             </div>
           </div>
-          <!-- <LoadingComponent v-if="loading"></LoadingComponent> -->
           <!-- 查無食譜 -->
           <div v-else-if="!filterRecipes.length && search" class="py-10">
             <img src="../../assets/images/undraw_Page_not_found_re_e9o6.png" class="mb-3" alt="" style="height: 250px; display: block; margin: auto;">
@@ -399,16 +376,12 @@ export default {
     </div>
 </template>
 <style>
-/* 改 placeholder 顏色 */
- ::placeholder {
-    /* color: #f39691 !important; */
-  }
   .categorySelector li a{
     padding-bottom: 10px;
   }
 
   .categorySelector li a .categoryImg1, .categoryImg2, .categoryImg3, .categoryImg4, .categoryImg5, .categoryImg6{
-    opacity: .5; /* 把紅色 變粉 */
+    opacity: .5;
   }
   .categorySelector li a:hover .categoryImg1 {
     content: url('@/assets/images/allDessert2.png');

@@ -23,19 +23,17 @@ export default {
       // 控制搜尋收合
       priceOrRateCollapse: {},
       highOrLowCollapse: {},
-
+      user: {},
+      uid: '',
       products: [],
       priceOrRate: '價格',
       highOrLow: '不拘',
       productSearchName: '',
       filterProducts: [],
-      myCollapse: {},
       bookMarks: [],
-      recipes: [],
-      pageStatus: '全部', // 頁面切到哪頁了?
+      pageStatus: '全部',
       selectPage: '全部',
-      search: false, // 在搜尋嗎? 用來判斷搜尋無值的狀況
-      uid: '',
+      search: false,
       isLoading: false,
       fullPage: true
     }
@@ -44,12 +42,9 @@ export default {
   methods: {
     ...mapActions(cartStore, ['addCart', 'toastMessage']),
     getProducts () {
-      // 1. const dataRef = ref(db, 'users/') 取得 users 項下所有資料
-      // 2. 取得 user s的特定子分支資料
       const dataRef = ref(db, 'products/')
       onValue(dataRef, snapshot => {
         this.products = snapshot.val()
-        // 把物件轉成陣列 並填入id
         this.products = Object.entries(this.products).map(item => {
           item[1].id = item[0]
           return item[1]
@@ -64,7 +59,6 @@ export default {
             rate.id = Object.keys(rates)[index]
             return rate
           })
-          console.log(rates, this.products, '全部產品的評價還未分類產品')
           this.products.forEach((product, index) => {
             rates.forEach(item => {
               if (product.id === item.productId && !this.products[index].scores) {
@@ -85,13 +79,11 @@ export default {
               this.products[index].averageRate = 0
             }
           })
-          console.log(this.products, '加了評分的產品')
 
           this.filterProducts = this.products
           this.isLoading = false
 
           if (!this.$route.query.pageStatus && this.$route.fullPath === '/products') { // 未傳值再渲染
-          // 從單頁按讚後這裡會出現錯誤警告 因為觸發了最上方的得到讚 this.$route.fullPath === '/recipes' 用這個在食譜單頁就不會觸發了
             this.$refs.pagination.renderPage(1, this.filterProducts)
           } else if (this.$route.query.pageStatus) { // 有外部傳值再搜索
             this.searchProducts()
@@ -145,7 +137,6 @@ export default {
       this.filterProducts = this.filterProducts.filter(product => {
         return product.title.match(this.productSearchName)
       })
-      console.log(this.filterProducts, '是什麼???')
       // 搜尋了 用來判斷搜尋無值的狀況
       this.search = true
       this.$refs.pagination.renderPage(1, this.filterProducts)
@@ -155,28 +146,18 @@ export default {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           this.uid = user.uid
-          console.log(this.uid, '使用者已登入取得 uid')
-
           const dataRef = ref(db, 'users/' + user.uid)
           onValue(dataRef, snapshot => {
             this.user = snapshot.val()
-            console.log(this.user, '讀取的資料')
-            if (this.user.admin) {
-              console.log('管理者登場')
-            }
             const dataRef = ref(db, `productBookmarks/${this.uid}`)
             onValue(dataRef, snapshot => {
               this.bookMarks = snapshot.val()
               if (this.bookMarks) {
                 this.bookMarks = Object.keys(this.bookMarks)
               }
-              console.log(this.bookMarks, '書籤')
             })
           })
         } else {
-          // User is signed out
-          // ...
-          console.log('並未登入')
           this.uid = null
           this.user = {}
         }
@@ -201,8 +182,6 @@ export default {
   mounted () {
     this.isLoading = true
     // 先關閉
-    // this.$refs.loadingModal.show()
-    // 加了這個頁碼會不見 為何??? 因為沒使用變成 undefined 了 避免沒值
     this.priceOrRateCollapse = new Collapse(this.$refs.priceOrRateCollapse, {
       toggle: false,
       parent: '#myGroup'
@@ -217,14 +196,12 @@ export default {
       this.priceOrRate = this.$route.query.valuePriceOrRate
       this.highOrLow = this.$route.query.valueHighOrLow
       this.productSearchName = this.$route.query.searchName
-      console.log('存入了', this.pageStatus, this.priceOrRate, this.highOrLow, this.productSearchName)
     }
     this.getProducts()
     this.getBookmarks()
   },
   watch: {
     selectPage () {
-      // loading pageStatus 外部傳入  selectPage 點擊
       this.pageStatus = this.selectPage
       // 換頁把搜尋欄位清除
       this.productSearchName = ''
@@ -332,8 +309,6 @@ export default {
             <span class="material-icons-outlined text-blue ">search</span>
           </button>
         </div>
-        <!-- 參考： https://stackoverflow.com/questions/72345809/only-show-one-collapse-open-vue-3-bootstrap-5 -->
-        <!-- 控制折疊開啟一個 另一個就關閉  在最外層加上 id="myGroup" 摺疊分別加上 data-bs-parent="#myGroup" -->
         <div class="row g-0" id="myGroup">
           <div class="col-2">
             <div ref="priceOrRateCollapse" class="collapse">
@@ -363,14 +338,7 @@ export default {
           </div>
         </div>
       </div>
-      <!-- 產品畫面 -->
       <div class="container mt-4">
-           <!-- 1. 取消所有 border-radius: 20px; -->
-                  <!-- 2. 卡片、圖片 border-radius: 0  -->
-                  <!-- 3. 卡片取消  border-0 加入 border: 1px solid transparent; -->
-                  <!-- 4. footer改成 padding-top: 230px; 食譜、材料 card-text 加入 mb-0 card-footer pt-lg-3 -->
-                  <!-- 折價 取消 border rounded  之後可考慮要不要加 shadow-->
-                  <!-- 折價手機 fs 改成 10  font-size: 10px; -->
         <div v-if="filterProducts.length && !isLoading" class="row row-cols-lg-4 row-cols-2 gy-4">
           <div class="col text-decoration-none" v-for="product in this.$refs.pagination.pageProducts" :key="product.id">
             <div class="card position-relative bg-transparent" style="border: 1px solid transparent; border-radius: 0;">
@@ -388,7 +356,6 @@ export default {
                 <span v-if="product.isCheaper" style="pointer-events: none;" class="d-flex flex-column align-items-center text-white p-2 bg-blue  position-absolute top-0 start-0">
                   {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                 </span>
-                <!-- 先轉成 string 再取得字串第一個字元 .charAt(0) -->
                 <div v-for="mark in bookMarks" :key="mark">
                   <button v-if="mark === product.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>deleteBookmark(product.id)">
                       <img src="../../assets/images/image4.png">
@@ -436,7 +403,7 @@ export default {
 <style>
 
   .categorySelector li a .productImg1, .productImg2, .productImg3, .productImg4{
-    opacity: .5; /* 把紅色 變粉 */
+    opacity: .5; /* 藍色 變淡藍 */
   }
   .categorySelector li a:hover .productImg1 {
     content: url('@/assets/images/fruit2.png');
@@ -451,13 +418,8 @@ export default {
     content: url('@/assets/images/discount2.png');
   }
 
-  #myTab .nav-item .active {
-    color: #d04740;
-  }
-  /* 當要選擇特定input種類要加上  [type="radio"] */
-  /* + 是只會選擇相鄰的兄弟 不加上 + 就會選擇全部 */
  .collapse .card input:hover + label{
-    background: #e9a8a5 !important;
+    background: #83a2ff !important;
     color: white !important;
   }
 

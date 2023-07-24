@@ -1,8 +1,6 @@
 <template>
-    <!-- fade -->
     <div class="modal right" ref="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style=" overflow-y: hidden;">
         <div class="modal-dialog modal-fullscreen-md-down w-100" style="margin-right: 0; margin-top: 0;">
-          <!-- v-if="cart" 避免錯誤 -->
             <div class="modal-content" style="height: 100vh; overflow-y:auto">
               <div class="modal-header bg-blue" style="border-radius: 0;">
                   <h5 class="modal-title text-white" v-if="uid">
@@ -52,7 +50,6 @@
                                 <input type="number" class="form-control border-0 text-center" v-model.number="item.qty" @change="changeCartNum(item.product, item.qty, $event)"  style="width: 70px;" @keydown="handleKeyDown">
                                 <button :disabled="loadingItem === 'loading'" class="btn btn-sm btn-blue rounded-circle" style="width: 30px; height: 30px;" type="button" id="button-addon2" @click="()=>updateCartNum('add',item.product, item.qty)">
                                   <span v-if="loadingItem !== 'loading'">+</span>
-                                  <!-- <i class="fas fa-spinner fa-pulse" v-if="loadingItem === product.id"></i> -->
                                   <font-awesome-icon v-else-if="loadingItem === 'loading'" icon="fa-solid fa-spinner" spin />
                                 </button>
                               </div>
@@ -62,7 +59,6 @@
                       </div>
                       <div class="border"></div>
                     </div>
-                  <!-- <hr> -->
                   <div class="col-12">
                     <label for="code" class="col-3 form-label">優惠碼</label>
                     <div class="input-group mb-3" v-if="cart.total + cart.deliveryCharge === cart.finalTotal">
@@ -70,7 +66,6 @@
                       <button class="btn btn-outline-blue" type="button" id="button-addon2" @click="()=>checkCoupon(code)">套用優惠碼</button>
                     </div>
                     <div class="input-group mb-3" v-else-if="cart.total + cart.deliveryCharge !== cart.finalTotal">
-                      <!-- v-if="cart.coupon" -->
                       <input v-if="cart.coupon" type="text" class="form-control" :value="cart.coupon.code" disabled>
                       <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="cancelCoupon">取消</button>
                     </div>
@@ -88,7 +83,6 @@
                             NT$ {{ cart.total >= 1000 ? 0 : cart.deliveryCharge }}
                           </td>
                         </tr>
-                        <!-- cart.coupon -->
                         <tr v-if="cart.total + cart.deliveryCharge !== cart.finalTotal && cart.coupon">
                           <td>優惠券折扣 - {{cart.coupon.title}}</td>
                           <td class="text-end">- NT$ {{ numberComma(Math.ceil(cart.total * (cart.coupon.discount / 100))) }}</td>
@@ -165,11 +159,8 @@ export default {
           const dataRef = ref(db, 'users/' + user.uid)
           onValue(dataRef, snapshot => {
             this.user = snapshot.val()
-            console.log(this.user, '使用者資料')
           })
         } else {
-          // 需要嗎?
-          console.log('並未登入')
           this.uid = null
           this.user = {}
           // 遊客
@@ -186,10 +177,8 @@ export default {
     // 監聽 route.fullPath 變化
     // 只要換頁就關閉cartModal
     '$route.fullPath' (newVal) { // oldVal
-      console.log(newVal, '路徑')
       if (newVal === '/checkout') {
         this.code = ''
-        console.log('清空優惠碼')
         this.hide()
       } else if (newVal.includes('/products')) { // 點到產品頁面也關閉modal
         this.hide()
@@ -225,10 +214,4 @@ export default {
     transform: translateX(250px);
     right: 0;
 }
-/* .hvr-sweep-to-right:hover{
-    color: white !important;
-}
-  .hvr-sweep-to-right::before {
-    background: #d04740;
-  } */
 </style>

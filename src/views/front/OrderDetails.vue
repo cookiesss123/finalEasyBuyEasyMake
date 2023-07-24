@@ -9,9 +9,9 @@ export default {
   data () {
     return {
       user: {},
+      uid: '',
       order: {},
       barWidth: 0,
-      uid: '',
       isLoading: false,
       fullPage: true
     }
@@ -32,7 +32,6 @@ export default {
           onValue(dataRef, snapshot => {
             this.order = snapshot.val()
             this.order.id = id
-            console.log(this.order, '取得我的訂單')
             if (this.order.deliveryStatus === '待出貨') {
               this.barWidth = 0
             } else if (this.order.deliveryStatus === '運送中') {
@@ -45,7 +44,6 @@ export default {
             this.isLoading = false
           })
         } else {
-          console.log('並未登入')
           this.uid = null
           this.user = {}
           if (!this.uid) {
@@ -96,15 +94,11 @@ export default {
             <p>訂單建立時間：{{ new Date(order.creatAt).toLocaleDateString() }} {{ new Date(order.creatAt).getHours() }}:{{ new Date(order.creatAt).getMinutes() }}</p>
             <p class="">訂單編號：{{ order.id }}</p>
             <div class="d-flex flex-column align-items-center mt-5">
-                <!-- justify-content-between  -->
                 <section class="col-12 col-lg-10 d-flex " id="orderProcess" style="color: #d3ccc1">
-                    <!-- 如果是加圈圈 -->
-
                     <div class="d-flex flex-column align-items-center" :class="{'orderStatus': barWidth === 0}">
                         <i class=" fs-1 bi bi-box-seam text-blue"></i>
                         <h5 class=" fw-bold text-blue"  style="white-space: nowrap" >待出貨</h5>
                     </div>
-                    <!-- 線條 -->
                     <div v-if="barWidth < 33" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #d3ccc1; width: 33%;"></div>
                     <div v-else-if="barWidth >= 33" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #4572c2; width: 33%;"></div>
                     <div class="d-flex flex-column align-items-center" :class="{'orderStatus': barWidth === 33}">
@@ -127,7 +121,6 @@ export default {
                 <div class="row gx-5 row-cols-1 row-cols-lg-2 my-5">
                     <div class="col ">
                         <h4  class="text-center fw-bold bg-lightBlue py-2">訂購商品資訊</h4>
-                        <!-- <h4 class="text-center fw-bold">訂購商品資訊</h4> -->
                         <div v-if="order.cart" class="row py-3">
                             <div class="col-12">
                                 <div class="row">
@@ -186,8 +179,7 @@ export default {
                         </div>
                     </div>
                     <div class="col ">
-                        <h4  class="text-center fw-bold bg-lightYellow py-2">收件人資訊</h4>
-                        <!-- <h4  class="text-center fw-bold">收件人資訊</h4> -->
+                        <h4  class="text-center fw-bold bg-cyan py-2">收件人資訊</h4>
                         <table class="table table-borderless table-striped">
                         <thead>
                         <tr>
@@ -225,9 +217,6 @@ export default {
     </div>
 </template>
 <style>
- .w-1000{
-    width: 1000px;
- }
  .orderStatus{
     border-radius: 50%;
     padding: 0 15px;

@@ -54,12 +54,10 @@
                   </div>
                   <div class="mt-3">
                     <button type="button" class="btn btn-primary" @click="()=>tempLottery.rules.push('')">新增規則</button>
-                    <!-- <button v-else-if="!tempLottery.rules" type="button" class="btn btn-primary" @click="()=>tempLottery.rules.push('')">新增規則</button> -->
                   </div>
                 </div>
                 <div class="col-12">
                   <h3>獎品</h3>
-                  <!-- 注意 key 值必須寫不然會出錯 -->
                     <div class="row" v-for="(prize, index) in tempLottery.prizes" :key="index + 500">
                      <h5>獎品{{ index + 1 }}</h5>
                      <div class="col-1">
@@ -86,7 +84,6 @@
                 </div>
                 <div class="col-12">
                   <div class="form-check">
-                    <!-- true-value="1" false-value="0" -->
                   <input class="form-check-input" type="checkbox" value="" :v-true="1" :v-false="0" id="isEnabled" v-model="tempLottery.isEnabled">
                   <label class="form-check-label" for="isEnabled">
                     是否啟用
@@ -140,8 +137,6 @@ export default {
     ...mapActions(cartStore, ['toastMessage']),
 
     updateLottery () {
-      // 要多傳入一個名額 欄位 之後從這裡去扣除
-
       this.tempLottery.startDate = new Date(this.startDate).getTime()
       this.tempLottery.dueDate = new Date(this.dueDate).getTime()
       if (!this.tempLottery.prizes || !this.tempLottery.rules || !this.tempLottery.recipes || !this.tempLottery.startDate || !this.tempLottery.dueDate || !this.tempLottery.name) {
@@ -201,7 +196,6 @@ export default {
           }
           this.dueDate = new Date(this.tempLottery.dueDate).toISOString().split('T')[0]
           this.startDate = new Date(this.tempLottery.startDate).toISOString().split('T')[0]
-          console.log(this.tempLottery, '抽獎')
           this.show()
           this.status = 'edit'
           this.lotteryId = this.id

@@ -166,7 +166,6 @@ export default {
             this.hide()
             return
           }
-          console.log(this.tempOrder, '訂單')
           this.show()
           this.orderId = this.id
           this.customerId = this.uid

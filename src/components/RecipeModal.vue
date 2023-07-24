@@ -101,14 +101,6 @@
                           <ol>
                             <li v-for="(product, index) in tempRecipe.relativeProducts" :key="product.id" class="row mb-5">
                               <label :for="product + index" class="col-8 mb-0">{{ index + 1 }}. {{ product.title }} ： {{ product.num }}{{ product.unit }} / {{ product.price }} 元</label>
-                              <!-- <div class="col-4">
-                                <div class="input-group input-group-sm">
-                                  <select name="" :id="product + index" class="form-select" v-model="tempRecipe.relativeProducts[index].group">
-                                    <option v-for="num in 20" :key="num + 34534" :value="num">{{ num }}</option>
-                                  </select>
-                                  <span class="input-group-text" id="basic-addon2">組</span>
-                                </div>
-                              </div> -->
                             </li>
                           </ol>
                           <h5 class="text-end text-primary">
@@ -150,7 +142,6 @@ export default {
         '日式甜點',
         '台式甜點'
       ],
-      // relativeProducts: [], // 剛開始用來存的東西
       total: 0,
       recipeId: ''
     }
@@ -190,10 +181,7 @@ export default {
         this.toastMessage('更改成功', 'success')
       } else if (this.status === 'new') {
         const reference = ref(db, 'recipes/')
-        // push 自動生成 亂數 id
         const newUserRef = push(reference)
-
-        // 如果沒填入暫時以這個為值
         this.tempRecipe.price = 0
         this.total = 0
         this.tempRecipe.relativeProducts = []
@@ -230,7 +218,6 @@ export default {
             this.tempRecipe.id = this.id
           }
 
-          console.log(this.tempRecipe)
           // 如果沒有imgsUrl 就設定一個空陣列讓副圖存在
           if (!this.tempRecipe.imgsUrl) {
             this.tempRecipe.imgsUrl = []
@@ -246,12 +233,9 @@ export default {
           // 先有這個
           this.products.forEach((product) => { // 會把所有產品跑一遍
             product.relevantRecipes.forEach(item => {
-              if (item === this.tempRecipe.title && product.category === '單一產品') { // 為甚麼後面的不跑是因為沒達到 item === this.tempRecipe.title 這個條件
-              // product.group = 5 // 原本在recipe的group不存在才加
-              // 原本是空物件 後來加東西
+              if (item === this.tempRecipe.title && product.category === '單一產品') {
                 this.tempRecipe.relativeProducts.push(product)
                 this.total += product.price
-              // console.log(product)
               } else if (item === this.tempRecipe.title && product.category === '組合包') { // 組合包 不算入total
                 this.tempRecipe.relativeProducts.push(product)
               }

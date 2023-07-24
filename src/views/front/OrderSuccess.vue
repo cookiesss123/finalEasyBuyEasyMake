@@ -5,14 +5,11 @@ import numberCommaMixin from '../../mixins/numberCommaMixin'
 import { auth } from '../../firebase/db'
 import { onAuthStateChanged } from 'firebase/auth'
 
-// const { VITE_PATH } = import.meta.env
 export default {
   data () {
     return {
-      userId: '',
-      token: '',
-      nickName: '',
-      user: {}
+      user: {},
+      uid: ''
     }
   },
   mixins: [numberCommaMixin],
@@ -24,7 +21,6 @@ export default {
           this.uid = user.uid
           this.getOrder(this.uid)
         } else {
-          console.log('並未登入')
           this.uid = null
           this.user = {}
           // 遊客
@@ -38,24 +34,15 @@ export default {
     window.scrollTo(0, 0)
 
     this.toastMessage('恭喜您! 訂單建立完成')
-    this.token = document.cookie.replace(/(?:(?:^|.*;\s*)myToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
-    this.userId = localStorage.getItem('userId')
-    this.userId = Number(this.userId)
-    this.nickName = localStorage.getItem('nickName')
     this.getMyOrder()
   },
   computed: {
     ...mapState(cartStore, ['myOrder'])
-    // 找到當筆
   }
 }
 </script>
 <template>
     <div class="">
-
-        <!-- https://images.unsplash.com/photo-1616968173862-27da15c02bbd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80 -->
-        <!-- https://images.unsplash.com/photo-1616968173983-cc56f09d8279?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80 -->
-
         <section class="py-9 d-flex" style="background-image:url('https://images.unsplash.com/photo-1678465952838-c9d7f5daaa65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80'); background-position: center; background-size: cover; background-repeat: no-repeat;">
             <div class="checkoutMask mx-auto ">
                 <div class="container">
@@ -90,10 +77,7 @@ export default {
         </section>
 
       <section class="container my-5">
-        <!-- v-if="myOrder.cart -->
-        <!-- col-lg-6 -->
         <div class="" v-if="myOrder.cart">
-            <!--  border border-blue -->
             <h1 class="h4 text-center text-white w-100 bg-blue py-2">恭喜您! 訂單建立完成</h1>
             <div class="d-flex align-items-center my-4">
                 <span class="">會員可到 <RouterLink to="/member" class="link-blue">會員專區</RouterLink> 查看訂單運送進度</span>
@@ -119,8 +103,6 @@ export default {
                                 <del class="me-2 text-muted mt-1" style="font-size: 14px;" :class="{'d-none': !item.product.isCheaper}">NT$ {{ numberComma(item.product.originalPrice) }}</del>
                                 <span class=" mt-1"> <span :class="{'text-danger':item.product.isCheaper, 'fw-bold':item.product.isCheaper}">NT$ {{numberComma(item.product.price)}}</span> / {{ item.product.num }}{{ item.product.unit }}</span>
                             </div>
-
-                            <!-- <p class="mb-0 text-danger text-end">小計：NT$ {{ item.product.price * item.qty }} / {{ item.product.num * item.qty }}{{ item.product.unit }}</p> -->
 
                             <!-- 非組合包 -->
                             <p class="mb-0 text-danger text-end fw-bold" v-if="item.product.category !== '組合包'">小計：NT$ {{ numberComma(item.product.price * item.qty) }} / {{ numberComma(item.product.num * item.qty) }}{{ item.product.unit }}</p>
@@ -160,7 +142,7 @@ export default {
                 </div>
 
             <div class="col-lg-6 col-12">
-                <h4  class="text-center fw-bold bg-lightYellow py-2">收件人資訊</h4>
+                <h4  class="text-center fw-bold bg-cyan py-2">收件人資訊</h4>
 
                 <div class="card-body">
                     <table class="table table-borderless table-striped">

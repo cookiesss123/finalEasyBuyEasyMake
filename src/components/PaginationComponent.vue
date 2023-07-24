@@ -39,16 +39,8 @@ export default {
       console.log(this.pageProducts, firstIndex, lastIndex, '分頁好的訂單')
 
       // 換頁到最上方
-      // if (this.$route.fullPath !== '/member') {
       window.scrollTo(0, 0)
-      // }
     }
-    // 改變訂單頁面
-    // changeOrderPage (pageNumber, products) {
-    //   this.renderPage(pageNumber, products)
-    //   // 因為切換種類 會影響到所以放這
-    //   window.scrollTo(0, 700)
-    // }
   }
 }
 </script>

@@ -56,9 +56,7 @@ export default {
       if (this.id) {
         this.show()
         this.tempProduct = this.item
-        console.log(this.tempProduct, '友直嗎')
         this.deleteId = this.id
-        // 這裡被清空了當然讀不到... 所以要再另外存
         this.openDeleteModal('', '')
       }
     }

@@ -2,7 +2,6 @@
     <!-- ref 都要叫modal -->
     <div class="modal fade" ref="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
-            <!-- v-if="tempCoupon" -->
             <div v-if="tempCoupon" class="modal-content">
             <div class="modal-header bg-dark">
                 <h5 class="modal-title text-white" id="exampleModalLabel">
@@ -50,8 +49,6 @@
                         </div>
                         <div class="col-12">
                           <div class="form-check">
-                            <!-- true-value="1" false-value="0" -->
-                            <!-- :v-true="1" :v-false="0" ???? -->
                           <input class="form-check-input" type="checkbox" :v-true="1" :v-false="0" id="isEnabled" v-model="tempCoupon.isEnabled">
                           <label class="form-check-label" for="isEnabled">
                             是否啟用
@@ -104,8 +101,6 @@ export default {
       this.tempCoupon.startDate = new Date(this.startDate).getTime()
       this.tempCoupon.dueDate = new Date(this.dueDate).getTime()
       if (!this.tempCoupon.code || !this.tempCoupon.discount || !this.tempCoupon.condition || !this.tempCoupon.description || !this.tempCoupon.image || !this.tempCoupon.startDate || !this.tempCoupon.dueDate || !this.tempCoupon.title) {
-        console.log(this.tempCoupon.code, this.tempCoupon.discount, this.tempCoupon.condition, this.tempCoupon.description, this.tempCoupon.image, this.tempCoupon.startDate, this.tempCoupon.dueDate, this.tempCoupon.isEnabled, this.tempCoupon.title, '哪裡沒寫')
-        //  !this.tempCoupon.isEnabled ||
         this.toastMessage('資料沒寫完', 'error')
         return
       }
@@ -155,7 +150,6 @@ export default {
         const dataRef = ref(db, `coupons/${this.id}`)
         onValue(dataRef, snapshot => {
           this.tempCoupon = snapshot.val()
-          // 注意一定要用 toISOString() !!!!!!!!!!!!!!!!!!  才是 2023-02-24 的格式  用toString不能用 因為是 2023/02/24
           if (!this.tempCoupon) {
             this.hide()
             return
@@ -164,7 +158,6 @@ export default {
 
           this.dueDate = new Date(this.tempCoupon.dueDate).toISOString().split('T')[0]
           this.startDate = new Date(this.tempCoupon.startDate).toISOString().split('T')[0]
-          console.log(this.tempCoupon, '折價券')
           this.show()
           this.status = 'edit'
           this.couponId = this.id

@@ -66,7 +66,6 @@ export default {
       const dataRef = ref(db, `coupons/${id}`)
       onValue(dataRef, snapshot => {
         this.coupon = snapshot.val()
-        console.log(this.coupon, '折價券')
         this.isLoading = false
       })
     }

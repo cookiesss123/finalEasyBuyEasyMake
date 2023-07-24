@@ -5,7 +5,7 @@ import numberCommaMixin from '../../mixins/numberCommaMixin'
 import { mapActions } from 'pinia'
 import cartStore from '../../stores/carts'
 import { db, auth } from '../../firebase/db'
-import { ref, onValue, set } from 'firebase/database'
+import { ref, onValue } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
@@ -19,15 +19,16 @@ export default {
   data () {
     return {
       uid: '',
+      user: {},
       bookMarks: [],
       pageStatus: 'recipe',
       deleteId: '',
       deleteItem: {}, // 刪除資料
-      AllproductRates: [],
       averageRate: [],
       rates: {},
       recipeThumbs: [],
       thumbs: {},
+
       isLoading: false,
       fullPage: true
     }
@@ -111,56 +112,20 @@ export default {
             })
           })
         } else {
-          // User is signed out
-          // ...
           this.uid = null
           this.user = {}
           if (!this.uid) {
+            this.isLoading = false
             this.toastMessage('登入才可使用收藏功能', 'error')
             this.$router.push('/login')
           }
         }
       })
     },
-    // 增加所有收藏
-    // 食譜 recipeBookmarks
-    // 產品 productBookmarks
-    addBookmark (bookMark, item) {
-      if (!this.uid) {
-        this.toastMessage('登入才可使用收藏功能', 'error')
-      }
-      const reference = ref(db, `${bookMark}/${this.uid}/${item.id}`)
-      set(reference, item)
-      this.toastMessage('收藏成功')
-    },
     // 打開刪除收藏確認
     openDeleteModal (id, item) {
       this.deleteId = id
       this.deleteItem = item
-    },
-    getRecipeThumbs () {
-      // 得到讚數
-      const dataRef = ref(db, 'recipeThumbs')
-      onValue(dataRef, snapshot => {
-        const recipeThumbs = snapshot.val()
-        Object.keys(recipeThumbs).forEach(item => {
-          this.thumbs[item] = Object.values(recipeThumbs[item]).length
-        })
-
-        // 把讚數填入
-        this.recipes.forEach((recipe, index) => {
-          Object.keys(this.thumbs).forEach(thumbId => {
-            if (recipe.id === thumbId) {
-              this.recipes[index].thumbs = this.thumbs[recipe.id]
-            }
-          })
-        })
-        this.recipes.forEach((recipe, index) => {
-          if (!recipe.thumbs) {
-            this.recipes[index].thumbs = 0
-          }
-        })
-      })
     }
   },
   mounted () {
@@ -217,7 +182,6 @@ export default {
                   <span  class="titleSize ">食譜收藏</span>
                 </a>
               </li>
-              <!-- src="/finalEasyBuyEasyMake/src/assets/images/vegetables3.png" -->
               <li class="col d-flex  align-items-center justify-content-center" :class="{'liDisabled': pageStatus === 'product'}">
                 <a href="#"  @click.prevent="()=>pageStatus = 'product'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': pageStatus === 'product', 'link-blue': pageStatus === 'product'}">
                   <img class="bookmarkImg2" v-if="pageStatus !== 'product'" src="../../assets/images/fruit1.png"  alt="">
@@ -230,13 +194,6 @@ export default {
       </section>
 
         <div class="container  py-4">
-          <!-- 食譜 -->
-            <!-- 1. 取消所有 border-radius: 20px; -->
-                  <!-- 2. 卡片、圖片 border-radius: 0  -->
-                  <!-- 3. 卡片取消  border-0 加入 border: 1px solid transparent; -->
-                  <!-- 4. footer改成 padding-top: 230px; 食譜、材料 card-text 加入 mb-0 card-footer pt-lg-3 -->
-                  <!-- 折價 取消 border rounded  之後可考慮要不要加 shadow-->
-                  <!-- 折價手機 fs 改成 10  font-size: 10px; -->
           <div v-if="pageStatus === 'recipe' && bookMarks && !isLoading" class="row row-cols-lg-4 row-cols-2 gy-4">
             <div class="col text-decoration-none" v-for="recipe in bookMarks" :key="recipe.id">
               <div class="card position-relative bg-transparent" style="border-radius: 0; border: 1px solid transparent;">
@@ -253,7 +210,6 @@ export default {
                         <img src="../../assets/images/image4.png">
                     </button>
                   </div>
-                    <!-- 已收藏狀態 -->
                     <div v-for="mark in bookMarks" :key="mark + 4567">
                       <button v-if="mark === recipe.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>deleteBookmark(recipe.id)">
                           <img src="../../assets/images/image4.png">
@@ -282,12 +238,6 @@ export default {
             </div>
           </div>
           <!-- 產品 -->
-             <!-- 1. 取消所有 border-radius: 20px; -->
-                  <!-- 2. 卡片、圖片 border-radius: 0  -->
-                  <!-- 3. 卡片取消  border-0 加入 border: 1px solid transparent; -->
-                  <!-- 4. footer改成 padding-top: 230px; 食譜、材料 card-text 加入 mb-0 card-footer pt-lg-3 -->
-                  <!-- 折價 取消 border rounded  之後可考慮要不要加 shadow-->
-                  <!-- 折價手機 fs 改成 10  font-size: 10px; -->
           <div v-else-if="pageStatus === 'product' && bookMarks && !isLoading" class="row row-cols-lg-4 row-cols-2 gy-4">
             <div class="col text-decoration-none" v-for="product in bookMarks" :key="product.id">
               <div class="card position-relative bg-transparent" style="border-radius: 0; border: 1px solid transparent;">
@@ -306,13 +256,11 @@ export default {
                   <span v-if="product.isCheaper" style="pointer-events: none;" class="d-flex flex-column align-items-center text-white p-2 bg-blue  position-absolute top-0 start-0 ">
                     {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                   </span>
-                  <!-- 先轉成 string 再取得字串第一個字元 .charAt(0) -->
                   <div v-for="mark in bookMarks" :key="mark">
                     <button v-if="mark === product.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>deleteBookmark(product.id)">
                         <img src="../../assets/images/image4.png">
                     </button>
                   </div>
-                  <!-- top: 155px; -->
                   <button :disabled="isLoading === 'loading'" @click="()=>addCart(product)" type="button" class="buyBtn border-0 bg-transparent me-lg-2 me-1 position-absolute end-0" >
                     <img src="../../assets/images/icon-cart.png"  alt="" class="rounded-circle shadow-sm">
                   </button>
@@ -358,8 +306,4 @@ export default {
   .categorySelector li a:hover .bookmarkImg2 {
     content: url('@/assets/images/fruit2.png');
   }
- /* .collapse .card input:hover + label{
-    background: #C0AB8E !important;
-    color: white !important;
-  } */
 </style>

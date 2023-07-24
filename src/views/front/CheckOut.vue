@@ -2,14 +2,9 @@
 import { mapActions, mapState } from 'pinia'
 import cartStore from '../../stores/carts'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
-
-// const { VITE_PATH } = import.meta.env
 export default {
   data () {
     return {
-      userId: '',
-      token: '',
-      nickName: '',
       user: {
         email: '',
         name: '',
@@ -29,11 +24,6 @@ export default {
   },
   mounted () {
     window.scrollTo(0, 0)
-
-    this.token = document.cookie.replace(/(?:(?:^|.*;\s*)myToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
-    this.userId = localStorage.getItem('userId')
-    this.userId = Number(this.userId)
-    this.nickName = localStorage.getItem('nickName')
   },
   computed: {
     ...mapState(cartStore, ['cart', 'cartItems'])
@@ -42,7 +32,6 @@ export default {
 </script>
 <template>
     <div class="" style="overflow-x: hidden;">
-        <!-- bannerBg -->
         <section class="py-lg-9  d-flex " style="background-image: url('https://images.unsplash.com/photo-1678465952838-c9d7f5daaa65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80'); background-repeat: no-repeat; background-position: center center; background-size: cover; height: 50vh;">
             <div class="checkoutMask mx-auto mt-4">
                 <div class="container">
@@ -57,11 +46,7 @@ export default {
                     <li class="bg-blue d-lg-none my-2" style="width: 3px; height: 40px;  margin: 0 auto;"></li>
 
                     <li class=" text-center position-relative" style="flex: 1;">
-                        <!-- <img src="../../assets/images/donut4.png" class="" style="width: 45px; top: -28px; right: 41px;" alt=""> -->
-
                         <i class="bi bi-2-circle-fill text-blue fs-2 rounded-circle" style="padding: 3px 5px; border: 2px dotted #4572c2;"></i>
-                        <!-- <i class="bi bi-2-circle text-white fs-2 position-absolute" style="padding: 3px 5px; left: 71px; top: -5px; text-shadow: 2px 2px 5px black;"></i> -->
-
                         <p class="">
                             <span class="text-blue fw-bold ">填寫訂單資訊</span>
                         </p>
@@ -149,9 +134,7 @@ export default {
                 </div>
             </div>
             <div class="col">
-                <h4 class="text-center fw-bold mb-4 bg-lightYellow py-2">填寫收件人資訊</h4>
-
-                <!-- 要在form寫 submit 才會把不符合表單的內容擋下 -->
+                <h4 class="text-center fw-bold mb-4 bg-cyan py-2">填寫收件人資訊</h4>
                 <VForm ref="form" class="" v-slot="{ errors }" @submit="()=>addOrder(user.email, user.name, user.phoneNum, user.address, user.message)">
                     <div class="row gy-4 d-flex">
                         <div class="col-12 fs-5">
@@ -240,16 +223,4 @@ export default {
 .hvr-sweep-to-left:hover{
   color: white !important;
 }
-/* .hvr-sweep-to-right::before{
-    background: #008391;
-  } */
-/* .hvr-sweep-to-right:hover {
-    color: white !important;
-} */
-/* .hvr-sweep-to-left:hover{
-    color: white !important;
-}
-  .hvr-sweep-to-left::before {
-    background: #d04740;
-  } */
 </style>
