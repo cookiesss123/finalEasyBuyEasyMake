@@ -2,12 +2,12 @@
    <div>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
           <div class="container-fluid">
-            <h1 class="text-primary h5">甜點食譜一鍵購(後台)</h1>
+            <h1 class="text-primary h5">甜點食譜一鍵購-後台</h1>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav">
+              <ul class="navbar-nav dashboardNavbar">
                 <li class="nav-item">
                   <RouterLink to="/admin/recipes" class="nav-link">食譜</RouterLink>
                 </li>
@@ -30,7 +30,7 @@
             </div>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                  <RouterLink to="/home" class="nav-link">回到前台</RouterLink>
+                  <RouterLink to="/home" class="nav-link text-white">回到前台</RouterLink>
                 </li>
               </ul>
           </div>
@@ -77,3 +77,13 @@ export default {
   }
 }
 </script>
+<style>
+  .dashboardNavbar .nav-item .nav-link{
+    color: white;
+
+  }
+  .dashboardNavbar .nav-item .nav-link.active{
+    color: red !important;
+
+  }
+</style>

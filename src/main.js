@@ -8,9 +8,6 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueSweetalert2 from 'vue-sweetalert2'
-// VUE LOADING
-// import { LoadingPlugin } from 'vue-loading-overlay'
-// import 'vue-loading-overlay/dist/css/index.css'
 
 import 'sweetalert2/dist/sweetalert2.min.css'
 import 'hover.css/css/hover-min.css'
@@ -32,10 +29,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faUserSecret, faCheckCircle, faCheck, faExclamationTriangle, faSpinner } from '@fortawesome/free-solid-svg-icons'
 // import { far } from '@fortawesome/free-regular-svg-icons'
 
-// firebase
 // /* add icons to the library */
 library.add(faUserSecret, faCheckCircle, faCheck, faExclamationTriangle, faSpinner)
-// library.add(far)
 
 const app = createApp(App)
 Object.keys(AllRules).forEach(rule => {
@@ -52,11 +47,6 @@ setLocale('zh_TW')
 app.use(router)
 app.use(VueAxios, axios)
 app.use(VueSweetalert2)
-// LOADING
-// app.use(LoadingPlugin, {
-//   color: '#d04740',
-//   loader: 'dots'
-// })
 app.component('VForm', Form)
 app.component('VField', Field)
 app.component('ErrorMessage', ErrorMessage)

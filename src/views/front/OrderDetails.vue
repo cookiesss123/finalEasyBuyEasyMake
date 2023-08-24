@@ -62,14 +62,14 @@ export default {
 }
 </script>
 <template>
-    <div class="mt-10 container" style="overflow-x: hidden;">
+    <div class="mt-96 container" style="overflow-x: hidden;">
         <loading v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"
                  :lock-scroll="true">
-                 <div class="d-flex flex-column align-items-center py-10">
+                 <div class="d-flex flex-column align-items-center py-96">
       <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <h1 class="text-center fw-bold text-blue">
+      <p class="text-center fw-bold text-primary h2">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -80,13 +80,13 @@ export default {
         <span class="mx-2 animate-text">.</span>
         <span class="me-2 animate-text">.</span>
         <span class="animate-text">.</span>
-      </h1>
+      </p>
     </div>
     </loading>
         <div>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item "><RouterLink to="/member" href="#" class="link-blue">會員專區</RouterLink></li>
+                    <li class="breadcrumb-item "><RouterLink to="/member" href="#" class="link-primary">會員專區</RouterLink></li>
                     <li class="breadcrumb-item ">訂單狀況</li>
                     <li class="breadcrumb-item active " aria-current="page">{{ order.deliveryStatus }}</li>
                 </ol>
@@ -96,31 +96,31 @@ export default {
             <div class="d-flex flex-column align-items-center mt-5">
                 <section class="col-12 col-lg-10 d-flex " id="orderProcess" style="color: #d3ccc1">
                     <div class="d-flex flex-column align-items-center" :class="{'orderStatus': barWidth === 0}">
-                        <i class=" fs-1 bi bi-box-seam text-blue"></i>
-                        <h5 class=" fw-bold text-blue"  style="white-space: nowrap" >待出貨</h5>
+                        <i class=" fs-1 bi bi-box-seam text-primary"></i>
+                        <h5 class=" fw-bold text-primary"  style="white-space: nowrap" >待出貨</h5>
                     </div>
                     <div v-if="barWidth < 33" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #d3ccc1; width: 33%;"></div>
                     <div v-else-if="barWidth >= 33" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #4572c2; width: 33%;"></div>
                     <div class="d-flex flex-column align-items-center" :class="{'orderStatus': barWidth === 33}">
-                        <i class="bi bi-truck  fs-1" :class="{'text-blue': barWidth >= 33}"></i>
-                        <h5 class=" fw-bold" :class="{'text-blue': barWidth >= 33}" style="white-space: nowrap">運送中</h5>
+                        <i class="bi bi-truck  fs-1" :class="{'text-primary': barWidth >= 33}"></i>
+                        <h5 class=" fw-bold" :class="{'text-primary': barWidth >= 33}" style="white-space: nowrap">運送中</h5>
                     </div>
                     <div v-if="barWidth < 66" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #d3ccc1; width: 33%;"></div>
                     <div v-else-if="barWidth >= 66" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #4572c2; width: 33%;"></div>
                     <div class="d-flex flex-column align-items-center" :class="{'orderStatus': barWidth === 66}">
-                        <i class="bi bi-house-check  fs-1" :class="{'text-blue': barWidth >= 66}" ></i>
-                        <h5 class=" fw-bold" :class="{'text-blue': barWidth >= 66}" style="white-space: nowrap">已抵達</h5>
+                        <i class="bi bi-house-check  fs-1" :class="{'text-primary': barWidth >= 66}" ></i>
+                        <h5 class=" fw-bold" :class="{'text-primary': barWidth >= 66}" style="white-space: nowrap">已抵達</h5>
                     </div>
                     <div v-if="barWidth < 100" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #d3ccc1; width: 33%;"></div>
                     <div v-else-if="barWidth === 100" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #4572c2; width: 33%;"></div>
                     <div class="d-flex flex-column align-items-center" :class="{'orderStatus-finished': barWidth === 100}">
-                        <i class="bi bi-clipboard-check  fs-1" :class="{'text-blue': barWidth === 100}" ></i>
-                        <h5 class=" fw-bold" :class="{'text-blue': barWidth === 100}" style="white-space: nowrap">訂單完成</h5>
+                        <i class="bi bi-clipboard-check  fs-1" :class="{'text-primary': barWidth === 100}" ></i>
+                        <h5 class=" fw-bold" :class="{'text-primary': barWidth === 100}" style="white-space: nowrap">訂單完成</h5>
                     </div>
                 </section>
                 <div class="row gx-5 row-cols-1 row-cols-lg-2 my-5">
                     <div class="col ">
-                        <h4  class="text-center fw-bold bg-lightBlue py-2">訂購商品資訊</h4>
+                        <h4  class="text-center fw-bold bg-secondary py-2">訂購商品資訊</h4>
                         <div v-if="order.cart" class="row py-3">
                             <div class="col-12">
                                 <div class="row">
@@ -169,7 +169,7 @@ export default {
                                 <td>優惠券折扣</td>
                                 <td class="text-end">- NT$ {{ numberComma(Math.ceil(order.cart.total * (order.cart.coupon.discount / 100))) }}</td>
                             </tr>
-                            <tr class="border-top bg-lightBlue">
+                            <tr class="border-top bg-secondary">
                                 <td class="fw-bold text-danger">總計金額</td>
                                 <td class="text-end fw-bold text-danger">NT$ {{ numberComma(order.cart.finalTotal) }}</td>
                             </tr>

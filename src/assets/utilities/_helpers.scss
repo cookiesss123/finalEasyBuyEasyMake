@@ -1,0 +1,19 @@
+.bg-transGray{
+    background-color: rgba(255, 255, 255, .4);
+}
+.backdrop-blur-10{
+    backdrop-filter: blur(10px);
+}
+.object-fit-cover{
+    object-fit: cover;
+}
+.img-blur-shadow{
+    box-shadow: $primary 0px 0px 10px 0;
+}
+
+.alert-num{
+    width: 25px;
+    height: 25px;
+    padding: 2px;
+    background: $secondary;
+}

@@ -3,72 +3,6 @@
 .loginBg{
   background-size: cover; 
 }
-// navbar
-.logo{
-    height: 54px;
-}
-// 手機 menu link
-#navbarNav{
-    font-size: 16px;
-}
-/* 避免文字移動位置 */
-.navbar-nav .nav-link{
-    position: relative;
-    border-bottom: 2px solid transparent;
-  }
-  .navbar-nav .nav-link:hover{
-    color: #4572c2 !important;
-  }
-.navbar-nav .nav-link::after{
-    content: "";
-    width: 4px;
-    height: 2px;
-    position: absolute;
-    top: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: transparent;
-    transition: width .4s;
-  }
-
-  // hover 僅針對線條
-  .navbar-nav .nav-link:hover::after {
-    background-color: #4572c2;
-    width: 20%;
-  }
-  
-  // hover 對線條
-  #navbarNav .nav-link:hover{
-    color: #4572c2;
-    // background: white;
-    width: 100%;
-} 
-
-#navbarNav .mainMenu .active-link {
-    color: #4572c2 !important;
-    border-bottom: 2px solid #4572c2 !important;
-    // background: white; 不是這個
-    width: 20%; // !important
-    margin: 0 auto;
-}
-#navbarNav .login .active-link {
-    color: #4572c2 !important;
-    border-bottom: 2px solid #4572c2 !important;
-    // background: white; 不是這個
-}
-
-// 註冊按鈕
-#navbarNav .signup .active-link {
-  background: #4572c2 !important;
-  color: white !important;
-}
-// 頁籤 hover 顏色 沒東西????
-.nav .nav-item button:hover{
-    color: #4572c2 !important;
-  }
-.logo{
-    height: 40px;
-}
 
 .banner{
     background-repeat: no-repeat;
@@ -192,49 +126,6 @@
     background: #4572c2 !important;
     color: white !important;
   }
-
-    .logo{
-        height: 54px;
-    }
-    #navbarNav{
-        font-size: 16px;
-    }
-    /* 避免文字移動位置 */
-    .navbar-nav .nav-link{
-        position: relative;
-        border-bottom: 2px solid transparent;
-      }
-    .navbar-nav .nav-link::after{
-        content: "";
-        width: 4px;
-        height: 2px;
-        position: absolute;
-        top: 40px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: transparent;
-        transition: width .4s;
-      }
-
-      .navbar-nav .nav-link:hover::after {
-        background-color: #4572c2;
-        width: 100%;
-      }
-      
-      #navbarNav .nav-link:hover{
-        color: #4572c2;
-        // background: white;
-    } 
-    
-    // 桌機 menu link
-
-    #navbarNav .mainMenu .active-link {
-        color: #4572c2 !important;
-        border-bottom: 2px solid #4572c2 !important;
-        // background: white;
-        width: 100%;
-    }
-
     .banner{
         height: 670px;
         width:100%;

@@ -207,14 +207,14 @@ export default {
 }
 </script>
 <template>
-    <div class=""  style="overflow-x: hidden;">
+    <div class=""  style="overflow-x: hidden;" data-aos="fade-up">
       <loading v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"
                  :lock-scroll="true">
-                 <div class="d-flex flex-column align-items-center py-10">
+                 <div class="d-flex flex-column align-items-center py-96">
       <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <h1 class="text-center fw-bold text-blue">
+      <p class="text-center fw-bold text-primary h2">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -225,71 +225,71 @@ export default {
         <span class="mx-2 animate-text">.</span>
         <span class="me-2 animate-text">.</span>
         <span class="animate-text">.</span>
-      </h1>
+      </p>
     </div>
       </loading>
-        <section class="bannerBg" style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
+        <section   class="bannerBg" style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
           <div class="mask">
             <div class="text" style="background: linear-gradient(to bottom, white 50% , #4572c2 50%); -webkit-background-clip: text;">
               甜點種類
             </div>
           </div>
         </section>
-        <section class="container mt-4">
+        <section class="container mt-4"  >
           <ul class="position-relative categorySelector row row-cols-6 gy-2 list-unstyled border-bottom">
               <li class="col d-flex  align-items-center justify-content-center " :class="{'liDisabled': selectItem === '全部'}">
-                <a href="#"  @click.prevent="()=>selectCategory = '全部'" class="text-decoration-none d-flex flex-column align-items-center link-secondary " :class="{'fw-bold': selectItem === '全部', 'link-blue': selectItem === '全部'}">
+                <a href="#"  @click.prevent="()=>selectCategory = '全部'" class="text-decoration-none d-flex flex-column align-items-center link-secondary " :class="{'fw-bold': selectItem === '全部', 'link-primary': selectItem === '全部'}">
                   <img class="categoryImg1" v-if="selectItem !== '全部'" src="../../assets/images/allDessert1.png"  alt="">
                   <img v-else-if="selectItem === '全部'" src="../../assets/images/allDessert3.png"  alt="">
                   <span class="titleSize " >所有<br class="d-lg-none">甜點</span>
                 </a>
               </li>
               <li class="col d-flex  align-items-center justify-content-center " :class="{'liDisabled': selectItem === '台式甜點'}">
-                <a href="#"  @click.prevent="()=>selectCategory = '台式甜點'" class="text-decoration-none d-flex flex-column align-items-center link-secondary " :class="{'fw-bold': selectItem === '台式甜點', 'link-blue': selectItem === '台式甜點'}">
+                <a href="#"  @click.prevent="()=>selectCategory = '台式甜點'" class="text-decoration-none d-flex flex-column align-items-center link-secondary " :class="{'fw-bold': selectItem === '台式甜點', 'link-primary': selectItem === '台式甜點'}">
                   <img class="categoryImg2" v-if="selectItem !== '台式甜點'" src="../../assets/images/mooncake1.png"  alt="">
                   <img v-else-if="selectItem === '台式甜點'" src="../../assets/images/mooncake3.png"  alt="">
                   <span class="titleSize " >台式<br class="d-lg-none">甜點</span>
                 </a>
               </li>
               <li class="col d-flex  align-items-center justify-content-center" :class="{'liDisabled': selectItem === '法式甜點'}">
-                <a href="#"  @click.prevent="()=>selectCategory = '法式甜點'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': selectItem === '法式甜點', 'link-blue': selectItem === '法式甜點'}">
+                <a href="#"  @click.prevent="()=>selectCategory = '法式甜點'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': selectItem === '法式甜點', 'link-primary': selectItem === '法式甜點'}">
                   <img class="categoryImg3" v-if="selectItem !== '法式甜點'" src="../../assets/images/macaroon1.png"  alt="">
                   <img v-else-if="selectItem === '法式甜點'" src="../../assets/images/macaroon3.png"  alt="">
                   <span  class="titleSize ">法式<br class="d-lg-none">甜點</span>
                 </a>
               </li>
               <li class="col d-flex  align-items-center justify-content-center" :class="{'liDisabled': selectItem === '美式甜點'}">
-                <a href="#"  @click.prevent="()=>selectCategory = '美式甜點'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': selectItem === '美式甜點', 'link-blue': selectItem === '美式甜點'}">
+                <a href="#"  @click.prevent="()=>selectCategory = '美式甜點'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': selectItem === '美式甜點', 'link-primary': selectItem === '美式甜點'}">
                   <img class="categoryImg4" v-if="selectItem !== '美式甜點'" src="../../assets/images/donut1.png"  alt="">
                   <img v-else-if="selectItem === '美式甜點'" src="../../assets/images/donut4.png"  alt="">
                   <span  class="titleSize ">美式<br class="d-lg-none">甜點</span>
                 </a>
               </li>
               <li class="col d-flex  align-items-center justify-content-center" :class="{'liDisabled': selectItem === '日式甜點'}">
-                <a href="#"  @click.prevent="()=>selectCategory = '日式甜點'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': selectItem === '日式甜點', 'link-blue': selectItem === '日式甜點'}">
+                <a href="#"  @click.prevent="()=>selectCategory = '日式甜點'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': selectItem === '日式甜點', 'link-primary': selectItem === '日式甜點'}">
                   <img class="categoryImg5" v-if="selectItem !== '日式甜點'" src="../../assets/images/cakeStr1.png"  alt="">
                   <img v-else-if="selectItem === '日式甜點'" src="../../assets/images/cake17.png"  alt="">
                   <span  class="titleSize ">日式<br class="d-lg-none">甜點</span>
                 </a>
               </li>
               <li class="col d-flex align-items-center justify-content-center" :class="{'liDisabled': selectItem === '義式甜點'}">
-                <a href="#"  @click.prevent="()=>selectCategory = '義式甜點'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': selectItem === '義式甜點', 'link-blue': selectItem === '義式甜點'}">
+                <a href="#"  @click.prevent="()=>selectCategory = '義式甜點'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': selectItem === '義式甜點', 'link-primary': selectItem === '義式甜點'}">
                   <img class="categoryImg6" v-if="selectItem !== '義式甜點'" src="../../assets/images/pie1.png"  alt="">
                   <img v-else-if="selectItem === '義式甜點'" src="../../assets/images/pie3.png"  alt="">
                   <span class="titleSize ">義式<br class="d-lg-none">甜點</span>
                 </a>
               </li>
-              <li class="redLine bg-blue position-absolute" style="height: 2px; bottom: 0px; left: 5.5%" :class="{'activeAll': selectItem === '全部', 'activeT': selectItem === '台式甜點', 'activeF': selectItem === '法式甜點', 'activeA': selectItem === '美式甜點', 'activeJ': selectItem === '日式甜點', 'activeI': selectItem === '義式甜點'}"></li>
+              <li class="blueLine bg-primary position-absolute" style="height: 2px; bottom: 0px; left: 5.5%" :class="{'activeAll': selectItem === '全部', 'activeT': selectItem === '台式甜點', 'activeF': selectItem === '法式甜點', 'activeA': selectItem === '美式甜點', 'activeJ': selectItem === '日式甜點', 'activeI': selectItem === '義式甜點'}"></li>
           </ul>
         </section>
 
-        <section class="d-none d-lg-block container selectProduct my-5">
+        <section class="d-none d-lg-block container selectProduct my-5"  >
           <div class="input-group">
-            <a class="btn btn-outline-blue px-5" @click="()=> this.costOrRateCollapse.toggle()">篩選對象 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{priceOrRate}}</span></a>
-            <button class="btn btn-outline-blue px-5" type="button" @click="()=> this.highOrLowCollapse.toggle()">篩選值 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{highOrLow}}</span> </button>
-            <input type="search" class="form-control border-blue border-end-0" placeholder="請輸入食譜名稱" aria-label="Example text with two button addons" v-model="recipeSearchName" @keyup.enter="searchRecipes">
-            <button type="submit" class="btn border border-blue border-start-0 bg-transparent d-flex" @click.prevent="searchRecipes">
-              <span class="material-icons-outlined text-blue ">search</span>
+            <a class="btn btn-outline-primary px-5" @click="()=> this.costOrRateCollapse.toggle()">篩選對象 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{priceOrRate}}</span></a>
+            <button class="btn btn-outline-primary px-5" type="button" @click="()=> this.highOrLowCollapse.toggle()">篩選值 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{highOrLow}}</span> </button>
+            <input type="search" class="form-control border-primary border-end-0" placeholder="請輸入食譜名稱" aria-label="Example text with two button addons" v-model="recipeSearchName" @keyup.enter="searchRecipes">
+            <button type="submit" class="btn border border-primary border-start-0 bg-transparent d-flex" @click.prevent="searchRecipes">
+              <span class="material-icons-outlined text-primary ">search</span>
             </button>
           </div>
           <div class="row g-0" id="myGroup">
@@ -298,9 +298,9 @@ export default {
                 <div class="card card-body border-0" style="border: 0px !important;">
                   <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
                     <input type="radio" class="btn-check" value="成本" name="priceOrRate" id="selectprice" autocomplete="off"  v-model="priceOrRate">
-                    <label class="btn btn-outline-blue " for="selectprice">成本</label>
+                    <label class="btn btn-outline-primary " for="selectprice">成本</label>
                     <input type="radio" class="btn-check"  value="評價" name="priceOrRate" id="selectRate" autocomplete="off" v-model="priceOrRate">
-                    <label class="btn btn-outline-blue " for="selectRate">評價</label>
+                    <label class="btn btn-outline-primary " for="selectRate">評價</label>
                   </div>
                 </div>
               </div>
@@ -310,11 +310,11 @@ export default {
                 <div class="card card-body border-0" style="border: 0px !important;">
                   <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
                     <input type="radio" class="btn-check" value="不拘" name="highOrLow" id="noDifference" autocomplete="off" checked="" v-model="highOrLow">
-                    <label class="btn btn-outline-blue" for="noDifference">不拘</label>
+                    <label class="btn btn-outline-primary" for="noDifference">不拘</label>
                     <input type="radio" class="btn-check" value="高到低" name="highOrLow" id="highToLow" autocomplete="off" v-model="highOrLow">
-                    <label class="btn btn-outline-blue" for="highToLow">高到低</label>
+                    <label class="btn btn-outline-primary" for="highToLow">高到低</label>
                     <input type="radio" class="btn-check" value="低到高" name="highOrLow" id="lowToHigh" autocomplete="off" v-model="highOrLow">
-                    <label class="btn btn-outline-blue" for="lowToHigh">低到高</label>
+                    <label class="btn btn-outline-primary" for="lowToHigh">低到高</label>
                   </div>
                 </div>
               </div>
@@ -322,7 +322,7 @@ export default {
           </div>
         </section>
 
-        <section class="container">
+        <section class="container"  >
           <div v-if="filterRecipes.length" class="row row-cols-lg-4 row-cols-2 gy-4">
             <div class="col text-decoration-none" v-for="recipe in this.$refs.pagination.pageProducts" :key="recipe.id">
               <div class="card position-relative bg-transparent" style="border-radius: 0; border: 1px solid transparent;">
@@ -343,7 +343,7 @@ export default {
                           <img src="../../assets/images/image4.png">
                       </button>
                     </div>
-                    <span style="pointer-events: none; " class="cardTextCategory badge rounded-pill bg-blue mt-4 border-0 m-3 position-absolute start-0">{{ recipe.category }}</span>
+                    <span style="pointer-events: none; " class="cardTextCategory badge rounded-pill bg-primary mt-4 border-0 m-3 position-absolute start-0">{{ recipe.category }}</span>
                 </h5>
                 <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent border-0 pt-lg-3 text-decoration-none link-darkBrown">
                   <h5 class="d-flex justify-content-between align-items-center fw-bold">
@@ -355,7 +355,7 @@ export default {
                       <span><span v-if="recipe.price" :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{numberComma(recipe.price)}}</span> / {{ recipe.content }}</span>
                     </div>
                     <h5 class="starRates mb-0 ms-auto">
-                      <p class=" mb-0 badge rounded-pill border d-flex align-items-center" :class="{'border-blue': recipe.thumbs !== 0, 'border-lightBrownGray':  recipe.thumbs === 0, 'text-blue':recipe.thumbs !== 0,'text-lightBrownGray': recipe.thumbs === 0}">
+                      <p class=" mb-0 badge rounded-pill border d-flex align-items-center" :class="{'border-primary': recipe.thumbs !== 0, 'border-lightBrownGray':  recipe.thumbs === 0, 'text-primary':recipe.thumbs !== 0,'text-lightBrownGray': recipe.thumbs === 0}">
                         <span class="me-1">{{ recipe.thumbs }}</span>
                         <i class="bi bi-hand-thumbs-up-fill"></i>
                       </p>
@@ -366,7 +366,7 @@ export default {
             </div>
           </div>
           <!-- 查無食譜 -->
-          <div v-else-if="!filterRecipes.length && search" class="py-10">
+          <div v-else-if="!filterRecipes.length && search" class="py-96">
             <img src="../../assets/images/undraw_Page_not_found_re_e9o6.png" class="mb-3" alt="" style="height: 250px; display: block; margin: auto;">
             <h2 class="text-center">查無食譜，請您重新查詢</h2>
           </div>

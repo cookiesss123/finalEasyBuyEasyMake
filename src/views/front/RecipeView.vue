@@ -199,14 +199,14 @@ export default {
 }
 </script>
 <template>
-  <div>
+  <div data-aos="fade-up">
     <loading v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"
                  :lock-scroll="true">
-                 <div class="d-flex flex-column align-items-center py-10">
+                 <div class="d-flex flex-column align-items-center py-96">
       <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <h1 class="text-center fw-bold text-blue">
+      <p class="text-center fw-bold text-primary h2">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -217,16 +217,16 @@ export default {
         <span class="mx-2 animate-text">.</span>
         <span class="me-2 animate-text">.</span>
         <span class="animate-text">.</span>
-      </h1>
+      </p>
     </div>
         </loading>
-    <div class="mt-10" style="overflow-x: hidden;">
+    <div class="mt-96" style="overflow-x: hidden;">
 
 <div class="container">
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item ">
-        <RouterLink to="/recipes" class="link-blue">甜點食譜</RouterLink>
+        <RouterLink to="/recipes" class="link-primary">甜點食譜</RouterLink>
         </li>
         <li class="breadcrumb-item active " aria-current="page">{{ recipe.title }}</li>
       </ol>
@@ -247,12 +247,12 @@ export default {
       >
         <swiper-slide style="cursor: pointer;" @click="()=>mainImg = recipe.image">
           <div>
-            <img :src="recipe.image" alt="" style="object-fit: cover; height: 100px !important;" :class="{'border': mainImg === recipe.image, 'border-3': mainImg === recipe.image, 'border-blue': mainImg === recipe.image}">
+            <img :src="recipe.image" alt="" style="object-fit: cover; height: 100px !important;" :class="{'border': mainImg === recipe.image, 'border-3': mainImg === recipe.image, 'border-primary': mainImg === recipe.image}">
           </div>
         </swiper-slide>
         <swiper-slide v-for="pic in recipe.imgsUrl" :key="pic + 45345" style="cursor: pointer;"  @click="()=>mainImg = pic">
           <div>
-            <img :src="pic" alt="" style="object-fit: cover; height: 100px !important;" :class="{'border': mainImg === pic, 'border-3': mainImg === pic, 'border-blue': mainImg === pic}">
+            <img :src="pic" alt="" style="object-fit: cover; height: 100px !important;" :class="{'border': mainImg === pic, 'border-3': mainImg === pic, 'border-primary': mainImg === pic}">
           </div>
         </swiper-slide>
       </swiper>
@@ -261,21 +261,21 @@ export default {
   <div class="col d-flex flex-column">
     <div class=" d-flex align-items-center mb-3">
       <h5 class="me-2 mb-0">
-        <span class="badge rounded-pill bg-blue">{{ recipe.category }}</span>
+        <span class="badge rounded-pill bg-primary">{{ recipe.category }}</span>
       </h5>
-      <h1 class="mb-0 mainTitle">{{ recipe.title }}</h1>
+      <h2 class="mb-0 mainTitle">{{ recipe.title }}</h2>
       <div class="d-flex align-items-center ms-auto">
-      <button v-if="!bookMark" type="button" class="border-0 bg-transparent text-blue fs-4" @click="()=>addBookmark(recipe.id)">
+      <button v-if="!bookMark" type="button" class="border-0 bg-transparent text-primary fs-4" @click="()=>addBookmark(recipe.id)">
         <i class="bi bi-heart"></i>
       </button>
       <button v-else-if="bookMark" type="button" class=" border-0 bg-transparent fs-4" @click="deleteBookmark" style="color: #fa6e42">
         <i class="bi bi-heart-fill"></i>
       </button>
-        <span class="mb-0 ms-3" :class="{'text-blue': allThumbNum,'text-lightGray': !allThumbNum}">{{ allThumbNum }}</span>
-        <button v-if="!myThumb" type="button" class="border-0 bg-transparent fs-4" :class="{'text-blue': allThumbNum,'text-lightGray': !allThumbNum}" @click="addThumb">
+        <span class="mb-0 ms-3" :class="{'text-primary': allThumbNum,'text-lightGray': !allThumbNum}">{{ allThumbNum }}</span>
+        <button v-if="!myThumb" type="button" class="border-0 bg-transparent fs-4" :class="{'text-primary': allThumbNum,'text-lightGray': !allThumbNum}" @click="addThumb">
           <i class="bi bi-hand-thumbs-up"></i>
         </button>
-        <button v-else-if="myThumb" type="button" class="border-0 bg-transparent fs-4" :class="{'text-blue': allThumbNum,'text-lightGray': !allThumbNum}" @click="deleteThumb">
+        <button v-else-if="myThumb" type="button" class="border-0 bg-transparent fs-4" :class="{'text-primary': allThumbNum,'text-lightGray': !allThumbNum}" @click="deleteThumb">
           <i class="bi bi-hand-thumbs-up-fill"></i>
         </button>
       </div>
@@ -290,13 +290,13 @@ export default {
 </div>
 </section>
 
-<section class="bg-lightBlue my-5" style="overflow-x: hidden;">
+<section class="bg-secondary my-5" style="overflow-x: hidden;">
   <div class="container py-5">
     <div class="row row-cols-lg-2 row-cols-1 g-5">
       <div class="col">
         <h3 class="mb-3 fw-bold"><span class="material-icons">egg</span> 準備材料</h3>
         <h5 class="me-3">成本：NT$ {{recipe.total}}</h5>
-        <div class="row mb-6">
+        <div class="row mb-64">
           <div class="col-12" v-for="(ingredient, index) in recipe.ingredients" :key="ingredient + 367657">
             {{ index + 1 }}. {{ ingredient.name }} {{ ingredient.num }} {{ ingredient.unit }}
           </div>
@@ -305,16 +305,16 @@ export default {
         <div v-if="recipe.instructions">
           <p class="me-3" v-for="(instruction) in recipe.instructions.split('/')" :key="instruction + 346346">{{instruction}}</p>
         </div>
-        <h3 class="mt-6 mb-3 fw-bold"><i class="bi bi-youtube"></i> 教學影片</h3>
+        <h3 class="mt-64 mb-3 fw-bold"><i class="bi bi-youtube"></i> 教學影片</h3>
         <iframe width="560" height="315" :src="recipe.video" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
       </div>
       <div class="col">
         <h3 class="mb-4 fw-bold"><i class="bi bi-bag-check-fill"></i> 相關產品</h3>
         <div class="row">
-          <div class="col-12 relativeProducts">
+          <div class="col-12 relativeProducts ">
             <div v-for="product in recipe.relativeProducts" :key="product.id + 456496" class="subImg">
-              <RouterLink :to="`/products/${product.id}`"  class="link-blue d-flex flex-column align-items-center cardImg" v-if="product.category === '組合包'">
-                <div class="enlargeImg position-relative" style="width: 50% !important;">
+              <RouterLink :to="`/products/${product.id}`"  class="link-primary d-flex flex-column align-items-center cardImg" v-if="product.category === '組合包'">
+                <div class="enlargeImg position-relative " style="width: 50% !important;">
                   <img :src="product.imgUrl" alt="" class="w-100" height="150" style="object-fit: cover;">
                   <p class="subDetail d-none d-lg-block position-absolute fw-bold text-darkBrown" style="top: 40%; left: 50%; transform: translateX(-50%); letter-spacing: 5px;">查看商品資訊</p>
                 </div>
@@ -332,12 +332,12 @@ export default {
             <select name="" id="" class="form-select text-center" v-model="qty" style="width: 70px;">
               <option :value="number" v-for="number in 30" :key="number + 4596945">{{ number}}</option>
             </select>
-            <button class="btn btn-blue" type="button" id="button-addon2" @click="()=>addCart(groupProduct, qty)">一鍵買齊</button>
+            <button class="btn btn-primary" type="button" id="button-addon2" @click="()=>addCart(groupProduct, qty)">一鍵買齊</button>
           </div>
         </div>
         <div class="row mt-5 row-cols-lg-3 row-cols-2 relativeProducts">
           <div class="col subImg" v-for="product in recipe.relativeProducts" :key="product.id + 456496">
-            <RouterLink :to="`/products/${product.id}`"  class="link-blue d-flex flex-column align-items-center cardImg" v-if="product.category === '單一產品'">
+            <RouterLink :to="`/products/${product.id}`"  class="link-primary d-flex flex-column align-items-center cardImg" v-if="product.category === '單一產品'">
               <div class="enlargeImg position-relative">
                 <img :src="product.imgUrl" alt="" height="150" style="object-fit: cover;" class="w-100">
                 <p class="subDetail d-none d-lg-block position-absolute fw-bold text-darkBrown" style="top: 40%; left: 50%; transform: translateX(-50%);">查看商品資訊</p>
@@ -354,13 +354,13 @@ export default {
   <h3 class="d-flex align-items-center">
     <i class="bi bi-stars"></i>
     顧客評價
-    <div class="ms-2 badge border rounded-pill bg-white" :class="{'text-blue': recipeComments.length, 'text-lightBrownGray': !recipeComments.length,'border-blue': recipeComments.length, 'border-lightBrownGray': !recipeComments.length}" style="font-size: 16px;">
+    <div class="ms-2 badge border rounded-pill bg-white" :class="{'text-primary': recipeComments.length, 'text-lightBrownGray': !recipeComments.length,'border-primary': recipeComments.length, 'border-lightBrownGray': !recipeComments.length}" style="font-size: 16px;">
       {{ recipeComments.length }} 則
     </div>
-    <RouterLink to="/login" class="ms-3 btn btn-blue d-none d-lg-block" v-if="!uid">我要登入寫評價</RouterLink>
+    <RouterLink to="/login" class="ms-3 btn btn-primary d-none d-lg-block" v-if="!uid">我要登入寫評價</RouterLink>
   </h3>
   <div class="d-flex">
-    <RouterLink to="/login" class="btn btn-blue d-lg-none ms-auto" v-if="!uid">我要登入寫評價</RouterLink>
+    <RouterLink to="/login" class="btn btn-primary d-lg-none ms-auto" v-if="!uid">我要登入寫評價</RouterLink>
   </div>
   <div class="my-5">
     <form action="" v-if="uid">
@@ -371,7 +371,7 @@ export default {
       </h5>
       <textarea class="form-control" name="" id="" cols="30" rows="10" v-model="recipeMessage"></textarea>
       <div class="d-flex">
-        <button type="submit" class="ms-auto btn btn-blue mt-3" @click.prevent="addComments">送出</button>
+        <button type="submit" class="ms-auto btn btn-primary mt-3" @click.prevent="addComments">送出</button>
       </div>
     </form>
     <div class="row gy-5">

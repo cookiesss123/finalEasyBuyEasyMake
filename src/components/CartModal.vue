@@ -2,7 +2,7 @@
     <div class="modal right" ref="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style=" overflow-y: hidden;">
         <div class="modal-dialog modal-fullscreen-md-down w-100" style="margin-right: 0; margin-top: 0;">
             <div class="modal-content" style="height: 100vh; overflow-y:auto">
-              <div class="modal-header bg-blue" style="border-radius: 0;">
+              <div class="modal-header bg-primary" style="border-radius: 0;">
                   <h5 class="modal-title text-white" v-if="uid">
                    {{ user.nickName }} 的購物車
                   </h5>
@@ -42,13 +42,13 @@
                               <p class="mb-0 text-danger text-end fw-bold" v-if="item.product.category === '組合包'">小計：NT$ {{ numberComma(item.product.price * item.qty) }} / {{ numberComma(item.qty) }}組</p>
 
                               <div class="d-flex justify-content-end align-items-center mt-2">
-                                <button :disabled="loadingItem === 'loading'" class="btn btn-sm btn-blue rounded-circle" :class="{'disabled': item.qty === 1}"  style="width: 30px; height: 30px;" type="button" id="button-addon2" @click="()=>updateCartNum('reduce', item.product, item.qty)">
+                                <button :disabled="loadingItem === 'loading'" class="btn btn-sm btn-primary rounded-circle" :class="{'disabled': item.qty === 1}"  style="width: 30px; height: 30px;" type="button" id="button-addon2" @click="()=>updateCartNum('reduce', item.product, item.qty)">
                                   <span v-if="loadingItem !== 'loading'">-</span>
                                   <font-awesome-icon v-else-if="loadingItem === 'loading'" icon="fa-solid fa-spinner" spin />
                                 </button>
 
                                 <input type="number" class="form-control border-0 text-center" v-model.number="item.qty" @change="changeCartNum(item.product, item.qty, $event)"  style="width: 70px;" @keydown="handleKeyDown">
-                                <button :disabled="loadingItem === 'loading'" class="btn btn-sm btn-blue rounded-circle" style="width: 30px; height: 30px;" type="button" id="button-addon2" @click="()=>updateCartNum('add',item.product, item.qty)">
+                                <button :disabled="loadingItem === 'loading'" class="btn btn-sm btn-primary rounded-circle" style="width: 30px; height: 30px;" type="button" id="button-addon2" @click="()=>updateCartNum('add',item.product, item.qty)">
                                   <span v-if="loadingItem !== 'loading'">+</span>
                                   <font-awesome-icon v-else-if="loadingItem === 'loading'" icon="fa-solid fa-spinner" spin />
                                 </button>
@@ -63,7 +63,7 @@
                     <label for="code" class="col-3 form-label">優惠碼</label>
                     <div class="input-group mb-3" v-if="cart.total + cart.deliveryCharge === cart.finalTotal">
                       <input type="text" class="form-control" v-model="code">
-                      <button class="btn btn-outline-blue" type="button" id="button-addon2" @click="()=>checkCoupon(code)">套用優惠碼</button>
+                      <button class="btn btn-outline-primary" type="button" id="button-addon2" @click="()=>checkCoupon(code)">套用優惠碼</button>
                     </div>
                     <div class="input-group mb-3" v-else-if="cart.total + cart.deliveryCharge !== cart.finalTotal">
                       <input v-if="cart.coupon" type="text" class="form-control" :value="cart.coupon.code" disabled>
@@ -97,12 +97,12 @@
                       </tbody>
                     </table>
                   </div>
-                  <RouterLink to="/checkout" type="button" class="hvr-sweep-to-right btn btn-blue rounded-0"><i class="bi bi-cart-check-fill"></i> 前往結帳</RouterLink>
+                  <RouterLink to="/checkout" type="button" class="hvr-sweep-to-right btn btn-primary rounded-0"><i class="bi bi-cart-check-fill"></i> 前往結帳</RouterLink>
                 </div>
-                <div v-else-if="cartNum === 0" class="mt-6 d-flex flex-column align-items-center" >
+                <div v-else-if="cartNum === 0" class="text-center" >
                   <img src="../../src/assets/images/undraw_shopping_app_flsj.png" width="300" class="mb-3 " alt="" >
                   <h5 class="text-center">您的購物車是空的</h5>
-                  <RouterLink class="link-blue h5" to="/products" >前往選購商品</RouterLink>
+                  <RouterLink class="link-primary h5" to="/products" >前往選購商品</RouterLink>
                 </div>
                 </div>
                 <div v-else-if="this.$route.fullPath === '/checkout'" class="h-100 d-flex">

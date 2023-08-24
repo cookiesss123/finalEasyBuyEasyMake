@@ -1,12 +1,12 @@
 <template>
-  <div class="container my-10 ">
+  <div class="container my-96 ">
     <loading v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"
                  :lock-scroll="true">
-                 <div class="d-flex flex-column align-items-center py-10">
+                 <div class="d-flex flex-column align-items-center py-96">
       <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <h1 class="text-center fw-bold text-blue">
+      <p class="text-center fw-bold text-primary h2">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -17,12 +17,12 @@
         <span class="mx-2 animate-text">.</span>
         <span class="me-2 animate-text">.</span>
         <span class="animate-text">.</span>
-      </h1>
+      </p>
     </div>
     </loading>
     <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><RouterLink to="/discounts" class="link-blue">優惠特報</RouterLink></li>
+            <li class="breadcrumb-item"><RouterLink to="/discounts" class="link-primary">優惠特報</RouterLink></li>
             <li class="breadcrumb-item active" aria-current="page">{{ coupon.title }}</li>
           </ol>
         </nav>

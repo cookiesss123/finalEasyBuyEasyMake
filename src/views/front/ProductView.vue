@@ -258,14 +258,14 @@ export default {
 }
 </script>
 <template>
-  <div>
+  <div data-aos="fade-up">
     <loading v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"
                  :lock-scroll="true">
-                 <div class="d-flex flex-column align-items-center py-10">
+                 <div class="d-flex flex-column align-items-center py-96">
       <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <h1 class="text-center fw-bold text-blue">
+      <p class="text-center fw-bold text-primary h2">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -276,15 +276,15 @@ export default {
         <span class="mx-2 animate-text">.</span>
         <span class="me-2 animate-text">.</span>
         <span class="animate-text">.</span>
-      </h1>
+      </p>
     </div>
     </loading>
-    <div class="mt-10" style="overflow-x: hidden;">
+    <div class="mt-96" style="overflow-x: hidden;">
       <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item">
-              <RouterLink to="/products" class="link-blue">材料購買</RouterLink>
+              <RouterLink to="/products" class="link-primary">材料購買</RouterLink>
               </li>
               <li class="breadcrumb-item active" aria-current="page">{{ product.title }}</li>
             </ol>
@@ -303,12 +303,12 @@ export default {
               >
                 <swiper-slide style="cursor: pointer; " @click="()=>mainImg = product.imgUrl" class="">
                   <div>
-                    <img :src="product.imgUrl" alt="" style="object-fit: cover; height: 100px !important;" :class="{'border': mainImg === product.imgUrl, 'border-3': mainImg === product.imgUrl, 'border-blue': mainImg === product.imgUrl}">
+                    <img :src="product.imgUrl" alt="" style="object-fit: cover; height: 100px !important;" :class="{'border': mainImg === product.imgUrl, 'border-3': mainImg === product.imgUrl, 'border-primary': mainImg === product.imgUrl}">
                   </div>
                 </swiper-slide>
                 <swiper-slide v-for="pic in product.imgsUrl" :key="pic + 45345" style="cursor: pointer; "  @click="()=>mainImg = pic">
                   <div>
-                    <img :src="pic" alt="" style="object-fit: cover; height: 100px !important;" :class="{'border': mainImg === pic, 'border-3': mainImg === pic, 'border-blue': mainImg === pic}">
+                    <img :src="pic" alt="" style="object-fit: cover; height: 100px !important;" :class="{'border': mainImg === pic, 'border-3': mainImg === pic, 'border-primary': mainImg === pic}">
                   </div>
                 </swiper-slide>
               </swiper>
@@ -317,15 +317,15 @@ export default {
           </div>
           <div class="col d-flex flex-column">
               <div class="d-flex align-items-center mb-3">
-                <span v-if="product.isCheaper" style="pointer-events: none;" class="badgeSize badge rounded-pill px-lg-3 px-2 py-2 bg-blue border-0 me-1 me-lg-2">
+                <span v-if="product.isCheaper" style="pointer-events: none;" class="badgeSize badge rounded-pill px-lg-3 px-2 py-2 bg-primary border-0 me-1 me-lg-2">
                   {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }}
                 折
                 </span>
-                <h1 class="h3 mb-0 mainTitle" >
+                <h2 class="h3 mb-0 mainTitle" >
                   {{ product.title }}
-                </h1>
+                </h2>
                 <div class="ms-auto">
-                <button v-if="!bookMark" type="button" class="border-0 bg-transparent text-blue fs-4" @click="()=>addBookmark(product.id)">
+                <button v-if="!bookMark" type="button" class="border-0 bg-transparent text-primary fs-4" @click="()=>addBookmark(product.id)">
                   <i class="bi bi-heart"></i>
                 </button>
                 <button v-else-if="bookMark" type="button" class=" border-0 bg-transparent fs-4" @click="deleteBookmark" style="color: #fa6e42">
@@ -343,7 +343,7 @@ export default {
                     <select name="" id="" class="form-select text-center" v-model="qty" style="width: 70px;">
                       <option :value="number" v-for="number in 30" :key="number + 4596945">{{ number}}</option>
                     </select>
-                    <button :disabled="loadingItem === 'loading'" class="btn btn-blue" type="button" @click="()=>addCart(product, qty)">
+                    <button :disabled="loadingItem === 'loading'" class="btn btn-primary" type="button" @click="()=>addCart(product, qty)">
                       購買
                       <font-awesome-icon v-if="loadingItem === 'loading'" icon="fa-solid fa-spinner" spin />
                     </button>
@@ -353,7 +353,7 @@ export default {
         </div>
       </section>
 
-      <section class="bg-lightBlue my-5">
+      <section class="bg-secondary my-5">
         <div class="container py-5 ">
           <h3>
             <span class="material-icons-outlined fs-3 ">menu_book</span>
@@ -365,7 +365,7 @@ export default {
             navigation
             >
               <swiper-slide class="subImg" v-for="recipe in relevantRecipesInfo"  :key="recipe.id + 15345" style="cursor: pointer;">
-                <RouterLink :to="`/recipes/${recipe.id}`" class="link-blue cardImg">
+                <RouterLink :to="`/recipes/${recipe.id}`" class="link-primary cardImg">
                   <div class="enlargeImg position-relative">
                     <img :src="recipe.image" alt="" style="object-fit: cover; height: 130px;">
                     <p class="subDetail d-none d-lg-block position-absolute fw-bold text-darkBrown" style="top: 40%; left: 50%; transform: translateX(-50%); ">查看詳細食譜</p>
@@ -383,7 +383,7 @@ export default {
             navigation
             >
             <swiper-slide v-for="recipe in relevantRecipesInfo" :key="recipe.id + 15345" style="cursor: pointer;">
-              <RouterLink :to="`/recipes/${recipe.id}`" class="link-blue cardImg">
+              <RouterLink :to="`/recipes/${recipe.id}`" class="link-primary cardImg">
                 <div class="enlargeImg">
                   <img :src="recipe.image" alt="" style="object-fit: cover; height: 130px;">
                 </div>
@@ -405,10 +405,10 @@ export default {
             {{ averageRate ? averageRate : 0}}
             <i class="bi bi-star-fill"></i>
           </div>
-          <RouterLink to="/login" class="ms-lg-3 btn btn-blue btn-sm d-none d-lg-block" v-if="!this.uid">我要登入寫評價</RouterLink>
+          <RouterLink to="/login" class="ms-lg-3 btn btn-primary btn-sm d-none d-lg-block" v-if="!this.uid">我要登入寫評價</RouterLink>
         </h3>
         <div class="d-flex">
-          <RouterLink to="/login" class="btn btn-blue btn-sm d-lg-none ms-auto" v-if="!this.uid">我要登入寫評價</RouterLink>
+          <RouterLink to="/login" class="btn btn-primary btn-sm d-lg-none ms-auto" v-if="!this.uid">我要登入寫評價</RouterLink>
         </div>
         <div class="my-5">
           <form ref="form" @submit.prevent="addProductRate" class="mt-2" v-if="this.uid">
@@ -451,7 +451,7 @@ export default {
             </div>
             <textarea class="form-control" name="" id="" cols="30" rows="10" v-model="rateMessage"></textarea>
             <div class="d-flex">
-              <button type="submit" class="ms-auto btn btn-blue my-3">送出</button>
+              <button type="submit" class="ms-auto btn btn-primary my-3">送出</button>
             </div>
           </form>
           <div class="row gy-5">

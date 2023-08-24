@@ -1,119 +1,107 @@
 <template>
   <div class="d-flex flex-column" style="min-height: 100vh;">
     <header class="fixed-top">
-      <div class="" :class="{'bg-white': searchToggle}" style="background-color: rgba(255, 255, 255, .4); backdrop-filter: blur(10px);" >
-        <nav class="navbar navbar-expand-lg navbar-light">
-          <div class="container">
-            <div class="d-flex align-items-center">
-            <RouterLink to="/home" @click="reload('/home')" class="navbar-brand d-flex align-items-center">
-              <img src="../assets/images/loadingLogo.png" style="height: 40px;" class="logo me-1" alt="">
-              <div>
-                <p class="text-darkBrown mb-0"  style="font-size: 16px;" >甜點食譜一鍵購</p>
-                <p class="fw-light  mb-0"  style="font-family: 'Rajdhani', sans-serif;font-size: 10px; margin-top: -6px; color: #5a5ad0;" >Easy Buy Easy Make</p>
-              </div>
-            </RouterLink>
-            <!-- 手機 bar -->
-            <div class="position-absolute end-0 ">
-              <!-- 手機購物車按鈕 -->
-              <button class="btn btn-sm position-relative d-lg-none border-0 me-3"  @click="()=>this.$refs.cartModal.show()">
-                <span v-if="cartNum !== 0"  class="position-absolute border border-blue text-blue fw-bold" style="padding: 2px; border-radius: 25px; width: 25px; height: 25px; font-size: 12px; top: -10px; left: 20px;" >
-                  {{ cartNum }}
+      <nav class="navbar navbar-expand-lg navbar-light bg-transGray backdrop-blur-10" :class="{'bg-white': searchToggle}">
+        <div class="container">
+          <RouterLink to="/home" @click="reload('/home')" class="navbar-brand d-flex align-items-center me-auto">
+            <img src="../assets/images/loadingLogo.png" class="logo me-1" alt="甜點食譜一鍵購logo">
+            <div>
+              <p class="text-darkBrown mb-0 fs-6" >甜點食譜一鍵購</p>
+              <p class="fw-light mb-0 font-style-Chathura mt-n2 text-purple fs-5">Easy Buy Easy Make</p>
+            </div>
+          </RouterLink>
+
+          <button class="btn position-relative border-0 pb-0 d-lg-none me-1"  @click="()=>this.$refs.cartModal.show()">
+            <span v-if="cartNum !== 0" class="position-absolute top-0 end-0 translate-middle-y rounded-circle border fw-bold border-primary text-primary fs-12 alert-num">
+              {{ cartNum }}
+            </span>
+            <span class="material-icons text-primary fs-4" >shopping_cart</span>
+          </button>
+
+          <RouterLink  @click="reload('/bookmarks')" to="/bookmarks" class="btn position-relative border-0 pb-0 d-lg-none">
+            <span class="material-icons link-primary fs-4">
+              favorite
               </span>
-              <span class="material-icons text-blue fs-4" >shopping_cart</span>
+          </RouterLink>
 
-              </button>
-              <RouterLink  @click="reload('/bookmarks')" to="/bookmarks" class="d-lg-none btn btn-sm position-relative border-0">
-                <span class="material-icons link-blue fs-4">
-                  favorite
-                  </span>
-              </RouterLink>
+          <button class="navbar-toggler btn border-0  link-primary" type="button" @click="()=>searchToggle = !searchToggle">
+            <span class="material-icons-outlined fs-4" >search</span>
+          </button>
 
-                <!-- searchCollapse 搜尋 -->
-                <button class="navbar-toggler btn border-0 p-2  ms-2 link-blue" type="button" @click="()=>searchToggle = !searchToggle">
-                  <span class="material-icons-outlined fs-4" >search</span>
-                </button>
-
-              <!-- 手機菜單按鈕 -->
-              <button class="navbar-toggler btn border-0 link-blue" type="button" @click="()=>menuToggle = !menuToggle">
-                <span class="material-icons-outlined fs-4" >
-                  menu
-                </span>
-              </button>
-
-            </div>
-            </div>
+          <button class="navbar-toggler btn border-0 link-primary" type="button" @click="()=>menuToggle = !menuToggle">
+            <span class="material-icons-outlined fs-4" >
+              menu
+            </span>
+          </button>
 
             <!-- 菜單桌機手機板 -->
-            <div id="navbarNav" class="collapse navbar-collapse " ref="menuCollapse" >
-              <ul class="mainMenu navbar-nav mx-auto text-center text-lg-start">
-                <li class="nav-item me-lg-3"   style="white-space:nowrap">
-                  <RouterLink to="/recipes" @click="reload('/recipes')" active-class="active-link" class="nav-link d-inline-block ">甜點食譜</RouterLink>
-                </li>
-                <li class="nav-item mx-lg-3"   style="white-space:nowrap">
-                  <RouterLink to="/products" @click="reload('/products')" active-class="active-link"  class="nav-link d-inline-block " >材料購買</RouterLink>
-                </li>
-                <li class="nav-item mx-lg-3"  style="white-space:nowrap">
-                  <RouterLink to="/discounts"  @click="reload('/discounts')" active-class="active-link"  class="nav-link d-inline-block " >優惠特報</RouterLink>
-                </li>
-                <li class="nav-item ms-lg-3" style="white-space:nowrap">
-                  <RouterLink to="/member"  @click="reload('/member')" active-class="active-link" class="nav-link d-inline-block " >會員專區</RouterLink>
-                </li>
-              </ul>
-              <ul class="navbar-nav d-flex align-items-center" v-if="!uid">
-                <!-- 手機 -->
-                <!-- style="white-space:nowrap" 這個沒用 -->
-                <li class="login nav-item me-lg-3 mb-2 mb-lg-0" style="white-space:nowrap">
-                  <RouterLink to="/login"  @click="reload('/login')" active-class="active-link" class="nav-link" >登入</RouterLink>
-                </li>
-                <li class="signup nav-item me-lg-4" style="white-space:nowrap">
-                  <RouterLink to="/signup" @click="reload('/signup')" class="text-decoration-none badge  btn btn-blue rounded-pill fs-6 px-4 py-3 fw-bold" style="">註冊</RouterLink>
-                </li>
-              </ul>
-            <ul class="navbar-nav d-lg-flex align-items-lg-center" v-else-if="uid">
-              <li class="nav-item me-lg-3" v-if="user.admin" style="white-space:nowrap">
-                <RouterLink to="/admin/products"  class="nav-link text-center text-lg-start">進入後台</RouterLink>
+          <!-- style="white-space:nowrap" 加在 li 標籤 的意義是???? -->
+          <div id="navbarNav" class="collapse navbar-collapse " ref="menuCollapse" >
+            <ul class="mainMenu navbar-nav mx-auto text-center">
+              <li class="nav-item me-lg-3">
+                <RouterLink to="/recipes" @click="reload('/recipes')" active-class="active-link" class="nav-link d-inline-block ">甜點食譜</RouterLink>
               </li>
-              <li class="nav-item fs-5 me-4 d-flex align-items-center justify-content-center justify-content-lg-start">
-                <img v-if="user.headshotImg" :src="user.headshotImg" alt="" height="50" width="50" class="me-3 rounded-circle" style="object-fit: cover;">
-                <i v-else-if="!user.headshotImg" class="bi bi-person-circle me-3 fs-1 text-blue"></i>
-
-                <span class="fw-bold" style="white-space:nowrap; font-size: 16px; " >
+              <li class="nav-item mx-lg-3">
+                <RouterLink to="/products" @click="reload('/products')" active-class="active-link"  class="nav-link d-inline-block " >材料購買</RouterLink>
+              </li>
+              <li class="nav-item mx-lg-3">
+                <RouterLink to="/discounts"  @click="reload('/discounts')" active-class="active-link"  class="nav-link d-inline-block " >優惠特報</RouterLink>
+              </li>
+              <li class="nav-item ms-lg-3">
+                <RouterLink to="/member"  @click="reload('/member')" active-class="active-link" class="nav-link d-inline-block" >會員專區</RouterLink>
+              </li>
+            </ul>
+            <ul class="navbar-nav align-items-center me-lg-4" v-if="!uid">
+              <li class="login nav-item me-lg-3 mb-2 mb-lg-0" >
+                <RouterLink to="/login"  @click="reload('/login')" active-class="active-link" class="nav-link " >登入</RouterLink>
+              </li>
+              <li class="nav-item" >
+                <!--  -->
+                <RouterLink to="/signup" @click="reload('/signup')" class="signup btn btn-primary badge  rounded-pill fs-6 px-4 py-3 fw-bold">註冊</RouterLink>
+              </li>
+            </ul>
+            <ul class="navbar-nav d-lg-flex align-items-lg-center me-lg-3 text-center" v-else-if="uid">
+              <li class="nav-item me-lg-3" v-if="user.admin">
+                <RouterLink to="/admin/products" class="nav-link">進入後台</RouterLink>
+              </li>
+              <li class=" me-4 d-flex align-items-center justify-content-center">
+                <img v-if="user.headshotImg" :src="user.headshotImg" alt="會員大頭貼" height="50" width="50" class="rounded-circle object-fit-cover img-blur-shadow">
+                <i v-else-if="!user.headshotImg" class="bi bi-person-circle fs-1 text-primary"></i>
+                <span class="fw-bold fs-6 ms-3">
                   {{ user.nickName }}
                 </span>
               </li>
-              <!-- 桌機 -->
-              <li class="nav-item me-lg-3" style="white-space:nowrap">
-                <a href="#" class="nav-link text-center text-lg-start" @click.prevent="logout"  >登出</a>
+              <li class="nav-item">
+                <a href="#" class="nav-link " @click.prevent="logout">登出</a>
               </li>
             </ul>
-            <RouterLink to="/bookmarks" @click="reload('/bookmarks')" class="me-4 link-blue hvr-push d-none d-lg-block  ">
-              <span class="material-icons link-blue fs-4">
+            <RouterLink  @click="reload('/bookmarks')" to="/bookmarks" class="btn position-relative border-0 pb-0 d-none d-lg-block">
+              <span class="material-icons link-primary fs-4">
                 favorite
-              </span>
+                </span>
             </RouterLink>
-            <!-- 桌面cart按鈕 -->
-            <button type="button" class=" btn position-relative p-0 border-0 d-none d-lg-block"  @click="()=>this.$refs.cartModal.show()">
-              <span v-if="cartNum !== 0" class="position-absolute border fw-bold border-blue text-blue" style="padding: 2px; border-radius: 25px; width: 25px; height: 25px; font-size: 12px; top: -12px; left: 10px;">
-                {{ cartNum }}
-              </span>
-              <span class="material-icons link-blue " >shopping_cart</span>
-            </button>
-            </div>
+            <button class="btn position-relative border-0 pb-0 d-none d-lg-block"  @click="()=>this.$refs.cartModal.show()">
+            <span v-if="cartNum !== 0" class="position-absolute top-0 end-0 translate-middle-y rounded-circle border fw-bold border-primary text-primary fs-12  alert-num">
+              {{ cartNum }}
+            </span>
+            <span class="material-icons text-primary fs-4" >shopping_cart</span>
+          </button>
           </div>
-        </nav>
-
+        </div>
+      </nav>
         <!-- 搜尋 -->
-        <div class="bg-white collapse navbar-collapse py-1" ref="searchCollapse">
+        <div class="bg-white collapse navbar-collapse pb-4" ref="searchCollapse">
+          <div class="container">
             <!-- 食譜搜尋 -->
-            <select name="" id="" class="form-select" v-model="searchItem">
+            <select name="" id="" class="form-select d-lg-none text-center mb-4" v-model="searchItem">
               <option value="食譜搜尋">食譜搜尋</option>
               <option value="產品搜尋">產品搜尋</option>
             </select>
-            <div v-if="searchItem === '食譜搜尋'" class="m-4 d-lg-none">
+            <div v-if="searchItem === '食譜搜尋'" class="d-lg-none">
               <h5 class="text-center fw-bold">食譜搜尋</h5>
               <ul class="list-unstyled">
-                <li class="text-center mb-3 d-flex flex-column border-bottom" style="border-color: #D3CCC1 !important;">
-                  <label for="category" class="form-label me-auto ms-2" style="font-size: 14px;">種類</label>
+                <li class=" mb-3 d-flex flex-column border-bottom border-lightBrownGray">
+                  <label for="category" class="form-label fs-14">種類</label>
                   <select name="" id="category"  class="form-select border-0" v-model="selectItem">
                     <option value="全部" selected>全部</option>
                     <option value="台式甜點">台式甜點</option>
@@ -123,15 +111,15 @@
                     <option value="義式甜點">義式甜點</option>
                   </select>
                 </li>
-                <li class="text-center mb-3 d-flex flex-column border-bottom" style="border-color: #D3CCC1 !important;">
-                  <label for="category" class="form-label me-auto ms-2 mt-2" style="font-size: 14px; ">成本或評價</label>
+                <li class=" mb-3 d-flex flex-column border-bottom border-lightBrownGray">
+                  <label for="category" class="form-label  fs-14" >成本或評價</label>
                   <select name="" id="category"  class="form-select border-0" v-model="priceOrRate">
                     <option value="成本">成本</option>
                     <option value="評價">評價</option>
                   </select>
                 </li>
-                <li class="text-center mb-3 d-flex flex-column border-bottom " style="border-color: #D3CCC1 !important;">
-                  <label for="category" class="form-label me-auto ms-2 mt-2" style="font-size: 14px; ">由高到低或由低到高</label>
+                <li class=" d-flex flex-column border-bottom border-lightBrownGray ">
+                  <label for="category" class="form-label fs-14" >由高到低或由低到高</label>
                   <select name="" id="category"  class="form-select border-0" v-model="highOrLow">
                     <option value="不拘">不拘</option>
                     <option value="高到低">高到低</option>
@@ -139,21 +127,21 @@
                   </select>
                 </li>
               </ul>
-              <div class="bg-white border-0 position-relative">
-                <div class="border rounded-pill border-lightred">
-                  <input type="search" class="form-control border-0 rounded-pill" placeholder="請輸入甜點名稱" v-model="recipeSearchName" @keyup.enter="searchRecipes" style="width: 90%;">
-                  <button type="submit" class="border-0 bg-transparent position-absolute translate-middle" style="top:23px; right: -15px;" @click="searchRecipes">
-                    <span class="material-icons-outlined text-lightred" >search</span>
+              <div class="pt-2 border-0 position-relative ">
+                <div class="border rounded-pill border-primary">
+                  <input type="search" class="form-control border-0 rounded-pill" placeholder="請輸入甜點名稱" v-model="recipeSearchName" @keyup.enter="searchRecipes">
+                  <button type="submit" class="border-0 bg-transparent position-absolute end-0 bottom-0" @click="searchRecipes">
+                    <span class="material-icons-outlined text-primary" >search</span>
                   </button>
                 </div>
               </div>
             </div>
             <!-- 產品搜尋 -->
-            <div class="m-4 d-lg-none" v-if="searchItem === '產品搜尋'">
+            <div class="d-lg-none" v-if="searchItem === '產品搜尋'">
               <h5 class="text-center fw-bold">產品搜尋</h5>
               <ul class="list-unstyled">
-                <li class="text-center mb-3 d-flex flex-column border-bottom " style="border-color: #D3CCC1 !important;">
-                  <label for="category" class="form-label me-auto ms-2 mt-2 " style="font-size: 14px; ">種類</label>
+                <li class=" mb-3 d-flex flex-column border-bottom  border-lightBrownGray">
+                  <label for="category" class="form-label  fs-14" >種類</label>
                   <select name="" id="category"  class="form-select border-0" v-model="pageStatus">
                     <option value="全部">全部</option>
                     <option value="食材組合包">食材組合包</option>
@@ -161,15 +149,15 @@
                     <option value="特價商品">特價商品</option>
                   </select>
                 </li>
-                <li class="text-center mb-3 d-flex flex-column border-bottom" style="border-color: #D3CCC1 !important;">
-                  <label for="productPriceOrRate" class="form-label me-auto ms-2 mt-2" style="font-size: 14px; ">價格或評價</label>
+                <li class=" mb-3 d-flex flex-column border-bottom border-lightBrownGray">
+                  <label for="productPriceOrRate" class="form-label fs-14" >價格或評價</label>
                   <select name="" id="productPriceOrRate"  class="form-select border-0" v-model="productPriceOrRate">
                     <option value="價格">價格</option>
                     <option value="評價">評價</option>
                   </select>
                 </li>
-                <li class="text-center mb-3 d-flex flex-column border-bottom " style="border-color: #D3CCC1 !important;">
-                  <label for="productHighOrLow" class="form-label me-auto ms-2 mt-2" style="font-size: 14px; ">由高到低或由低到高</label>
+                <li class="d-flex flex-column border-bottom  border-lightBrownGray">
+                  <label for="productHighOrLow" class="form-label fs-14" >由高到低或由低到高</label>
                   <select name="" id="productHighOrLow"  class="form-select border-0" v-model="productHighOrLow">
                     <option value="不拘">不拘</option>
                     <option value="高到低">高到低</option>
@@ -177,67 +165,67 @@
                   </select>
                 </li>
               </ul>
-              <div class=" border-0 position-relative">
-                <div class="border rounded-pill border-lightred">
-                  <input type="search" class="form-control border-0 rounded-pill" placeholder="請輸入產品名稱" v-model="productSearchName" @keyup.enter="searchProducts" style="width: 90%;">
-                  <button type="submit" class="border-0 bg-transparent position-absolute translate-middle" style="right: -15px; top:22px;" @click="searchProducts">
-                  <span class="material-icons-outlined text-lightred" >search</span>
+              <div class="pt-2 border-0 position-relative">
+                <div class="border rounded-pill border-primary">
+                  <input type="search" class="form-control border-0 rounded-pill" placeholder="請輸入產品名稱" v-model="productSearchName" @keyup.enter="searchProducts">
+                  <button type="submit" class="border-0 bg-transparent position-absolute end-0 bottom-0" @click="searchProducts">
+                  <span class="material-icons-outlined text-primary">search</span>
                   </button>
                 </div>
               </div>
 
             </div>
+          </div>
         </div>
-      </div>
     </header>
     <!-- 強制觸發路由跳轉 這樣即使在同個頁面搜尋 依然可以觸發搜尋 this.$router.push -->
-    <!-- style="flex-grow: 1;" 沒有這個也可 -->
-    <RouterView :key="$route.fullPath" style="flex-grow: 1;"></RouterView>
+    <RouterView :key="$route.fullPath" class="flex-grow-1"></RouterView>
     <!-- cart選單 -->
     <CartModal ref="cartModal"></CartModal>
     <!-- chat 聊天室 -->
     <ChatModal ref="chatModal"></ChatModal>
     <!-- 向上箭頭 -->
-    <button ref="upArrow" class="link-blue bg-transparent hvr-float" :class="{'fade': !showScrollArrow, 'show': showScrollArrow}"  @click="goToTop" style="position: fixed; bottom: 20px; right: 20px;  border: 0 !important;">
-      <i class="bi bi-arrow-up-circle-fill" style="font-size: 35px;"></i>
-    </button>
-    <!-- 數字 -->
-    <button type="button" v-if="uid" class="link-blue bg-transparent" style="position: fixed; bottom: 20px; right: 100px;  border: 0 !important; z-index: 1;" @click="()=>this.$refs.chatModal.show()">
-      <span v-if="this.$refs.chatModal && this.$refs.chatModal.newChatNum !== 0" class="position-absolute bg-lightBlue text-blue fw-bold  border border-blue" style="padding: 2px; border-radius: 25px; width: 25px; height: 25px; font-size: 12px; top: -10px; left: 30px;">
-        {{ this.$refs.chatModal.newChatNum }}
-      </span>
-      <i class="bi bi-chat-dots-fill" style="font-size: 35px;"></i>
+    <button type="button" ref="upArrow" class="link-primary hvr-float position-fixed border-0 bottom-0 end-0 m-3 bg-transparent" :class="{'fade': !showScrollArrow, 'show': showScrollArrow}"  @click="goToTop" >
+      <i class="bi bi-arrow-up-circle-fill fs-35"></i>
     </button>
 
-    <footer class="" style=" margin-top: auto; " :class="{'bg-lightBlue': this.$route.fullPath !== '/login' || this.$route.fullPath !== '/signup', 'bg-white': this.$route.fullPath === '/login' || this.$route.fullPath === '/signup'}" >
-        <div class="container d-flex flex-column flex-lg-row align-items-center" style="padding: 40px 0;">
-          <div class="d-flex justify-content-center align-items-center mt-2 mb-3 mb-lg-0">
-              <img src="../assets/images/loadingLogo.png" style="height: 60px;" class="logo me-1" alt="">
+    <button type="button" v-if="uid" class="link-primary bg-transparent position-fixed border-0 bottom-0 end-0 mx-88 my-3" @click="()=>this.$refs.chatModal.show()">
+      <span v-if="this.$refs.chatModal && this.$refs.chatModal.newChatNum !== 0" class="position-absolute text-primary fw-bold border border-primary alert-num rounded-circle fs-12  top-0 start-100 translate-middle" style="">
+        {{ this.$refs.chatModal.newChatNum }}
+      </span>
+      <i class="bi bi-chat-dots-fill fs-35"></i>
+    </button>
+
+    <footer class="mt-auto" :class="{'bg-secondary': this.$route.fullPath !== '/login' || this.$route.fullPath !== '/signup', 'bg-white': this.$route.fullPath === '/login' || this.$route.fullPath === '/signup'}" >
+        <div class="container d-flex flex-column flex-lg-row align-items-center py-3">
+          <div class="d-flex justify-content-center align-items-center mb-3 mb-lg-0">
+              <img src="../assets/images/loadingLogo.png" class="logo me-1" alt="甜點食譜一鍵購網站logo">
               <div>
-                <p class="text-darkBrown mb-0 text-start"  style="font-size: 24px;">甜點食譜一鍵購</p>
-                <p class="fw-light mb-0 text-start" style="font-family: 'Rajdhani', sans-serif; color: #5a5ad0; font-size: 18px; margin-top: -6px;">Easy Buy Easy Make</p>
+                <p class="text-darkBrown mb-0 fs-6">甜點食譜一鍵購</p>
+                <p class="fw-light mb-0 font-style-Chathura mt-n2 text-purple fs-5" >Easy Buy Easy Make</p>
               </div>
           </div>
+
           <div class="ms-lg-auto d-flex flex-column align-items-lg-end align-items-center">
-            <ul id="contactInfo" class="list-unstyled d-flex">
-              <li class="me-4 hvr-bob">
-                <a href="#" class="text-decoration-none link-blue">
-                  <i class="bi bi-instagram me-2" style="font-size: 34px;"></i>
-                </a>
-              </li>
-              <li class="me-4 hvr-bob">
-                <a href="#" class="text-decoration-none link-blue">
-                  <i class="bi bi-facebook me-2" style="font-size: 34px;"></i>
+            <ul class="list-unstyled d-flex justify-content-between w-50">
+              <li class="hvr-bob">
+                <a href="#" class="text-decoration-none link-primary">
+                  <i class="bi bi-instagram fs-35"></i>
                 </a>
               </li>
               <li class="hvr-bob">
-                <a href="#" class="text-decoration-none link-blue">
-                  <i class="bi bi-envelope me-2" style="font-size: 34px;"></i>
+                <a href="#" class="text-decoration-none link-primary">
+                  <i class="bi bi-facebook fs-35"></i>
+                </a>
+              </li>
+              <li class="hvr-bob">
+                <a href="mailto:@EasyMakeEasyBuy.gmail.com" class="text-decoration-none link-primary">
+                  <i class="bi bi-envelope fs-35"></i>
                 </a>
               </li>
             </ul>
-            <p class="mb-0 text-center text-lg-start" style="font-size: 10px;">本網站僅作為網頁製作練習使用<br class="d-block d-lg-none"><span class="d-none d-lg-inline-block">，</span>圖片、資料源自網路，無任何商業利益行為</p>
-            <p class="mb-0 text-lg-end text-center" style="font-size: 10px;">Copyright © 2022 甜點食譜一鍵購 All Rights Reserved.</p>
+            <p class="mb-0 text-center text-lg-start fs-10">本網站僅作為網頁製作練習使用<br class="d-block d-lg-none"><span class="d-none d-lg-inline-block">，</span>圖片、資料源自網路，無任何商業利益行為</p>
+            <p class="mb-0 fs-10">Copyright © 2022 甜點食譜一鍵購 All Rights Reserved.</p>
           </div>
         </div>
     </footer>

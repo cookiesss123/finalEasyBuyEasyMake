@@ -298,8 +298,8 @@ $cyans: (
 // fusv-enable
 
 // scss-docs-start theme-color-variables
-$primary:       $blue !default; 
-$secondary:     $gray-600 !default;
+$primary:       #4572c2; // $blue !default; 
+$secondary:     #e8edfc; // $gray-600 !default;
 $success:       $green !default;
 $info:          $cyan !default;
 $warning:       $yellow !default;
@@ -320,11 +320,15 @@ $theme-colors: (
   "dark":       $dark,
   "yellow":#F5AE4C,// custom
   "darkBrown":#493A25,// custom
-  "blue":#4572c2,// custom
   "lightBrownGray": #AFA89F, // custom
   "lightGray": #d3ccc1, // custom 
   "cyan": #d0fdfd, // custom
-  "lightBlue": #e8edfc, // custom
+  "gray": $secondary, // custom
+  "purple": #5a5ad0, // custom
+
+
+  // "blue":#4572c2,// custom 改成 primary
+  // "lightBlue": #e8edfc, // custom 改成 secondary
 ) !default;
 // scss-docs-end theme-colors-map
 
@@ -354,7 +358,7 @@ $enable-cssgrid:              false !default;
 $enable-button-pointers:      true !default;
 $enable-rfs:                  true !default;
 $enable-validation-icons:     true !default;
-$enable-negative-margins:     false !default;
+$enable-negative-margins:     true; // false !default; custom true 開啟負值margin
 $enable-deprecation-messages: true !default;
 $enable-important-utilities:  true !default;
 
@@ -386,12 +390,10 @@ $spacers: (
   3: $spacer,
   4: $spacer * 1.5,
   5: $spacer * 3,
-  6: $spacer * 4, // custom
-  7: $spacer * 4.5,
-  8: $spacer * 5,
-  9: $spacer * 5.5,
-  10: $spacer * 6,
-  11: $spacer * 6.25, // 100px
+  64: 64px, // custom
+  76: 76px, // custom
+  88: 88px, // custom
+  96: 96px, // custom
 ) !default;
 // scss-docs-end spacer-variables-maps
 
@@ -594,7 +596,11 @@ $font-sizes: (
   3: $h3-font-size,
   4: $h4-font-size,
   5: $h5-font-size,
-  6: $h6-font-size
+  6: $h6-font-size,
+  10: 10px, // custom
+  12: 12px, // custom
+  14: 14px, // custom
+  35: 35px, // custom
 ) !default;
 // scss-docs-end font-sizes
 

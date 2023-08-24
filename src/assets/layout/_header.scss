@@ -1,0 +1,54 @@
+.logo{
+    height: 40px;
+}
+
+// navbar
+.navbar-nav{
+    .nav-link{
+        /* 避免文字移動位置 */
+        position: relative;
+        border-bottom: 2px solid transparent;
+       
+        // 透明底線
+        &::after{
+            content: "";
+            width: 4px;
+            height: 2px;
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: transparent;
+            transition: width .4s;
+        }
+    }
+    .active-link {
+        color: $primary;
+        border-bottom: 2px solid $primary;
+
+        // 註冊按鈕
+        &.signup{
+            color: white;
+        }
+    }
+}
+
+@include media-breakpoint-up(lg){
+    // navbar
+    .navbar-nav{
+        .nav-link{
+            &:hover{
+                color: $primary;
+                width: 100%;
+                &::after{
+                    background-color: $primary;
+                    width: 100%;
+                }
+            }
+        }
+        .active-link {
+            width: 100%;
+        }
+
+    }
+}

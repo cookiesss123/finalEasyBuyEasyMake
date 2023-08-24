@@ -42,33 +42,33 @@ export default {
 }
 </script>
 <template>
-    <div class="">
-        <section class="py-9 d-flex" style="background-image:url('https://images.unsplash.com/photo-1678465952838-c9d7f5daaa65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80'); background-position: center; background-size: cover; background-repeat: no-repeat;">
+    <div class="" data-aos="fade-up">
+        <section class="py-76 d-flex" style="background-image:url('https://images.unsplash.com/photo-1678465952838-c9d7f5daaa65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80'); background-position: center; background-size: cover; background-repeat: no-repeat;">
             <div class="checkoutMask mx-auto ">
                 <div class="container">
                 <ul class="list-unstyled d-lg-flex  fs-5 align-items-center">
                     <li class=" text-center" style="flex: 1;">
-                        <i class="bi bi-check-circle-fill text-blue  fs-2"></i>
+                        <i class="bi bi-check-circle-fill text-primary  fs-2"></i>
                         <p>
                             <span class="fw-bold">確認購物車品項</span>
                         </p>
                     </li>
-                    <li class="bg-blue d-none d-lg-block " style="width: 200px; height: 3px; flex: 2;"></li>
-                    <li class="bg-blue d-lg-none my-2" style="width: 3px; height: 40px;  margin: 0 auto;"></li>
+                    <li class="bg-primary d-none d-lg-block " style="width: 200px; height: 3px; flex: 2;"></li>
+                    <li class="bg-primary d-lg-none my-2" style="width: 3px; height: 40px;  margin: 0 auto;"></li>
 
                     <li class=" text-center" style="flex: 1;">
-                        <i class="bi bi-check-circle-fill text-blue  fs-2"></i>
+                        <i class="bi bi-check-circle-fill text-primary  fs-2"></i>
                         <p class="">
                             <span class="fw-bold">填寫訂單資訊</span>
                         </p>
                     </li>
-                    <li class="bg-blue d-none d-lg-block " style="width: 200px; height: 3px; flex: 2;"></li>
-                    <li class="bg-blue d-lg-none my-2" style="width: 3px; height: 40px;  margin: 0 auto;"></li>
+                    <li class="bg-primary d-none d-lg-block " style="width: 200px; height: 3px; flex: 2;"></li>
+                    <li class="bg-primary d-lg-none my-2" style="width: 3px; height: 40px;  margin: 0 auto;"></li>
 
                     <li class=" text-center" style="flex: 1;">
-                        <i class="bi bi-check-circle-fill text-blue fs-2 rounded-circle" style="padding: 3px 5px; border: 2px dotted #4572c2;"></i>
+                        <i class="bi bi-check-circle-fill text-primary fs-2 rounded-circle" style="padding: 3px 5px; border: 2px dotted #4572c2;"></i>
                         <p class="">
-                            <span class="text-blue fw-bold">成功下訂</span>
+                            <span class="text-primary fw-bold">成功下訂</span>
                         </p>
                     </li>
                 </ul>
@@ -78,16 +78,16 @@ export default {
 
       <section class="container my-5">
         <div class="" v-if="myOrder.cart">
-            <h1 class="h4 text-center text-white w-100 bg-blue py-2">恭喜您! 訂單建立完成</h1>
+            <h2 class="h4 text-center text-white w-100 bg-primary py-2">恭喜您! 訂單建立完成</h2>
             <div class="d-flex align-items-center my-4">
-                <span class="">會員可到 <RouterLink to="/member" class="link-blue">會員專區</RouterLink> 查看訂單運送進度</span>
-                <span class="ms-auto"><RouterLink to="/products" class="btn btn-sm btn-blue hvr-sweep-to-right" style="border-radius: 0px;">繼續購物</RouterLink></span>
+                <span class="">會員可到 <RouterLink to="/member" class="link-primary">會員專區</RouterLink> 查看訂單運送進度</span>
+                <span class="ms-auto"><RouterLink to="/products" class="btn btn-sm btn-primary hvr-sweep-to-right" style="border-radius: 0px;">繼續購物</RouterLink></span>
             </div>
             <p class="mb-2">訂單建立時間：{{ new Date(myOrder.creatAt).toLocaleDateString() }} {{ new Date(myOrder.creatAt).getHours() }}:{{ new Date(myOrder.creatAt).getMinutes() }} </p>
 
             <div class="row">
                 <div class="col-lg-6 col-12">
-                    <h4 class="text-center fw-bold bg-lightBlue py-2 mb-4">訂購商品資訊</h4>
+                    <h4 class="text-center fw-bold bg-secondary py-2 mb-4">訂購商品資訊</h4>
                     <div class="" v-for="(item, index) in myOrder.cart.items" :key="index + 756345">
                     <div class="card mb-3" style="border: none !important;">
                         <div class="row g-0">
@@ -132,7 +132,7 @@ export default {
                                 <td>優惠券折扣</td>
                                 <td class="text-end">- NT$ {{ numberComma(Math.ceil(myOrder.cart.total * (myOrder.cart.coupon.discount / 100))) }}</td>
                             </tr>
-                            <tr class="border-top bg-lightBlue">
+                            <tr class="border-top bg-secondary">
                                 <td class="fw-bold text-danger">總計金額</td>
                                 <td class="text-end fw-bold text-danger">NT$ {{ numberComma(myOrder.cart.finalTotal) }}</td>
                             </tr>

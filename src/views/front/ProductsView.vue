@@ -237,14 +237,14 @@ export default {
 }
 </script>
 <template>
-    <div class="" style="overflow-x: hidden;">
+    <div class="" style="overflow-x: hidden;" data-aos="fade-up">
         <loading v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"
                  :lock-scroll="true">
-                 <div class="d-flex flex-column align-items-center py-10">
+                 <div class="d-flex flex-column align-items-center py-96">
       <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <h1 class="text-center fw-bold text-blue">
+      <p class="text-center fw-bold text-primary h2">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -255,7 +255,7 @@ export default {
         <span class="mx-2 animate-text">.</span>
         <span class="me-2 animate-text">.</span>
         <span class="animate-text">.</span>
-      </h1>
+      </p>
     </div>
         </loading>
         <section class="bannerBg" style="background-image: url('https://images.unsplash.com/photo-1678465952860-422bf820209b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
@@ -268,45 +268,45 @@ export default {
         <section class="container mt-4">
           <ul class="position-relative categorySelector row row-cols-4 gy-2 list-unstyled border-bottom">
               <li class="col d-flex  align-items-center justify-content-center " :class="{'liDisabled': pageStatus === '全部'}">
-                <a href="#"  @click.prevent="()=>selectPage = '全部'" class="text-decoration-none d-flex flex-column align-items-center link-secondary " :class="{'fw-bold': pageStatus === '全部', 'link-blue': pageStatus === '全部'}">
+                <a href="#"  @click.prevent="()=>selectPage = '全部'" class="text-decoration-none d-flex flex-column align-items-center link-secondary " :class="{'fw-bold': pageStatus === '全部', 'link-primary': pageStatus === '全部'}">
                   <img class="productImg1" v-if="pageStatus !== '全部'" src="../../assets/images/fruit1.png"  alt="">
                   <img v-else-if="pageStatus === '全部'" src="../../assets/images/fruit3.png"  alt="">
                   <span class="titleSize " >所有<br class="d-lg-none">材料</span>
                 </a>
               </li>
               <li class="col d-flex  align-items-center justify-content-center " :class="{'liDisabled': pageStatus === '食材組合包'}">
-                <a href="#"  @click.prevent="()=>selectPage = '食材組合包'" class="text-decoration-none d-flex flex-column align-items-center link-secondary " :class="{'fw-bold': pageStatus === '食材組合包', 'link-blue': pageStatus === '食材組合包'}">
+                <a href="#"  @click.prevent="()=>selectPage = '食材組合包'" class="text-decoration-none d-flex flex-column align-items-center link-secondary " :class="{'fw-bold': pageStatus === '食材組合包', 'link-primary': pageStatus === '食材組合包'}">
                   <img class="productImg2" v-if="pageStatus !== '食材組合包'" src="../../assets/images/food1.png"  alt="">
                   <img v-else-if="pageStatus === '食材組合包'" src="../../assets/images/food3.png"  alt="">
                   <span class="titleSize text-center" >食材<br class="d-lg-none">組合包</span>
                 </a>
               </li>
               <li class="col d-flex  align-items-center justify-content-center" :class="{'liDisabled': pageStatus === '熱銷單品'}">
-                <a href="#"  @click.prevent="()=>selectPage = '熱銷單品'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': pageStatus === '熱銷單品', 'link-blue': pageStatus === '熱銷單品'}">
+                <a href="#"  @click.prevent="()=>selectPage = '熱銷單品'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': pageStatus === '熱銷單品', 'link-primary': pageStatus === '熱銷單品'}">
                   <img class="productImg3" v-if="pageStatus !== '熱銷單品'" src="../../assets/images/strawberry1.png"  alt="">
                   <img v-else-if="pageStatus === '熱銷單品'" src="../../assets/images/strawberry3.png"  alt="">
                   <span  class="titleSize ">熱銷<br class="d-lg-none">單品</span>
                 </a>
               </li>
               <li class="col d-flex  align-items-center justify-content-center" :class="{'liDisabled': pageStatus === '特價商品'}">
-                <a href="#"  @click.prevent="()=>selectPage = '特價商品'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': pageStatus === '特價商品', 'link-blue': pageStatus === '特價商品'}">
+                <a href="#"  @click.prevent="()=>selectPage = '特價商品'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': pageStatus === '特價商品', 'link-primary': pageStatus === '特價商品'}">
                   <img class="productImg4" v-if="pageStatus !== '特價商品'" src="../../assets/images/discount1.png"  alt="">
                   <img v-else-if="pageStatus === '特價商品'" src="../../assets/images/discount3.png"  alt="">
                   <span  class="titleSize ">特價<br class="d-lg-none">商品</span>
                 </a>
               </li>
-              <li class="redLine bg-blue position-absolute" style="height: 2px; bottom: 0px; left: 5.5%" :class="{'activeAllIngredient': pageStatus === '全部', 'activePackage': pageStatus === '食材組合包', 'activeHot': pageStatus === '熱銷單品', 'activeSale': pageStatus === '特價商品'}"></li>
+              <li class="blueLine bg-primary position-absolute" style="height: 2px; bottom: 0px; left: 5.5%" :class="{'activeAllIngredient': pageStatus === '全部', 'activePackage': pageStatus === '食材組合包', 'activeHot': pageStatus === '熱銷單品', 'activeSale': pageStatus === '特價商品'}"></li>
           </ul>
         </section>
 
       <!-- 搜尋 -->
       <div class="d-none d-lg-block container selectProduct pt-4">
         <div class="input-group">
-          <a class="btn btn-outline-blue px-5" @click="()=> this.priceOrRateCollapse.toggle()">篩選對象 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{priceOrRate}}</span></a>
-          <button class="btn btn-outline-blue px-5" type="button" @click="()=> this.highOrLowCollapse.toggle()">篩選值 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{highOrLow}}</span> </button>
-          <input type="search" class="form-control border-blue border-end-0" placeholder="請輸入食材名稱" aria-label="Example text with two button addons" v-model="productSearchName" @keyup.enter="searchProducts">
-          <button type="submit" class="btn border border-blue border-start-0 bg-transparent d-flex" @click.prevent="searchProducts">
-            <span class="material-icons-outlined text-blue ">search</span>
+          <a class="btn btn-outline-primary px-5" @click="()=> this.priceOrRateCollapse.toggle()">篩選對象 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{priceOrRate}}</span></a>
+          <button class="btn btn-outline-primary px-5" type="button" @click="()=> this.highOrLowCollapse.toggle()">篩選值 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{highOrLow}}</span> </button>
+          <input type="search" class="form-control border-primary border-end-0" placeholder="請輸入食材名稱" aria-label="Example text with two button addons" v-model="productSearchName" @keyup.enter="searchProducts">
+          <button type="submit" class="btn border border-primary border-start-0 bg-transparent d-flex" @click.prevent="searchProducts">
+            <span class="material-icons-outlined text-primary ">search</span>
           </button>
         </div>
         <div class="row g-0" id="myGroup">
@@ -315,9 +315,9 @@ export default {
               <div class="card card-body border-0" style="border: 0px !important;">
                 <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
                   <input type="radio" class="btn-check" value="價格" name="priceOrRate" id="selectprice" autocomplete="off"  v-model="priceOrRate">
-                  <label class="btn btn-outline-blue " for="selectprice">價格</label>
+                  <label class="btn btn-outline-primary " for="selectprice">價格</label>
                   <input type="radio" class="btn-check"  value="評價" name="priceOrRate" id="selectRate" autocomplete="off" v-model="priceOrRate">
-                  <label class="btn btn-outline-blue " for="selectRate">評價</label>
+                  <label class="btn btn-outline-primary " for="selectRate">評價</label>
                 </div>
               </div>
             </div>
@@ -327,11 +327,11 @@ export default {
               <div class="card card-body border-0" style="border: 0px !important;">
                 <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
                   <input type="radio" class="btn-check" value="不拘" name="highOrLow" id="noDifference" autocomplete="off" checked="" v-model="highOrLow">
-                  <label class="btn btn-outline-blue" for="noDifference">不拘</label>
+                  <label class="btn btn-outline-primary" for="noDifference">不拘</label>
                   <input type="radio" class="btn-check" value="高到低" name="highOrLow" id="highToLow" autocomplete="off" v-model="highOrLow">
-                  <label class="btn btn-outline-blue" for="highToLow">高到低</label>
+                  <label class="btn btn-outline-primary" for="highToLow">高到低</label>
                   <input type="radio" class="btn-check" value="低到高" name="highOrLow" id="lowToHigh" autocomplete="off" v-model="highOrLow">
-                  <label class="btn btn-outline-blue" for="lowToHigh">低到高</label>
+                  <label class="btn btn-outline-primary" for="lowToHigh">低到高</label>
                 </div>
               </div>
             </div>
@@ -353,7 +353,7 @@ export default {
                 <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2" @click="()=>addBookmark(product)">
                   <img src="../../assets/images/image5.png">
                 </button>
-                <span v-if="product.isCheaper" style="pointer-events: none;" class="d-flex flex-column align-items-center text-white p-2 bg-blue  position-absolute top-0 start-0">
+                <span v-if="product.isCheaper" style="pointer-events: none;" class="d-flex flex-column align-items-center text-white p-2 bg-primary  position-absolute top-0 start-0">
                   {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                 </span>
                 <div v-for="mark in bookMarks" :key="mark">
@@ -390,9 +390,9 @@ export default {
         </div>
 
           <!-- 查無產品 -->
-        <div v-else-if="!filterProducts.length && search && !isLoading" class="py-10">
+        <div v-else-if="!filterProducts.length && search && !isLoading" class="py-96">
           <img src="../../assets/images/undraw_Page_not_found_re_e9o6.png" class="mb-3" alt="" style="height: 250px; display: block; margin: auto;">
-          <h2 class="text-center">查無商品，請您重新查詢</h2>
+          <p class="text-center">查無商品，請您重新查詢</p>
         </div>
       </div>
 

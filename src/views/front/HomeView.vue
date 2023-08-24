@@ -257,9 +257,9 @@ export default {
                  :can-cancel="false"
                  :is-full-page="fullPage"
                  :lock-scroll="true">
-                 <div class="d-flex flex-column align-items-center py-10">
+                 <div class="d-flex flex-column align-items-center py-96">
       <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <h1 class="text-center fw-bold text-blue">
+      <p class="text-center fw-bold text-primary h2">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -270,12 +270,12 @@ export default {
         <span class="mx-2 animate-text">.</span>
         <span class="me-2 animate-text">.</span>
         <span class="animate-text">.</span>
-      </h1>
+      </p>
     </div>
         </loading>
-        <section class="">
+        <section class=""  data-aos="fade-up">
           <!-- 桌機 -->
-          <div class=" d-none d-lg-block pt-6">
+          <div class=" d-none d-lg-block pt-64">
             <swiper :slides-per-view="1" :space-between="25"
             :modules="modules"
             :pagination="{
@@ -287,51 +287,51 @@ export default {
               <swiper-slide style="background: linear-gradient(to right, #e8edfc 50%, white 50%);" class="py-5">
                 <div class="container">
                   <div class="row h-100">
-                  <div class="col-6 bg-lightBlue position-relative">
+                  <div class="col-6 bg-secondary position-relative">
                     <!-- 圓形 -->
                     <div class="position-absolute rounded-circle" style="object-fit: cover; height: 450px; width: 450px; top:5%; right: 15%; z-index: 1; border: white 8px double; background: linear-gradient(45deg, #7e82f9 20%, #57a2f9, #fea8c9 90% );"></div>
                     <div class="position-absolute rounded-circle" style="height: 470px; width: 470px; border: dashed 2px #4572c2;  top:3%; right: 14%; "></div>
 
                     <!-- 長條圓形 -->
-                    <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -12%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -12%; z-index: 1;" ></div>
                     <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -8%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -4%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -4%; z-index: 1;" ></div>
 
                     <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: 0%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 4%; left: 80%; top: 0%; z-index: 1;" ></div>
 
-                    <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 4%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 4%; left: 105%; top: 4%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 4%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 4%; left: 105%; top: 4%; z-index: 1;" ></div>
 
                     <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 8%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 7%; left: 75%; top: 8%; z-index: 1;" ></div>
 
-                    <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 120px; left: 83%; top: 12%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 83%; top: 12%; z-index: 1;" ></div>
                     <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 89%; top: 16%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 20%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 20%; z-index: 1;" ></div>
                     <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 83%; top: 24%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 120px; left: 90%; top: 28%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 90%; top: 28%; z-index: 1;" ></div>
                     <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 80px; left: 97%; top: 32%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 120px; left: 86%; top: 36%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 86%; top: 36%; z-index: 1;" ></div>
                     <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 86%; top: 40%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 100px; left: 87%; top: 44%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 87%; top: 44%; z-index: 1;" ></div>
                     <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 89%; top: 48%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 100px; left: 90%; top: 52%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 90%; top: 52%; z-index: 1;" ></div>
                     <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 90px; left: 95%; top: 56%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 100px; left: 86%; top: 60%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 86%; top: 60%; z-index: 1;" ></div>
                     <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 90%; top: 64%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 100px; left: 92%; top: 68%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 92%; top: 68%; z-index: 1;" ></div>
                     <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 85%; top: 72%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 100px; left: 90%; top: 76%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 90%; top: 76%; z-index: 1;" ></div>
                     <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 100px; left: 92%; top: 80%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 100px; left: 87%; top: 84%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 87%; top: 84%; z-index: 1;" ></div>
                     <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 140px; left: 80%; top: 88%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 100px; left: 89%; top: 92%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 89%; top: 92%; z-index: 1;" ></div>
                     <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 100px; left: 92%; top: 96%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 7%; left: 80%; top: 96%; z-index: 1;" ></div>
 
-                    <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 100px; left: 89%; top: 100%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 89%; top: 100%; z-index: 1;" ></div>
                     <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 170px; left: 75%; top: 104%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 108%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 108%; z-index: 1;" ></div>
 
                     <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 114%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 120%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 120%; z-index: 1;" ></div>
 
                     <!-- 圖片 -->
                     <div class="box position-absolute"  style="height: 400px; width: 400px; top: 10%; left: 20%; z-index: 1;">
@@ -344,7 +344,7 @@ export default {
                   </div>
                   <div class="col-6 bg-white ">
                       <div class=" mt-5 mb-lg-5">
-                      <h1 class="ms-5 fw-bold lh-base h1Text text-blue " style="letter-spacing:10px;">
+                      <h2 class="ms-5 fw-bold lh-base h1Text text-primary " style="letter-spacing:10px;">
                         <p class="d-flex align-items-center">
                           <img src="../../assets/images/makeCupcake.png" class="me-3" style="width: 35px;" alt="">
                           甜點食譜加材料
@@ -353,15 +353,15 @@ export default {
                           一次購足好簡單
                           <img src="../../assets/images/baking.png" class="ms-3"  style="width: 35px;" alt="">
                         </p>
-                      </h1>
+                      </h2>
                       <p class="text-center text-lg-start mb-0 ms-5">用最優惠的價格<br class="d-block d-lg-none"> 享受最高品質的食材</p>
                       </div>
                       <div class="ms-5 col-10 d-none d-lg-block">
                         <p class="mb-0">立即搜索新鮮食材！</p>
-                        <div class="card border-blue">
+                        <div class="card border-primary">
                           <div class="card-body">
                             <div class="row">
-                              <div class="col-4 border-end border-blue">
+                              <div class="col-4 border-end border-primary">
                                 <p class="card-title mb-0" style="font-size: 14px;">種類</p>
                                 <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="pageStatus">
                                   <option selected >全部</option>
@@ -370,14 +370,14 @@ export default {
                                   <option value="特價商品">特價商品</option>
                                 </select>
                               </div>
-                              <div class="col-4 border-end border-blue">
+                              <div class="col-4 border-end border-primary">
                                 <p class="card-title mb-0" style="font-size: 14px;">價格或評價</p>
                                 <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="productPriceOrRate">
                                   <option value="價格">價格</option>
                                   <option value="評價">評價</option>
                                 </select>
                               </div>
-                              <div class="col-4 border-blue">
+                              <div class="col-4 border-primary">
                                 <p class="card-title mb-0" style="font-size: 14px;">由高到低或由低到高</p>
                                 <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="productHighOrLow">
                                   <option value="不拘" selected>不拘</option>
@@ -389,10 +389,10 @@ export default {
 
                           </div>
                           <div class="card-footer bg-white border-0 position-relative" style="background-color: white !important;">
-                            <div class="border rounded-pill border-blue">
+                            <div class="border rounded-pill border-primary">
                               <input type="search" class="form-control border-0 rounded-pill " placeholder="請輸入甜點名稱" v-model="productSearchName" @keyup.enter="searchProducts" style="width: 90%;">
                               <button type="submit" class="border-0 bg-transparent position-absolute translate-middle end-0" style="top:30px" @click="searchProducts">
-                              <span class="material-icons-outlined text-blue">search</span>
+                              <span class="material-icons-outlined text-primary">search</span>
                               </button>
                             </div>
                           </div>
@@ -407,50 +407,50 @@ export default {
               <swiper-slide  style="background: linear-gradient(to right, #e8edfc 50%, white 50%);" class="py-5">
                 <div class="container">
                   <div class="row h-100">
-                    <div class="col-6 bg-lightBlue position-relative">
+                    <div class="col-6 bg-secondary position-relative">
                       <!-- 圓形 -->
                       <div class="position-absolute rounded-circle" style="object-fit: cover; height: 450px; width: 450px; top:5%; right: 15%; z-index: 1; border: white 8px double; background: linear-gradient(45deg, #789cd0 20%, #78c3d0, #b9a4ff 90% );"></div>
                       <div class="position-absolute rounded-circle" style="height: 470px; width: 470px; border: dashed 2px #4572c2;  top:3%; right: 14%;"></div>
 
                       <!-- 長條圓形 -->
-                      <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -12%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -12%; z-index: 1;" ></div>
                     <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -8%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -4%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -4%; z-index: 1;" ></div>
 
                       <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: 0%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 4%; left: 80%; top: 0%; z-index: 1;" ></div>
 
-                      <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 4%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 4%; left: 105%; top: 4%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 4%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 4%; left: 105%; top: 4%; z-index: 1;" ></div>
 
                       <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 8%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 7%; left: 75%; top: 8%; z-index: 1;" ></div>
 
-                      <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 120px; left: 83%; top: 12%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 83%; top: 12%; z-index: 1;" ></div>
                       <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 89%; top: 16%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 20%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 20%; z-index: 1;" ></div>
                       <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 83%; top: 24%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 120px; left: 90%; top: 28%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 90%; top: 28%; z-index: 1;" ></div>
                       <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 80px; left: 97%; top: 32%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 120px; left: 86%; top: 36%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 86%; top: 36%; z-index: 1;" ></div>
                       <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 86%; top: 40%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 100px; left: 87%; top: 44%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 87%; top: 44%; z-index: 1;" ></div>
                       <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 89%; top: 48%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 100px; left: 90%; top: 52%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 90%; top: 52%; z-index: 1;" ></div>
                       <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 90px; left: 95%; top: 56%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 100px; left: 86%; top: 60%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 86%; top: 60%; z-index: 1;" ></div>
                       <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 90%; top: 64%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 100px; left: 92%; top: 68%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 92%; top: 68%; z-index: 1;" ></div>
                       <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 85%; top: 72%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 100px; left: 90%; top: 76%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 90%; top: 76%; z-index: 1;" ></div>
                       <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 100px; left: 92%; top: 80%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 100px; left: 87%; top: 84%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 87%; top: 84%; z-index: 1;" ></div>
                       <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 140px; left: 80%; top: 88%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 100px; left: 89%; top: 92%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 89%; top: 92%; z-index: 1;" ></div>
                       <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 100px; left: 92%; top: 96%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 7%; left: 80%; top: 96%; z-index: 1;" ></div>
 
-                      <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 4%; width: 100px; left: 89%; top: 100%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 89%; top: 100%; z-index: 1;" ></div>
                       <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 170px; left: 75%; top: 104%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 108%; z-index: 1;" ></div>
+                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 108%; z-index: 1;" ></div>
                       <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 114%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 120%; z-index: 1;" ></div>
+                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 120%; z-index: 1;" ></div>
                       <!-- 圖片 -->
                       <div class="box position-absolute"  style="height: 400px; width: 400px; top: 10%; left: 20%; z-index: 1;">
                         <div class="spin-container">
@@ -462,7 +462,7 @@ export default {
                     </div>
                     <div class="col-6 bg-white ">
                         <div class=" mt-5 mb-lg-5">
-                        <h1 class="ms-5 fw-bold lh-base h1Text text-blue " style="letter-spacing:10px;">
+                        <h2 class="ms-5 fw-bold lh-base h1Text text-primary " style="letter-spacing:10px;">
                           <p class="d-flex align-items-center">
                             <img src="../../assets/images/cake18.png" class="me-3" style="width: 35px;" alt="">
                             免費學習
@@ -471,7 +471,7 @@ export default {
                             各國特色甜點食譜
                             <img src="../../assets/images/pannaCotta12.png" class="ms-3"  style="width: 35px;" alt="">
                           </p>
-                        </h1>
+                        </h2>
                         <p class="text-center text-lg-start mb-0 ms-5">詳細的甜點教學<br class="d-block d-lg-none"> 保證您學到會</p>
                         </div>
                         <div class="ms-5 col-10 d-none d-lg-block">
@@ -479,7 +479,7 @@ export default {
                           <div class="card" style="border: 1px solid #4572c2 !important;">
                             <div class="card-body">
                               <div class="row">
-                                <div class="col-4 border-end border-blue">
+                                <div class="col-4 border-end border-primary">
                                   <p class="card-title mb-0" style="font-size: 14px;">種類</p>
                                   <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="selectItem">
                                     <option selected >全部</option>
@@ -490,14 +490,14 @@ export default {
                                     <option value="義式甜點">義式甜點</option>
                                   </select>
                                 </div>
-                                <div class="col-4 border-end border-blue">
+                                <div class="col-4 border-end border-primary">
                                   <p class="card-title mb-0" style="font-size: 14px;">成本或評價</p>
                                   <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="priceOrRate">
                                     <option value="成本">成本</option>
                                     <option value="評價">評價</option>
                                   </select>
                                 </div>
-                                <div class="col-4 border-blue">
+                                <div class="col-4 border-primary">
                                   <p class="card-title mb-0" style="font-size: 14px;">由高到低或由低到高</p>
                                   <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="highOrLow">
                                     <option value="不拘" selected>不拘</option>
@@ -509,10 +509,10 @@ export default {
 
                             </div>
                             <div class="card-footer bg-white border-0 position-relative" style="background-color: white !important;">
-                              <div class="border rounded-pill border-blue">
+                              <div class="border rounded-pill border-primary">
                                 <input type="search" class="form-control border-0 rounded-pill " placeholder="請輸入甜點名稱" v-model="recipeSearchName" @keyup.enter="searchRecipes" style="width: 90%;">
                                 <button type="submit" class="border-0 bg-transparent position-absolute translate-middle end-0" style="top:30px" @click="searchRecipes">
-                                <span class="material-icons-outlined text-blue">search</span>
+                                <span class="material-icons-outlined text-primary">search</span>
                                 </button>
                               </div>
                             </div>
@@ -534,54 +534,54 @@ export default {
             navigation
             style="height: 600px;"
             >
-              <swiper-slide class="bg-lightBlue position-relative">
+              <swiper-slide class="bg-secondary position-relative">
                 <div class="py-4 bg-white"></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 100px; left: -40px; top: 9%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 40px; left: 12px; top: 8%; z-index: 4; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 40px; left: 12px; top: 8%; z-index: 4; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 40px; left: 34px; top: 6%; z-index: 4; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 30px; left: 39px; top: 14%; z-index: 4; transform: rotate(90deg)" ></div>
 
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 40px; left: 55px; top: 6%; z-index: 4; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 40px; left: 55px; top: 6%; z-index: 4; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 40px; left: 77px; top: 8%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 40px; left: 99px; top: 8%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 40px; left: 99px; top: 8%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 40px; left: 120px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 40px; left: 141px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 40px; left: 141px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 40px; left: 163px; top: 8%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 175px; top: 5%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 175px; top: 5%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 197px; top: 8%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 219px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 219px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 241px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 263px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 263px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 285px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 307px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 307px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 329px; top: 7%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 352px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 352px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 374px; top: 4%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 396px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 396px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 418px; top: 9%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 440px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 440px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 462px; top: 7%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 484px; top: 8%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 484px; top: 8%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 506px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 528px; top: 5%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 528px; top: 5%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 550px; top: 9%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 572px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 572px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 90px; left: 579px; top: 9%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 616px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 616px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 638px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 660px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 660px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 120px; left: 652px; top: 14%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 704px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 704px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 726px; top: 9%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 748px; top: 7%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 748px; top: 7%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 770px; top: 7%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 792px; top: 5%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 792px; top: 5%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 814px; top: 8%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 837px; top: 8%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 837px; top: 8%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 120px; left: 830px; top: 10%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 883px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 883px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 905px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 927px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 927px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
 
                 <div class=" position-relative ">
                   <div class="position-absolute rounded-circle" style="object-fit: cover; height: 350px; width: 350px; top: 10px; right: 50%; transform: translateX(50%); z-index: 1; border: white 8px double; background:linear-gradient(45deg, #7e82f9 20%, #57a2f9, #fea8c9 90% );"></div>
@@ -596,7 +596,7 @@ export default {
                   </div>
                 </div>
                 <div class="" style="margin-top: 380px">
-                    <h1 class="fw-bold lh-base h1Text text-blue" style="letter-spacing:10px;">
+                    <h2 class="fw-bold lh-base h1Text text-primary" style="letter-spacing:10px;">
                       <p class="d-flex align-items-center justify-content-center">
                         <img src="../../assets/images/makeCupcake.png" class="me-3" style="width: 30px;" alt="">
                         甜點食譜加材料
@@ -605,58 +605,58 @@ export default {
                         一次購足好簡單
                         <img src="../../assets/images/baking.png" class="ms-3"  style="width: 30px;" alt="">
                       </p>
-                    </h1>
+                    </h2>
                     <p class="text-center mb-0">用最優惠的價格<br> 享受最高品質的食材</p>
                 </div>
               </swiper-slide>
-              <swiper-slide class="bg-lightBlue position-relative">
+              <swiper-slide class="bg-secondary position-relative">
                 <div class="py-4 bg-white"></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 100px; left: -40px; top: 9%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 40px; left: 12px; top: 8%; z-index: 4; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 40px; left: 12px; top: 8%; z-index: 4; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 40px; left: 34px; top: 6%; z-index: 4; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 30px; left: 39px; top: 14%; z-index: 4; transform: rotate(90deg)" ></div>
 
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 40px; left: 55px; top: 6%; z-index: 4; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 40px; left: 55px; top: 6%; z-index: 4; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 40px; left: 77px; top: 8%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 40px; left: 99px; top: 8%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 40px; left: 99px; top: 8%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 40px; left: 120px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 40px; left: 141px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 40px; left: 141px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 40px; left: 163px; top: 8%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 175px; top: 5%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 175px; top: 5%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 197px; top: 8%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 219px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 219px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 241px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 263px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 263px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 285px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 307px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 307px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 329px; top: 7%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 352px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 352px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 374px; top: 4%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 396px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 396px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 418px; top: 9%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 440px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 440px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 462px; top: 7%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 484px; top: 8%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 484px; top: 8%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 506px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 528px; top: 5%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 528px; top: 5%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 550px; top: 9%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 572px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 572px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 90px; left: 579px; top: 9%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 616px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 616px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 638px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 660px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 660px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 120px; left: 652px; top: 14%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 704px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 704px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 726px; top: 9%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 748px; top: 7%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 748px; top: 7%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 770px; top: 7%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 792px; top: 5%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 792px; top: 5%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 814px; top: 8%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 837px; top: 8%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 837px; top: 8%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 120px; left: 830px; top: 10%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 883px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 883px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
                 <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 905px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-lightBlue" style="object-fit: cover; height: 22px; width: 60px; left: 927px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
+                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 927px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
 
                 <div class=" position-relative ">
                   <div class="position-absolute rounded-circle" style="object-fit: cover; height: 350px; width: 350px; top: 10px; right: 50%; transform: translateX(50%); z-index: 1; border: white 8px double; background:  linear-gradient(45deg, #789cd0 20%, #78c3d0, #b9a4ff 90% );"></div>
@@ -671,7 +671,7 @@ export default {
                   </div>
                 </div>
                 <div class="" style="margin-top: 380px">
-                    <h1 class="fw-bold lh-base h1Text text-blue" style="letter-spacing:10px;">
+                    <h2 class="fw-bold lh-base h1Text text-primary" style="letter-spacing:10px;">
                       <p class="d-flex align-items-center justify-content-center">
                         <img src="../../assets/images/cake18.png" class="me-3" style="width: 30px;" alt="">
                         免費學習
@@ -680,7 +680,7 @@ export default {
                         各國特色甜點食譜
                         <img src="../../assets/images/pannaCotta12.png" class="ms-3"  style="width: 30px;" alt="">
                       </p>
-                    </h1>
+                    </h2>
                     <p class="text-center mb-0">詳細的甜點教學<br> 保證您學到會</p>
                 </div>
               </swiper-slide>
@@ -689,7 +689,7 @@ export default {
         </section>
 
           <!-- 熱門食譜 -->
-          <section class="py-10" data-aos="fade-right">
+          <section class="py-96" data-aos="fade-right">
           <div class="container">
             <h2 class="display-6 fw-bold d-flex flex-column-reverse flex-lg-row align-items-center mb-4 justify-content-center justify-content-lg-start">
               <div class="d-flex align-items-center">
@@ -732,7 +732,7 @@ export default {
                               <img src="../../assets/images/image4.png" style="width: 36px !important;">
                           </button>
                         </div>
-                        <span style="pointer-events: none; top: 155px;" class="cardTextCategory badge rounded-pill bg-blue mt-4 border-0 ms-3 position-absolute start-0">{{ recipe.category }}</span>
+                        <span style="pointer-events: none; top: 155px;" class="cardTextCategory badge rounded-pill bg-primary mt-4 border-0 ms-3 position-absolute start-0">{{ recipe.category }}</span>
                     </h5>
                     <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown" style="padding-top: 230px;">
                       <div class="d-flex justify-content-between align-items-center">
@@ -743,7 +743,7 @@ export default {
                         <span class=" mt-1"> <span :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{ numberComma(recipe.price) }}</span> / {{ recipe.content }}</span>
 
                         <p class="mb-0 h5 ms-auto">
-                          <span class="badge rounded-pill text-blue border border-blue">
+                          <span class="badge rounded-pill text-primary border border-primary">
                             {{ recipe.thumbs }}
                             <i class="bi bi-hand-thumbs-up-fill" ></i>
                           </span>
@@ -781,7 +781,7 @@ export default {
                               <img src="../../assets/images/image4.png" style="width: 20px !important;">
                           </button>
                         </div>
-                        <span style="pointer-events: none; top: 65px;" class=" badge rounded-pill bg-blue mt-4 border-0 ms-3 position-absolute start-0">{{ recipe.category }}</span>
+                        <span style="pointer-events: none; top: 65px;" class=" badge rounded-pill bg-primary mt-4 border-0 ms-3 position-absolute start-0">{{ recipe.category }}</span>
                     </h5>
                     <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown" style="padding-top: 125px;">
                       <div class="d-flex justify-content-between align-items-center">
@@ -793,7 +793,7 @@ export default {
                         <div class="d-flex justify-content-between align-items-center">
                           <span> <span :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{ numberComma(recipe.price) }}</span> / {{ recipe.content }}</span>
                         <p class="mb-0" style="font-size: 10px;">
-                          <span class="badge rounded-pill text-blue border border-blue">
+                          <span class="badge rounded-pill text-primary border border-primary">
                             {{ recipe.thumbs }}
                             <i class="bi bi-hand-thumbs-up-fill" ></i>
                           </span>
@@ -806,7 +806,7 @@ export default {
               </swiper>
             </div>
             <div class="d-flex">
-                <RouterLink to="/recipes" type="button" class="d-lg-none btn btn-blue rounded-pill px-4 mx-auto mt-3">
+                <RouterLink to="/recipes" type="button" class="d-lg-none btn btn-primary rounded-pill px-4 mx-auto mt-3">
                   更多食譜
                 </RouterLink>
               </div>
@@ -901,18 +901,18 @@ export default {
         </div>
         </section>
 
-        <section class="mt-10" style=" background-attachment: fixed; background-repeat: no-repeat; background-size: cover; background-position:center; background-image: url('https://images.unsplash.com/photo-1678465952975-85cc1a08b2d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');">
+        <section class="mt-96" style=" background-attachment: fixed; background-repeat: no-repeat; background-size: cover; background-position:center; background-image: url('https://images.unsplash.com/photo-1678465952975-85cc1a08b2d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');">
           <div class="w-100 d-flex flex-column justify-content-center align-items-center" style="background-color: rgba(244, 240, 234, 0.2); padding: 100px 0; height: 100%;">
             <h3 class="text-center text-white fw-bold mb-4" style="letter-spacing: 10px; text-shadow: 2px 2px 4px #000
 ; line-height: 1.5;">每個月都有新好禮<br>超值大獎一次帶回</h3>
-          <button type="button" class="hvr-sweep-to-right  btn btn-blue fw-bold rounded-0 px-4 shadow-lg" @click="linkToLottery">
+          <button type="button" class="hvr-sweep-to-right  btn btn-primary fw-bold rounded-0 px-4 shadow-lg" @click="linkToLottery">
             立即抽獎
           </button>
           </div>
         </section>
 
         <!-- 優選食材 -->
-        <section class="py-10" data-aos="fade-right">
+        <section class="py-96" data-aos="fade-right">
           <div class="container">
             <h2 class="display-6 fw-bold d-flex flex-column-reverse flex-lg-row align-items-center mb-4 justify-content-center justify-content-lg-start">
               <div class="d-flex align-items-center">
@@ -950,7 +950,7 @@ export default {
                   <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('productBookmarks' ,product)">
                     <img src="../../assets/images/image5.png" style="width: 36px !important;">
                   </button>
-                  <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex flex-column align-items-center text-white p-2 bg-blue  me-3 position-absolute top-0 start-0">
+                  <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex flex-column align-items-center text-white p-2 bg-primary  me-3 position-absolute top-0 start-0">
                     {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                   </span>
                   <div v-for="mark in productBookmarks" :key="mark">
@@ -1009,7 +1009,7 @@ export default {
                   <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent top-0 end-0 m-2 m-lg-3" @click="()=>addBookmark('productBookmarks' ,product)">
                     <img src="../../assets/images/image5.png" style="width: 20px !important;">
                   </button>
-                  <span v-if="product.isCheaper" style="pointer-events: none; font-size: 10px;" class="d-flex flex-column align-items-center text-white p-2 bg-blue  me-3 position-absolute top-0 start-0 ">
+                  <span v-if="product.isCheaper" style="pointer-events: none; font-size: 10px;" class="d-flex flex-column align-items-center text-white p-2 bg-primary  me-3 position-absolute top-0 start-0 ">
                     {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                   </span>
                   <div v-for="mark in productBookmarks" :key="mark">
@@ -1042,7 +1042,7 @@ export default {
                 </swiper>
             </div>
             <div class="d-flex">
-              <RouterLink to="/products" type="button" class="d-lg-none btn btn-blue rounded-pill px-4 mx-auto mt-3">
+              <RouterLink to="/products" type="button" class="d-lg-none btn btn-primary rounded-pill px-4 mx-auto mt-3">
                 更多商品
               </RouterLink>
             </div>

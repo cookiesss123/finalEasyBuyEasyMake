@@ -1,9 +1,9 @@
 <template>
-    <main class="py-7 loginBg" style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); background-position: right; background-repeat: no-repeat; background-attachment: fixed;">
+    <main class="py-76 loginBg" style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); background-position: right; background-repeat: no-repeat; background-attachment: fixed;">
             <div class="container">
                 <ul class="list-unstyled d-flex mt-4">
                   <li class="me-2">
-                    <RouterLink to="/home" class="link-lightBlue">首頁</RouterLink>
+                    <RouterLink to="/home" class="">首頁</RouterLink>
                   </li>
                   <li class="text-white">
                     / <span  class="me-2">註冊</span>
@@ -13,7 +13,7 @@
                     <div class="col d-none d-lg-block" style="margin: auto">
                       <h2 class="text-white text-center h1 fw-bold ">
                           您在找的
-                          <span class="text-blue"> 食譜材料 </span>
+                          <span class="text-primary"> 食譜材料 </span>
                           都在這裡
                       </h2>
                     </div>
@@ -23,14 +23,14 @@
                                 <div class="card-header bg-white py-0 border-0"  style="border-radius: 15px 15px 0px 0px;">
                                     <div class="row " style="margin: 0 -18px;">
                                         <h2 class="blueBottomLine h5 col mb-0 text-center py-3 position-relative" style="padding-bottom: 10px; border-radius: 20px 0 0 0;">
-                                            <RouterLink to="/login" class="link-dark stretched-link text-decoration-none fw-bold link-blue ">登入</RouterLink>
+                                            <RouterLink to="/login" class="link-dark stretched-link text-decoration-none fw-bold link-primary ">登入</RouterLink>
                                         </h2>
-                                        <h2 class="h5 col mb-0 text-center py-3 position-relative bg-blue text-decoration-none fw-bold text-white border-end border-white" style="padding-bottom: 10px; border-radius: 0 20px 0 0;">
+                                        <h2 class="h5 col mb-0 text-center py-3 position-relative bg-primary text-decoration-none fw-bold text-white border-end border-white" style="padding-bottom: 10px; border-radius: 0 20px 0 0;">
                                             註冊
                                         </h2>
                                     </div>
                                 </div>
-                                <h1 class="text-blue text-center h3 mt-4">
+                                <h3 class="text-primary text-center mt-4">
                                     歡迎來到
                                     <div class="d-flex justify-content-center align-items-center mt-2">
                                       <img src="../../assets/images/loadingLogo.png" style="height: 60px;" class="logo me-1" alt="">
@@ -39,11 +39,11 @@
                                         <p class="fw-light mb-0 text-start" style="font-family: 'Rajdhani', sans-serif; color: #5a5ad0; font-size: 18px; margin-top: -6px;">Easy Buy Easy Make</p>
                                       </div>
                                     </div>
-                                </h1>
+                                </h3>
                                 <VForm ref="form" class="mx-5 card-body" v-slot="{ errors }" @submit="signUp">
                                     <div class="row gy-4 d-flex">
                                         <div class="col-12 fs-5">
-                                            <label for="nickName" class="form-label text-secondary" :class="{'text-blue':user.nickName && !errors['暱稱']}"><i class="bi bi-person-circle"></i> 暱稱</label>
+                                            <label for="nickName" class="form-label text-gray" :class="{'text-primary':user.nickName && !errors['暱稱']}"><i class="bi bi-person-circle"></i> 暱稱</label>
                                             <VField
                                                 id="nickName"
                                                 name="暱稱"
@@ -57,7 +57,7 @@
                                             <ErrorMessage name="暱稱" class="invalid-feedback"></ErrorMessage>
                                         </div>
                                         <div class="col-12 fs-5">
-                                            <label for="email" class="form-label text-secondary" :class="{'text-blue':user.email && !errors['信箱']}"><i class="bi bi-envelope-fill" ></i> 信箱</label>
+                                            <label for="email" class="form-label text-gray" :class="{'text-primary':user.email && !errors['信箱']}"><i class="bi bi-envelope-fill" ></i> 信箱</label>
                                             <VField
                                                 id="email"
                                                 name="信箱"
@@ -71,7 +71,7 @@
                                             <ErrorMessage name="信箱" class="invalid-feedback"></ErrorMessage>
                                         </div>
                                         <div class="col-12 fs-5">
-                                            <label for="password" class="form-label text-secondary" :class="{'text-blue':user.password && !errors['密碼']}"><i class="bi bi-unlock-fill"></i> 密碼</label>
+                                            <label for="password" class="form-label text-gray" :class="{'text-primary':user.password && !errors['密碼']}"><i class="bi bi-unlock-fill"></i> 密碼</label>
                                             <VField
                                                 id="password"
                                                 name="密碼"
@@ -85,7 +85,7 @@
                                             <ErrorMessage name="密碼" class="invalid-feedback"></ErrorMessage>
                                         </div>
                                         <div class="col-12 fs-5">
-                                            <label for="confirmPassword" class="form-label text-secondary" :class="{'text-blue':user.confirmPassword && !errors['確認密碼']}"><i class="bi bi-lock-fill" ></i> 確認密碼</label>
+                                            <label for="confirmPassword" class="form-label text-gray" :class="{'text-primary':user.confirmPassword && !errors['確認密碼']}"><i class="bi bi-lock-fill" ></i> 確認密碼</label>
                                             <VField
                                                 id="confirmPassword"
                                                 name="確認密碼"
@@ -98,8 +98,8 @@
                                             ></VField>
                                             <ErrorMessage name="確認密碼" class="invalid-feedback"></ErrorMessage>
                                         </div>
-                                        <div class="col-12" >
-                                            <button type="submit" class="btn btn-blue w-100 text-white">註冊</button>
+                                        <div class="col-12 mt-76" >
+                                            <button type="submit" class="btn btn-primary w-100 text-white">註冊</button>
                                         </div>
                                     </div>
                                 </VForm>
@@ -117,31 +117,31 @@
                                 >
                                 <swiper-slide class="d-flex align-items-center">
                                     <img src="../../assets/images/cake17.png" style="width: 50px; height: 50px" class="mx-auto">
-                                    <i class="bi bi-dot text-blue fs-1"></i>
+                                    <i class="bi bi-dot text-primary fs-1"></i>
                                 </swiper-slide>
                                 <swiper-slide class="d-flex align-items-center">
                                     <img src="../../assets/images/dessert22.png" style="width: 50px; height: 50px" class="mx-auto">
-                                    <i class="bi bi-dot text-blue fs-1"></i>
+                                    <i class="bi bi-dot text-primary fs-1"></i>
                                 </swiper-slide>
                                 <swiper-slide class="d-flex align-items-center">
                                     <img class="mx-auto" src="../../assets/images/cottonCandy16.png" style="width: 50px; height: 50px">
-                                    <i class="bi bi-dot text-blue fs-1"></i>
+                                    <i class="bi bi-dot text-primary fs-1"></i>
                                 </swiper-slide>
                                 <swiper-slide class="d-flex align-items-center">
                                     <img class="mx-auto" src="../../assets/images/dessert21.png" style="width: 50px; height: 50px">
-                                    <i class="bi bi-dot text-blue fs-1"></i>
+                                    <i class="bi bi-dot text-primary fs-1"></i>
                                 </swiper-slide>
                                 <swiper-slide class="d-flex align-items-center">
                                     <img class="mx-auto" src="../../assets/images/cookie20.png" style="width: 50px; height: 50px">
-                                    <i class="bi bi-dot text-blue fs-1"></i>
+                                    <i class="bi bi-dot text-primary fs-1"></i>
                                 </swiper-slide>
                                 <swiper-slide class="d-flex align-items-center">
                                     <img class="mx-auto" src="../../assets/images/dessert22.png" style="width: 50px; height: 50px">
-                                    <i class="bi bi-dot text-blue fs-1"></i>
+                                    <i class="bi bi-dot text-primary fs-1"></i>
                                 </swiper-slide>
                                 <swiper-slide class="d-flex align-items-center">
                                     <img class="mx-auto" src="../../assets/images/dessert13.png" style="width: 50px; height: 50px">
-                                    <i class="bi bi-dot text-blue fs-1"></i>
+                                    <i class="bi bi-dot text-primary fs-1"></i>
                                 </swiper-slide>
                                 </swiper>
                           </div>
