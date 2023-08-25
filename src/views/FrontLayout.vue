@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-column" style="min-height: 100vh;">
+  <div class="d-flex flex-column min-height-100">
     <header class="fixed-top">
       <nav class="navbar navbar-expand-lg navbar-light bg-transGray-4 backdrop-blur-10" :class="{'bg-white': searchToggle}">
         <div class="container">
@@ -55,7 +55,7 @@
               </li>
             </ul>
             <ul class="navbar-nav me-lg-4" v-if="!uid">
-              <li class="nav-item">
+              <li class="nav-item text-center">
                 <RouterLink to="/loginSignup" @click="reload('/signup')" class="loginSignup btn btn-outline-primary  rounded-pill fs-6 py-2 fw-bold">登入 / 註冊</RouterLink>
               </li>
             </ul>
@@ -192,7 +192,7 @@
     </button>
 
     <button type="button" v-if="uid" class="link-primary bg-transparent position-fixed border-0 bottom-0 end-0 mx-88 my-3" @click="()=>this.$refs.chatModal.show()">
-      <span v-if="this.$refs.chatModal && this.$refs.chatModal.newChatNum !== 0" class="position-absolute text-primary fw-bold border border-primary alert-num rounded-circle fs-12  top-0 start-100 translate-middle" style="">
+      <span v-if="this.$refs.chatModal && this.$refs.chatModal.newChatNum !== 0" class="position-absolute text-primary fw-bold border border-primary alert-num rounded-circle fs-12  top-0 start-100 translate-middle">
         {{ this.$refs.chatModal.newChatNum }}
       </span>
       <i class="bi bi-chat-dots-fill fs-35"></i>
@@ -388,17 +388,3 @@ export default {
   }
 }
 </script>
-<style>
-  /* 初始連結顏色 深咖啡 */
-  .nav-link{
-    font-weight: bold;
-    color: #493A25;
-  }
-
-/* 隱藏input輸入框的上下按鈕 Chrome, Safari, Edge, Opera */
-input[type=number]::-webkit-outer-spin-button,
-input[type=number]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-</style>

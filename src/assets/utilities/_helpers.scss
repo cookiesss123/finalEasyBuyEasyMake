@@ -39,22 +39,29 @@
 .text-shadow{
     text-shadow: 2px 2px 4px #000
 }
-.rounded-top-5{
+.text-shadow-white{
+    text-shadow: 2px 2px 0 white;
+}
+.rounded-top-15{
    border-radius: 15px 15px 0px 0px !important;
 }
 .rounded-20{
     border-radius: 20px;
 }
-.rounded-topLeft-5{
+.rounded-topLeft-20{
     border-radius: 20px 0 0 0; 
  }
- .rounded-topRight-5{
+.rounded-topRight-20{
     border-radius: 0 20px 0 0; 
- }
+}
 .img-lg-50-sm-30{
     height: 30px !important;
     width: 30px !important;
 }
+.min-height-100{
+    min-height: 100vh;
+}
+
 @include media-breakpoint-up(lg) {
     .img-lg-50-sm-30{
         height: 50px !important;

@@ -1,5 +1,5 @@
 .blueBottomLine{
-    transform: scale(.8);
+    transform: scale(.9);
     transition: all .4s ease-in-out;
 }
 
@@ -11,9 +11,9 @@
 
 
 // login signup 頁面圖片
-.loginBg{
-    background-size: cover; 
-  }
+.loginSignupBg{
+  background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
+}
 @include media-breakpoint-up(lg) {
     .blueBottomLine{
         &:hover{
@@ -21,9 +21,4 @@
             box-shadow: 0 -2px 0 0 $primary inset;
         }
     }
-
-    // login signup 頁面圖片
-  .loginBg{
-    background-size: 130%; 
-  }
 }

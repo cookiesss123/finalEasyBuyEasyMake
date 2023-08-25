@@ -8,7 +8,8 @@
         /* 避免文字移動位置 */
         position: relative;
         border-bottom: 2px solid transparent;
-       
+        color: #493A25;
+        font-weight: bold;
         // 透明底線
         &::after{
             content: "";
