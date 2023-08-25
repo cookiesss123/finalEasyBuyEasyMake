@@ -1,16 +1,17 @@
 <template>
   <div class="d-flex flex-column" style="min-height: 100vh;">
     <header class="fixed-top">
-      <nav class="navbar navbar-expand-lg navbar-light bg-transGray backdrop-blur-10" :class="{'bg-white': searchToggle}">
+      <nav class="navbar navbar-expand-lg navbar-light bg-transGray-4 backdrop-blur-10" :class="{'bg-white': searchToggle}">
         <div class="container">
-          <RouterLink to="/home" @click="reload('/home')" class="navbar-brand d-flex align-items-center me-auto">
-            <img src="../assets/images/loadingLogo.png" class="logo me-1" alt="甜點食譜一鍵購logo">
-            <div>
-              <p class="text-darkBrown mb-0 fs-6" >甜點食譜一鍵購</p>
-              <p class="fw-light mb-0 font-style-Chathura mt-n2 text-purple fs-5">Easy Buy Easy Make</p>
-            </div>
-          </RouterLink>
-
+          <h1 class="mb-0">
+            <RouterLink to="/home" @click="reload('/home')" class="navbar-brand d-flex align-items-center me-auto">
+              <img src="../assets/images/loadingLogo.png" class="logo me-1 mt-n1" alt="甜點食譜一鍵購logo">
+              <div>
+                <p class="text-darkBrown mb-0 fs-6" >甜點食譜一鍵購</p>
+                <p class="fw-light mb-0 font-style-Chathura mt-n2 text-purple fs-5">Easy Buy Easy Make</p>
+              </div>
+            </RouterLink>
+          </h1>
           <button class="btn position-relative border-0 pb-0 d-lg-none me-1"  @click="()=>this.$refs.cartModal.show()">
             <span v-if="cartNum !== 0" class="position-absolute top-0 end-0 translate-middle-y rounded-circle border fw-bold border-primary text-primary fs-12 alert-num">
               {{ cartNum }}
@@ -19,8 +20,11 @@
           </button>
 
           <RouterLink  @click="reload('/bookmarks')" to="/bookmarks" class="btn position-relative border-0 pb-0 d-lg-none">
-            <span class="material-icons link-primary fs-4">
-              favorite
+              <span v-if="this.$route.fullPath === '/bookmarks'" class="material-icons link-primary fs-4">
+                favorite
+              </span>
+              <span v-if="this.$route.fullPath !== '/bookmarks'" class="material-icons link-primary fs-4">
+                favorite_border
               </span>
           </RouterLink>
 
@@ -35,7 +39,6 @@
           </button>
 
             <!-- 菜單桌機手機板 -->
-          <!-- style="white-space:nowrap" 加在 li 標籤 的意義是???? -->
           <div id="navbarNav" class="collapse navbar-collapse " ref="menuCollapse" >
             <ul class="mainMenu navbar-nav mx-auto text-center">
               <li class="nav-item me-lg-3">
@@ -51,13 +54,9 @@
                 <RouterLink to="/member"  @click="reload('/member')" active-class="active-link" class="nav-link d-inline-block" >會員專區</RouterLink>
               </li>
             </ul>
-            <ul class="navbar-nav align-items-center me-lg-4" v-if="!uid">
-              <li class="login nav-item me-lg-3 mb-2 mb-lg-0" >
-                <RouterLink to="/login"  @click="reload('/login')" active-class="active-link" class="nav-link " >登入</RouterLink>
-              </li>
-              <li class="nav-item" >
-                <!--  -->
-                <RouterLink to="/signup" @click="reload('/signup')" class="signup btn btn-primary badge  rounded-pill fs-6 px-4 py-3 fw-bold">註冊</RouterLink>
+            <ul class="navbar-nav me-lg-4" v-if="!uid">
+              <li class="nav-item">
+                <RouterLink to="/loginSignup" @click="reload('/signup')" class="loginSignup btn btn-outline-primary  rounded-pill fs-6 py-2 fw-bold">登入 / 註冊</RouterLink>
               </li>
             </ul>
             <ul class="navbar-nav d-lg-flex align-items-lg-center me-lg-3 text-center" v-else-if="uid">
@@ -75,12 +74,15 @@
                 <a href="#" class="nav-link " @click.prevent="logout">登出</a>
               </li>
             </ul>
-            <RouterLink  @click="reload('/bookmarks')" to="/bookmarks" class="btn position-relative border-0 pb-0 d-none d-lg-block">
-              <span class="material-icons link-primary fs-4">
+            <RouterLink  @click="reload('/bookmarks')" to="/bookmarks" class="hvr-push btn position-relative border-0 pb-0 d-none d-lg-block">
+              <span v-if="this.$route.fullPath === '/bookmarks'" class="material-icons link-primary fs-4">
                 favorite
-                </span>
+              </span>
+              <span v-if="this.$route.fullPath !== '/bookmarks'" class="material-icons link-primary fs-4">
+                favorite_border
+              </span>
             </RouterLink>
-            <button class="btn position-relative border-0 pb-0 d-none d-lg-block"  @click="()=>this.$refs.cartModal.show()">
+            <button class="hvr-push btn position-relative border-0 pb-0 d-none d-lg-block"  @click="()=>this.$refs.cartModal.show()">
             <span v-if="cartNum !== 0" class="position-absolute top-0 end-0 translate-middle-y rounded-circle border fw-bold border-primary text-primary fs-12  alert-num">
               {{ cartNum }}
             </span>
@@ -196,9 +198,9 @@
       <i class="bi bi-chat-dots-fill fs-35"></i>
     </button>
 
-    <footer class="mt-auto" :class="{'bg-secondary': this.$route.fullPath !== '/login' || this.$route.fullPath !== '/signup', 'bg-white': this.$route.fullPath === '/login' || this.$route.fullPath === '/signup'}" >
+    <footer class="mt-auto" :class="{'bg-secondary': this.$route.fullPath !== '/loginSignup', 'bg-white': this.$route.fullPath === '/loginSignup'}" >
         <div class="container d-flex flex-column flex-lg-row align-items-center py-3">
-          <div class="d-flex justify-content-center align-items-center mb-3 mb-lg-0">
+          <div class=" d-flex justify-content-center align-items-center mb-3 mb-lg-0">
               <img src="../assets/images/loadingLogo.png" class="logo me-1" alt="甜點食譜一鍵購網站logo">
               <div>
                 <p class="text-darkBrown mb-0 fs-6">甜點食譜一鍵購</p>
@@ -345,6 +347,8 @@ export default {
     this.searchCollapse = new Collapse(this.$refs.searchCollapse, {
       toggle: false
     })
+
+    console.log(this.$refs.cartModal, '購物車內容')
   },
   computed: {
     ...mapState(cartStore, ['user', 'uid', 'cartItems', 'cartNum'])

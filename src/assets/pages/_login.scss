@@ -1,0 +1,29 @@
+.blueBottomLine{
+    transform: scale(.8);
+    transition: all .4s ease-in-out;
+}
+
+.header-active{
+    width: 50%;
+    transition: all .4s ease-in-out !important; 
+    z-index: 1;
+}
+
+
+// login signup 頁面圖片
+.loginBg{
+    background-size: cover; 
+  }
+@include media-breakpoint-up(lg) {
+    .blueBottomLine{
+        &:hover{
+            transform: scale(1);
+            box-shadow: 0 -2px 0 0 $primary inset;
+        }
+    }
+
+    // login signup 頁面圖片
+  .loginBg{
+    background-size: 130%; 
+  }
+}

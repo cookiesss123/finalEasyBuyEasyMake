@@ -88,13 +88,13 @@ const routes = [
         component: () => import('../views/front/SpecialOffer.vue')
       },
       {
-        path: 'login',
-        component: () => import('../views/front/LoginView.vue')
+        path: 'loginSignup',
+        component: () => import('../views/front/LoginSignup.vue')
       },
-      {
-        path: 'signup',
-        component: () => import('../views/front/SignUp.vue')
-      },
+      // {
+      //   path: 'signup',
+      //   component: () => import('../views/front/SignUp.vue')
+      // },
       // 404頁面
       {
         path: '/:pathMatch(.*)*',

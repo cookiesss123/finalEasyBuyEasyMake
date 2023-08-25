@@ -26,12 +26,7 @@
   opacity: 1;
 }
 // 僅限 食譜、產品物件 其他盡量不要是 card 結構
-// .card:hover{
-//   border: 1px solid #d04740 !important;
-// }
-// .card:hover .card-footer{
-//   background: #fff1f0 !important;
-// }
+
 .enlargeImg{
   width: 300px;
   overflow:hidden;
@@ -54,6 +49,7 @@
 }
 // 食譜分類
 .card-text .cardTextCategory{
+  pointer-events:none;
   top: 65px;
 }
 

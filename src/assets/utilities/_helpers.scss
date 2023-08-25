@@ -1,5 +1,8 @@
-.bg-transGray{
+.bg-transGray-4{
     background-color: rgba(255, 255, 255, .4);
+}
+.bg-transGray-2{
+    background-color: rgba(255, 255, 255, .2);
 }
 .backdrop-blur-10{
     backdrop-filter: blur(10px);
@@ -16,4 +19,45 @@
     height: 25px;
     padding: 2px;
     background: $secondary;
+}
+.letter-spacing-5{
+    letter-spacing: 5px;
+}
+.letter-spacing-10{
+    letter-spacing: 10px;
+}
+// .pointer-events-none{
+//     pointer-events: none;
+// }
+
+.bg-img-fixed{
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-size: cover; 
+    background-attachment: fixed; 
+}
+.text-shadow{
+    text-shadow: 2px 2px 4px #000
+}
+.rounded-top-5{
+   border-radius: 15px 15px 0px 0px !important;
+}
+.rounded-20{
+    border-radius: 20px;
+}
+.rounded-topLeft-5{
+    border-radius: 20px 0 0 0; 
+ }
+ .rounded-topRight-5{
+    border-radius: 0 20px 0 0; 
+ }
+.img-lg-50-sm-30{
+    height: 30px !important;
+    width: 30px !important;
+}
+@include media-breakpoint-up(lg) {
+    .img-lg-50-sm-30{
+        height: 50px !important;
+        width: 50px !important;
+    }
 }

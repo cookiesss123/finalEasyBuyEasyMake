@@ -117,7 +117,7 @@ export default {
           if (!this.uid) {
             this.isLoading = false
             this.toastMessage('登入才可使用收藏功能', 'error')
-            this.$router.push('/login')
+            this.$router.push('/loginSignup')
           }
         }
       })

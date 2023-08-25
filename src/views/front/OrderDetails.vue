@@ -48,7 +48,7 @@ export default {
           this.user = {}
           if (!this.uid) {
             this.toastMessage('請先登入', 'error')
-            this.$router.push('/login')
+            this.$router.push('/loginSignup')
           }
         }
       })

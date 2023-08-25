@@ -357,10 +357,10 @@ export default {
     <div class="ms-2 badge border rounded-pill bg-white" :class="{'text-primary': recipeComments.length, 'text-lightBrownGray': !recipeComments.length,'border-primary': recipeComments.length, 'border-lightBrownGray': !recipeComments.length}" style="font-size: 16px;">
       {{ recipeComments.length }} 則
     </div>
-    <RouterLink to="/login" class="ms-3 btn btn-primary d-none d-lg-block" v-if="!uid">我要登入寫評價</RouterLink>
+    <RouterLink to="/loginSignup" class="ms-3 btn btn-primary d-none d-lg-block" v-if="!uid">我要登入寫評價</RouterLink>
   </h3>
   <div class="d-flex">
-    <RouterLink to="/login" class="btn btn-primary d-lg-none ms-auto" v-if="!uid">我要登入寫評價</RouterLink>
+    <RouterLink to="/loginSignup" class="btn btn-primary d-lg-none ms-auto" v-if="!uid">我要登入寫評價</RouterLink>
   </div>
   <div class="my-5">
     <form action="" v-if="uid">

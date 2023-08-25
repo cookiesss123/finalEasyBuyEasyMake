@@ -52,7 +52,7 @@ export default {
             showConfirmButton: false,
             timer: 1500
           })
-          this.$router.push('/login')
+          this.$router.push('/loginSignup')
         }
       })
     },
@@ -87,7 +87,7 @@ export default {
           this.user = {}
           if (!this.uid) {
             this.toastMessage('請先登入', 'error')
-            this.$router.push('/login')
+            this.$router.push('/loginSignup')
           }
         }
       })
@@ -119,7 +119,7 @@ export default {
         this.toastMessage('密碼變更成功')
       }).catch(() => {
         this.toastMessage('長時間未驗證請重新登入以更改密碼', 'error')
-        this.$router.push('/login')
+        this.$router.push('/loginSignup')
       })
     },
     // 連結到抽獎頁面

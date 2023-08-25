@@ -405,10 +405,10 @@ export default {
             {{ averageRate ? averageRate : 0}}
             <i class="bi bi-star-fill"></i>
           </div>
-          <RouterLink to="/login" class="ms-lg-3 btn btn-primary btn-sm d-none d-lg-block" v-if="!this.uid">我要登入寫評價</RouterLink>
+          <RouterLink to="/loginSignup" class="ms-lg-3 btn btn-primary btn-sm d-none d-lg-block" v-if="!this.uid">我要登入寫評價</RouterLink>
         </h3>
         <div class="d-flex">
-          <RouterLink to="/login" class="btn btn-primary btn-sm d-lg-none ms-auto" v-if="!this.uid">我要登入寫評價</RouterLink>
+          <RouterLink to="/loginSignup" class="btn btn-primary btn-sm d-lg-none ms-auto" v-if="!this.uid">我要登入寫評價</RouterLink>
         </div>
         <div class="my-5">
           <form ref="form" @submit.prevent="addProductRate" class="mt-2" v-if="this.uid">

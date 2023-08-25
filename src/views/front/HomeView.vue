@@ -273,7 +273,7 @@ export default {
       </p>
     </div>
         </loading>
-        <section class=""  data-aos="fade-up">
+        <section data-aos="fade-up">
           <!-- 桌機 -->
           <div class=" d-none d-lg-block pt-64">
             <swiper :slides-per-view="1" :space-between="25"
@@ -689,14 +689,14 @@ export default {
         </section>
 
           <!-- 熱門食譜 -->
-          <section class="py-96" data-aos="fade-right">
+          <section class="py-lg-96 py-5 " data-aos="fade-up">
           <div class="container">
-            <h2 class="display-6 fw-bold d-flex flex-column-reverse flex-lg-row align-items-center mb-4 justify-content-center justify-content-lg-start">
-              <div class="d-flex align-items-center">
+            <h2 class="display-6 fw-bold d-flex flex-column flex-lg-row align-items-center  justify-content-center justify-content-lg-start">
+              <div class="d-flex align-items-center mb-2 mb-lg-0">
                 <img src="../../assets/images/image1.png" class="me-lg-4 me-2 titleImg" alt="">
                 <span class="recipeTitle">門食譜</span>
               </div>
-              <span class="mb-2 mb-lg-0 h6 ms-2 speakerText d-flex align-items-center">
+              <span class=" h6 ms-2 speakerText d-flex align-items-center">
                 <img src="../../assets/images/icon-speaker.png" class="speaker" alt="">
                 一鍵購買甜點材料包～
               </span>
@@ -714,27 +714,27 @@ export default {
               disableOnInteraction: false,
             }"
               >
-                <swiper-slide v-for="recipe in popularRecipes" :key="recipe.id" style="cursor: pointer;">
-                  <div class="card position-relative bg-transparent" style="border-radius: 0; border: 1px solid transparent;">
-                    <div class="position-absolute cardImg" style=" width: 100%; height: 220px;">
-                      <RouterLink :to="`/recipes/${recipe.id}`" class="enlargeImg" style="" >
-                      <img :src="recipe.image" class="position-absolute top-0 card-img border-0" style=" object-fit: cover; height: 220px !important; border-radius: 0" alt="">
+                <swiper-slide v-for="recipe in popularRecipes" :key="recipe.id">
+                  <div class="card position-relative bg-transparent">
+                    <div class="position-absolute cardImg w-100" style=" height: 220px;">
+                      <RouterLink :to="`/recipes/${recipe.id}`" class="enlargeImg" >
+                      <img :src="recipe.image" class="position-absolute top-0 card-img border-0 object-fit-cover" style="  height: 220px !important;" :alt="recipe.title">
                       </RouterLink>
                     </div>
                     <h5 class="card-text">
-                      <p class="detail position-absolute fw-bold" style="top: 35%; left: 50%; transform: translateX(-50%); letter-spacing: 5px;">查看詳細食譜</p>
+                      <p class="detail position-absolute fw-bold translate-middle start-50 bottom-50 letter-spacing-5" >查看詳細食譜</p>
 
                         <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('recipeBookmarks',recipe)">
-                          <img src="../../assets/images/image5.png" style="width: 36px !important;">
+                          <img src="../../assets/images/image5.png" style="width: 36px !important;" alt="收藏按鈕-未收藏">
                         </button>
                         <div v-for="mark in recipeBookMarks" :key="mark">
                           <button v-if="mark === recipe.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent top-0 end-0 m-3" @click="()=>deleteBookmark('recipeBookmarks', recipe.id)">
-                              <img src="../../assets/images/image4.png" style="width: 36px !important;">
+                              <img src="../../assets/images/image4.png" style="width: 36px !important;" alt="收藏按鈕-已收藏">
                           </button>
                         </div>
-                        <span style="pointer-events: none; top: 155px;" class="cardTextCategory badge rounded-pill bg-primary mt-4 border-0 ms-3 position-absolute start-0">{{ recipe.category }}</span>
+                        <span class="cardTextCategory badge rounded-pill bg-primary mt-4 ms-3 position-absolute start-0 pointer-events-none">{{ recipe.category }}</span>
                     </h5>
-                    <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown" style="padding-top: 230px;">
+                    <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent text-decoration-none link-darkBrown pt-230">
                       <div class="d-flex justify-content-between align-items-center">
                         <h5 class="fw-bold mb-0">{{recipe.title}}</h5>
                       </div>
@@ -742,7 +742,7 @@ export default {
                         <del class="me-2 text-muted mt-1" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
                         <span class=" mt-1"> <span :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{ numberComma(recipe.price) }}</span> / {{ recipe.content }}</span>
 
-                        <p class="mb-0 h5 ms-auto">
+                        <p class="mb-0 fs-5 ms-auto">
                           <span class="badge rounded-pill text-primary border border-primary">
                             {{ recipe.thumbs }}
                             <i class="bi bi-hand-thumbs-up-fill" ></i>
@@ -812,12 +812,14 @@ export default {
               </div>
           </div>
           </section>
-        <section class="" style="background-position: center; background-repeat: no-repeat; background-size: cover; background-attachment: fixed; background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
-          <div class="w-100 " style=" padding: 100px 0; height: 100%;">
-            <div class="container py-lg-5 py-4 border border-white" style="border-radius: 20px; backdrop-filter: blur(10px); background-color: rgba(255, 255, 255, 0.2); "  data-aos="zoom-in-right">
-            <h2 class="h4 fw-bold text-center mb-4 questionTitle text-white" style="text-shadow: 2px 2px 4px #000">總是花錢花時間 尋找甜點材料嗎？</h2>
+        <section class="bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
+          <!-- padding: 100px 0; -->
+          <div class="py-lg-96 py-5 container">
+            <!-- border-radius: 20px;  -->
+            <div class=" py-lg-5 py-4 border border-white rounded-5 backdrop-blur-10 bg-transGray-2"  data-aos="zoom-in-right">
+            <h2 class="h4 fw-bold text-center mb-4 questionTitle text-white text-shadow">總是花錢花時間 尋找甜點材料嗎？</h2>
             <div class="px-5">
-              <div class="row row-cols-1 row-cols-lg-3 gy-4 fw-bold" style="text-shadow: 2px 2px 4px #000">
+              <div class="row row-cols-1 row-cols-lg-3 gy-4 fw-bold text-shadow">
                 <div class="col ps-lg-5 d-flex flex-column flex-lg-row  align-items-center">
                   <div class="mb-2 me-lg-3">
                     <i class="bi bi-coin fs-2 text-white"></i>
@@ -851,16 +853,16 @@ export default {
         </section>
 
         <section class="mt-5">
-          <div class="container " style="border-radius: 20px; backdrop-filter: blur(10px); z-index: 1; ">
+          <div class="container">
             <h2 class="fw-bold fixedTitle mb-4 text-center mb-5 "  data-aos="fade-up" data-aos-anchor-placement="center-center">
               <p><i class="bi bi-chevron-double-down"></i></p>
               一站解決你的所有問題
             </h2>
-            <ul class="list-unstyled " style="">
+            <ul class="list-unstyled">
               <li class="row mb-5"  data-aos="fade-up" data-aos-anchor-placement="center-center">
                 <div class="col d-none d-lg-block"></div>
                 <div class="col">
-                  <img src="../../assets/images/feature-image1.png" style="border-radius: 20px; object-fit: cover; height: 240px;" class="card-img" alt="...">
+                  <img src="../../assets/images/feature-image1.png" style="  height: 240px;" class="card-img rounded-5 object-fit-cover" alt="食譜">
                 </div>
                   <div class="col d-flex flex-column justify-content-center ">
                     <h5 class="card-title fw-bold contentTitle mb-3">立即取得食譜材料</h5>
@@ -869,7 +871,7 @@ export default {
               </li>
               <li class="row mb-5" data-aos="fade-up" data-aos-anchor-placement="center-center">
                 <div class="col">
-                  <img src="../../assets/images/feature-image2.png" style="border-radius: 20px; object-fit: cover; height: 240px;" class="card-img" alt="...">
+                  <img src="../../assets/images/feature-image2.png" style="  height: 240px;" class="card-img rounded-5 object-fit-cover" alt="食材">
                 </div>
                   <div class="col d-flex flex-column justify-content-center ">
                     <h5 class="card-title fw-bold contentTitle mb-3">便宜且份量適中的食材</h5>
@@ -880,7 +882,7 @@ export default {
               <li class="row mb-5"  data-aos="fade-up" data-aos-anchor-placement="center-center">
                 <div class="col d-none d-lg-block"></div>
                 <div class="col">
-                  <img src="../../assets/images/feature-image3.png" style="border-radius: 20px; object-fit: cover; height: 240px;" class="card-img" alt="...">
+                  <img src="../../assets/images/feature-image3.png" style="  height: 240px;" class="card-img rounded-5 object-fit-cover" alt="影片教學">
                 </div>
                   <div class="col d-flex flex-column justify-content-center ">
                     <h5 class="card-title fw-bold contentTitle mb-3">甜點食譜＋影片教學</h5>
@@ -889,7 +891,7 @@ export default {
               </li>
               <li class="row"  data-aos="fade-up" data-aos-anchor-placement="center-center">
                 <div class="col">
-                  <img src="../../assets/images/feature-image4.png" style="border-radius: 20px; object-fit: cover; height: 240px;" class="card-img" alt="...">
+                  <img src="../../assets/images/feature-image4.png" style=" height: 240px;" class="card-img rounded-5 object-fit-cover" alt="甜點">
                 </div>
                   <div class="col d-flex flex-column justify-content-center ">
                     <h5 class="card-title fw-bold contentTitle mb-3">優惠不間斷</h5>
@@ -901,10 +903,9 @@ export default {
         </div>
         </section>
 
-        <section class="mt-96" style=" background-attachment: fixed; background-repeat: no-repeat; background-size: cover; background-position:center; background-image: url('https://images.unsplash.com/photo-1678465952975-85cc1a08b2d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');">
-          <div class="w-100 d-flex flex-column justify-content-center align-items-center" style="background-color: rgba(244, 240, 234, 0.2); padding: 100px 0; height: 100%;">
-            <h3 class="text-center text-white fw-bold mb-4" style="letter-spacing: 10px; text-shadow: 2px 2px 4px #000
-; line-height: 1.5;">每個月都有新好禮<br>超值大獎一次帶回</h3>
+        <section class="mt-96 bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1678465952975-85cc1a08b2d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');">
+          <div class="w-100 d-flex flex-column justify-content-center align-items-center py-lg-96 py-5 bg-transGray-2">
+            <h3 class="text-center text-white fw-bold mb-4 letter-spacing-10 text-shadow lh-base">每個月都有新好禮<br>超值大獎一次帶回</h3>
           <button type="button" class="hvr-sweep-to-right  btn btn-primary fw-bold rounded-0 px-4 shadow-lg" @click="linkToLottery">
             立即抽獎
           </button>
@@ -916,11 +917,11 @@ export default {
           <div class="container">
             <h2 class="display-6 fw-bold d-flex flex-column-reverse flex-lg-row align-items-center mb-4 justify-content-center justify-content-lg-start">
               <div class="d-flex align-items-center">
-                <img src="../../assets/images/title3.png" class="me-lg-4 me-2 titleImg" alt="">
+                <img src="../../assets/images/title3.png" class="me-lg-4 me-2 titleImg" alt="優">
                 <span class="recipeTitle">選食材</span>
               </div>
               <span class="mb-2 mb-lg-0 h6 ms-2 speakerText d-flex align-items-center">
-                <img src="../../assets/images/icon-speaker.png" class="speaker" alt="">
+                <img src="../../assets/images/icon-speaker.png" class="speaker" alt="大聲公">
                 總消費額滿500即可獲得1次抽獎機會！
               </span>
             </h2>

@@ -1,8 +1,5 @@
 // 手機
-// login signup 頁面圖片
-.loginBg{
-  background-size: cover; 
-}
+
 
 .banner{
     background-repeat: no-repeat;
@@ -113,19 +110,8 @@
 
 // 桌機
 @include media-breakpoint-up(lg) {
-// login signup 頁面圖片
-  .loginBg{
-    background-size: 130%; 
-  }
 
-  // 控制註冊按鈕 hover
-  #navbarNav .signup .text-decoration-none{
-    transition: all .3s ease-in-out;
-  }
-  #navbarNav .signup .text-decoration-none:hover {
-    background: #4572c2 !important;
-    color: white !important;
-  }
+
     .banner{
         height: 670px;
         width:100%;
@@ -138,9 +124,6 @@
     }
     .bannerContent{
         padding-top: 80px;
-    }
-    .mb-lg-80{
-        margin-bottom: 80px;
     }
     .subTitle{
         font-size: 16px;

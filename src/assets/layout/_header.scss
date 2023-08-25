@@ -26,9 +26,11 @@
         color: $primary;
         border-bottom: 2px solid $primary;
 
-        // 註冊按鈕
-        &.signup{
+        // 註冊按鈕 必要
+        &.loginSignup{
             color: white;
+            background: $primary;
+            border-bottom: 1px solid $primary;
         }
     }
 }

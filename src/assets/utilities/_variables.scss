@@ -323,7 +323,7 @@ $theme-colors: (
   "lightBrownGray": #AFA89F, // custom
   "lightGray": #d3ccc1, // custom 
   "cyan": #d0fdfd, // custom
-  "gray": $secondary, // custom
+  "gray": $gray-600, // custom
   "purple": #5a5ad0, // custom
 
 
@@ -394,6 +394,7 @@ $spacers: (
   76: 76px, // custom
   88: 88px, // custom
   96: 96px, // custom
+  230: 230px, // custom
 ) !default;
 // scss-docs-end spacer-variables-maps
 
@@ -1255,8 +1256,8 @@ $card-spacer-y:                     $spacer !default;
 $card-spacer-x:                     $spacer !default;
 $card-title-spacer-y:               $spacer * .5 !default;
 $card-border-width:                 $border-width !default;
-$card-border-color:                 var(--#{$prefix}border-color-translucent) !default;
-$card-border-radius:                $border-radius !default;
+$card-border-color:                 transparent; // var(--#{$prefix}border-color-translucent) !default; custom
+$card-border-radius:                0 !default; // $border-radius !default; custom
 $card-box-shadow:                   null !default;
 $card-inner-border-radius:          subtract($card-border-radius, $card-border-width) !default;
 $card-cap-padding-y:                $card-spacer-y * .5 !default;
