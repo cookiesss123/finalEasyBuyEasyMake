@@ -102,8 +102,6 @@
     color: transparent; /* 文字顏色設定透明 */
     -webkit-background-clip: text; /* 背景裁剪成文字的前景色 */
     background-clip: text;
-
-
     letter-spacing: 15px; /* 這個不能太大否則無法置中 */
     font-weight: bold;
   }

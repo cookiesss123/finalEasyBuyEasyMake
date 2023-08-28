@@ -12,14 +12,12 @@ import { db, auth } from '../../firebase/db'
 import { ref, onValue, set, remove } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
 
-import Loading from 'vue-loading-overlay'
-import 'vue-loading-overlay/dist/css/index.css'
-
+import LoadingComponent from '../../components/LoadingComponent.vue'
 export default {
   components: {
     Swiper,
     SwiperSlide,
-    Loading
+    LoadingComponent
   },
   mixins: [numberCommaMixin],
   data () {
@@ -54,8 +52,7 @@ export default {
       productPriceOrRate: '價格',
       pageStatus: '全部',
       // loading
-      isLoading: false,
-      fullPage: true
+      isLoading: false
     }
   },
   methods: {
@@ -64,6 +61,8 @@ export default {
     // 取得食譜 前 10
     getPopularRecipes () {
       this.isLoading = true
+      // this.showLoading()
+
       const dataRef = ref(db, 'recipes/')
       onValue(dataRef, snapshot => {
         let recipes = snapshot.val()
@@ -249,30 +248,22 @@ export default {
     this.getPopularRecipes()
     this.getProducts()
   }
+  // watch: {
+  //   isLoading () {
+  //     if (this.isLoading) {
+  //       document.body.classList.add('no-scroll', 'mask')
+  //     } else if (!this.isLoading) {
+  //       document.body.classList.remove('no-scroll', 'mask')
+  //     }
+  //   }
+  // }
+
 }
 </script>
 <template>
-    <div class="" style="overflow-x: hidden;">
-        <loading v-model:active="isLoading"
-                 :can-cancel="false"
-                 :is-full-page="fullPage"
-                 :lock-scroll="true">
-                 <div class="d-flex flex-column align-items-center py-96">
-      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <p class="text-center fw-bold text-primary h2">
-        <span class="me-1 animate-text">L</span>
-        <span class="mx-1 animate-text">o</span>
-        <span class="mx-1 animate-text">a</span>
-        <span class="mx-1 animate-text">d</span>
-        <span class="mx-1 animate-text">i</span>
-        <span class="mx-1 animate-text">n</span>
-        <span class="mx-1 animate-text">g</span>
-        <span class="mx-2 animate-text">.</span>
-        <span class="me-2 animate-text">.</span>
-        <span class="animate-text">.</span>
-      </p>
-    </div>
-        </loading>
+  <!-- style="overflow-x: hidden;" -->
+    <div class="">
+      <LoadingComponent :is-loading="isLoading"></LoadingComponent>
         <section data-aos="fade-up">
           <!-- 桌機 -->
           <div class=" d-none d-lg-block pt-64">
@@ -284,13 +275,15 @@ export default {
             navigation
             style="height: 600px;"
             >
-              <swiper-slide style="background: linear-gradient(to right, #e8edfc 50%, white 50%);" class="py-5">
+              <swiper-slide class="py-5 bg-secondary-white">
                 <div class="container">
-                  <div class="row h-100">
-                  <div class="col-6 bg-secondary position-relative">
+                  <div class="row">
+                  <div class="col-6 position-relative">
                     <!-- 圓形 -->
-                    <div class="position-absolute rounded-circle" style="object-fit: cover; height: 450px; width: 450px; top:5%; right: 15%; z-index: 1; border: white 8px double; background: linear-gradient(45deg, #7e82f9 20%, #57a2f9, #fea8c9 90% );"></div>
-                    <div class="position-absolute rounded-circle" style="height: 470px; width: 470px; border: dashed 2px #4572c2;  top:3%; right: 14%; "></div>
+                    <!-- top:5%; right: 15%; -->
+                    <div class="position-absolute rounded-circle img-450 border-double-8 bg-ingredient-banner1 top-0" style=""></div>
+                    <!-- top:3%; right: 14%; -->
+                    <div class="position-absolute rounded-circle border-dashed-primary-2" style="height: 470px; width: 470px;    "></div>
 
                     <!-- 長條圓形 -->
                     <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -12%; z-index: 1;" ></div>
@@ -334,9 +327,10 @@ export default {
                     <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 120%; z-index: 1;" ></div>
 
                     <!-- 圖片 -->
-                    <div class="box position-absolute"  style="height: 400px; width: 400px; top: 10%; left: 20%; z-index: 1;">
+                    <!-- top: 10%; left: 20%; -->
+                    <div class="box position-absolute"  style="height: 400px; width: 400px;  z-index: 1;">
                       <div class="spin-container">
-                        <div class="shape" style=" border: #d04740;">
+                        <div class="shape">
                             <div class="bd" style="background-image:url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); background-size: 150%;"></div>
                         </div>
                       </div>
@@ -687,7 +681,6 @@ export default {
             </swiper>
           </div>
         </section>
-
           <!-- 熱門食譜 -->
           <section class="py-lg-96 py-5 " data-aos="fade-up">
           <div class="container">
@@ -852,8 +845,8 @@ export default {
 
         </section>
 
-        <section class="mt-5">
-          <div class="container">
+        <section class="py-5">
+          <div class="container" >
             <h2 class="fw-bold fixedTitle mb-4 text-center mb-5 "  data-aos="fade-up" data-aos-anchor-placement="center-center">
               <p><i class="bi bi-chevron-double-down"></i></p>
               一站解決你的所有問題

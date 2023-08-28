@@ -1,12 +1,9 @@
   .loadingLogo {
     animation: move 1.5s infinite;
-    display: block;
-    margin: auto;
   }
   @keyframes move {
     0% {
       transform: rotateY(0deg);
-  
     }
     50% {
       transform: rotateY(-180deg);

@@ -1,7 +1,12 @@
 <template>
-    <div class="d-flex flex-column align-items-center py-96">
-      <img src="../../src/assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <p class="text-center fw-bold text-lightBrown">
+  <!-- d-flex align-items-center -->
+    <div v-if="isLoading" class="loadingBackdrop text-center d-flex align-items-center justify-content-center">
+      <div class="row">
+        <div class="col-12">
+          <img src="../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
+        </div>
+        <div class="col-12">
+          <p class="text-center fw-bold text-purple h2">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -13,75 +18,57 @@
         <span class="me-2 animate-text">.</span>
         <span class="animate-text">.</span>
       </p>
+        </div>
+      </div>
     </div>
 </template>
 <script>
 export default {
-  mounted () {
+  props: ['isLoading'],
+  watch: {
+    isLoading () {
+      if (this.isLoading) {
+        document.body.classList.add('no-scroll')
+        // 首頁外的header還是可以點擊 手動改成不能點擊
+        document.querySelector('.js-header').classList.add('pointer-events-none')
+        document.querySelector('.js-footer').classList.add('footer-backdrop')
+      } else if (!this.isLoading) {
+        document.body.classList.remove('no-scroll')
+        document.querySelector('.js-header').classList.remove('pointer-events-none')
+        document.querySelector('.js-footer').classList.remove('footer-backdrop')
+      }
+    }
   }
 }
 </script>
-<style>
-
-.loadingLogo {
-  animation: move 1.5s infinite;
+<!-- <template>
+  <div class="modal " ref="modal" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false" >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="row text-center w-100">
+      <div class="col-12">
+        <img src="../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
+      </div>
+      <div class="col-12">
+        <p class="text-center fw-bold text-secondary h2">
+      <span class="me-1 animate-text">L</span>
+      <span class="mx-1 animate-text">o</span>
+      <span class="mx-1 animate-text">a</span>
+      <span class="mx-1 animate-text">d</span>
+      <span class="mx-1 animate-text">i</span>
+      <span class="mx-1 animate-text">n</span>
+      <span class="mx-1 animate-text">g</span>
+      <span class="mx-2 animate-text">.</span>
+      <span class="me-2 animate-text">.</span>
+      <span class="animate-text">.</span>
+    </p>
+      </div>
+    </div>
+    </div>
+  </div>
+</template>
+<script>
+import modalMixin from '../mixins/modalMixin'
+export default {
+  mixins: [modalMixin]
 }
-@keyframes move {
-  0% {
-    transform: rotateY(0deg);
-
-  }
-  50% {
-    transform: rotateY(-180deg);
-
-  }
-  100% {
-    transform: rotateY(180deg);
-  }
-}
-
-.animate-text {
-  opacity: 0;
-  animation: fadeIn 2s ease-in-out infinite;
-}
-
-.animate-text:nth-child(1) {
-  animation-delay: 0.1s;
-}
-.animate-text:nth-child(2) {
-  animation-delay: 0.2s;
-}
-.animate-text:nth-child(3) {
-  animation-delay: 0.3s;
-}
-.animate-text:nth-child(4) {
-  animation-delay: 0.4s;
-}
-.animate-text:nth-child(5) {
-  animation-delay: 0.5s;
-}
-.animate-text:nth-child(6) {
-  animation-delay: 0.6s;
-}
-.animate-text:nth-child(7) {
-  animation-delay: 0.7s;
-}
-.animate-text:nth-child(8) {
-  animation-delay: 0.8s;
-}
-.animate-text:nth-child(9) {
-  animation-delay: 0.9s;
-}
-.animate-text:nth-child(10) {
-  animation-delay: 1s;
-}
-@keyframes fadeIn {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-</style>
+</script> -->

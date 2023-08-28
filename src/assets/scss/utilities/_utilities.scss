@@ -459,7 +459,8 @@ $utilities: map-merge(
       values: (monospace: var(--#{$prefix}font-monospace))
     ),
     "font-size": (
-      rfs: true,
+      // rfs: true,
+      responsive: true, // 從rfs自動設定響應式文字差 到手動響應式大小 自行添加 .fs-md-3
       property: font-size,
       class: fs,
       values: $font-sizes

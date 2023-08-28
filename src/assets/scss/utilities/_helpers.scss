@@ -4,6 +4,9 @@
 .bg-transGray-2{
     background-color: rgba(255, 255, 255, .2);
 }
+.bg-transGray-6{
+    background-color: rgba(255, 255, 255, .6);
+}
 .backdrop-blur-10{
     backdrop-filter: blur(10px);
 }
@@ -14,21 +17,15 @@
     box-shadow: $primary 0px 0px 10px 0;
 }
 
-.alert-num{
-    width: 25px;
-    height: 25px;
-    padding: 2px;
-    background: $secondary;
-}
 .letter-spacing-5{
     letter-spacing: 5px;
 }
 .letter-spacing-10{
     letter-spacing: 10px;
 }
-// .pointer-events-none{
-//     pointer-events: none;
-// }
+.pointer-events-none{
+    pointer-events: none;
+}
 
 .bg-img-fixed{
     background-position: center; 
@@ -36,6 +33,7 @@
     background-size: cover; 
     background-attachment: fixed; 
 }
+
 .text-shadow{
     text-shadow: 2px 2px 4px #000
 }
@@ -61,7 +59,50 @@
 .min-height-100{
     min-height: 100vh;
 }
+.no-scroll{
+    overflow: hidden;
+}
+.z-index-1{
+    z-index: 1;
+}
+.loadingBackdrop{
+    position: fixed;
+    // top: 0;
+    // left: 0;
+    z-index: 2031; // 因為 frontlayout header 下了 1030
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, .4);
+}
+.footer-backdrop{
+    position: absolute;
+    z-index: 2031; // 因為 frontlayout header 下了 1030
+    background: rgba(0, 0, 0, .4);
+    position: fixed;
+}
+// 半副色半白色
+.bg-secondary-white{
+    background: linear-gradient(to right, $secondary 50%, white 50%);
+}
 
+.bg-primary-purple{
+    background: linear-gradient(to right, $primary , $purple);
+    color: white;
+}
+
+.img-450{
+    width: 450px;
+    height: 450px;
+}
+.border-double-8{
+    border: white 8px double;
+}
+.bg-ingredient-banner1{
+    background: linear-gradient(45deg, #7e82f9 20%, #57a2f9, #fea8c9 90% );
+}
+.border-dashed-primary-2{
+    border: dashed 2px $primary;
+}
 @include media-breakpoint-up(lg) {
     .img-lg-50-sm-30{
         height: 50px !important;

@@ -1,5 +1,5 @@
 .logo{
-    height: 40px;
+    height: 30px;
 }
 
 // navbar
@@ -30,13 +30,18 @@
         // 註冊按鈕 必要
         &.loginSignup{
             color: white;
-            background: $primary;
-            border-bottom: 1px solid $primary;
+            // background: $primary;
+            // border-bottom: 1px solid $primary;
+            background: linear-gradient(to right, $primary , $purple);
         }
     }
 }
 
 @include media-breakpoint-up(lg){
+    .logo{
+        height: 40px;
+    }
+    
     // navbar
     .navbar-nav{
         .nav-link{

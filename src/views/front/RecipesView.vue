@@ -8,14 +8,13 @@ import Collapse from 'bootstrap/js/dist/collapse'
 import { db, auth } from '../../firebase/db'
 import { ref, set, remove, onValue } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
+import LoadingComponent from '../../components/LoadingComponent.vue'
 
-import Loading from 'vue-loading-overlay'
-import 'vue-loading-overlay/dist/css/index.css'
 export default {
   components: {
     RouterLink,
     PaginationComponent,
-    Loading
+    LoadingComponent
   },
   mixins: [numberCommaMixin],
   data () {
@@ -34,8 +33,7 @@ export default {
       user: {},
       uid: '',
       search: false, // 在搜尋嗎? 用來判斷搜尋無值的狀況
-      isLoading: false,
-      fullPage: true
+      isLoading: false // 初始值為什麼一定是false
     }
   },
   methods: {
@@ -208,28 +206,11 @@ export default {
 </script>
 <template>
     <div class=""  style="overflow-x: hidden;" data-aos="fade-up">
-      <loading v-model:active="isLoading"
-                 :can-cancel="false"
-                 :is-full-page="fullPage"
-                 :lock-scroll="true">
-                 <div class="d-flex flex-column align-items-center py-96">
-      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <p class="text-center fw-bold text-primary h2">
-        <span class="me-1 animate-text">L</span>
-        <span class="mx-1 animate-text">o</span>
-        <span class="mx-1 animate-text">a</span>
-        <span class="mx-1 animate-text">d</span>
-        <span class="mx-1 animate-text">i</span>
-        <span class="mx-1 animate-text">n</span>
-        <span class="mx-1 animate-text">g</span>
-        <span class="mx-2 animate-text">.</span>
-        <span class="me-2 animate-text">.</span>
-        <span class="animate-text">.</span>
-      </p>
-    </div>
-      </loading>
-        <section   class="bannerBg" style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
-          <div class="mask">
+    <LoadingComponent :is-loading="isLoading"></LoadingComponent>
+    <!-- <div class="loadingBackdrop"></div> -->
+        <section   class="bannerBg " style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
+          <!-- mask -->
+          <div class=" mask">
             <div class="text" style="background: linear-gradient(to bottom, white 50% , #4572c2 50%); -webkit-background-clip: text;">
               甜點種類
             </div>

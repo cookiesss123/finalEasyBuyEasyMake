@@ -1,10 +1,10 @@
 <template>
   <div class="d-flex flex-column min-height-100">
-    <header class="fixed-top">
-      <nav class="navbar navbar-expand-lg navbar-light bg-transGray-4 backdrop-blur-10" :class="{'bg-white': searchToggle}">
+    <header class="fixed-top js-header">
+      <nav class="navbar navbar-expand-lg navbar-light backdrop-blur-10 bg-transGray-4" :class="{'bg-white': searchToggle}">
         <div class="container">
-          <h1 class="mb-0">
-            <RouterLink to="/home" @click="reload('/home')" class="navbar-brand d-flex align-items-center me-auto">
+          <h1 class="mb-0 me-auto">
+            <RouterLink to="/home" @click="reload('/home')" class="navbar-brand d-flex align-items-center">
               <img src="../assets/images/loadingLogo.png" class="logo me-1 mt-n1" alt="甜點食譜一鍵購logo">
               <div>
                 <p class="text-darkBrown mb-0 fs-6" >甜點食譜一鍵購</p>
@@ -12,35 +12,33 @@
               </div>
             </RouterLink>
           </h1>
-          <button class="btn position-relative border-0 pb-0 d-lg-none me-1"  @click="()=>this.$refs.cartModal.show()">
-            <span v-if="cartNum !== 0" class="position-absolute top-0 end-0 translate-middle-y rounded-circle border fw-bold border-primary text-primary fs-12 alert-num">
+
+          <button class="btn position-relative border-0 d-lg-none pb-0 me-md-3"  @click="()=>this.$refs.cartModal.show()">
+            <span v-if="cartNum !== 0" class="position-absolute top-0 end-0 translate-middle-y rounded-circle border fw-bold border-primary text-primary fs-10 alert-num">
               {{ cartNum }}
             </span>
-            <span class="material-icons text-primary fs-4" >shopping_cart</span>
+            <span class="material-icons text-gradient fs-5" >shopping_cart</span>
           </button>
 
-          <RouterLink  @click="reload('/bookmarks')" to="/bookmarks" class="btn position-relative border-0 pb-0 d-lg-none">
-              <span v-if="this.$route.fullPath === '/bookmarks'" class="material-icons link-primary fs-4">
-                favorite
-              </span>
-              <span v-if="this.$route.fullPath !== '/bookmarks'" class="material-icons link-primary fs-4">
-                favorite_border
+          <RouterLink  @click="reload('/bookmarks')" to="/bookmarks" class="btn position-relative pb-0 border-0 d-lg-none me-md-3">
+            <span  class="text-gradient material-icons fs-5">
+                {{ this.$route.fullPath === '/bookmarks' ? 'favorite' : 'favorite_border' }}
               </span>
           </RouterLink>
 
-          <button class="navbar-toggler btn border-0  link-primary" type="button" @click="()=>searchToggle = !searchToggle">
-            <span class="material-icons-outlined fs-4" >search</span>
+          <button class="navbar-toggler btn border-0 me-md-3" type="button" @click="()=>searchToggle = !searchToggle">
+            <span class="material-icons-outlined fs-5 text-gradient" >search</span>
           </button>
 
-          <button class="navbar-toggler btn border-0 link-primary" type="button" @click="()=>menuToggle = !menuToggle">
-            <span class="material-icons-outlined fs-4" >
+          <!-- pe-1 -->
+          <button class="navbar-toggler btn border-0 me-md-3" type="button" @click="()=>menuToggle = !menuToggle">
+            <span class="material-icons-outlined fs-5 text-gradient" >
               menu
             </span>
           </button>
-
             <!-- 菜單桌機手機板 -->
           <div id="navbarNav" class="collapse navbar-collapse " ref="menuCollapse" >
-            <ul class="mainMenu navbar-nav mx-auto text-center">
+            <ul class="mainMenu navbar-nav mx-auto text-center mb-1 mb-lg-0">
               <li class="nav-item me-lg-3">
                 <RouterLink to="/recipes" @click="reload('/recipes')" active-class="active-link" class="nav-link d-inline-block ">甜點食譜</RouterLink>
               </li>
@@ -54,9 +52,9 @@
                 <RouterLink to="/member"  @click="reload('/member')" active-class="active-link" class="nav-link d-inline-block" >會員專區</RouterLink>
               </li>
             </ul>
-            <ul class="navbar-nav me-lg-4" v-if="!uid">
+            <ul class="navbar-nav me-lg-4 mt-2 pb-3 mt-lg-2 pb-lg-3" v-if="!uid">
               <li class="nav-item text-center">
-                <RouterLink to="/loginSignup" @click="reload('/signup')" class="loginSignup btn btn-outline-primary  rounded-pill fs-6 py-2 fw-bold">登入 / 註冊</RouterLink>
+                <RouterLink to="/loginSignup" @click="reload('/signup')" class="loginSignup btn-outline-gradient px-3 text-decoration-none rounded-pill fs-md-6 fs-14 py-2 fw-bold">登入 / 註冊</RouterLink>
               </li>
             </ul>
             <ul class="navbar-nav d-lg-flex align-items-lg-center me-lg-3 text-center" v-else-if="uid">
@@ -74,19 +72,17 @@
                 <a href="#" class="nav-link " @click.prevent="logout">登出</a>
               </li>
             </ul>
-            <RouterLink  @click="reload('/bookmarks')" to="/bookmarks" class="hvr-push btn position-relative border-0 pb-0 d-none d-lg-block">
-              <span v-if="this.$route.fullPath === '/bookmarks'" class="material-icons link-primary fs-4">
-                favorite
-              </span>
-              <span v-if="this.$route.fullPath !== '/bookmarks'" class="material-icons link-primary fs-4">
-                favorite_border
+            <RouterLink  @click="reload('/bookmarks')" to="/bookmarks" class="btn position-relative border-0 pb-0 d-none d-lg-block">
+              <span  class="text-gradient material-icons fs-4">
+                {{ this.$route.fullPath === '/bookmarks' ? 'favorite' : 'favorite_border' }}
               </span>
             </RouterLink>
-            <button class="hvr-push btn position-relative border-0 pb-0 d-none d-lg-block"  @click="()=>this.$refs.cartModal.show()">
-            <span v-if="cartNum !== 0" class="position-absolute top-0 end-0 translate-middle-y rounded-circle border fw-bold border-primary text-primary fs-12  alert-num">
-              {{ cartNum }}
-            </span>
-            <span class="material-icons text-primary fs-4" >shopping_cart</span>
+
+            <button class="btn position-relative border-0 pb-0 d-none d-lg-block"  @click="()=>this.$refs.cartModal.show()">
+              <span v-if="cartNum !== 0" class="position-absolute top-0 end-0 translate-middle-y rounded-circle border fw-bold border-primary text-primary fs-12  alert-num">
+                {{ cartNum }}
+              </span>
+              <span class="material-icons text-gradient fs-4" >shopping_cart</span>
           </button>
           </div>
         </div>
@@ -187,7 +183,8 @@
     <!-- chat 聊天室 -->
     <ChatModal ref="chatModal"></ChatModal>
     <!-- 向上箭頭 -->
-    <button type="button" ref="upArrow" class="link-primary hvr-float position-fixed border-0 bottom-0 end-0 m-3 bg-transparent" :class="{'fade': !showScrollArrow, 'show': showScrollArrow}"  @click="goToTop" >
+    <button type="button" ref="upArrow" class="link-primary bg-transparent hvr-float position-fixed border-0 bottom-0 end-0 m-3" :class="{'fade': !showScrollArrow, 'show': showScrollArrow}"  @click="goToTop" >
+      <!-- <i class="bi bi-chevron-up fs-5"></i> -->
       <i class="bi bi-arrow-up-circle-fill fs-35"></i>
     </button>
 
@@ -198,9 +195,9 @@
       <i class="bi bi-chat-dots-fill fs-35"></i>
     </button>
 
-    <footer class="mt-auto" :class="{'bg-secondary': this.$route.fullPath !== '/loginSignup', 'bg-white': this.$route.fullPath === '/loginSignup'}" >
+    <footer class="mt-auto js-footer position-relative" :class="{'bg-secondary': this.$route.fullPath !== '/loginSignup', 'bg-white': this.$route.fullPath === '/loginSignup'}" >
         <div class="container d-flex flex-column flex-lg-row align-items-center py-3">
-          <div class=" d-flex justify-content-center align-items-center mb-3 mb-lg-0">
+          <div class=" d-flex justify-content-center align-items-center mb-2 mb-lg-0">
               <img src="../assets/images/loadingLogo.png" class="logo me-1" alt="甜點食譜一鍵購網站logo">
               <div>
                 <p class="text-darkBrown mb-0 fs-6">甜點食譜一鍵購</p>
@@ -212,17 +209,17 @@
             <ul class="list-unstyled d-flex justify-content-between w-50">
               <li class="hvr-bob">
                 <a href="#" class="text-decoration-none link-primary">
-                  <i class="bi bi-instagram fs-35"></i>
+                  <i class="bi bi-instagram fs-lg-35 fs-3"></i>
                 </a>
               </li>
               <li class="hvr-bob">
                 <a href="#" class="text-decoration-none link-primary">
-                  <i class="bi bi-facebook fs-35"></i>
+                  <i class="bi bi-facebook fs-lg-35 fs-3"></i>
                 </a>
               </li>
               <li class="hvr-bob">
                 <a href="mailto:@EasyMakeEasyBuy.gmail.com" class="text-decoration-none link-primary">
-                  <i class="bi bi-envelope fs-35"></i>
+                  <i class="bi bi-envelope fs-lg-35 fs-3"></i>
                 </a>
               </li>
             </ul>
@@ -267,6 +264,8 @@ export default {
       showScrollArrow: false, // 向上箭頭
       searchItem: '食譜搜尋' // 搜尋可以選擇食譜或產品
       // 先前傳入的 參數 對比目前參數 如果相同要 reload
+
+      // bookMarkIcon: 'favorite_border'
     }
   },
   components: {
