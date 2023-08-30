@@ -1,7 +1,13 @@
 /* 移動的封面 */
-.box {
-    position: relative;
-  
+// box
+.spin {
+    position: absolute;
+    z-index: 4;
+    width: 250px;
+    height: 250px;
+    top: 20%; 
+    left: 50%;
+
     &::before {
       content: "";
       position: absolute;
@@ -32,13 +38,13 @@
     z-index: 5;
   }
   
-  .bd {
+  // bd
+  .spin-img {
     width: 142%;
     height: 142%;
     position: absolute;
     left: -21%;
     top: -21%;
-    background-size: 100%;
     background-position: center center;
     display: flex;
     color: #003;
@@ -63,3 +69,29 @@
       transform: rotate(1turn);
     }
   }
+
+  @include media-breakpoint-up(md) {
+    .spin{
+      width: 280px;
+      height: 280px;
+      top: 16%; 
+    }
+  }  
+  @include media-breakpoint-up(lg) {
+    .spin{
+      width: 300px;
+      height: 300px;
+      top: 16%; 
+      left: 14%;
+    }
+  }
+  @include media-breakpoint-up(xl) {
+    .spin{
+      width: 400px;
+      height: 400px;
+      top: 6%; 
+      left: 10%;
+    }
+  }  
+  
+

@@ -1,3 +1,4 @@
+// 背景
 .bg-transGray-4{
     background-color: rgba(255, 255, 255, .4);
 }
@@ -7,16 +8,53 @@
 .bg-transGray-6{
     background-color: rgba(255, 255, 255, .6);
 }
+// 半副色(淡藍色)半白色
+.bg-secondary-white{
+    background: linear-gradient(to right, $secondary 50%, white 50%);
+}
+// 半淡紫色半白色
+.bg-lightPurple-white{
+    background: linear-gradient(to right, $lightPurple 50%, white 50%);
+}
+
+// 直向
+// 半淡藍色(副色 半淡紫色 漸層 banner bar 顏色
+.bg-secondary-lightPurple{
+    background: linear-gradient(to bottom, $secondary 30%, $lightPurple 70%);
+}
+// 半淡紫色半淡藍色(副色 漸層 banner bar 顏色
+.bg-lightPurple-secondary{
+    background: linear-gradient(to bottom, $lightPurple 30%, $secondary 70%);
+}
+
+// 半藍色半紫色(副色 漸層 - 登入
+.bg-primary-purple{
+    background: linear-gradient(to right, $primary , $purple);
+    color: white;
+}
+
+.bg-img-150{
+    background-size: 150%;
+}
+
+.bg-img-fixed{
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-size: cover; 
+    background-attachment: fixed; 
+}
 .backdrop-blur-10{
     backdrop-filter: blur(10px);
+}
+.rotate-90{
+    transform: rotate(90deg);
 }
 .object-fit-cover{
     object-fit: cover;
 }
-.img-blur-shadow{
+.blur-shadow{
     box-shadow: $primary 0px 0px 10px 0;
 }
-
 .letter-spacing-5{
     letter-spacing: 5px;
 }
@@ -25,13 +63,6 @@
 }
 .pointer-events-none{
     pointer-events: none;
-}
-
-.bg-img-fixed{
-    background-position: center; 
-    background-repeat: no-repeat; 
-    background-size: cover; 
-    background-attachment: fixed; 
 }
 
 .text-shadow{
@@ -80,30 +111,27 @@
     background: rgba(0, 0, 0, .4);
     position: fixed;
 }
-// 半副色半白色
-.bg-secondary-white{
-    background: linear-gradient(to right, $secondary 50%, white 50%);
+
+.img-35{
+    width: 35px !important;
 }
 
-.bg-primary-purple{
-    background: linear-gradient(to right, $primary , $purple);
-    color: white;
+//btn hover 效果
+.hvr-sweep-to-right::before{
+    background: #7555ff !important;
 }
 
-.img-450{
-    width: 450px;
-    height: 450px;
-}
-.border-double-8{
-    border: white 8px double;
-}
-.bg-ingredient-banner1{
-    background: linear-gradient(45deg, #7e82f9 20%, #57a2f9, #fea8c9 90% );
-}
-.border-dashed-primary-2{
-    border: dashed 2px $primary;
-}
 @include media-breakpoint-up(lg) {
+    // 橫向
+    // 半淡紫色半淡藍色(副色 漸層 banner bar 顏色
+    .bg-lightPurple-secondary{
+        background: linear-gradient(to right, $lightPurple 30%, $secondary 70%);
+    }
+    // 半淡藍色(副色 半淡紫色 漸層 banner bar 顏色
+    .bg-secondary-lightPurple{
+        background: linear-gradient(to right, $secondary 30%, $lightPurple 70%);
+    }
+
     .img-lg-50-sm-30{
         height: 50px !important;
         width: 50px !important;

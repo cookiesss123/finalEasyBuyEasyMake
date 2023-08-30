@@ -35,6 +35,7 @@ $grays: (
 // scss-docs-end gray-colors-map
 // fusv-enable
 
+// 客製化
 // scss-docs-start color-variables
 $blue:    #0d6efd !default;
 $indigo:  #6610f2 !default;
@@ -46,7 +47,7 @@ $yellow:  #ffc107 !default;
 $green:   #198754 !default;
 $teal:    #20c997 !default;
 $cyan:    #0dcaf0 !default;
-$lightPurple: #d8c3ff !default; // custom
+$lightPurple: #f2eaff !default; // custom
 
 // scss-docs-end color-variables
 
@@ -327,6 +328,7 @@ $theme-colors: (
   "cyan": #d0fdfd, // custom
   "gray": $gray-600, // custom
   "purple": #5a5ad0, // custom
+  "lightPurple": $lightPurple, // custom
 
 
   // "blue":#4572c2,// custom 改成 primary
@@ -392,11 +394,16 @@ $spacers: (
   3: $spacer,
   4: $spacer * 1.5,
   5: $spacer * 3,
+  60: 60px, // custom
   64: 64px, // custom
+  68: 68px, // custom 測試
+
   76: 76px, // custom
+  80: 80px, // custom
   88: 88px, // custom
   96: 96px, // custom
   230: 230px, // custom
+  380: 380px, // custom
 ) !default;
 // scss-docs-end spacer-variables-maps
 
@@ -1258,8 +1265,8 @@ $card-spacer-y:                     $spacer !default;
 $card-spacer-x:                     $spacer !default;
 $card-title-spacer-y:               $spacer * .5 !default;
 $card-border-width:                 $border-width !default;
-$card-border-color:                 transparent; // var(--#{$prefix}border-color-translucent) !default; custom
-$card-border-radius:                0 !default; // $border-radius !default; custom
+$card-border-color:                 transparent; // var(--#{$prefix}border-color-translucent) !default;
+$card-border-radius:                0; // $border-radius !default; 
 $card-box-shadow:                   null !default;
 $card-inner-border-radius:          subtract($card-border-radius, $card-border-width) !default;
 $card-cap-padding-y:                $card-spacer-y * .5 !default;

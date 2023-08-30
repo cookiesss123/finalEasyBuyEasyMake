@@ -192,12 +192,6 @@ export default {
 }
 </script>
 <style>
-.hvr-sweep-to-right::before{
-  background: #7555ff;
-}
-.hvr-sweep-to-right:hover {
-  color: white !important;
-}
 .right .modal-dialog{
     transition: transform .3s ease-out;
     position: fixed;

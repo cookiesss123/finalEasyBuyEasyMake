@@ -1,3 +1,40 @@
+// 首頁 橫向 swiper 箭頭
+.horizontalSwiper {
+  .swiper-button-next{
+    top:95%;
+    right:0;
+    &::after{
+      margin-left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  .swiper-button-prev{
+    top:95%;
+    left: 92%;
+  }
+  
+}
+// 手機 直向 swiper 箭頭 應該要改了 因為手機也改成橫向了
+.verticalSwiper{
+  .swiper-button-next{
+    top:95%;
+    right:0;
+    &::after{
+      margin-left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  // 因為手機是左右兩側點擊比較方便
+  .swiper-button-prev{
+    top:95%;
+    left: 0%;
+  }
+}
+// swiper 頁尾點點
+.swiper-pagination span{
+  --swiper-pagination-color: #4572c2;
+}
+
 /* 全部的圖片 */
 .swiper-slide img {
     display: block;
@@ -7,7 +44,7 @@
   }
   /* 統一圖片 高度100px */
   .swiper {
-    height: 100px;
+    // height: 100px;
   }
   /* 相關食譜 桌面 改箭頭樣式要用 ::after 偽元素 */
   .swiper-button-next::after, .swiper-button-prev::after{

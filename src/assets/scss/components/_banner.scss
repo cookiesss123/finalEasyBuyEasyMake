@@ -1,19 +1,124 @@
-// 手機
-
-
-.banner{
-    background-repeat: no-repeat;
-    height: 358px;
-    background-size: cover;
-    margin-top: 90px;
+.bg-ingredient-banner1, .bg-ingredient-banner2{
+  border: white 8px double;
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  left: 50%;
+  top: 15%;
+  z-index: 3;
 }
-.h1Text{
+.bg-ingredient-banner1{
+  background: linear-gradient(45deg, #7e82f9 20%, #57a2f9, #f4a8fe 90% );
+}
+.bg-ingredient-banner2{
+  background: linear-gradient(45deg, #789cd0 20%, #78c3d0, #b9a4ff 90%);
+}
+
+.border-dashed-purple, .border-dashed-primary{
+  width: 320px;
+  height: 320px;
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 14%;
+}
+// 虛線 紫色
+.border-dashed-purple{
+  border: dashed 2px #5a5ad0;
+}
+// 虛線 主色
+.border-dashed-primary{
+  border: dashed 2px $primary;
+}
+
+
+
+@include media-breakpoint-up(md){
+  .bg-ingredient-banner1, .bg-ingredient-banner2{
+    width: 330px;
+    height: 330px;
+    top: 12%;
+  }
+  .border-dashed-purple, .border-dashed-primary{
+    width: 350px;
+    height: 350px;
+    top: 11%;
+  }
+}
+// 桌機
+@include media-breakpoint-up(lg) {
+  .bg-ingredient-banner1, .bg-ingredient-banner2{
+    width: 350px;
+    height: 350px;
+    top: 10%;
+    left: 10%;
+  }
+  // 虛線 紫色 主色
+  .border-dashed-purple, .border-dashed-primary{
+    height: 370px; 
+    width: 370px;
+    top: 9%;
+    left: 8%;
+  }
+  .subTitle{
+      font-size: 16px;
+  }
+  // 食譜title文字大小
+  .mainTitle{
     font-size: 24px;
+  }
+  // 標籤大小
+  .badgeSize{
+    font-size: 14px;
+  }
+  // 產品價格大小
+  .priceSize{
+    font-size: 20px;
+  }
+
+// 每頁 banner
+  .text {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    font-size: 40px;
+    text-align: center;
+    // color: #4572c2;
+    background-image: linear-gradient(180deg, #4572c2 50%, #4572c2 50%);
+    color: transparent; /* 文字顏色設定透明 */
+    -webkit-background-clip: text; /* 背景裁剪成文字的前景色 */
+    background-clip: text;
+    letter-spacing: 40px;
+    font-weight: bold;
+  }
+
+  
+// checkoutMask 結帳半透明白色遮罩
+.checkoutMask{
+  background-color: rgba(255, 255, 255, 0.6);
+  width: 90vw;
+  height: 25vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-// 可以刪了
-.bannerContent{
-    padding: 160px 0;
 }
+@include media-breakpoint-up(xl) {
+  .bg-ingredient-banner1, .bg-ingredient-banner2{
+    width: 450px;
+    height: 450px;
+    top: 2%; 
+    left: 7%;
+  }
+  // 虛線 紫色 主色
+  .border-dashed-purple, .border-dashed-primary{
+    height: 470px; 
+    width: 470px;
+    top: 0; 
+    left: 6%;
+  }
+}  
+
 .subTitle{
     font-size: 14px;
 }
@@ -106,61 +211,3 @@
     font-weight: bold;
   }
 
-// 桌機
-@include media-breakpoint-up(lg) {
-    .banner{
-        height: 670px;
-        width:100%;
-        background-repeat: no-repeat;
-        background-size: cover;
-        margin-top: 125px;
-    }
-    .h1Text{
-        font-size: 40px;
-    }
-    .bannerContent{
-        padding-top: 80px;
-    }
-    .subTitle{
-        font-size: 16px;
-    }
-    // 食譜title文字大小
-    .mainTitle{
-      font-size: 24px;
-    }
-    // 標籤大小
-    .badgeSize{
-      font-size: 14px;
-    }
-    // 產品價格大小
-    .priceSize{
-      font-size: 20px;
-    }
-
-  // 每頁 banner
-    .text {
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: cover;
-      font-size: 40px;
-      text-align: center;
-      // color: #4572c2;
-      background-image: linear-gradient(180deg, #4572c2 50%, #4572c2 50%);
-      color: transparent; /* 文字顏色設定透明 */
-      -webkit-background-clip: text; /* 背景裁剪成文字的前景色 */
-      background-clip: text;
-      letter-spacing: 40px;
-      font-weight: bold;
-    }
-
-    
-  // checkoutMask 結帳半透明白色遮罩
-  .checkoutMask{
-    background-color: rgba(255, 255, 255, 0.6);
-    width: 90vw;
-    height: 25vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-}

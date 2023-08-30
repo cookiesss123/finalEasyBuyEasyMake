@@ -1,0 +1,30 @@
+.banner-bar, .banner-bar-short, .banner-dot{
+    border-radius: 50rem;
+    height: 4%; 
+    position: absolute;
+    z-index: 1;
+}
+.banner-bar{
+  width: 114px;
+}
+.banner-bar-short{
+  width: 7%;
+}
+.banner-dot{
+    width: 6%;
+}
+@include media-breakpoint-up(md) {
+  .banner-dot{
+    width: 4%;
+  } 
+}
+@include media-breakpoint-up(lg) {
+  .banner-bar{
+    width: 90px;
+  } 
+}
+@include media-breakpoint-up(xl) {
+  .banner-bar{
+    width: 114px;
+  } 
+}  

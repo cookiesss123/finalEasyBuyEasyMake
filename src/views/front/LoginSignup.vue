@@ -1,14 +1,10 @@
 <template>
     <main class="py-64 bg-img-fixed d-flex" style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
-          <div class="container my-auto" >
-            <ul class="list-unstyled d-flex mt-4">
-              <li class="me-2">
-                <RouterLink to="/home" class="text-white">首頁</RouterLink>
-              </li>
-              <li class="text-white">
-                / <span  class="me-2">{{ activePage }}</span>
-              </li>
-            </ul>
+          <div class="container my-auto">
+            <span class="rounded-pill bg-transGray-6 backdrop-blur-10 badge fs-6 my-4">
+              <RouterLink to="/home" class="">首頁</RouterLink><span class="text-darkBrown"> / {{ activePage }}</span>
+            </span>
+
             <div class="row">
                 <div class="col-md-6 d-none d-md-block my-auto">
                   <h2 class="text-white  text-center fw-bold mb-0">
@@ -40,8 +36,8 @@
                         <div class="d-flex align-items-center justify-content-center">
                           <img src="../../assets/images/loadingLogo.png" class=" me-1 mt-n1 img-lg-50-sm-30"  alt="甜點食譜一鍵購logo">
                           <div>
-                            <p class="text-darkBrown mb-0 fs-4" >甜點食譜一鍵購</p>
-                            <p class="fw-light mb-0 font-style-Chathura mt-n3 text-purple fs-3">Easy Buy Easy Make</p>
+                            <p class="text-darkBrown mb-0 fs-5 fs-lg-4">甜點食譜一鍵購</p>
+                            <p class="fw-light mb-0 font-style-Chathura mt-n3 text-purple fs-lg-3 fs-4">Easy Buy Easy Make</p>
                           </div>
                         </div>
                           <VForm v-if="activePage === '登入'" ref="form" class="mx-lg-5 text-gray" v-slot="{ errors }"  @submit="login">

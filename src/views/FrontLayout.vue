@@ -30,7 +30,6 @@
             <span class="material-icons-outlined fs-5 text-gradient" >search</span>
           </button>
 
-          <!-- pe-1 -->
           <button class="navbar-toggler btn border-0 me-md-3" type="button" @click="()=>menuToggle = !menuToggle">
             <span class="material-icons-outlined fs-5 text-gradient" >
               menu
@@ -52,7 +51,7 @@
                 <RouterLink to="/member"  @click="reload('/member')" active-class="active-link" class="nav-link d-inline-block" >會員專區</RouterLink>
               </li>
             </ul>
-            <ul class="navbar-nav me-lg-4 mt-2 pb-3 mt-lg-2 pb-lg-3" v-if="!uid">
+            <ul class="navbar-nav me-lg-4 mt-2 pb-3 mt-lg-0 pb-lg-0" v-if="!uid">
               <li class="nav-item text-center">
                 <RouterLink to="/loginSignup" @click="reload('/signup')" class="loginSignup btn-outline-gradient px-3 text-decoration-none rounded-pill fs-md-6 fs-14 py-2 fw-bold">登入 / 註冊</RouterLink>
               </li>
@@ -62,7 +61,7 @@
                 <RouterLink to="/admin/products" class="nav-link">進入後台</RouterLink>
               </li>
               <li class=" me-4 d-flex align-items-center justify-content-center">
-                <img v-if="user.headshotImg" :src="user.headshotImg" alt="會員大頭貼" height="50" width="50" class="rounded-circle object-fit-cover img-blur-shadow">
+                <img v-if="user.headshotImg" :src="user.headshotImg" alt="會員大頭貼" height="50" width="50" class="rounded-circle object-fit-cover blur-shadow">
                 <i v-else-if="!user.headshotImg" class="bi bi-person-circle fs-1 text-primary"></i>
                 <span class="fw-bold fs-6 ms-3">
                   {{ user.nickName }}

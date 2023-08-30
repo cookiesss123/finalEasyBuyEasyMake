@@ -248,602 +248,641 @@ export default {
     this.getPopularRecipes()
     this.getProducts()
   }
-  // watch: {
-  //   isLoading () {
-  //     if (this.isLoading) {
-  //       document.body.classList.add('no-scroll', 'mask')
-  //     } else if (!this.isLoading) {
-  //       document.body.classList.remove('no-scroll', 'mask')
-  //     }
-  //   }
-  // }
-
 }
 </script>
+<style>
+
+.fixedQ .card{
+  position: relative;
+}
+.fixedQ .card .card-img-overlay{
+  background-image: linear-gradient(180deg , transparent, rgba(0, 0, 0,0.1), rgba(255, 255, 255, 0.9));
+}
+
+.fixedQ .card:hover .card-img-overlay{
+  background-image: linear-gradient(180deg , transparent, rgba(255, 255, 255,0.2), rgba(255, 255, 255));
+}
+.fixedQ .card .card-img-overlay h5{
+  color: #493A25;
+  transition: all ease-in-out 0.4s;
+}
+.fixedQ .card:hover .card-img-overlay h5{
+  color: #493A25 !important;
+  transform: translateY(-50px);
+  transition: all ease-in-out 0.4s;
+}
+
+/* 不能用 display:block 和 none 不然沒有漸變效果 */
+.fixedQ .card .card-img-overlay p {
+  position: absolute;
+  bottom: 0;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.fixedQ .card:hover .card-img-overlay p {
+  opacity: 1;
+  bottom: 20px;
+  transform: translateY(0);
+  transition: all ease-in-out 0.4s;
+}
+.banner-swiper{
+  height: 600px;
+}
+</style>
 <template>
   <!-- style="overflow-x: hidden;" -->
-    <div class="">
+    <div>
       <LoadingComponent :is-loading="isLoading"></LoadingComponent>
-        <section data-aos="fade-up">
-          <!-- 桌機 -->
-          <div class=" d-none d-lg-block pt-64">
-            <swiper :slides-per-view="1" :space-between="25"
-            :modules="modules"
-            :pagination="{
-              dynamicBullets: true,
-            }"
-            navigation
-            style="height: 600px;"
-            >
-              <swiper-slide class="py-5 bg-secondary-white">
-                <div class="container">
-                  <div class="row">
-                  <div class="col-6 position-relative">
-                    <!-- 圓形 -->
-                    <!-- top:5%; right: 15%; -->
-                    <div class="position-absolute rounded-circle img-450 border-double-8 bg-ingredient-banner1 top-0" style=""></div>
-                    <!-- top:3%; right: 14%; -->
-                    <div class="position-absolute rounded-circle border-dashed-primary-2" style="height: 470px; width: 470px;    "></div>
+      <section data-aos="fade-up" class="mb-5">
+        <!-- 桌機 -->
+        <div class=" d-none d-lg-block pt-64 banner-swiper">
+          <swiper :slides-per-view="1" :space-between="25"
+          :modules="modules"
+          :pagination="{
+            dynamicBullets: true,
+          }"
+          navigation
+          >
+            <swiper-slide class="py-5 bg-lightPurple-white">
+              <div class="container">
+                <div class="row gx-76">
+                <div class="col-6 position-relative">
+                  <!-- 圓形 -->
+                  <div class="position-absolute rounded-circle bg-ingredient-banner1"></div>
+                  <div class="position-absolute rounded-circle border-dashed-purple"></div>
 
-                    <!-- 長條圓形 -->
-                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -12%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -8%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -4%; z-index: 1;" ></div>
+                  <!-- 長條圓形 -->
+                  <div class="banner-bar bg-lightPurple-secondary" style="left: 84%; top: -10%;" ></div>
+                  <div class="banner-bar bg-white" style="left: 87%; top: -6%;" ></div>
 
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: 0%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 4%; left: 80%; top: 0%; z-index: 1;" ></div>
+                  <div class="banner-bar bg-lightPurple-secondary" style=" left: 87%; top: -2%;" ></div>
+                  <div class="banner-bar-short bg-lightPurple-secondary" style="left: 112%; top: -2%;" ></div>
 
-                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 4%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 4%; left: 105%; top: 4%; z-index: 1;" ></div>
+                  <div class="banner-bar bg-white" style="left: 87%; top: 2%;"></div>
 
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 8%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 7%; left: 75%; top: 8%; z-index: 1;" ></div>
+                  <div class="banner-bar bg-lightPurple-secondary" style="left: 84%; top: 6%;"></div>
 
-                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 83%; top: 12%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 89%; top: 16%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 20%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 83%; top: 24%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 90%; top: 28%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 80px; left: 97%; top: 32%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 86%; top: 36%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 86%; top: 40%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 87%; top: 44%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 89%; top: 48%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 90%; top: 52%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 90px; left: 95%; top: 56%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 86%; top: 60%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 90%; top: 64%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 92%; top: 68%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 85%; top: 72%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 90%; top: 76%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 100px; left: 92%; top: 80%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 87%; top: 84%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 140px; left: 80%; top: 88%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 89%; top: 92%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 100px; left: 92%; top: 96%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 7%; left: 80%; top: 96%; z-index: 1;" ></div>
+                  <div class="banner-bar bg-white" style=" left: 84%; top: 10%;" ></div>
+                  <div class="banner-dot bg-white" style="left: 75%; top: 10%;" ></div>
 
-                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 89%; top: 100%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 170px; left: 75%; top: 104%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 108%; z-index: 1;" ></div>
+                  <div class="banner-bar bg-lightPurple-secondary" style=" left: 87%; top: 14%;" ></div>
+                  <div class="banner-bar bg-white" style=" left: 84%; top: 18%;" ></div>
+                  <div class="banner-bar bg-lightPurple-secondary" style=" left: 90%; top: 22%;" ></div>
+                  <div class="banner-bar bg-white" style="left: 97%; top: 26%;" ></div>
+                  <div class="banner-bar bg-lightPurple-secondary" style=" left: 86%; top: 30%;" ></div>
+                  <div class="banner-bar bg-white" style=" left: 86%; top: 34%;" ></div>
 
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 114%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 120%; z-index: 1;" ></div>
+                  <div class="banner-bar bg-lightPurple-secondary" style="left: 87%; top: 38%;" ></div>
+                  <div class="banner-dot bg-lightPurple-secondary" style="left: 110%; top: 38%;" ></div>
 
-                    <!-- 圖片 -->
-                    <!-- top: 10%; left: 20%; -->
-                    <div class="box position-absolute"  style="height: 400px; width: 400px;  z-index: 1;">
-                      <div class="spin-container">
-                        <div class="shape">
-                            <div class="bd" style="background-image:url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); background-size: 150%;"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-6 bg-white ">
-                      <div class=" mt-5 mb-lg-5">
-                      <h2 class="ms-5 fw-bold lh-base h1Text text-primary " style="letter-spacing:10px;">
-                        <p class="d-flex align-items-center">
-                          <img src="../../assets/images/makeCupcake.png" class="me-3" style="width: 35px;" alt="">
-                          甜點食譜加材料
-                        </p>
-                        <p class="d-flex  align-items-center">
-                          一次購足好簡單
-                          <img src="../../assets/images/baking.png" class="ms-3"  style="width: 35px;" alt="">
-                        </p>
-                      </h2>
-                      <p class="text-center text-lg-start mb-0 ms-5">用最優惠的價格<br class="d-block d-lg-none"> 享受最高品質的食材</p>
-                      </div>
-                      <div class="ms-5 col-10 d-none d-lg-block">
-                        <p class="mb-0">立即搜索新鮮食材！</p>
-                        <div class="card border-primary">
-                          <div class="card-body">
-                            <div class="row">
-                              <div class="col-4 border-end border-primary">
-                                <p class="card-title mb-0" style="font-size: 14px;">種類</p>
-                                <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="pageStatus">
-                                  <option selected >全部</option>
-                                  <option value="食材組合包">食材組合包</option>
-                                  <option value="熱銷單品">熱銷單品</option>
-                                  <option value="特價商品">特價商品</option>
-                                </select>
-                              </div>
-                              <div class="col-4 border-end border-primary">
-                                <p class="card-title mb-0" style="font-size: 14px;">價格或評價</p>
-                                <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="productPriceOrRate">
-                                  <option value="價格">價格</option>
-                                  <option value="評價">評價</option>
-                                </select>
-                              </div>
-                              <div class="col-4 border-primary">
-                                <p class="card-title mb-0" style="font-size: 14px;">由高到低或由低到高</p>
-                                <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="productHighOrLow">
-                                  <option value="不拘" selected>不拘</option>
-                                  <option value="高到低">高到低</option>
-                                  <option value="低到高">低到高</option>
-                                </select>
-                              </div>
-                            </div>
+                  <div class="banner-bar bg-white" style=" left: 89%; top: 42%;" ></div>
+                  <div class="banner-bar-short bg-white" style="left: 76%; top: 42%;" ></div>
 
-                          </div>
-                          <div class="card-footer bg-white border-0 position-relative" style="background-color: white !important;">
-                            <div class="border rounded-pill border-primary">
-                              <input type="search" class="form-control border-0 rounded-pill " placeholder="請輸入甜點名稱" v-model="productSearchName" @keyup.enter="searchProducts" style="width: 90%;">
-                              <button type="submit" class="border-0 bg-transparent position-absolute translate-middle end-0" style="top:30px" @click="searchProducts">
-                              <span class="material-icons-outlined text-primary">search</span>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                  </div>
+                  <div class="banner-bar bg-lightPurple-secondary" style="left: 90%; top: 46%;" ></div>
+                  <div class="banner-bar bg-white" style=" width: 90px; left: 98%; top: 50%;" ></div>
+                  <div class="banner-bar bg-lightPurple-secondary" style="left: 86%; top: 54%;" ></div>
+                  <div class="banner-bar bg-white" style=" left: 86%; top: 58%;" ></div>
+                  <div class="banner-bar bg-lightPurple-secondary" style="left: 85%; top: 62%;" ></div>
+                  <div class="banner-bar bg-white" style=" left: 95%; top: 66%;" ></div>
+                  <div class="banner-bar bg-lightPurple-secondary" style="left: 87%; top: 70%;" ></div>
+                  <div class="banner-bar bg-white" style="left: 87%; top: 74%;" ></div>
+                  <div class="banner-bar bg-lightPurple-secondary" style="left: 85%; top: 78%;" ></div>
 
-                </div>
-                </div>
+                  <div class="banner-bar bg-white" style="left: 95%; top: 82%;" ></div>
+                  <div class="banner-dot bg-white" style="left: 88%; top: 82%;" ></div>
 
-              </swiper-slide>
-              <swiper-slide  style="background: linear-gradient(to right, #e8edfc 50%, white 50%);" class="py-5">
-                <div class="container">
-                  <div class="row h-100">
-                    <div class="col-6 bg-secondary position-relative">
-                      <!-- 圓形 -->
-                      <div class="position-absolute rounded-circle" style="object-fit: cover; height: 450px; width: 450px; top:5%; right: 15%; z-index: 1; border: white 8px double; background: linear-gradient(45deg, #789cd0 20%, #78c3d0, #b9a4ff 90% );"></div>
-                      <div class="position-absolute rounded-circle" style="height: 470px; width: 470px; border: dashed 2px #4572c2;  top:3%; right: 14%;"></div>
+                  <div class="banner-bar bg-lightPurple-secondary" style="left: 85%; top: 86%;" ></div>
 
-                      <!-- 長條圓形 -->
-                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -12%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -8%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: -4%; z-index: 1;" ></div>
+                  <div class="banner-bar bg-white" style="left: 88%; top: 90%;" ></div>
+                  <div class="banner-bar bg-lightPurple-secondary" style="left: 95%; top: 94%;" ></div>
+                  <div class="banner-bar bg-white" style="left: 98%; top: 98%;" ></div>
+                  <div class="banner-bar bg-lightPurple-secondary" style="left: 91%; top: 102%;" ></div>
+                  <div class="banner-bar-short bg-lightPurple-secondary" style="left: 113%; top: 102%;" ></div>
 
-                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 87%; top: 0%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 4%; left: 80%; top: 0%; z-index: 1;" ></div>
+                  <div class="banner-bar bg-white" style="left: 89%; top: 106%;" ></div>
+                  <div class="banner-bar bg-lightPurple-secondary" style="left: 99%; top: 110%;" ></div>
 
-                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 4%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 4%; left: 105%; top: 4%; z-index: 1;" ></div>
-
-                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 8%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 7%; left: 75%; top: 8%; z-index: 1;" ></div>
-
-                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 83%; top: 12%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 89%; top: 16%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 84%; top: 20%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 83%; top: 24%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 90%; top: 28%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 80px; left: 97%; top: 32%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 120px; left: 86%; top: 36%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 86%; top: 40%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 87%; top: 44%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 89%; top: 48%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 90%; top: 52%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 90px; left: 95%; top: 56%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 86%; top: 60%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 90%; top: 64%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 92%; top: 68%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 120px; left: 85%; top: 72%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 90%; top: 76%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 100px; left: 92%; top: 80%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 87%; top: 84%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 140px; left: 80%; top: 88%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 89%; top: 92%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 100px; left: 92%; top: 96%; z-index: 1;" ></div><div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 7%; left: 80%; top: 96%; z-index: 1;" ></div>
-
-                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 4%; width: 100px; left: 89%; top: 100%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 4%; width: 170px; left: 75%; top: 104%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 108%; z-index: 1;" ></div>
-                      <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 114%; z-index: 1;" ></div>
-                    <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 6%; width: 100px; left: 87%; top: 120%; z-index: 1;" ></div>
-                      <!-- 圖片 -->
-                      <div class="box position-absolute"  style="height: 400px; width: 400px; top: 10%; left: 20%; z-index: 1;">
-                        <div class="spin-container">
-                          <div class="shape" style=" border: #008391;">
-                              <div class="bd" style="background-image:url('https://images.unsplash.com/photo-1678465952838-c9d7f5daaa65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80')"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-6 bg-white ">
-                        <div class=" mt-5 mb-lg-5">
-                        <h2 class="ms-5 fw-bold lh-base h1Text text-primary " style="letter-spacing:10px;">
-                          <p class="d-flex align-items-center">
-                            <img src="../../assets/images/cake18.png" class="me-3" style="width: 35px;" alt="">
-                            免費學習
-                          </p>
-                          <p class="d-flex  align-items-center">
-                            各國特色甜點食譜
-                            <img src="../../assets/images/pannaCotta12.png" class="ms-3"  style="width: 35px;" alt="">
-                          </p>
-                        </h2>
-                        <p class="text-center text-lg-start mb-0 ms-5">詳細的甜點教學<br class="d-block d-lg-none"> 保證您學到會</p>
-                        </div>
-                        <div class="ms-5 col-10 d-none d-lg-block">
-                          <p class="mb-0">立即搜索心儀食譜！</p>
-                          <div class="card" style="border: 1px solid #4572c2 !important;">
-                            <div class="card-body">
-                              <div class="row">
-                                <div class="col-4 border-end border-primary">
-                                  <p class="card-title mb-0" style="font-size: 14px;">種類</p>
-                                  <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="selectItem">
-                                    <option selected >全部</option>
-                                    <option value="台式甜點">台式甜點</option>
-                                    <option value="法式甜點">法式甜點</option>
-                                    <option value="美式甜點">美式甜點</option>
-                                    <option value="日式甜點">日式甜點</option>
-                                    <option value="義式甜點">義式甜點</option>
-                                  </select>
-                                </div>
-                                <div class="col-4 border-end border-primary">
-                                  <p class="card-title mb-0" style="font-size: 14px;">成本或評價</p>
-                                  <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="priceOrRate">
-                                    <option value="成本">成本</option>
-                                    <option value="評價">評價</option>
-                                  </select>
-                                </div>
-                                <div class="col-4 border-primary">
-                                  <p class="card-title mb-0" style="font-size: 14px;">由高到低或由低到高</p>
-                                  <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="highOrLow">
-                                    <option value="不拘" selected>不拘</option>
-                                    <option value="高到低">高到低</option>
-                                    <option value="低到高">低到高</option>
-                                  </select>
-                                </div>
-                              </div>
-
-                            </div>
-                            <div class="card-footer bg-white border-0 position-relative" style="background-color: white !important;">
-                              <div class="border rounded-pill border-primary">
-                                <input type="search" class="form-control border-0 rounded-pill " placeholder="請輸入甜點名稱" v-model="recipeSearchName" @keyup.enter="searchRecipes" style="width: 90%;">
-                                <button type="submit" class="border-0 bg-transparent position-absolute translate-middle end-0" style="top:30px" @click="searchRecipes">
-                                <span class="material-icons-outlined text-primary">search</span>
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-              </swiper-slide>
-            </swiper>
-          </div>
-          <!-- 手機 -->
-          <div class="d-lg-none bg-white" style="padding-top: 60px;">
-            <swiper :slides-per-view="1" :space-between="25"
-            :modules="modules"
-            :pagination="{
-              dynamicBullets: true,
-            }"
-            navigation
-            style="height: 600px;"
-            >
-              <swiper-slide class="bg-secondary position-relative">
-                <div class="py-4 bg-white"></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 100px; left: -40px; top: 9%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 40px; left: 12px; top: 8%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 40px; left: 34px; top: 6%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 30px; left: 39px; top: 14%; z-index: 4; transform: rotate(90deg)" ></div>
-
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 40px; left: 55px; top: 6%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 40px; left: 77px; top: 8%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 40px; left: 99px; top: 8%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 40px; left: 120px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 40px; left: 141px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 40px; left: 163px; top: 8%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 175px; top: 5%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 197px; top: 8%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 219px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 241px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 263px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 285px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 307px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 329px; top: 7%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 352px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 374px; top: 4%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 396px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 418px; top: 9%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 440px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 462px; top: 7%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 484px; top: 8%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 506px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 528px; top: 5%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 550px; top: 9%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 572px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 90px; left: 579px; top: 9%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 616px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 638px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 660px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 120px; left: 652px; top: 14%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 704px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 726px; top: 9%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 748px; top: 7%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 770px; top: 7%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 792px; top: 5%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 814px; top: 8%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 837px; top: 8%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 120px; left: 830px; top: 10%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 883px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 905px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 927px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
-
-                <div class=" position-relative ">
-                  <div class="position-absolute rounded-circle" style="object-fit: cover; height: 350px; width: 350px; top: 10px; right: 50%; transform: translateX(50%); z-index: 1; border: white 8px double; background:linear-gradient(45deg, #7e82f9 20%, #57a2f9, #fea8c9 90% );"></div>
-                  <div class="position-absolute rounded-circle" style="height: 360px; width: 360px; border: dashed 2px #4572c2;  top:5px; right: 50%; transform: translateX(50%); z-index: 1;"></div>
-
-                  <div class="box position-absolute"  style="height: 300px; width: 300px; left: 50%; top: 40px; transform: translateX(-50%); z-index: 1;">
+                  <div class="spin position-absolute">
                     <div class="spin-container">
-                      <div class="shape" style=" border: #d04740;">
-                          <div class="bd" style="background-image:url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); background-size: 160%;"></div>
+                      <div class="shape">
+                          <div class="spin-img bg-img-150" style="background-image:url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); "></div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="" style="margin-top: 380px">
-                    <h2 class="fw-bold lh-base h1Text text-primary" style="letter-spacing:10px;">
-                      <p class="d-flex align-items-center justify-content-center">
-                        <img src="../../assets/images/makeCupcake.png" class="me-3" style="width: 30px;" alt="">
+                <div class="col-6 py-5  position-relative z-index-1">
+                    <h2 class="fw-bold lh-base fs-1 text-purple letter-spacing-10">
+                      <p class="d-flex align-items-center">
+                        <img src="../../assets/images/makeCupcake.png" class="me-3 img-35" alt="製作甜點圖示">
                         甜點食譜加材料
                       </p>
-                      <p class="d-flex  align-items-center justify-content-center">
+                      <p class="d-flex  align-items-center">
                         一次購足好簡單
-                        <img src="../../assets/images/baking.png" class="ms-3"  style="width: 30px;" alt="">
+                        <img src="../../assets/images/baking.png" class="ms-3 img-35" alt="烘焙圖示">
                       </p>
                     </h2>
-                    <p class="text-center mb-0">用最優惠的價格<br> 享受最高品質的食材</p>
+                    <p class="text-center text-lg-start mb-0">用最優惠的價格<br class="d-block d-lg-none"> 享受最高品質的食材</p>
+                    <div class="col-10 d-none d-lg-block mt-5">
+                      <p class="mb-0">立即搜索新鮮食材！</p>
+                      <div class="card border-purple rounded-2">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-4 border-end border-purple">
+                              <p class="card-title mb-0 fs-14 text-purple">種類</p>
+                              <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="pageStatus">
+                                <option selected >全部</option>
+                                <option value="食材組合包">食材組合包</option>
+                                <option value="熱銷單品">熱銷單品</option>
+                                <option value="特價商品">特價商品</option>
+                              </select>
+                            </div>
+                            <div class="col-4 border-end border-purple">
+                              <p class="card-title mb-0 fs-14 text-purple">價格或評價</p>
+                              <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="productPriceOrRate">
+                                <option value="價格">價格</option>
+                                <option value="評價">評價</option>
+                              </select>
+                            </div>
+                            <div class="col-4 border-purple">
+                              <p class="card-title mb-0 fs-14 text-purple">高或低</p>
+                              <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="productHighOrLow">
+                                <option value="不拘" selected>不拘</option>
+                                <option value="高到低">高到低</option>
+                                <option value="低到高">低到高</option>
+                              </select>
+                            </div>
+                          </div>
+
+                        </div>
+                        <div class="card-footer rounded-2 bg-white pb-3 position-relative">
+                          <div class="border rounded-pill border-purple">
+                            <input type="search" class="form-control border-0 rounded-pill " placeholder="請輸入食材名稱" v-model="productSearchName" @keyup.enter="searchProducts">
+                            <button type="submit" class="border-0 bg-transparent position-absolute translate-middle end-0 mt-n3" style="" @click="searchProducts">
+                            <span class="material-icons-outlined text-purple">search</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                 </div>
-              </swiper-slide>
-              <swiper-slide class="bg-secondary position-relative">
-                <div class="py-4 bg-white"></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 100px; left: -40px; top: 9%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 40px; left: 12px; top: 8%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 40px; left: 34px; top: 6%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 30px; left: 39px; top: 14%; z-index: 4; transform: rotate(90deg)" ></div>
 
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 40px; left: 55px; top: 6%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 40px; left: 77px; top: 8%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 40px; left: 99px; top: 8%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 40px; left: 120px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 40px; left: 141px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 40px; left: 163px; top: 8%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 175px; top: 5%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 197px; top: 8%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 219px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 241px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 263px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 285px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 307px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 329px; top: 7%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 352px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 374px; top: 4%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 396px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 418px; top: 9%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 440px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 462px; top: 7%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 484px; top: 8%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 506px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 528px; top: 5%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 550px; top: 9%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 572px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 90px; left: 579px; top: 9%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 616px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 638px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 660px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 120px; left: 652px; top: 14%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 704px; top: 9%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 726px; top: 9%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 748px; top: 7%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 770px; top: 7%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 792px; top: 5%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 814px; top: 8%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 837px; top: 8%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 120px; left: 830px; top: 10%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 883px; top: 4%; z-index: 1; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-white" style="object-fit: cover; height: 22px; width: 60px; left: 905px; top: 5%; z-index: 4; transform: rotate(90deg)" ></div>
-                <div class="rounded-pill position-absolute bg-secondary" style="object-fit: cover; height: 22px; width: 60px; left: 927px; top: 6%; z-index: 1; transform: rotate(90deg)" ></div>
+              </div>
+              </div>
 
-                <div class=" position-relative ">
-                  <div class="position-absolute rounded-circle" style="object-fit: cover; height: 350px; width: 350px; top: 10px; right: 50%; transform: translateX(50%); z-index: 1; border: white 8px double; background:  linear-gradient(45deg, #789cd0 20%, #78c3d0, #b9a4ff 90% );"></div>
-                  <div class="position-absolute rounded-circle" style="height: 360px; width: 360px; border: dashed 2px #4572c2;  top:5px; right: 50%; transform: translateX(50%); z-index: 1;"></div>
+            </swiper-slide>
+            <swiper-slide class="py-5 bg-secondary-white">
+              <div class="container">
+                <div class="row gx-76">
+                  <div class="col-6 position-relative">
+                  <div class="position-absolute rounded-circle bg-ingredient-banner2"></div>
+                  <div class="position-absolute rounded-circle border-dashed-purple"></div>
 
-                  <div class="box position-absolute"  style="height: 300px; width: 300px; left: 50%; top: 40px; transform: translateX(-50%); z-index: 1;">
+                  <div class="banner-bar bg-secondary-lightPurple" style="left: 84%; top: -10%;" ></div>
+                  <div class="banner-bar bg-white" style="left: 87%; top: -6%;" ></div>
+
+                  <div class="banner-bar bg-secondary-lightPurple" style=" left: 87%; top: -2%;" ></div>
+                  <div class="banner-bar-short bg-secondary-lightPurple" style="left: 112%; top: -2%;" ></div>
+
+                  <div class="banner-bar bg-white" style="left: 87%; top: 2%;"></div>
+
+                  <div class="banner-bar bg-secondary-lightPurple" style="left: 84%; top: 6%;"></div>
+
+                  <div class="banner-bar bg-white" style=" left: 84%; top: 10%;" ></div>
+                  <div class="banner-dot bg-white" style="left: 75%; top: 10%;" ></div>
+
+                  <div class="banner-bar bg-secondary-lightPurple" style=" left: 87%; top: 14%;" ></div>
+                  <div class="banner-bar bg-white" style=" left: 84%; top: 18%;" ></div>
+                  <div class="banner-bar bg-secondary-lightPurple" style=" left: 90%; top: 22%;" ></div>
+                  <div class="banner-bar bg-white" style="left: 97%; top: 26%;" ></div>
+                  <div class="banner-bar bg-secondary-lightPurple" style=" left: 86%; top: 30%;" ></div>
+                  <div class="banner-bar bg-white" style=" left: 86%; top: 34%;" ></div>
+
+                  <div class="banner-bar bg-secondary-lightPurple" style="left: 87%; top: 38%;" ></div>
+                  <div class="banner-dot bg-secondary-lightPurple" style="left: 110%; top: 38%;" ></div>
+
+                  <div class="banner-bar bg-white" style=" left: 89%; top: 42%;" ></div>
+                  <div class="banner-bar-short bg-white" style="left: 76%; top: 42%;" ></div>
+
+                  <div class="banner-bar bg-secondary-lightPurple" style="left: 90%; top: 46%;" ></div>
+                  <div class="banner-bar bg-white" style=" width: 90px; left: 98%; top: 50%;" ></div>
+                  <div class="banner-bar bg-secondary-lightPurple" style="left: 86%; top: 54%;" ></div>
+                  <div class="banner-bar bg-white" style=" left: 86%; top: 58%;" ></div>
+                  <div class="banner-bar bg-secondary-lightPurple" style="left: 85%; top: 62%;" ></div>
+                  <div class="banner-bar bg-white" style=" left: 95%; top: 66%;" ></div>
+                  <div class="banner-bar bg-secondary-lightPurple" style="left: 87%; top: 70%;" ></div>
+                  <div class="banner-bar bg-white" style="left: 87%; top: 74%;" ></div>
+                  <div class="banner-bar bg-secondary-lightPurple" style="left: 85%; top: 78%;" ></div>
+
+                  <div class="banner-bar bg-white" style="left: 95%; top: 82%;" ></div>
+                  <div class="banner-dot bg-white" style="left: 88%; top: 82%;" ></div>
+
+                  <div class="banner-bar bg-secondary-lightPurple" style="left: 85%; top: 86%;" ></div>
+
+                  <div class="banner-bar bg-white" style="left: 88%; top: 90%;" ></div>
+                  <div class="banner-bar bg-secondary-lightPurple" style="left: 95%; top: 94%;" ></div>
+                  <div class="banner-bar bg-white" style="left: 98%; top: 98%;" ></div>
+                  <div class="banner-bar bg-secondary-lightPurple" style="left: 91%; top: 102%;" ></div>
+                  <div class="banner-bar-short bg-secondary-lightPurple" style="left: 113%; top: 102%;" ></div>
+
+                  <div class="banner-bar bg-white" style="left: 89%; top: 106%;" ></div>
+                  <div class="banner-bar bg-secondary-lightPurple" style="left: 99%; top: 110%;" ></div>
+
+                  <div class="spin position-absolute">
                     <div class="spin-container">
-                      <div class="shape" style=" border: #4572c2;">
-                          <div class="bd" style="background-image:url('https://images.unsplash.com/photo-1678465952838-c9d7f5daaa65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80')"></div>
+                      <div class="shape">
+                          <div class="spin-img" style="background-image: url('https://images.unsplash.com/photo-1678465952838-c9d7f5daaa65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80&quot'); "></div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="" style="margin-top: 380px">
-                    <h2 class="fw-bold lh-base h1Text text-primary" style="letter-spacing:10px;">
-                      <p class="d-flex align-items-center justify-content-center">
-                        <img src="../../assets/images/cake18.png" class="me-3" style="width: 30px;" alt="">
+                  </div>
+
+                  <div class="col-6 py-5  position-relative z-index-1">
+                    <h2 class="fw-bold lh-base fs-1 text-primary letter-spacing-10">
+                      <p class="d-flex align-items-center">
+                        <img src="../../assets/images/cake18.png" class="me-3 img-35" alt="杯子蛋糕圖示">
                         免費學習
                       </p>
-                      <p class="d-flex  align-items-center justify-content-center">
+                      <p class="d-flex  align-items-center">
                         各國特色甜點食譜
-                        <img src="../../assets/images/pannaCotta12.png" class="ms-3"  style="width: 30px;" alt="">
+                        <img src="../../assets/images/pannaCotta12.png" class="ms-3 img-35" alt="布丁圖示">
                       </p>
                     </h2>
-                    <p class="text-center mb-0">詳細的甜點教學<br> 保證您學到會</p>
+                    <p class="text-center text-lg-start mb-0">詳細的甜點教學<br class="d-block d-lg-none"> 保證您學到會</p>
+                    <div class="col-10 d-none d-lg-block mt-5">
+                      <p class="mb-0">立即搜索心儀食譜！</p>
+                      <div class="card border-primary rounded-2">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-4 border-end border-primary">
+                              <p class="card-title mb-0 fs-14 text-primary">種類</p>
+                              <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="selectItem">
+                                <option selected >全部</option>
+                                <option value="台式甜點">台式甜點</option>
+                                <option value="法式甜點">法式甜點</option>
+                                <option value="美式甜點">美式甜點</option>
+                                <option value="日式甜點">日式甜點</option>
+                                <option value="義式甜點">義式甜點</option>
+                              </select>
+                            </div>
+                            <div class="col-4 border-end border-primary">
+                              <p class="card-title mb-0  fs-14 text-primary">成本或評價</p>
+                              <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="priceOrRate">
+                                <option value="成本">成本</option>
+                                <option value="評價">評價</option>
+                              </select>
+                            </div>
+                            <div class="col-4 border-primary">
+                              <p class="card-title mb-0  fs-14 text-primary">高或低</p>
+                              <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="highOrLow">
+                                <option value="不拘" selected>不拘</option>
+                                <option value="高到低">高到低</option>
+                                <option value="低到高">低到高</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card-footer rounded-2 bg-white pb-3 position-relative">
+                          <div class="border rounded-pill border-primary">
+                            <input type="search" class="form-control border-0 rounded-pill " placeholder="請輸入甜點名稱" v-model="recipeSearchName" @keyup.enter="searchRecipes">
+                            <button type="submit" class="border-0 bg-transparent position-absolute translate-middle end-0 mt-n3"  @click="searchRecipes">
+                            <span class="material-icons-outlined text-primary">search</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </swiper-slide>
-            </swiper>
-          </div>
-        </section>
-          <!-- 熱門食譜 -->
-          <section class="py-lg-96 py-5 " data-aos="fade-up">
-          <div class="container">
-            <h2 class="display-6 fw-bold d-flex flex-column flex-lg-row align-items-center  justify-content-center justify-content-lg-start">
-              <div class="d-flex align-items-center mb-2 mb-lg-0">
-                <img src="../../assets/images/image1.png" class="me-lg-4 me-2 titleImg" alt="">
-                <span class="recipeTitle">門食譜</span>
               </div>
-              <span class=" h6 ms-2 speakerText d-flex align-items-center">
-                <img src="../../assets/images/icon-speaker.png" class="speaker" alt="">
-                一鍵購買甜點材料包～
-              </span>
+            </swiper-slide>
+          </swiper>
+        </div>
+        <!-- 手機 -->
+        <div class="d-lg-none py-60 banner-swiper bg-white">
+          <swiper :slides-per-view="1" :space-between="25"
+          :modules="modules"
+          :pagination="{
+            dynamicBullets: true,
+          }"
+          navigation
+          >
+            <swiper-slide class="bg-secondary-lightPurple position-relative pb-4">
+              <div class="py-4 bg-white"></div>
+              <div class="banner-bar rotate-90 bg-white rotate-90" style="left: -45px; top: 9%;" ></div>
 
-            </h2>
+              <div class="banner-bar rotate-90 bg-secondary" style="left:-21px; top: 8%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 3px; top: 6%;" ></div>
+              <div class="banner-bar rotate-90 bg-secondary" style="left: 27px; top: 14%;" ></div>
+
+              <div class="banner-bar rotate-90 bg-white" style="left: 51px; top: 13%;" ></div>
+              <div class="banner-dot rotate-90 bg-white" style="left: 45px; top: 23%;" ></div>
+
+              <div class="banner-bar rotate-90 bg-secondary" style="left: 75px; top: 8%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 99px; top: 5%;" ></div>
+              <div class="banner-bar rotate-90 bg-secondary" style="left: 123px; top: 14%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 147px; top: 8%;" ></div>
+              <div class="banner-bar rotate-90 bg-secondary" style="left: 171px; top: 11%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 195px; top: -2%;" ></div>
+              <div class="banner-bar rotate-90 bg-secondary" style="left: 219px; top: 9%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 243px; top: 5%;" ></div>
+              <div class="banner-bar rotate-90 bg-secondary" style="left: 267px; top: 9%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 291px; top: -2%;" ></div>
+              <div class="banner-bar rotate-90 bg-secondary" style="left: 315px; top: 13%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 339px; top: 7%;" ></div>
+              <div class="banner-bar rotate-90 bg-secondary" style="left: 363px; top: 10%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 387px; top: 4%;" ></div>
+              <div class="banner-bar rotate-90 bg-secondary" style="left: 411px; top: 9%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 435px; top: -2%;" ></div>
+              <div class="banner-bar rotate-90 bg-secondary" style="left: 459px; top: 12%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 483px; top: 7%;" ></div>
+              <div class="banner-bar rotate-90 bg-secondary" style="left: 507px; top: 8%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 531px; top: 13%;" ></div>
+              <div class="banner-bar rotate-90 bg-secondary" style="left: 555px; top: 13%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 579px; top: 9%;" ></div>
+              <div class="banner-bar rotate-90 bg-secondary" style="left: 603px; top: 9%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 627px; top: 2%;" ></div>
+              <div class="banner-bar rotate-90 bg-secondary" style="left: 651px; top: 13%;" ></div>
+
+              <div class="banner-bar rotate-90 bg-white" style="left: 675px; top: 5%;" ></div>
+              <div class="banner-dot rotate-90 bg-white" style="left: 669px; top: 18%;" ></div>
+
+              <div class="banner-bar rotate-90 bg-secondary" style="left: 699px; top: 14%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 723px; top: 9%;" ></div>
+              <div class="banner-bar rotate-90 bg-secondary" style="left: 747px; top: 9%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 771px; top: 2%;" ></div>
+              <div class="banner-bar rotate-90 bg-secondary" style="left: 795px; top: 13%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 819px; top: 9%;" ></div>
+              <div class="banner-bar rotate-90 bg-secondary" style="left: 843px; top: 9%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 867px; top: 2%;" ></div>
+              <div class="banner-bar rotate-90 bg-secondary" style="left: 891px; top: 13%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 915px; top: 2%;" ></div>
+
+              <div class="rounded-circle bg-ingredient-banner1 translate-middle-x"></div>
+              <div class="rounded-circle border-dashed-purple translate-middle-x" ></div>
+              <div class="spin translate-middle-x">
+                  <div class="spin-container">
+                    <div class="shape">
+                        <div class="spin-img bg-img-150" style="background-image:url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'); "></div>
+                    </div>
+                  </div>
+              </div>
+              <div class="mt-380">
+                  <h2 class="fw-bold lh-base fs-4 text-purple letter-spacing-10">
+                    <p class="d-flex align-items-center justify-content-center">
+                      <img src="../../assets/images/makeCupcake.png" class="me-3 img-lg-50-sm-30" alt="製作甜點圖示">
+                      甜點食譜加材料
+                    </p>
+                    <p class="d-flex  align-items-center justify-content-center">
+                      一次購足好簡單
+                      <img src="../../assets/images/baking.png" class="ms-3 img-lg-50-sm-30" alt="烘焙圖示">
+                    </p>
+                  </h2>
+                  <p class="text-center mb-0">用最優惠的價格<br> 享受最高品質的食材</p>
+              </div>
+            </swiper-slide>
+            <swiper-slide class="bg-lightPurple-secondary position-relative pb-4">
+              <div class="py-4 bg-white"></div>
+              <div class="banner-bar rotate-90 bg-white rotate-90" style="left: -45px; top: 9%;" ></div>
+
+              <div class="banner-bar rotate-90 bg-lightPurple" style="left:-21px; top: 8%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 3px; top: 6%;" ></div>
+              <div class="banner-bar rotate-90 bg-lightPurple" style="left: 27px; top: 14%;" ></div>
+
+              <div class="banner-bar rotate-90 bg-white" style="left: 51px; top: 13%;" ></div>
+              <div class="banner-dot rotate-90 bg-white" style="left: 45px; top: 23%;" ></div>
+
+              <div class="banner-bar rotate-90 bg-lightPurple" style="left: 75px; top: 8%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 99px; top: 5%;" ></div>
+              <div class="banner-bar rotate-90 bg-lightPurple" style="left: 123px; top: 14%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 147px; top: 8%;" ></div>
+              <div class="banner-bar rotate-90 bg-lightPurple" style="left: 171px; top: 11%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 195px; top: -2%;" ></div>
+              <div class="banner-bar rotate-90 bg-lightPurple" style="left: 219px; top: 9%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 243px; top: 5%;" ></div>
+              <div class="banner-bar rotate-90 bg-lightPurple" style="left: 267px; top: 9%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 291px; top: -2%;" ></div>
+              <div class="banner-bar rotate-90 bg-lightPurple" style="left: 315px; top: 13%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 339px; top: 7%;" ></div>
+              <div class="banner-bar rotate-90 bg-lightPurple" style="left: 363px; top: 10%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 387px; top: 4%;" ></div>
+              <div class="banner-bar rotate-90 bg-lightPurple" style="left: 411px; top: 9%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 435px; top: -2%;" ></div>
+              <div class="banner-bar rotate-90 bg-lightPurple" style="left: 459px; top: 12%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 483px; top: 7%;" ></div>
+              <div class="banner-bar rotate-90 bg-lightPurple" style="left: 507px; top: 8%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 531px; top: 13%;" ></div>
+              <div class="banner-bar rotate-90 bg-lightPurple" style="left: 555px; top: 13%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 579px; top: 9%;" ></div>
+              <div class="banner-bar rotate-90 bg-lightPurple" style="left: 603px; top: 9%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 627px; top: 2%;" ></div>
+              <div class="banner-bar rotate-90 bg-lightPurple" style="left: 651px; top: 13%;" ></div>
+
+              <div class="banner-bar rotate-90 bg-white" style="left: 675px; top: 5%;" ></div>
+              <div class="banner-dot rotate-90 bg-white" style="left: 669px; top: 18%;" ></div>
+
+              <div class="banner-bar rotate-90 bg-lightPurple" style="left: 699px; top: 14%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 723px; top: 9%;" ></div>
+              <div class="banner-bar rotate-90 bg-lightPurple" style="left: 747px; top: 9%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 771px; top: 2%;" ></div>
+              <div class="banner-bar rotate-90 bg-lightPurple" style="left: 795px; top: 13%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 819px; top: 9%;" ></div>
+              <div class="banner-bar rotate-90 bg-lightPurple" style="left: 843px; top: 9%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 867px; top: 2%;" ></div>
+              <div class="banner-bar rotate-90 bg-lightPurple" style="left: 891px; top: 13%;" ></div>
+              <div class="banner-bar rotate-90 bg-white" style="left: 915px; top: 2%;" ></div>
+
+              <div class="rounded-circle bg-ingredient-banner2 translate-middle-x"></div>
+              <div class="rounded-circle border-dashed-primary translate-middle-x" ></div>
+              <div class="spin translate-middle-x">
+                  <div class="spin-container">
+                    <div class="shape">
+                        <div class="spin-img" style="background-image:url('https://images.unsplash.com/photo-1678465952838-c9d7f5daaa65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80'); "></div>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="mt-380">
+                  <h2 class="fw-bold lh-base fs-4 text-primary letter-spacing-10">
+                    <p class="d-flex align-items-center justify-content-center">
+                      <img src="../../assets/images/cake18.png" class="me-3 img-lg-50-sm-30" alt="杯子蛋糕圖示">
+                      免費學習
+                    </p>
+                    <p class="d-flex  align-items-center justify-content-center">
+                      各國特色甜點食譜
+                      <img src="../../assets/images/pannaCotta12.png" class="ms-3 img-lg-50-sm-30"  alt="布丁圖示">
+                    </p>
+                  </h2>
+                  <p class="text-center mb-0">詳細的甜點教學<br> 保證您學到會</p>
+              </div>
+            </swiper-slide>
+          </swiper>
+        </div>
+      </section>
+      <!-- 熱門食譜 -->
+      <!-- py-lg-96 py-5  -->
+      <section class="py-lg-96 py-60" data-aos="fade-up">
+      <div class="container">
+        <h2 class="display-6 fw-bold d-flex flex-column flex-lg-row align-items-center  justify-content-center justify-content-lg-start">
+          <div class="d-flex align-items-center mb-2 mb-lg-0">
+            <img src="../../assets/images/image1.png" class="me-lg-4 me-2 titleImg" alt="">
+            <span class="recipeTitle">門食譜</span>
           </div>
-          <div class="d-flex flex-column align-items-center" >
-            <div class="d-none d-md-none d-lg-block container horizontalSwiper">
-              <swiper :slides-per-view="4" :space-between="25"
-              :modules="modules"
-              navigation
-              style="height: 380px;"
-              :autoplay="{
-              delay: 2500,
-              disableOnInteraction: false,
-            }"
-              >
-                <swiper-slide v-for="recipe in popularRecipes" :key="recipe.id">
-                  <div class="card position-relative bg-transparent">
-                    <div class="position-absolute cardImg w-100" style=" height: 220px;">
-                      <RouterLink :to="`/recipes/${recipe.id}`" class="enlargeImg" >
-                      <img :src="recipe.image" class="position-absolute top-0 card-img border-0 object-fit-cover" style="  height: 220px !important;" :alt="recipe.title">
-                      </RouterLink>
+          <span class=" h6 ms-2 speakerText d-flex align-items-center">
+            <img src="../../assets/images/icon-speaker.png" class="speaker" alt="">
+            一鍵購買甜點材料包～
+          </span>
+
+        </h2>
+      </div>
+      <div class="d-flex flex-column align-items-center" >
+        <div class="d-none d-md-none d-lg-block container horizontalSwiper">
+          <swiper :slides-per-view="4" :space-between="25"
+          :modules="modules"
+          navigation
+          style="height: 380px;"
+          :autoplay="{
+          delay: 2500,
+          disableOnInteraction: false,
+        }"
+          >
+            <swiper-slide v-for="recipe in popularRecipes" :key="recipe.id">
+              <div class="card position-relative bg-transparent">
+                <div class="position-absolute cardImg w-100" style=" height: 220px;">
+                  <RouterLink :to="`/recipes/${recipe.id}`" class="enlargeImg" >
+                  <img :src="recipe.image" class="position-absolute top-0 card-img border-0 object-fit-cover" style="  height: 220px !important;" :alt="recipe.title">
+                  </RouterLink>
+                </div>
+                <h5 class="card-text">
+                  <p class="detail position-absolute fw-bold translate-middle start-50 bottom-50 letter-spacing-5" >查看詳細食譜</p>
+
+                    <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('recipeBookmarks',recipe)">
+                      <img src="../../assets/images/image5.png" style="width: 36px !important;" alt="收藏按鈕-未收藏">
+                    </button>
+                    <div v-for="mark in recipeBookMarks" :key="mark">
+                      <button v-if="mark === recipe.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent top-0 end-0 m-3" @click="()=>deleteBookmark('recipeBookmarks', recipe.id)">
+                          <img src="../../assets/images/image4.png" style="width: 36px !important;" alt="收藏按鈕-已收藏">
+                      </button>
                     </div>
-                    <h5 class="card-text">
-                      <p class="detail position-absolute fw-bold translate-middle start-50 bottom-50 letter-spacing-5" >查看詳細食譜</p>
-
-                        <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('recipeBookmarks',recipe)">
-                          <img src="../../assets/images/image5.png" style="width: 36px !important;" alt="收藏按鈕-未收藏">
-                        </button>
-                        <div v-for="mark in recipeBookMarks" :key="mark">
-                          <button v-if="mark === recipe.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent top-0 end-0 m-3" @click="()=>deleteBookmark('recipeBookmarks', recipe.id)">
-                              <img src="../../assets/images/image4.png" style="width: 36px !important;" alt="收藏按鈕-已收藏">
-                          </button>
-                        </div>
-                        <span class="cardTextCategory badge rounded-pill bg-primary mt-4 ms-3 position-absolute start-0 pointer-events-none">{{ recipe.category }}</span>
-                    </h5>
-                    <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent text-decoration-none link-darkBrown pt-230">
-                      <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="fw-bold mb-0">{{recipe.title}}</h5>
-                      </div>
-                      <div class="col-12 d-flex">
-                        <del class="me-2 text-muted mt-1" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
-                        <span class=" mt-1"> <span :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{ numberComma(recipe.price) }}</span> / {{ recipe.content }}</span>
-
-                        <p class="mb-0 fs-5 ms-auto">
-                          <span class="badge rounded-pill text-primary border border-primary">
-                            {{ recipe.thumbs }}
-                            <i class="bi bi-hand-thumbs-up-fill" ></i>
-                          </span>
-                        </p>
-                      </div>
-                    </RouterLink>
+                    <span class="cardTextCategory badge rounded-pill bg-primary mt-4 ms-3 position-absolute start-0 pointer-events-none">{{ recipe.category }}</span>
+                </h5>
+                <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent text-decoration-none link-darkBrown pt-230">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0">{{recipe.title}}</h5>
                   </div>
-                </swiper-slide>
-              </swiper>
-            </div>
-            <!-- 手機 橫向2 -->
-            <div class="d-lg-none d-md-block container verticalSwiper">
-              <swiper :slides-per-view="2" :space-between="25"
-              :modules="modules"
-              navigation
-              :autoplay="{
-              delay: 2500,
-              disableOnInteraction: false,
-            }"
-              style="height: 250px;"
-              >
-                <swiper-slide v-for="recipe in popularRecipes" :key="recipe.id" style="cursor: pointer;">
-                  <div class="card position-relative border-0 bg-transparent" style="border-radius: 0;">
-                    <div class="position-absolute border-0" style="width: 100%; height: 120px;">
-                      <RouterLink :to="`/recipes/${recipe.id}`" style="" >
-                        <img :src="recipe.image" class="position-absolute top-0 card-img border-0" style="object-fit: cover; height: 120px !important; border-radius: 0;" alt="">
-                      </RouterLink>
-                    </div>
-                    <h5 class="card-text">
-                        <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent top-0 end-0 m-2 m-lg-3" @click="()=>addBookmark('recipeBookmarks',recipe)">
-                          <img src="../../assets/images/image5.png" style="width: 20px !important;">
-                        </button>
-                        <div v-for="mark in recipeBookMarks" :key="mark">
-                          <button v-if="mark === recipe.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent top-0 end-0 m-2 m-lg-3" @click="()=>deleteBookmark('recipeBookmarks', recipe.id)">
-                              <img src="../../assets/images/image4.png" style="width: 20px !important;">
-                          </button>
-                        </div>
-                        <span style="pointer-events: none; top: 65px;" class=" badge rounded-pill bg-primary mt-4 border-0 ms-3 position-absolute start-0">{{ recipe.category }}</span>
-                    </h5>
-                    <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown" style="padding-top: 125px;">
-                      <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="fw-bold mb-0 cardTextTitle">{{recipe.title}}</h5>
+                  <div class="col-12 d-flex">
+                    <del class="me-2 text-muted mt-1" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
+                    <span class=" mt-1"> <span :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{ numberComma(recipe.price) }}</span> / {{ recipe.content }}</span>
 
-                      </div>
-                      <div class="col-12 cardTextPrice">
-                        <del class="me-2 text-muted mt-1 d-block" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
-                        <div class="d-flex justify-content-between align-items-center">
-                          <span> <span :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{ numberComma(recipe.price) }}</span> / {{ recipe.content }}</span>
-                        <p class="mb-0" style="font-size: 10px;">
-                          <span class="badge rounded-pill text-primary border border-primary">
-                            {{ recipe.thumbs }}
-                            <i class="bi bi-hand-thumbs-up-fill" ></i>
-                          </span>
-                        </p>
-                        </div>
-                      </div>
-                    </RouterLink>
+                    <p class="mb-0 fs-5 ms-auto">
+                      <span class="badge rounded-pill text-primary border border-primary">
+                        {{ recipe.thumbs }}
+                        <i class="bi bi-hand-thumbs-up-fill" ></i>
+                      </span>
+                    </p>
                   </div>
-                </swiper-slide>
-              </swiper>
-            </div>
-            <div class="d-flex">
-                <RouterLink to="/recipes" type="button" class="d-lg-none btn btn-primary rounded-pill px-4 mx-auto mt-3">
-                  更多食譜
                 </RouterLink>
               </div>
+            </swiper-slide>
+          </swiper>
+        </div>
+        <!-- 手機 橫向2 -->
+        <div class="d-lg-none d-md-block container verticalSwiper">
+          <swiper :slides-per-view="2" :space-between="25"
+          :modules="modules"
+          navigation
+          :autoplay="{
+          delay: 2500,
+          disableOnInteraction: false,
+        }"
+          style="height: 250px;"
+          >
+            <swiper-slide v-for="recipe in popularRecipes" :key="recipe.id" style="cursor: pointer;">
+              <div class="card position-relative border-0 bg-transparent" style="border-radius: 0;">
+                <div class="position-absolute border-0" style="width: 100%; height: 120px;">
+                  <RouterLink :to="`/recipes/${recipe.id}`" style="" >
+                    <img :src="recipe.image" class="position-absolute top-0 card-img border-0" style="object-fit: cover; height: 120px !important; border-radius: 0;" alt="">
+                  </RouterLink>
+                </div>
+                <h5 class="card-text">
+                    <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent top-0 end-0 m-2 m-lg-3" @click="()=>addBookmark('recipeBookmarks',recipe)">
+                      <img src="../../assets/images/image5.png" style="width: 20px !important;">
+                    </button>
+                    <div v-for="mark in recipeBookMarks" :key="mark">
+                      <button v-if="mark === recipe.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent top-0 end-0 m-2 m-lg-3" @click="()=>deleteBookmark('recipeBookmarks', recipe.id)">
+                          <img src="../../assets/images/image4.png" style="width: 20px !important;">
+                      </button>
+                    </div>
+                    <span style="pointer-events: none; top: 65px;" class=" badge rounded-pill bg-primary mt-4 border-0 ms-3 position-absolute start-0">{{ recipe.category }}</span>
+                </h5>
+                <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown" style="padding-top: 125px;">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0 cardTextTitle">{{recipe.title}}</h5>
+
+                  </div>
+                  <div class="col-12 cardTextPrice">
+                    <del class="me-2 text-muted mt-1 d-block" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <span> <span :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{ numberComma(recipe.price) }}</span> / {{ recipe.content }}</span>
+                    <p class="mb-0" style="font-size: 10px;">
+                      <span class="badge rounded-pill text-primary border border-primary">
+                        {{ recipe.thumbs }}
+                        <i class="bi bi-hand-thumbs-up-fill" ></i>
+                      </span>
+                    </p>
+                    </div>
+                  </div>
+                </RouterLink>
+              </div>
+            </swiper-slide>
+          </swiper>
+        </div>
+        <div class="d-flex">
+            <RouterLink to="/recipes" type="button" class="d-lg-none btn btn-primary rounded-pill px-4 mx-auto mt-3">
+              更多食譜
+            </RouterLink>
           </div>
-          </section>
-        <section class="bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
-          <!-- padding: 100px 0; -->
-          <div class="py-lg-96 py-5 container">
-            <!-- border-radius: 20px;  -->
-            <div class=" py-lg-5 py-4 border border-white rounded-5 backdrop-blur-10 bg-transGray-2"  data-aos="zoom-in-right">
-            <h2 class="h4 fw-bold text-center mb-4 questionTitle text-white text-shadow">總是花錢花時間 尋找甜點材料嗎？</h2>
-            <div class="px-5">
-              <div class="row row-cols-1 row-cols-lg-3 gy-4 fw-bold text-shadow">
-                <div class="col ps-lg-5 d-flex flex-column flex-lg-row  align-items-center">
-                  <div class="mb-2 me-lg-3">
-                    <i class="bi bi-coin fs-2 text-white"></i>
-                  </div>
-                  <span class="h5 questions text-white">
-                    花了錢卻買不到好食材...
-                  </span>
+      </div>
+      </section>
+
+      <section class="bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
+        <div class="py-lg-96 py-5 container">
+          <!-- border-radius: 20px;  -->
+          <div class=" py-lg-5 py-4 border border-white rounded-5 backdrop-blur-10 bg-transGray-2"  data-aos="zoom-in-right">
+          <h2 class="h4 fw-bold text-center mb-4 questionTitle text-white text-shadow">總是花錢花時間 尋找甜點材料嗎？</h2>
+          <div class="px-5">
+            <div class="row row-cols-1 row-cols-lg-3 gy-4 fw-bold text-shadow">
+              <div class="col ps-lg-5 d-flex flex-column flex-lg-row  align-items-center">
+                <div class="mb-2 me-lg-3">
+                  <i class="bi bi-coin fs-2 text-white"></i>
                 </div>
-                <div class="col ps-lg-5 d-flex flex-column flex-lg-row  align-items-center">
-                  <div class="mb-2 me-lg-3">
-                    <i class="bi bi-clock fs-2 text-white"></i>
-                  </div>
-                  <span class="h5 questions text-white">
-                    花時間找尋食材卻找不到...
-                  </span>
+                <span class="h5 questions text-white">
+                  花了錢卻買不到好食材...
+                </span>
+              </div>
+              <div class="col ps-lg-5 d-flex flex-column flex-lg-row  align-items-center">
+                <div class="mb-2 me-lg-3">
+                  <i class="bi bi-clock fs-2 text-white"></i>
                 </div>
-                <div class="col  ps-lg-5 d-flex flex-column flex-lg-row  align-items-center">
-                  <div class="mb-2 me-lg-3">
-                    <i class="bi bi-box-seam fs-2 text-white"></i>
-                  </div>
-                  <span class="h5 questions text-white">
-                    大包裝食材用不完好煩惱...
-                  </span>
+                <span class="h5 questions text-white">
+                  花時間找尋食材卻找不到...
+                </span>
+              </div>
+              <div class="col  ps-lg-5 d-flex flex-column flex-lg-row  align-items-center">
+                <div class="mb-2 me-lg-3">
+                  <i class="bi bi-box-seam fs-2 text-white"></i>
                 </div>
+                <span class="h5 questions text-white">
+                  大包裝食材用不完好煩惱...
+                </span>
               </div>
             </div>
-
-          </div>
           </div>
 
-        </section>
+        </div>
+        </div>
+
+      </section>
 
         <section class="py-5">
           <div class="container" >
@@ -1046,94 +1085,3 @@ export default {
 
     </div>
 </template>
-<style>
-.hvr-sweep-to-right::before{
-  background: #7555ff;
-}
-.hvr-sweep-to-right:hover {
-  color: white !important;
-}
-/* 桌面 橫向 swiper 箭頭*/
-.horizontalSwiper .swiper-button-next{
-  top:95%;
-  right:0
-}
-.horizontalSwiper .swiper-button-next::after{
-  margin-left: 50%;
-  transform: translateX(-50%);
-}
-.horizontalSwiper .swiper-button-prev{
-  top:95%;
-  left: 92%;
-}
-/* 手機 直向 swiper 箭頭 應該要改了 因為手機也改成橫向了 */
-.verticalSwiper .swiper-button-next{
-  top:95%;
-  right:0;
-}
-.verticalSwiper .swiper-button-next::after{
-  margin-left: 50%;
-  transform: translateX(-50%);
-}
-/* 因為手機是左右兩側點擊比較方便 */
-.verticalSwiper .swiper-button-prev{
-  top:95%;
-  left: 0%;
-}
-/* 輸入框提示 */
- ::placeholder {
-    /* color: #D3CCC1 !important; */
-  }
-
-.fixedQ .card{
-  position: relative;
-}
-.fixedQ .card .card-img-overlay{
-  background-image: linear-gradient(180deg , transparent, rgba(0, 0, 0,0.1), rgba(255, 255, 255, 0.9));
-}
-
-.fixedQ .card:hover .card-img-overlay{
-  background-image: linear-gradient(180deg , transparent, rgba(255, 255, 255,0.2), rgba(255, 255, 255));
-}
-.fixedQ .card .card-img-overlay h5{
-  color: #493A25;
-  transition: all ease-in-out 0.4s;
-}
-.fixedQ .card:hover .card-img-overlay h5{
-  color: #493A25 !important;
-  transform: translateY(-50px);
-  transition: all ease-in-out 0.4s;
-}
-
-/* 不能用 display:block 和 none 不然沒有漸變效果 */
-.fixedQ .card .card-img-overlay p {
-  position: absolute;
-  bottom: 0;
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.fixedQ .card:hover .card-img-overlay p {
-  opacity: 1;
-  bottom: 20px;
-  transform: translateY(0);
-  transition: all ease-in-out 0.4s;
-}
-/* swiper 頁尾點點 */
-.swiper-pagination span{
-  /* 調整顏色 */
-  --swiper-pagination-color: #4572c2;
-}
-
-.test {
-  margin: 5vh 0;
-  width: 100vw;
-  height: 90vh;
-  background: url("https://images.unsplash.com/photo-1604854391668-1beacc48417b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80") no-repeat top center;
-  background-size: cover;
-  -webkit-mask: url("https://images.unsplash.com/photo-1604854391668-1beacc48417b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80") no-repeat center center;
-  mask: url("https://images.unsplash.com/photo-1604854391668-1beacc48417b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80") no-repeat center center;
-  -webkit-mask-size: contain;
-  mask-size: contain;
-}
-</style>
