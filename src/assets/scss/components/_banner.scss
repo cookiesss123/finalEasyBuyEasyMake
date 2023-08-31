@@ -1,26 +1,21 @@
-.bg-ingredient-banner1, .bg-ingredient-banner2{
-  border: white 8px double;
-  width: 300px;
-  height: 300px;
-  position: absolute;
-  left: 50%;
-  top: 15%;
-  z-index: 3;
-}
-.bg-ingredient-banner1{
-  background: linear-gradient(45deg, #7e82f9 20%, #57a2f9, #f4a8fe 90% );
-}
-.bg-ingredient-banner2{
-  background: linear-gradient(45deg, #789cd0 20%, #78c3d0, #b9a4ff 90%);
-}
-
-.border-dashed-purple, .border-dashed-primary{
+.white-circle{
+  background: white;
   width: 320px;
   height: 320px;
   position: absolute;
-  z-index: 2;
   left: 50%;
-  top: 14%;
+  top: 15%;
+  z-index: 1;
+  border-radius: 50%;
+}
+
+.border-dashed-purple, .border-dashed-primary{
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  top: 17%;
 }
 // 虛線 紫色
 .border-dashed-purple{
@@ -34,30 +29,30 @@
 
 
 @include media-breakpoint-up(md){
-  .bg-ingredient-banner1, .bg-ingredient-banner2{
-    width: 330px;
-    height: 330px;
+  .white-circle{
+    width: 340px;
+    height: 340px;
     top: 12%;
   }
   .border-dashed-purple, .border-dashed-primary{
-    width: 350px;
-    height: 350px;
-    top: 11%;
+    width: 320px;
+    height: 320px;
+    top: 14%;
   }
 }
 // 桌機
 @include media-breakpoint-up(lg) {
-  .bg-ingredient-banner1, .bg-ingredient-banner2{
-    width: 350px;
-    height: 350px;
-    top: 10%;
-    left: 10%;
+  .white-circle{
+    width: 370px;
+    height: 370px;
+    top: 13%;
+    left: 6%;
   }
   // 虛線 紫色 主色
   .border-dashed-purple, .border-dashed-primary{
-    height: 370px; 
-    width: 370px;
-    top: 9%;
+    height: 350px; 
+    width: 350px;
+    top: 15%;
     left: 8%;
   }
   .subTitle{
@@ -104,17 +99,17 @@
 }
 }
 @include media-breakpoint-up(xl) {
-  .bg-ingredient-banner1, .bg-ingredient-banner2{
-    width: 450px;
-    height: 450px;
+  .white-circle{
+    width: 470px;
+    height: 470px;
     top: 2%; 
-    left: 7%;
+    left: 5%;
   }
   // 虛線 紫色 主色
   .border-dashed-purple, .border-dashed-primary{
-    height: 470px; 
-    width: 470px;
-    top: 0; 
+    height: 450px; 
+    width: 450px;
+    top: 4%; 
     left: 6%;
   }
 }  

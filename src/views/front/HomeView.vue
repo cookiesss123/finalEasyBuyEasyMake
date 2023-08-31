@@ -309,7 +309,9 @@ export default {
                 <div class="row gx-76">
                 <div class="col-6 position-relative">
                   <!-- 圓形 -->
-                  <div class="position-absolute rounded-circle bg-ingredient-banner1"></div>
+                  <!-- <div class="position-absolute rounded-circle bg-ingredient-banner1"></div> -->
+
+                  <div class="position-absolute white-circle"></div>
                   <div class="position-absolute rounded-circle border-dashed-purple"></div>
 
                   <!-- 長條圓形 -->
@@ -435,7 +437,7 @@ export default {
               <div class="container">
                 <div class="row gx-76">
                   <div class="col-6 position-relative">
-                  <div class="position-absolute rounded-circle bg-ingredient-banner2"></div>
+                  <div class="position-absolute white-circle"></div>
                   <div class="position-absolute rounded-circle border-dashed-purple"></div>
 
                   <div class="banner-bar bg-secondary-lightPurple" style="left: 84%; top: -10%;" ></div>
@@ -504,7 +506,7 @@ export default {
                         免費學習
                       </p>
                       <p class="d-flex  align-items-center">
-                        各國特色甜點食譜
+                        各國甜點食譜
                         <img src="../../assets/images/pannaCotta12.png" class="ms-3 img-35" alt="布丁圖示">
                       </p>
                     </h2>
@@ -559,7 +561,7 @@ export default {
           </swiper>
         </div>
         <!-- 手機 -->
-        <div class="d-lg-none py-60 banner-swiper bg-white">
+        <div class="d-lg-none py-60 banner-swiper">
           <swiper :slides-per-view="1" :space-between="25"
           :modules="modules"
           :pagination="{
@@ -568,7 +570,7 @@ export default {
           navigation
           >
             <swiper-slide class="bg-secondary-lightPurple position-relative pb-4">
-              <div class="py-4 bg-white"></div>
+              <div class="py-4 bg-white "></div>
               <div class="banner-bar rotate-90 bg-white rotate-90" style="left: -45px; top: 9%;" ></div>
 
               <div class="banner-bar rotate-90 bg-secondary" style="left:-21px; top: 8%;" ></div>
@@ -618,7 +620,7 @@ export default {
               <div class="banner-bar rotate-90 bg-secondary" style="left: 891px; top: 13%;" ></div>
               <div class="banner-bar rotate-90 bg-white" style="left: 915px; top: 2%;" ></div>
 
-              <div class="rounded-circle bg-ingredient-banner1 translate-middle-x"></div>
+              <div class="rounded-circle white-circle translate-middle-x"></div>
               <div class="rounded-circle border-dashed-purple translate-middle-x" ></div>
               <div class="spin translate-middle-x">
                   <div class="spin-container">
@@ -692,7 +694,7 @@ export default {
               <div class="banner-bar rotate-90 bg-lightPurple" style="left: 891px; top: 13%;" ></div>
               <div class="banner-bar rotate-90 bg-white" style="left: 915px; top: 2%;" ></div>
 
-              <div class="rounded-circle bg-ingredient-banner2 translate-middle-x"></div>
+              <div class="rounded-circle white-circle translate-middle-x"></div>
               <div class="rounded-circle border-dashed-primary translate-middle-x" ></div>
               <div class="spin translate-middle-x">
                   <div class="spin-container">
@@ -721,21 +723,17 @@ export default {
       </section>
       <!-- 熱門食譜 -->
       <!-- py-lg-96 py-5  -->
-      <section class="py-lg-96 py-60" data-aos="fade-up">
-      <div class="container">
-        <h2 class="display-6 fw-bold d-flex flex-column flex-lg-row align-items-center  justify-content-center justify-content-lg-start">
-          <div class="d-flex align-items-center mb-2 mb-lg-0">
-            <img src="../../assets/images/image1.png" class="me-lg-4 me-2 titleImg" alt="">
-            <span class="recipeTitle">門食譜</span>
-          </div>
-          <span class=" h6 ms-2 speakerText d-flex align-items-center">
-            <img src="../../assets/images/icon-speaker.png" class="speaker" alt="">
+      <section class="container py-lg-96 py-60" data-aos="fade-up">
+        <div class="d-lg-flex mb-2">
+          <h2 class="d-flex align-items-center justify-content-center justify-content-lg-start fw-bold">
+            <img src="../../assets/images/image1.png" class="me-lg-3 me-4 title-img" alt="熱">
+            <span class="fs-lg-1 fs-4 letter-spacing-20">門食譜</span>
+          </h2>
+          <span class="d-flex align-items-center justify-content-center fs-lg-6 fs-12">
+            <img src="../../assets/images/icon-speaker.png" style="width: 30px;" alt="大聲公圖示">
             一鍵購買甜點材料包～
           </span>
-
-        </h2>
-      </div>
-      <div class="d-flex flex-column align-items-center" >
+        </div>
         <div class="d-none d-md-none d-lg-block container horizontalSwiper">
           <swiper :slides-per-view="4" :space-between="25"
           :modules="modules"
@@ -747,7 +745,7 @@ export default {
         }"
           >
             <swiper-slide v-for="recipe in popularRecipes" :key="recipe.id">
-              <div class="card position-relative bg-transparent">
+              <div class="card position-relative">
                 <div class="position-absolute cardImg w-100" style=" height: 220px;">
                   <RouterLink :to="`/recipes/${recipe.id}`" class="enlargeImg" >
                   <img :src="recipe.image" class="position-absolute top-0 card-img border-0 object-fit-cover" style="  height: 220px !important;" :alt="recipe.title">
@@ -841,8 +839,7 @@ export default {
             <RouterLink to="/recipes" type="button" class="d-lg-none btn btn-primary rounded-pill px-4 mx-auto mt-3">
               更多食譜
             </RouterLink>
-          </div>
-      </div>
+        </div>
       </section>
 
       <section class="bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">

@@ -5,7 +5,7 @@
     z-index: 4;
     width: 250px;
     height: 250px;
-    top: 20%; 
+    top: 21%; 
     left: 50%;
 
     &::before {
@@ -74,14 +74,14 @@
     .spin{
       width: 280px;
       height: 280px;
-      top: 16%; 
+      top: 17%; 
     }
   }  
   @include media-breakpoint-up(lg) {
     .spin{
       width: 300px;
       height: 300px;
-      top: 16%; 
+      top: 20%; 
       left: 14%;
     }
   }
@@ -89,7 +89,7 @@
     .spin{
       width: 400px;
       height: 400px;
-      top: 6%; 
+      top: 9%; 
       left: 10%;
     }
   }  

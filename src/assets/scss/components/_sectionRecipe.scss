@@ -1,8 +1,4 @@
-// 第一個區塊 熱門食譜
-// 手機
-.titleImg{
-    height: 36px;
-}
+
 .recipeTitle{
     font-size: 24px;
     letter-spacing: 8px;
@@ -35,9 +31,7 @@
 
 // 電腦
 @include media-breakpoint-up(lg) {
-    .titleImg{
-        height: 64px;
-    }
+
     .recipeTitle{
         font-size: 40px;
         letter-spacing: 20px;

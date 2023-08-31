@@ -61,6 +61,9 @@
 .letter-spacing-10{
     letter-spacing: 10px;
 }
+.letter-spacing-20{
+    letter-spacing: 20px;
+}
 .pointer-events-none{
     pointer-events: none;
 }
@@ -96,6 +99,9 @@
 .z-index-1{
     z-index: 1;
 }
+.z-index-3{
+    z-index: 3;
+}
 .loadingBackdrop{
     position: fixed;
     // top: 0;
@@ -115,12 +121,15 @@
 .img-35{
     width: 35px !important;
 }
-
 //btn hover 效果
 .hvr-sweep-to-right::before{
     background: #7555ff !important;
 }
-
+// 第一個區塊 熱門食譜
+// 手機
+.title-img{
+    height: 36px;
+}
 @include media-breakpoint-up(lg) {
     // 橫向
     // 半淡紫色半淡藍色(副色 漸層 banner bar 顏色
@@ -135,5 +144,10 @@
     .img-lg-50-sm-30{
         height: 50px !important;
         width: 50px !important;
+    }
+
+    // 第一個區塊 熱門食譜
+    .title-img{
+        height: 64px;
     }
 }
