@@ -315,12 +315,12 @@ export default {
                 <h5 class="card-text mb-0">
                   <p class="detail d-none d-lg-block position-absolute fw-bold" style="top: 35%; left: 50%; transform: translateX(-50%); letter-spacing: 5px;">查看詳細食譜</p>
 
-                    <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2" @click="()=>addBookmark(recipe)">
+                    <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent end-0 top-0 m-lg-3 m-2" @click="()=>addBookmark(recipe)">
                       <img src="../../assets/images/image5.png">
                     </button>
                     <!-- 已收藏狀態 -->
                     <div v-for="mark in bookMarks" :key="mark + 4567">
-                      <button v-if="mark === recipe.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>deleteBookmark(recipe.id)">
+                      <button v-if="mark === recipe.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>deleteBookmark(recipe.id)">
                           <img src="../../assets/images/image4.png">
                       </button>
                     </div>

@@ -206,12 +206,12 @@ export default {
                   <div>
                     <p class="detail d-none d-lg-block position-absolute fw-bold" style="top: 35%; left: 50%; transform: translateX(-50%); letter-spacing: 5px;">查看詳細食譜</p>
 
-                    <button type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>openDeleteModal(recipe.id, recipe)">
+                    <button type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>openDeleteModal(recipe.id, recipe)">
                         <img src="../../assets/images/image4.png">
                     </button>
                   </div>
                     <div v-for="mark in bookMarks" :key="mark + 4567">
-                      <button v-if="mark === recipe.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>deleteBookmark(recipe.id)">
+                      <button v-if="mark === recipe.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>deleteBookmark(recipe.id)">
                           <img src="../../assets/images/image4.png">
                       </button>
                     </div>
@@ -249,7 +249,7 @@ export default {
                 <h5 class="card-text mb-0">
                   <div>
                     <p class="detail d-none d-lg-block position-absolute fw-bold" style="top: 35%; left: 50%; transform: translateX(-50%); letter-spacing: 5px;">查看商品資訊</p>
-                    <button type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>openDeleteModal(product.id, product)">
+                    <button type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>openDeleteModal(product.id, product)">
                         <img src="../../assets/images/image4.png">
                     </button>
                   </div>
@@ -257,7 +257,7 @@ export default {
                     {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                   </span>
                   <div v-for="mark in bookMarks" :key="mark">
-                    <button v-if="mark === product.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>deleteBookmark(product.id)">
+                    <button v-if="mark === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>deleteBookmark(product.id)">
                         <img src="../../assets/images/image4.png">
                     </button>
                   </div>

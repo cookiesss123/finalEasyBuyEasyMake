@@ -1,13 +1,11 @@
 // 漸層 btn
 .btn-gradient{
     font-weight: bold;
-    // background: $primary;
     border-radius: 6px;
     background: linear-gradient(to right, $primary , $purple);
     color: white !important; 
     transition: all .4s ease-in-out;
     &:hover{
-        // background: linear-gradient(to left, $primary 40%, #5a5ad0 60%);
         background: linear-gradient(to right, rgb(73, 133, 237), rgb(79, 79, 210));
     }
 }

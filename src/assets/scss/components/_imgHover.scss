@@ -1,19 +1,60 @@
 
-.card .cardImg{
-  // opacity: 0.9;
-  overflow:hidden;
+.card{
+  .card-img-hover{
+    overflow: hidden;
+    .card-img{
+      height: 120px !important;
+      transition: all .4s ease-out;
+    }
+  }
+  .detail{
+    opacity: 0;
+    transition: all .3s ease-out;
+  }
+  &:hover{
+    .card-img-hover{
+      .card-img{
+        opacity: .5;
+        transform: scale(1.2);
+      }
+    }
+    .detail{
+      opacity: 1;
+    }
+  }
 }
-.card:hover .cardImg,.card:hover .cardTextCategory{
-  opacity: .5;
-}
-.detail{
-  opacity: 0;
-  // 有時候不能點購物車 不知道為甚麼
-  pointer-events: none;
-}
-.card:hover .detail{
-  opacity: 1;
-}
+// .card-img-hover{
+//   overflow: hidden;
+//   .card-img{
+//     height: 220px !important;
+//     transition: all .4s ease-out;
+//   }
+//   .detail{
+//     opacity: 0;
+//     transition: all .3s ease-out;
+//   }
+//   &:hover{
+//     .card-img{
+//       opacity: .5;
+//       transform: scale(1.2);
+//     }
+
+//     .detail{
+//       opacity: 1;
+//     }
+//   }
+// }
+// .card .cardImg{
+//   overflow:hidden;
+// }
+// .card:hover .cardImg,.card:hover .cardTextCategory{
+//   opacity: .5;
+// }
+
+// .detail{
+//   opacity: 0;
+//   pointer-events: none;
+// }
 // 單一產品或食譜關聯食譜、產品資訊
 .subDetail{
   opacity: 0;
@@ -27,31 +68,32 @@
 }
 // 僅限 食譜、產品物件 其他盡量不要是 card 結構
 
-.enlargeImg{
-  width: 300px;
-  overflow:hidden;
-}
-.card .cardImg img{
-  transform:scale(1,1);
-  transition: all .4s ease-out;
-}
-.card:hover .enlargeImg img{
-  transform:scale(1.2,1.2);
-}
+// .enlargeImg{
+//   width: 300px;
+//   overflow:hidden;
+// }
+
+// .card .cardImg img{
+//   transform:scale(1,1);
+//   transition: all .4s ease-out;
+// }
+// .card:hover .enlargeImg img{
+//   transform:scale(1.2,1.2);
+// }
 
 // 食譜和產品的圖片
-.cardImg .card-img{
-  height: 120px;
-}
+// .cardImg .card-img{
+//   height: 120px;
+// }
 // 產品 折
 .card-text span{
   font-size: 10px;
 }
 // 食譜分類
-.card-text .cardTextCategory{
-  pointer-events:none;
-  top: 65px;
-}
+// .card-text .cardTextCategory{
+//   pointer-events:none;
+//   top: 65px;
+// }
 
 // 產品、食譜 title 記得之後home 也要加
 // 10 改成 12
@@ -72,13 +114,31 @@
   font-size: 14px;
 }
 
-
+// 平板
+@include media-breakpoint-up(md) {
+  .card{
+    .card-img-hover{
+      .card-img{
+        height: 220px !important;
+      }
+    }
+  }
+}
 // 桌機
 @include media-breakpoint-up(lg) {
-  // 食譜和產品的圖片
-  .cardImg .card-img{
-    height: 220px;
+  .card{
+    .card-img-hover{
+      .card-img{
+        height: 220px !important;
+      }
+    }
   }
+ 
+
+  // 食譜和產品的圖片
+  // .cardImg .card-img{
+  //   height: 220px;
+  // }
  // 產品 折
 .card-text span{
   font-size: 14px;

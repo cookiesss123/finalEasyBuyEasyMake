@@ -722,8 +722,8 @@ export default {
         </div>
       </section>
       <!-- 熱門食譜 -->
-      <!-- py-lg-96 py-5  -->
-      <section class="container py-lg-96 py-60" data-aos="fade-up">
+      <!-- py-lg-96 py-5 -->
+      <section class="container py-md-96 py-60" data-aos="fade-up">
         <div class="d-lg-flex mb-2">
           <h2 class="d-flex align-items-center justify-content-center justify-content-lg-start fw-bold">
             <img src="../../assets/images/image1.png" class="me-lg-3 me-4 title-img" alt="熱">
@@ -734,109 +734,89 @@ export default {
             一鍵購買甜點材料包～
           </span>
         </div>
-        <div class="d-none d-md-none d-lg-block container horizontalSwiper">
-          <swiper :slides-per-view="4" :space-between="25"
-          :modules="modules"
-          navigation
-          style="height: 380px;"
-          :autoplay="{
-          delay: 2500,
-          disableOnInteraction: false,
-        }"
-          >
-            <swiper-slide v-for="recipe in popularRecipes" :key="recipe.id">
-              <div class="card position-relative">
-                <div class="position-absolute cardImg w-100" style=" height: 220px;">
-                  <RouterLink :to="`/recipes/${recipe.id}`" class="enlargeImg" >
-                  <img :src="recipe.image" class="position-absolute top-0 card-img border-0 object-fit-cover" style="  height: 220px !important;" :alt="recipe.title">
-                  </RouterLink>
-                </div>
-                <h5 class="card-text">
-                  <p class="detail position-absolute fw-bold translate-middle start-50 bottom-50 letter-spacing-5" >查看詳細食譜</p>
-
-                    <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('recipeBookmarks',recipe)">
-                      <img src="../../assets/images/image5.png" style="width: 36px !important;" alt="收藏按鈕-未收藏">
-                    </button>
-                    <div v-for="mark in recipeBookMarks" :key="mark">
-                      <button v-if="mark === recipe.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent top-0 end-0 m-3" @click="()=>deleteBookmark('recipeBookmarks', recipe.id)">
-                          <img src="../../assets/images/image4.png" style="width: 36px !important;" alt="收藏按鈕-已收藏">
-                      </button>
-                    </div>
-                    <span class="cardTextCategory badge rounded-pill bg-primary mt-4 ms-3 position-absolute start-0 pointer-events-none">{{ recipe.category }}</span>
-                </h5>
-                <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent text-decoration-none link-darkBrown pt-230">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="fw-bold mb-0">{{recipe.title}}</h5>
-                  </div>
-                  <div class="col-12 d-flex">
-                    <del class="me-2 text-muted mt-1" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
-                    <span class=" mt-1"> <span :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{ numberComma(recipe.price) }}</span> / {{ recipe.content }}</span>
-
-                    <p class="mb-0 fs-5 ms-auto">
-                      <span class="badge rounded-pill text-primary border border-primary">
-                        {{ recipe.thumbs }}
-                        <i class="bi bi-hand-thumbs-up-fill" ></i>
-                      </span>
-                    </p>
-                  </div>
-                </RouterLink>
-              </div>
-            </swiper-slide>
-          </swiper>
-        </div>
-        <!-- 手機 橫向2 -->
-        <div class="d-lg-none d-md-block container verticalSwiper">
-          <swiper :slides-per-view="2" :space-between="25"
+        <!-- 桌機 -->
+        <swiper :slides-per-view="4" :space-between="25"
           :modules="modules"
           navigation
           :autoplay="{
           delay: 2500,
           disableOnInteraction: false,
         }"
-          style="height: 250px;"
+        class="d-none d-lg-block swiper-home"
           >
-            <swiper-slide v-for="recipe in popularRecipes" :key="recipe.id" style="cursor: pointer;">
-              <div class="card position-relative border-0 bg-transparent" style="border-radius: 0;">
-                <div class="position-absolute border-0" style="width: 100%; height: 120px;">
-                  <RouterLink :to="`/recipes/${recipe.id}`" style="" >
-                    <img :src="recipe.image" class="position-absolute top-0 card-img border-0" style="object-fit: cover; height: 120px !important; border-radius: 0;" alt="">
-                  </RouterLink>
-                </div>
-                <h5 class="card-text">
-                    <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent top-0 end-0 m-2 m-lg-3" @click="()=>addBookmark('recipeBookmarks',recipe)">
-                      <img src="../../assets/images/image5.png" style="width: 20px !important;">
-                    </button>
-                    <div v-for="mark in recipeBookMarks" :key="mark">
-                      <button v-if="mark === recipe.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent top-0 end-0 m-2 m-lg-3" @click="()=>deleteBookmark('recipeBookmarks', recipe.id)">
-                          <img src="../../assets/images/image4.png" style="width: 20px !important;">
-                      </button>
-                    </div>
-                    <span style="pointer-events: none; top: 65px;" class=" badge rounded-pill bg-primary mt-4 border-0 ms-3 position-absolute start-0">{{ recipe.category }}</span>
-                </h5>
-                <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown" style="padding-top: 125px;">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="fw-bold mb-0 cardTextTitle">{{recipe.title}}</h5>
-
-                  </div>
-                  <div class="col-12 cardTextPrice">
-                    <del class="me-2 text-muted mt-1 d-block" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <span> <span :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{ numberComma(recipe.price) }}</span> / {{ recipe.content }}</span>
-                    <p class="mb-0" style="font-size: 10px;">
-                      <span class="badge rounded-pill text-primary border border-primary">
-                        {{ recipe.thumbs }}
-                        <i class="bi bi-hand-thumbs-up-fill" ></i>
-                      </span>
-                    </p>
-                    </div>
-                  </div>
-                </RouterLink>
+          <swiper-slide v-for="recipe in popularRecipes" :key="recipe.id">
+            <div class="card position-relative">
+              <RouterLink :to="`/recipes/${recipe.id}`" class="card-img-hover position-relative">
+                <img :src="recipe.image" class="object-fit-cover card-img" :alt="recipe.title">
+                <span class="badge fs-6 rounded-pill bg-primary position-absolute start-0 bottom-0 m-3">{{ recipe.category }}</span>
+                <p class="detail position-absolute top-50 start-50 translate-middle fw-bold letter-spacing-5 link-darkBrown fs-xl-5 text-center">查看<br class="d-xl-none d-lg-block">詳細食譜</p>
+              </RouterLink>
+              <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('recipeBookmarks',recipe)">
+                <img src="../../assets/images/image5.png" alt="收藏按鈕-未收藏">
+              </button>
+              <div v-for="mark in recipeBookMarks" :key="mark">
+                <button v-if="mark === recipe.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-3" @click="()=>deleteBookmark('recipeBookmarks', recipe.id)">
+                    <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
+                </button>
               </div>
-            </swiper-slide>
-          </swiper>
-        </div>
+
+              <RouterLink :to="`/recipes/${recipe.id}`" class="card-body px-0 text-decoration-none link-darkBrown">
+                <h3 class="fw-bold fs-5">{{recipe.title}}</h3>
+                <div class="d-flex align-items-center fs-xl-6 fs-lg-12">
+                  <del class="me-2 text-muted" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
+                  <span class="me-1" :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{ numberComma(recipe.price) }}</span>
+                  <span> / {{ recipe.content }}</span>
+                  <span class="badge rounded-pill text-primary border border-primary ms-auto bg-secondary">
+                    {{ recipe.thumbs }}
+                    <i class="bi bi-hand-thumbs-up-fill" ></i>
+                  </span>
+                </div>
+              </RouterLink>
+            </div>
+          </swiper-slide>
+        </swiper>
+        <!-- 平板、手機 -->
+        <swiper :slides-per-view="2" :space-between="25"
+        :modules="modules"
+        navigation
+        :autoplay="{
+        delay: 2500,
+        disableOnInteraction: false,
+      }"
+        class="d-lg-none d-block swiper-home"
+        >
+          <swiper-slide v-for="recipe in popularRecipes" :key="recipe.id">
+            <div class="card position-relative">
+              <RouterLink :to="`/recipes/${recipe.id}`" class="card-img-hover position-relative">
+                <img :src="recipe.image" class="object-fit-cover card-img" :alt="recipe.title">
+                <span class="badge fs-md-6 rounded-pill bg-primary position-absolute start-0 bottom-0 m-2 m-md-3">{{ recipe.category }}</span>
+                <p class="detail d-none d-md-block position-absolute top-50 start-50 translate-middle fw-bold letter-spacing-5 link-darkBrown">查看詳細食譜</p>
+              </RouterLink>
+              <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-lg-3" @click="()=>addBookmark('recipeBookmarks',recipe)">
+                <img src="../../assets/images/image5.png" alt="收藏按鈕-未收藏">
+              </button>
+              <div v-for="mark in recipeBookMarks" :key="mark">
+                <button v-if="mark === recipe.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-lg-3" @click="()=>deleteBookmark('recipeBookmarks', recipe.id)">
+                    <img src="../../assets/images/image4.png"  alt="收藏按鈕-已收藏">
+                </button>
+              </div>
+              <RouterLink :to="`/recipes/${recipe.id}`" class="card-body px-0 py-2 py-md-3 text-decoration-none link-darkBrown">
+                <h3 class="fw-bold fs-md-5 fs-6">{{recipe.title}}</h3>
+                <div class="d-flex align-items-center flex-wrap fs-md-6 fs-12">
+                  <del class="me-2 text-muted" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
+                  <span class="me-1" :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{ numberComma(recipe.price) }}</span>
+                  <span> / {{ recipe.content }}</span>
+                  <span class="badge rounded-pill text-primary border border-primary ms-auto bg-secondary mt-1 mt-md-0">
+                    {{ recipe.thumbs }}
+                    <i class="bi bi-hand-thumbs-up-fill" ></i>
+                  </span>
+                </div>
+              </RouterLink>
+            </div>
+          </swiper-slide>
+        </swiper>
         <div class="d-flex">
-            <RouterLink to="/recipes" type="button" class="d-lg-none btn btn-primary rounded-pill px-4 mx-auto mt-3">
+            <RouterLink to="/recipes" type="button" class="d-lg-none btn btn-gradient rounded-pill px-4 mx-auto mt-4">
               更多食譜
             </RouterLink>
         </div>
@@ -844,93 +824,89 @@ export default {
 
       <section class="bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
         <div class="py-lg-96 py-5 container">
-          <!-- border-radius: 20px;  -->
-          <div class=" py-lg-5 py-4 border border-white rounded-5 backdrop-blur-10 bg-transGray-2"  data-aos="zoom-in-right">
-          <h2 class="h4 fw-bold text-center mb-4 questionTitle text-white text-shadow">總是花錢花時間 尋找甜點材料嗎？</h2>
+          <div class="py-lg-5 py-4 border border-white rounded-5 backdrop-blur-5 bg-transGray-2"  data-aos="zoom-in-right">
+          <h2 class="fs-lg-1 fs-md-3 fs-5 fw-bold text-center mb-4 text-white text-shadow">總是花錢花時間 尋找甜點材料嗎？</h2>
           <div class="px-5">
-            <div class="row row-cols-1 row-cols-lg-3 gy-4 fw-bold text-shadow">
-              <div class="col ps-lg-5 d-flex flex-column flex-lg-row  align-items-center">
-                <div class="mb-2 me-lg-3">
+            <ul class="row row-cols-1 row-cols-lg-3 gy-4 list-unstyled text-shadow ">
+              <li class="col d-flex flex-column flex-lg-row align-items-center justify-content-center">
+                <div class="mb-2 me-lg-3 mb-lg-0">
                   <i class="bi bi-coin fs-2 text-white"></i>
                 </div>
-                <span class="h5 questions text-white">
+                <span class="fs-lg-5 fs-14 text-white">
                   花了錢卻買不到好食材...
                 </span>
-              </div>
-              <div class="col ps-lg-5 d-flex flex-column flex-lg-row  align-items-center">
-                <div class="mb-2 me-lg-3">
+              </li>
+              <li class="col d-flex flex-column flex-lg-row  align-items-center justify-content-center">
+                <div class="mb-2 me-lg-3 mb-lg-0">
                   <i class="bi bi-clock fs-2 text-white"></i>
                 </div>
-                <span class="h5 questions text-white">
+                <span class="fs-lg-5 fs-14 text-white">
                   花時間找尋食材卻找不到...
                 </span>
-              </div>
-              <div class="col  ps-lg-5 d-flex flex-column flex-lg-row  align-items-center">
-                <div class="mb-2 me-lg-3">
+              </li>
+              <li class="col  d-flex flex-column flex-lg-row  align-items-center justify-content-center">
+                <div class="mb-2 me-lg-3 mb-lg-0">
                   <i class="bi bi-box-seam fs-2 text-white"></i>
                 </div>
-                <span class="h5 questions text-white">
+                <span class="fs-lg-5 fs-14 text-white">
                   大包裝食材用不完好煩惱...
                 </span>
-              </div>
-            </div>
+              </li>
+            </ul>
           </div>
 
         </div>
         </div>
-
       </section>
 
-        <section class="py-5">
-          <div class="container" >
-            <h2 class="fw-bold fixedTitle mb-4 text-center mb-5 "  data-aos="fade-up" data-aos-anchor-placement="center-center">
-              <p><i class="bi bi-chevron-double-down"></i></p>
-              一站解決你的所有問題
-            </h2>
-            <ul class="list-unstyled">
-              <li class="row mb-5"  data-aos="fade-up" data-aos-anchor-placement="center-center">
-                <div class="col d-none d-lg-block"></div>
-                <div class="col">
-                  <img src="../../assets/images/feature-image1.png" style="  height: 240px;" class="card-img rounded-5 object-fit-cover" alt="食譜">
+      <section class="py-5 container">
+          <h2 class="fw-bold fixedTitle mb-4 text-center mb-5" data-aos="fade-up" data-aos-anchor-placement="center-center">
+            <p><i class="bi bi-chevron-double-down"></i></p>
+            一站解決你的所有問題
+          </h2>
+          <ul class="list-unstyled">
+            <li class="row mb-5"  data-aos="fade-up" data-aos-anchor-placement="center-center">
+              <div class="col d-none d-lg-block"></div>
+              <div class="col">
+                <img src="../../assets/images/feature-image1.png" style="  height: 240px;" class="card-img rounded-5 object-fit-cover" alt="食譜">
+              </div>
+                <div class="col d-flex flex-column justify-content-center ">
+                  <h5 class="card-title fw-bold contentTitle mb-3">立即取得食譜材料</h5>
+                  <p class="card-text speakerText">使用首頁上方搜尋欄尋找食譜，所有食譜皆有列出製作材料、工具，點擊購買即可一次買齊。</p>
                 </div>
-                  <div class="col d-flex flex-column justify-content-center ">
-                    <h5 class="card-title fw-bold contentTitle mb-3">立即取得食譜材料</h5>
-                    <p class="card-text speakerText">使用首頁上方搜尋欄尋找食譜，所有食譜皆有列出製作材料、工具，點擊購買即可一次買齊。</p>
-                  </div>
-              </li>
-              <li class="row mb-5" data-aos="fade-up" data-aos-anchor-placement="center-center">
-                <div class="col">
-                  <img src="../../assets/images/feature-image2.png" style="  height: 240px;" class="card-img rounded-5 object-fit-cover" alt="食材">
+            </li>
+            <li class="row mb-5" data-aos="fade-up" data-aos-anchor-placement="center-center">
+              <div class="col">
+                <img src="../../assets/images/feature-image2.png" style="  height: 240px;" class="card-img rounded-5 object-fit-cover" alt="食材">
+              </div>
+                <div class="col d-flex flex-column justify-content-center ">
+                  <h5 class="card-title fw-bold contentTitle mb-3">便宜且份量適中的食材</h5>
+                  <p class="card-text speakerText">使用首頁上方搜尋欄尋找食譜，所有食譜皆有列出製作材料、工具，點擊購買即可一次買齊。</p>
                 </div>
-                  <div class="col d-flex flex-column justify-content-center ">
-                    <h5 class="card-title fw-bold contentTitle mb-3">便宜且份量適中的食材</h5>
-                    <p class="card-text speakerText">使用首頁上方搜尋欄尋找食譜，所有食譜皆有列出製作材料、工具，點擊購買即可一次買齊。</p>
-                  </div>
-                <div class="col d-none d-lg-block"></div>
-              </li>
-              <li class="row mb-5"  data-aos="fade-up" data-aos-anchor-placement="center-center">
-                <div class="col d-none d-lg-block"></div>
-                <div class="col">
-                  <img src="../../assets/images/feature-image3.png" style="  height: 240px;" class="card-img rounded-5 object-fit-cover" alt="影片教學">
+              <div class="col d-none d-lg-block"></div>
+            </li>
+            <li class="row mb-5"  data-aos="fade-up" data-aos-anchor-placement="center-center">
+              <div class="col d-none d-lg-block"></div>
+              <div class="col">
+                <img src="../../assets/images/feature-image3.png" style="  height: 240px;" class="card-img rounded-5 object-fit-cover" alt="影片教學">
+              </div>
+                <div class="col d-flex flex-column justify-content-center ">
+                  <h5 class="card-title fw-bold contentTitle mb-3">甜點食譜＋影片教學</h5>
+                  <p class="card-text speakerText">免費甜點食譜和完整講解的影片教學，一定帶你學到會！不上烘焙課也能有良好的製作體驗。</p>
                 </div>
-                  <div class="col d-flex flex-column justify-content-center ">
-                    <h5 class="card-title fw-bold contentTitle mb-3">甜點食譜＋影片教學</h5>
-                    <p class="card-text speakerText">免費甜點食譜和完整講解的影片教學，一定帶你學到會！不上烘焙課也能有良好的製作體驗。</p>
-                  </div>
-              </li>
-              <li class="row"  data-aos="fade-up" data-aos-anchor-placement="center-center">
-                <div class="col">
-                  <img src="../../assets/images/feature-image4.png" style=" height: 240px;" class="card-img rounded-5 object-fit-cover" alt="甜點">
+            </li>
+            <li class="row"  data-aos="fade-up" data-aos-anchor-placement="center-center">
+              <div class="col">
+                <img src="../../assets/images/feature-image4.png" style=" height: 240px;" class="card-img rounded-5 object-fit-cover" alt="甜點">
+              </div>
+                <div class="col d-flex flex-column justify-content-center ">
+                  <h5 class="card-title fw-bold contentTitle mb-3">優惠不間斷</h5>
+                  <p class="card-text speakerText">消費滿千元免運費！每月抽獎活動，享價值千元以上好禮！買越多賺越多！</p>
                 </div>
-                  <div class="col d-flex flex-column justify-content-center ">
-                    <h5 class="card-title fw-bold contentTitle mb-3">優惠不間斷</h5>
-                    <p class="card-text speakerText">消費滿千元免運費！每月抽獎活動，享價值千元以上好禮！買越多賺越多！</p>
-                  </div>
-                <div class="col d-none d-lg-block"></div>
-              </li>
-            </ul>
-        </div>
-        </section>
+              <div class="col d-none d-lg-block"></div>
+            </li>
+          </ul>
+      </section>
 
         <section class="mt-96 bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1678465952975-85cc1a08b2d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');">
           <div class="w-100 d-flex flex-column justify-content-center align-items-center py-lg-96 py-5 bg-transGray-2">
@@ -956,7 +932,7 @@ export default {
             </h2>
           </div>
           <div class="d-flex flex-column align-items-center" >
-            <div class="d-none d-md-none d-lg-block container horizontalSwiper">
+            <div class="d-none d-md-none d-lg-block container swiper-home">
                 <swiper :slides-per-view="4" :space-between="25"
                 :modules="modules"
                 navigation
@@ -977,14 +953,14 @@ export default {
                 <h5 class="card-text">
                   <p class="detail position-absolute fw-bold" style="top: 35%; left: 50%; transform: translateX(-50%); letter-spacing: 5px;">查看商品資訊</p>
 
-                  <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('productBookmarks' ,product)">
+                  <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('productBookmarks' ,product)">
                     <img src="../../assets/images/image5.png" style="width: 36px !important;">
                   </button>
                   <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex flex-column align-items-center text-white p-2 bg-primary  me-3 position-absolute top-0 start-0">
                     {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                   </span>
                   <div v-for="mark in productBookmarks" :key="mark">
-                    <button v-if="mark === product.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent top-0 end-0 m-3"  @click="()=>deleteBookmark('productBookmarks', product.id)">
+                    <button v-if="mark === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-3"  @click="()=>deleteBookmark('productBookmarks', product.id)">
                         <img src="../../assets/images/image4.png" style="width: 36px !important;">
                     </button>
                   </div>
@@ -1036,14 +1012,14 @@ export default {
                       </div>
 
                 <h5 class="card-text">
-                  <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent top-0 end-0 m-2 m-lg-3" @click="()=>addBookmark('productBookmarks' ,product)">
+                  <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-lg-3" @click="()=>addBookmark('productBookmarks' ,product)">
                     <img src="../../assets/images/image5.png" style="width: 20px !important;">
                   </button>
                   <span v-if="product.isCheaper" style="pointer-events: none; font-size: 10px;" class="d-flex flex-column align-items-center text-white p-2 bg-primary  me-3 position-absolute top-0 start-0 ">
                     {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                   </span>
                   <div v-for="mark in productBookmarks" :key="mark">
-                    <button v-if="mark === product.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent top-0 end-0 m-2 m-lg-3"  @click="()=>deleteBookmark('productBookmarks', product.id)">
+                    <button v-if="mark === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-lg-3"  @click="()=>deleteBookmark('productBookmarks', product.id)">
                         <img src="../../assets/images/image4.png" style="width: 20px !important;">
                     </button>
                   </div>

@@ -1,76 +1,87 @@
-// 首頁 橫向 swiper 箭頭
-.horizontalSwiper {
-  .swiper-button-next{
-    top:95%;
-    right:0;
-    &::after{
-      margin-left: 50%;
-      transform: translateX(-50%);
-    }
-  }
-  .swiper-button-prev{
-    top:95%;
-    left: 92%;
-  }
-  
-}
-// 手機 直向 swiper 箭頭 應該要改了 因為手機也改成橫向了
-.verticalSwiper{
-  .swiper-button-next{
-    top:95%;
-    right:0;
-    &::after{
-      margin-left: 50%;
-      transform: translateX(-50%);
-    }
-  }
-  // 因為手機是左右兩側點擊比較方便
-  .swiper-button-prev{
-    top:95%;
-    left: 0%;
-  }
-}
-// swiper 頁尾點點
+// - 所有設定
+
+// 頁尾點點
 .swiper-pagination span{
-  --swiper-pagination-color: #4572c2;
+  --swiper-pagination-color: $primary;
 }
 
-/* 全部的圖片 */
-.swiper-slide img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  /* 統一圖片 高度100px */
-  .swiper {
-    // height: 100px;
-  }
-  /* 相關食譜 桌面 改箭頭樣式要用 ::after 偽元素 */
-  .swiper-button-next::after, .swiper-button-prev::after{
+// 左右按鈕
+.swiper-button-next, .swiper-button-prev{
+  background: $primary;
+  border-radius: 30px;
+  width: 20px !important;
+  height:20px !important;
+  position: absolute !important;
+  /* 要加 important 否則點入換頁會有問題 */
+  
+  // 所有箭頭樣式
+  &::after{
     font-size: 10px !important;
     color: white;
   }
-  .swiper-button-next, .swiper-button-prev{
-    background: #4572c2;
-    border-radius: 30px;
-    width: 20px !important;
-    height:20px !important;
-    padding: 0px;
-    position: absolute !important;
-    /* 要加 important 否則點入換頁會有問題 */
+  &:hover{
+    background: linear-gradient(to right, $primary , $purple);
   }
+}
+// 下一頁白色箭頭
+.swiper-button-next::after{
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
 
-// 除了首頁的手機swiper 有包含副圖 產品、食譜
-@include media-breakpoint-up(lg) {
+
+// 首頁 swiper
+.swiper-home {
+  height: 250px;
+  // 箭頭位置 手機兩側點更方便
+  .swiper-button-next{
+    top:95%;
+    right: 0;
+  }
+  .swiper-button-prev{
+    top:95%;
+    left: 0;
+  }
+}
+// 手機 直向 swiper 箭頭 應該要改了 因為手機也改成橫向了
+// .verticalSwiper{
+//   .swiper-button-next{
+//     top:95%;
+//     right:0;
+//     &::after{
+//       margin-left: 50%;
+//       transform: translateX(-50%);
+//     }
+//   }
+//   .swiper-button-prev{
+//     top:95%;
+//     left: 0%;
+//   }
+// }
+
+@include media-breakpoint-up(md) {
   .swiper-button-next, .swiper-button-prev{
     width: 30px !important;
     height:30px !important;
+    &::after{
+      font-size: 15px !important;
+      color: white;
+    }
   }
-
-  .swiper-button-next::after, .swiper-button-prev::after{
-    font-size: 15px !important;
-    color: white;
+    // 首頁 swiper 
+    .swiper-home {
+      height: 380px;
+      .swiper-button-prev{
+        left: 85%;
+      }
+    }
+}
+// 除了首頁的手機swiper 有包含副圖 產品、食譜
+@include media-breakpoint-up(lg) {
+  // 首頁 swiper 
+  .swiper-home {
+    .swiper-button-prev{
+      left: 90%;
+    }
   }
-
 }

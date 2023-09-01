@@ -353,14 +353,14 @@ export default {
               <h5 class="card-text mb-0">
                 <p class="detail d-none d-lg-block position-absolute fw-bold" style="top: 35%; left: 50%; transform: translateX(-50%); letter-spacing: 5px;">查看商品資訊</p>
 
-                <button type="button" class="position-absolute bookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2" @click="()=>addBookmark(product)">
+                <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent end-0 top-0 m-lg-3 m-2" @click="()=>addBookmark(product)">
                   <img src="../../assets/images/image5.png">
                 </button>
                 <span v-if="product.isCheaper" style="pointer-events: none;" class="d-flex flex-column align-items-center text-white p-2 bg-primary  position-absolute top-0 start-0">
                   {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                 </span>
                 <div v-for="mark in bookMarks" :key="mark">
-                  <button v-if="mark === product.id" type="button" class="position-absolute deleteBookmarkBtn border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>deleteBookmark(product.id)">
+                  <button v-if="mark === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>deleteBookmark(product.id)">
                       <img src="../../assets/images/image4.png">
                   </button>
                 </div>
