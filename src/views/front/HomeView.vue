@@ -859,56 +859,65 @@ export default {
         </div>
       </section>
 
-      <section class="py-5 container">
-          <h2 class="fw-bold fixedTitle mb-4 text-center mb-5" data-aos="fade-up" data-aos-anchor-placement="center-center">
-            <p><i class="bi bi-chevron-double-down"></i></p>
-            一站解決你的所有問題
+      <section class="py-lg-96 py-60 container">
+          <h2 class="fw-bold fs-md-3 fs-5 text-center mb-md-5 mb-4" data-aos="fade-up">
+            <i class="bi bi-chevron-double-down"></i>
+            <p class="mt-3">一站解決你的所有問題</p>
           </h2>
-          <ul class="list-unstyled">
-            <li class="row mb-5"  data-aos="fade-up" data-aos-anchor-placement="center-center">
-              <div class="col d-none d-lg-block"></div>
-              <div class="col">
-                <img src="../../assets/images/feature-image1.png" style="  height: 240px;" class="card-img rounded-5 object-fit-cover" alt="食譜">
-              </div>
-                <div class="col d-flex flex-column justify-content-center ">
-                  <h5 class="card-title fw-bold contentTitle mb-3">立即取得食譜材料</h5>
-                  <p class="card-text speakerText">使用首頁上方搜尋欄尋找食譜，所有食譜皆有列出製作材料、工具，點擊購買即可一次買齊。</p>
+          <ul class="list-unstyled row gy-5">
+            <li class="col-12"  data-aos="fade-up">
+              <div class="row">
+                <div class="col-lg-4 col-md-6 d-none d-lg-block"></div>
+                <div class="col-lg-4 col-md-6 mb-3 mb-md-0">
+                  <img src="../../assets/images/feature-image1.png" class="w-100 rounded-5 img-240 object-fit-cover" alt="食譜">
                 </div>
+                <div class="col-lg-4 col-md-6 d-flex flex-column justify-content-center">
+                  <h5 class="fw-bold fs-md-4 fs-6 mb-md-3">立即取得食譜材料</h5>
+                  <p class="fs-md-6 fs-12 mb-0">使用首頁上方搜尋欄尋找食譜，所有食譜皆有列出製作材料、工具，點擊購買即可一次買齊。</p>
+                </div>
+              </div>
             </li>
-            <li class="row mb-5" data-aos="fade-up" data-aos-anchor-placement="center-center">
-              <div class="col">
-                <img src="../../assets/images/feature-image2.png" style="  height: 240px;" class="card-img rounded-5 object-fit-cover" alt="食材">
-              </div>
-                <div class="col d-flex flex-column justify-content-center ">
-                  <h5 class="card-title fw-bold contentTitle mb-3">便宜且份量適中的食材</h5>
-                  <p class="card-text speakerText">使用首頁上方搜尋欄尋找食譜，所有食譜皆有列出製作材料、工具，點擊購買即可一次買齊。</p>
+            <li class="col-12" data-aos="fade-up">
+              <div class="row">
+                <div class="col-lg-4 col-md-6 mb-3 mb-md-0">
+                  <img src="../../assets/images/feature-image2.png" class="w-100 rounded-5 img-240 object-fit-cover" alt="食材">
                 </div>
-              <div class="col d-none d-lg-block"></div>
+                <div class="col-lg-4 col-md-6 d-flex flex-column justify-content-center">
+                  <h5 class="fw-bold fs-md-4 fs-6 mb-md-3">便宜且份量適中的食材</h5>
+                  <p class="fs-md-6 fs-12 mb-0">使用首頁上方搜尋欄尋找食譜，所有食譜皆有列出製作材料、工具，點擊購買即可一次買齊。</p>
+                </div>
+                <div class="col-lg-4 col-md-6 d-none d-lg-block"></div>
+              </div>
             </li>
-            <li class="row mb-5"  data-aos="fade-up" data-aos-anchor-placement="center-center">
-              <div class="col d-none d-lg-block"></div>
-              <div class="col">
-                <img src="../../assets/images/feature-image3.png" style="  height: 240px;" class="card-img rounded-5 object-fit-cover" alt="影片教學">
-              </div>
-                <div class="col d-flex flex-column justify-content-center ">
-                  <h5 class="card-title fw-bold contentTitle mb-3">甜點食譜＋影片教學</h5>
-                  <p class="card-text speakerText">免費甜點食譜和完整講解的影片教學，一定帶你學到會！不上烘焙課也能有良好的製作體驗。</p>
+            <li class="col-12"  data-aos="fade-up">
+              <div class="row">
+                <div class="col-lg-4 col-md-6 d-none d-lg-block"></div>
+                <div class="col-lg-4 col-md-6 mb-3 mb-md-0">
+                  <img src="../../assets/images/feature-image3.png" class="w-100 rounded-5 img-240 object-fit-cover" alt="影片教學">
                 </div>
+                <div class="col-lg-4 col-md-6 d-flex flex-column justify-content-center ">
+                  <h5 class="fw-bold fs-md-4 fs-6 mb-md-3">甜點食譜＋影片教學</h5>
+                  <p class="fs-md-6 fs-12 mb-0">免費甜點食譜和完整講解的影片教學，一定帶你學到會！不上烘焙課也能有良好的製作體驗。</p>
+                </div>
+              </div>
             </li>
-            <li class="row"  data-aos="fade-up" data-aos-anchor-placement="center-center">
-              <div class="col">
-                <img src="../../assets/images/feature-image4.png" style=" height: 240px;" class="card-img rounded-5 object-fit-cover" alt="甜點">
-              </div>
-                <div class="col d-flex flex-column justify-content-center ">
-                  <h5 class="card-title fw-bold contentTitle mb-3">優惠不間斷</h5>
-                  <p class="card-text speakerText">消費滿千元免運費！每月抽獎活動，享價值千元以上好禮！買越多賺越多！</p>
+            <li class="col-12"  data-aos="fade-up">
+              <div class="row">
+                <div class="col-lg-4 col-md-6 mb-3 mb-md-0">
+                  <img src="../../assets/images/feature-image4.png" class="w-100 rounded-5 img-240 object-fit-cover" alt="甜點">
                 </div>
-              <div class="col d-none d-lg-block"></div>
+                <div class="col-lg-4 col-md-6 d-flex flex-column justify-content-center ">
+                  <h5 class="fw-bold fs-md-4 fs-6 mb-md-3">優惠不間斷</h5>
+                  <p class="fs-md-6 fs-12 mb-0">消費滿千元免運費！每月抽獎活動，享價值千元以上好禮！買越多賺越多！</p>
+                </div>
+                <div class="col-lg-4 col-md-6 d-none d-lg-block"></div>
+              </div>
             </li>
           </ul>
       </section>
 
-        <section class="mt-96 bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1678465952975-85cc1a08b2d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');">
+      <!-- mt-96  -->
+        <section class="bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1678465952975-85cc1a08b2d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');">
           <div class="w-100 d-flex flex-column justify-content-center align-items-center py-lg-96 py-5 bg-transGray-2">
             <h3 class="text-center text-white fw-bold mb-4 letter-spacing-10 text-shadow lh-base">每個月都有新好禮<br>超值大獎一次帶回</h3>
           <button type="button" class="hvr-sweep-to-right  btn btn-primary fw-bold rounded-0 px-4 shadow-lg" @click="linkToLottery">
