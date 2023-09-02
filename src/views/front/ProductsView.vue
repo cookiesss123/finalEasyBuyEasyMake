@@ -364,7 +364,7 @@ export default {
                       <img src="../../assets/images/image4.png">
                   </button>
                 </div>
-                <button :disabled="loadingItem === 'loading'" @click="()=>addCart(product)" type="button" class="buyBtn border-0 bg-transparent me-lg-2 me-1 position-absolute end-0" >
+                <button :disabled="loadingItem === 'loading'" @click="()=>addCart(product)" type="button" class="btn-buy border-0 bg-transparent me-lg-2 me-1 position-absolute end-0" >
                   <img src="../../assets/images/icon-cart.png"  alt="" class="rounded-circle shadow-sm">
                 </button>
               </h5>

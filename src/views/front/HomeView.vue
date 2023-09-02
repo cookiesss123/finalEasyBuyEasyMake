@@ -722,7 +722,6 @@ export default {
         </div>
       </section>
       <!-- 熱門食譜 -->
-      <!-- py-lg-96 py-5 -->
       <section class="container py-md-96 py-60" data-aos="fade-up">
         <div class="d-lg-flex mb-2">
           <h2 class="d-flex align-items-center justify-content-center justify-content-lg-start fw-bold">
@@ -730,7 +729,7 @@ export default {
             <span class="fs-lg-1 fs-4 letter-spacing-20">門食譜</span>
           </h2>
           <span class="d-flex align-items-center justify-content-center fs-lg-6 fs-12">
-            <img src="../../assets/images/icon-speaker.png" style="width: 30px;" alt="大聲公圖示">
+            <img src="../../assets/images/icon-speaker.png" class="me-2" style="width: 30px;" alt="大聲公圖示">
             一鍵購買甜點材料包～
           </span>
         </div>
@@ -926,141 +925,124 @@ export default {
       </section>
 
         <!-- 優選食材 -->
-        <section class="py-96" data-aos="fade-right">
-          <div class="container">
-            <h2 class="display-6 fw-bold d-flex flex-column-reverse flex-lg-row align-items-center mb-4 justify-content-center justify-content-lg-start">
-              <div class="d-flex align-items-center">
-                <img src="../../assets/images/title3.png" class="me-lg-4 me-2 titleImg" alt="優">
-                <span class="recipeTitle">選食材</span>
-              </div>
-              <span class="mb-2 mb-lg-0 h6 ms-2 speakerText d-flex align-items-center">
-                <img src="../../assets/images/icon-speaker.png" class="speaker" alt="大聲公">
-                總消費額滿500即可獲得1次抽獎機會！
-              </span>
+        <section class="container py-md-96 py-60" data-aos="fade-right">
+          <div class="d-lg-flex mb-2">
+            <h2 class="d-flex align-items-center justify-content-center justify-content-lg-start fw-bold">
+              <img src="../../assets/images/title3.png" class="me-lg-3 me-4 title-img" alt="優">
+              <span class="fs-lg-1 fs-4 letter-spacing-20">選食材</span>
             </h2>
+            <span class="d-flex align-items-center justify-content-center fs-lg-6 fs-12">
+              <img src="../../assets/images/icon-speaker.png" class="me-2" style="width: 30px;" alt="大聲公圖示">
+              總消費額滿500即可獲得1次抽獎機會！
+            </span>
           </div>
-          <div class="d-flex flex-column align-items-center" >
-            <div class="d-none d-md-none d-lg-block container swiper-home">
-                <swiper :slides-per-view="4" :space-between="25"
-                :modules="modules"
-                navigation
-                :autoplay="{
-              delay: 2500,
-              disableOnInteraction: false,
-            }"
-                style="height: 380px;"
-                >
-                  <swiper-slide v-for="product in goodProducts" :key="product.id" style="cursor: pointer;">
-                    <div class="card position-relative bg-transparent" style="border-radius: 0; border: 1px solid transparent;">
-                      <div class="position-absolute cardImg" style=" width: 100%;  height: 220px;">
-                        <RouterLink :to="`/products/${product.id}`" class="enlargeImg">
-                          <img :src="product.imgUrl" class="position-absolute top-0 card-img" style=" object-fit: cover;  max-width: 100%; max-height: 100%; height:220px !important; border-radius: 0;" alt="">
-                        </RouterLink>
-                      </div>
-
-                <h5 class="card-text">
-                  <p class="detail position-absolute fw-bold" style="top: 35%; left: 50%; transform: translateX(-50%); letter-spacing: 5px;">查看商品資訊</p>
-
-                  <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('productBookmarks' ,product)">
-                    <img src="../../assets/images/image5.png" style="width: 36px !important;">
-                  </button>
-                  <span v-if="product.isCheaper" style="pointer-events: none; font-size: 14px;" class="d-flex flex-column align-items-center text-white p-2 bg-primary  me-3 position-absolute top-0 start-0">
+          <!-- 桌機 -->
+          <swiper :slides-per-view="4" :space-between="25"
+          :modules="modules"
+          navigation
+          :autoplay="{
+        delay: 2500,
+        disableOnInteraction: false,
+      }"
+      class="d-none d-lg-block swiper-home"
+          >
+          <swiper-slide v-for="product in goodProducts" :key="product.id">
+            <div class="card position-relative">
+              <div class="card-img-hover position-relative">
+                <RouterLink :to="`/products/${product.id}`">
+                  <img :src="product.imgUrl" class="object-fit-cover card-img" :alt="product.title">
+                  <p class="detail position-absolute top-50 start-50 translate-middle fw-bold letter-spacing-5 link-darkBrown fs-xl-5 text-center">查看<br class="d-xl-none d-lg-block">商品資訊</p>
+                  <span v-if="product.isCheaper" class="fs-14 text-white p-2 bg-primary position-absolute top-0 start-0">
                     {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                   </span>
-                  <div v-for="mark in productBookmarks" :key="mark">
-                    <button v-if="mark === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-3"  @click="()=>deleteBookmark('productBookmarks', product.id)">
-                        <img src="../../assets/images/image4.png" style="width: 36px !important;">
-                    </button>
-                  </div>
-                  <button @click="()=>addCart(product)" type="button" class="buyBtn border-0 bg-transparent me-2 position-absolute end-0" style="top: 155px;">
-                    <img src="../../assets/images/icon-cart.png" style="height: 48px;" alt="" class="rounded-circle shadow-sm">
-                  </button>
-                </h5>
-                <RouterLink :to="`/products/${product.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown" style="padding-top: 230px;">
-                  <h5 class="h5 fw-bold">{{product.title}}</h5>
-                    <div class="d-flex align-items-center justify-content-between">
-                      <div>
-                        <del v-if="product.originalPrice" class="me-2 text-muted " :class="{'d-none': !product.isCheaper}">NT$ {{ numberComma(product.originalPrice) }}</del>
-                        <span v-if="product.price" class=" "> <span :class="{'text-danger':product.isCheaper, 'fw-bold':product.isCheaper}">NT$ {{ numberComma(product.price)}}</span> / {{ product.num }}{{ product.unit }}</span>
-                      </div>
-                      <h5 class="mb-0">
-                        <div class="badge rounded-pill border border-yellow">
-                          <span class="me-1 text-yellow">
-                            {{ product.averageRate }}
-                          </span>
-                          <i class="bi bi-star-fill text-yellow"></i>
-                        </div>
-                      </h5>
-                    </div>
                 </RouterLink>
-                    </div>
-                  </swiper-slide>
-
-                </swiper>
+                <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('productBookmarks' ,product)">
+                  <img src="../../assets/images/image5.png" alt="收藏按鈕-未收藏">
+                </button>
+                <div v-for="mark in productBookmarks" :key="mark">
+                  <button v-if="mark === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-3"  @click="()=>deleteBookmark('productBookmarks', product.id)">
+                      <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
+                  </button>
+                </div>
+                <button @click="()=>addCart(product)" type="button" class="btn-buy border-0 bg-transparent mx-2 my-3 position-absolute end-0 bottom-0">
+                  <img src="../../assets/images/icon-cart.png" alt="購物車按鈕" class="shadow-sm">
+                </button>
+              </div>
+              <RouterLink :to="`/products/${product.id}`" class="card-body px-0 text-decoration-none link-darkBrown">
+                <h3 class=" fs-5 fw-bold">{{product.title}}</h3>
+                <div class="d-flex align-items-center fs-xl-6 fs-lg-12">
+                  <del class="me-2 text-muted" :class="{'d-none': !product.isCheaper}">NT$ {{ numberComma(product.originalPrice) }}</del>
+                  <span class="me-1" :class="{'text-danger':product.isCheaper, 'fw-bold':product.isCheaper}">NT$ {{ numberComma(product.price)}}</span>
+                  <span > / {{ product.num }}{{ product.unit }}</span>
+                  <span class="badge rounded-pill text-yellow border border-yellow ms-auto bg-lightYellow">
+                    {{ product.averageRate }}
+                    <i class="bi bi-star-fill"></i>
+                  </span>
+                </div>
+              </RouterLink>
             </div>
-
+          </swiper-slide>
+        </swiper>
             <!-- 手機 直向 -->
 
-            <div class="d-lg-none container verticalSwiper">
-                <swiper :slides-per-view="2" :space-between="25"
-                :modules="modules"
-                navigation
-                :autoplay="{
-              delay: 2500,
-              disableOnInteraction: false,
-            }"
-                style="height: 250px;"
-                >
-                  <swiper-slide v-for="product in goodProducts" :key="product.id" style="cursor: pointer;">
-                    <div class="card position-relative  bg-transparent" style="border-radius: 0;border: 1px solid transparent;">
-                      <div class="position-absolute cardImg" style=" width: 100%;  height: 120px;">
-                        <RouterLink :to="`/products/${product.id}`" class="enlargeImg">
-                          <img :src="product.imgUrl" class="position-absolute top-0 card-img" style=" object-fit: cover;  max-width: 100%; max-height: 100%;border-radius: 0; height:120px !important;" alt="">
-                        </RouterLink>
-                      </div>
-
-                <h5 class="card-text">
-                  <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-lg-3" @click="()=>addBookmark('productBookmarks' ,product)">
-                    <img src="../../assets/images/image5.png" style="width: 20px !important;">
-                  </button>
-                  <span v-if="product.isCheaper" style="pointer-events: none; font-size: 10px;" class="d-flex flex-column align-items-center text-white p-2 bg-primary  me-3 position-absolute top-0 start-0 ">
+          <swiper :slides-per-view="2" :space-between="25"
+          :modules="modules"
+          navigation
+          :autoplay="{
+        delay: 2500,
+        disableOnInteraction: false,
+      }"
+      class="d-lg-none d-block swiper-home"
+          >
+          <swiper-slide v-for="product in goodProducts" :key="product.id">
+            <div class="card position-relative">
+              <div class="card-img-hover position-relative">
+                <RouterLink :to="`/products/${product.id}`">
+                  <img :src="product.imgUrl" class="object-fit-cover card-img" :alt="product.title">
+                  <p class="detail position-absolute top-50 start-50 translate-middle fw-bold letter-spacing-5 link-darkBrown fs-xl-5 text-center">查看<br class="d-xl-none d-lg-block">商品資訊</p>
+                  <span v-if="product.isCheaper" class="fs-14 text-white p-2 bg-primary position-absolute top-0 start-0">
                     {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                   </span>
-                  <div v-for="mark in productBookmarks" :key="mark">
-                    <button v-if="mark === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-lg-3"  @click="()=>deleteBookmark('productBookmarks', product.id)">
-                        <img src="../../assets/images/image4.png" style="width: 20px !important;">
-                    </button>
-                  </div>
-                  <button @click="()=>addCart(product)" type="button" class="buyBtn border-0 bg-transparent me-lg-2 me-1  position-absolute end-0" style="top: 80px;">
-                    <img src="../../assets/images/icon-cart.png" style="height: 30px;" alt="" class="rounded-circle shadow-sm">
-                  </button>
-                </h5>
-                <RouterLink :to="`/products/${product.id}`" class="card-footer bg-transparent border-0 text-decoration-none link-darkBrown" style="padding-top: 125px;">
-                  <h5 class="fw-bold cardTextTitle">{{product.title}}</h5>
-                    <div class="d-flex align-items-lg-center justify-content-between cardTextPrice" :class="{'align-items-end': product.isCheaper, 'align-items-center': !product.isCheaper}">
-                      <div>
-                        <del v-if="product.originalPrice" class="me-2 text-muted d-block" :class="{'d-none': !product.isCheaper}">NT$ {{ numberComma(product.originalPrice) }}</del>
-                        <span v-if="product.price" class=" "> <span :class="{'text-danger':product.isCheaper, 'fw-bold':product.isCheaper}">NT$ {{ numberComma(product.price)}}</span> / {{ product.num }}{{ product.unit }}</span>
-                      </div>
-                      <div class="badge starRates rounded-pill border border-yellow">
-                        <span class="me-1 text-yellow">
-                          {{ product.averageRate }}
-                        </span>
-                        <i class="bi bi-star-fill text-yellow"></i>
-                      </div>
-                    </div>
                 </RouterLink>
-                    </div>
-                  </swiper-slide>
+                <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-3 p-0" @click="()=>addBookmark('productBookmarks' ,product)">
+                  <img src="../../assets/images/image5.png" alt="收藏按鈕-未收藏">
+                </button>
+                <div v-for="mark in productBookmarks" :key="mark">
+                  <button v-if="mark === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-3 p-0"  @click="()=>deleteBookmark('productBookmarks', product.id)">
+                      <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
+                  </button>
+                </div>
+                <button @click="()=>addCart(product)" type="button" class="btn-buy border-0 bg-transparent mx-md-2 my-md-3 m-2 position-absolute end-0 bottom-0 p-0">
+                  <img src="../../assets/images/icon-cart.png" alt="購物車按鈕" class="shadow-sm">
+                </button>
+              </div>
+              <RouterLink :to="`/products/${product.id}`" class="card-body px-0 py-2 py-md-3 text-decoration-none link-darkBrown">
+                <h3 class="fw-bold fs-md-5 fs-6">{{product.title}}</h3>
+                <div class="d-flex align-items-center flex-wrap fs-md-6 fs-12">
+                  <del class="me-2 text-muted" :class="{'d-none': !product.isCheaper}">NT$ {{ numberComma(product.originalPrice) }}</del>
+                  <span class="me-1" :class="{'text-danger':product.isCheaper, 'fw-bold':product.isCheaper}">NT$ {{ numberComma(product.price)}}</span>
+                  <span > / {{ product.num }}{{ product.unit }}</span>
+                  <span class="badge rounded-pill text-yellow border border-yellow ms-auto bg-lightYellow d-none d-md-block">
+                    {{ product.averageRate }}
+                    <i class="bi bi-star-fill"></i>
+                  </span>
+                </div>
+                <div class="text-end mt-1 d-md-none">
+                  <span class="badge rounded-pill text-yellow border border-yellow bg-lightYellow">
+                    {{ product.averageRate }}
+                    <i class="bi bi-star-fill"></i>
+                  </span>
+                </div>
 
-                </swiper>
+              </RouterLink>
             </div>
+          </swiper-slide>
+          </swiper>
             <div class="d-flex">
-              <RouterLink to="/products" type="button" class="d-lg-none btn btn-primary rounded-pill px-4 mx-auto mt-3">
+              <RouterLink to="/products" type="button" class="d-lg-none btn btn-gradient rounded-pill px-4 mx-auto mt-4">
                 更多商品
               </RouterLink>
             </div>
-          </div>
 
         </section>
 
