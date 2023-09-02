@@ -916,15 +916,14 @@ export default {
           </ul>
       </section>
 
-      <!-- mt-96  -->
-        <section class="bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1678465952975-85cc1a08b2d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');">
-          <div class="w-100 d-flex flex-column justify-content-center align-items-center py-lg-96 py-5 bg-transGray-2">
-            <h3 class="text-center text-white fw-bold mb-4 letter-spacing-10 text-shadow lh-base">每個月都有新好禮<br>超值大獎一次帶回</h3>
-          <button type="button" class="hvr-sweep-to-right  btn btn-primary fw-bold rounded-0 px-4 shadow-lg" @click="linkToLottery">
-            立即抽獎
-          </button>
-          </div>
-        </section>
+      <section class="bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1678465952975-85cc1a08b2d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');">
+        <div class="py-lg-96 py-5 text-center bg-transGray-2">
+          <h2 class="text-white fs-md-3 fs-5 fw-bold mb-4 letter-spacing-10 text-shadow lh-base">每個月都有新好禮<br>超值大獎一次帶回</h2>
+          <button type="button" class="hvr-sweep-to-right btn btn-primary fw-bold px-4 shadow-lg" @click="linkToLottery">
+          立即抽獎
+        </button>
+        </div>
+      </section>
 
         <!-- 優選食材 -->
         <section class="py-96" data-aos="fade-right">
