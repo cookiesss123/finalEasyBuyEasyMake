@@ -28,7 +28,10 @@
   margin-left: 50%;
   transform: translateX(-50%);
 }
-
+// 首頁 -banner
+.banner-swiper{
+  height: 600px;
+}
 
 // 首頁 swiper
 .swiper-home {
@@ -43,22 +46,6 @@
     left: 0;
   }
 }
-// 手機 直向 swiper 箭頭 應該要改了 因為手機也改成橫向了
-// .verticalSwiper{
-//   .swiper-button-next{
-//     top:95%;
-//     right:0;
-//     &::after{
-//       margin-left: 50%;
-//       transform: translateX(-50%);
-//     }
-//   }
-//   .swiper-button-prev{
-//     top:95%;
-//     left: 0%;
-//   }
-// }
-
 @include media-breakpoint-up(md) {
   .swiper-button-next, .swiper-button-prev{
     width: 30px !important;

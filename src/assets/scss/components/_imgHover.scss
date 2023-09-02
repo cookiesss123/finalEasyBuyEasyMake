@@ -1,4 +1,5 @@
 
+// 產品、食譜圖片效果
 .card{
   .card-img-hover{
     overflow: hidden;
@@ -23,80 +24,20 @@
     }
   }
 }
-// .card-img-hover{
-//   overflow: hidden;
-//   .card-img{
-//     height: 220px !important;
-//     transition: all .4s ease-out;
-//   }
-//   .detail{
-//     opacity: 0;
-//     transition: all .3s ease-out;
-//   }
-//   &:hover{
-//     .card-img{
-//       opacity: .5;
-//       transform: scale(1.2);
-//     }
 
-//     .detail{
-//       opacity: 1;
-//     }
-//   }
-// }
-// .card .cardImg{
-//   overflow:hidden;
-// }
-// .card:hover .cardImg,.card:hover .cardTextCategory{
-//   opacity: .5;
-// }
-
-// .detail{
+// 單一產品或食譜關聯食譜、產品資訊
+// .subDetail{
 //   opacity: 0;
 //   pointer-events: none;
 // }
-// 單一產品或食譜關聯食譜、產品資訊
-.subDetail{
-  opacity: 0;
-  pointer-events: none;
-}
-.subImg:hover img{
-  opacity: .5;
-}
-.subImg:hover .subDetail{
-  opacity: 1;
-}
-// 僅限 食譜、產品物件 其他盡量不要是 card 結構
-
-// .enlargeImg{
-//   width: 300px;
-//   overflow:hidden;
+// .subImg:hover img{
+//   opacity: .5;
 // }
-
-// .card .cardImg img{
-//   transform:scale(1,1);
-//   transition: all .4s ease-out;
-// }
-// .card:hover .enlargeImg img{
-//   transform:scale(1.2,1.2);
-// }
-
-// 食譜和產品的圖片
-// .cardImg .card-img{
-//   height: 120px;
-// }
-// 產品 折
-.card-text span{
-  font-size: 10px;
-}
-// 食譜分類
-// .card-text .cardTextCategory{
-//   pointer-events:none;
-//   top: 65px;
+// .subImg:hover .subDetail{
+//   opacity: 1;
 // }
 
 // 產品、食譜 title 記得之後home 也要加
-// 10 改成 12
 .card-footer .cardTextTitle{
   font-size: 14px;
 }
@@ -108,10 +49,6 @@
 // 產品 評價
 .card-footer .starRates{
   font-size: 10px;
-}
-// 產品、優惠特報頁籤標題 文字大小 
-.navTitle{
-  font-size: 14px;
 }
 
 // 平板
@@ -135,15 +72,6 @@
   }
  
 
-  // 食譜和產品的圖片
-  // .cardImg .card-img{
-  //   height: 220px;
-  // }
- // 產品 折
-.card-text span{
-  font-size: 14px;
-}
-
 // 產品、食譜 title 記得之後home 也要加
 .card-footer .cardTextTitle{
   font-size: 20px;
@@ -160,9 +88,4 @@
 .card-text .cardTextCategory{
   top: 155px;
 }
-// 產品、優惠特報頁籤標題 文字大小 
-.navTitle{
-  font-size: 16px;
-}
-
 }

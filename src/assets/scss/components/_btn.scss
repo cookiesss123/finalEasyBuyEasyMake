@@ -1,3 +1,22 @@
+$fullHeart: url('@/assets/images/image4.png');
+$heart: url('@/assets/images/image5.png');
+
+// 收藏按鈕
+.btn-bookmark, .btn-bookmark-delete{
+    img{
+        width: 20px;
+        height: 20px;
+    }
+}
+
+// 購買按鈕
+.btn-buy{
+    img{
+        width: 30px;
+        height: 30px;
+    }
+}
+
 // 漸層 btn
 .btn-gradient{
     font-weight: bold;
@@ -35,3 +54,52 @@
     }
 }
 
+@include media-breakpoint-up(md) {
+    // 收藏按鈕
+    .btn-bookmark{
+        img{
+            width: 36px;
+            height: 36px;
+        }
+    }
+    .btn-bookmark-delete{
+        img{
+            width: 36px;
+            height: 36px;
+        }
+    }
+
+    // 購買按鈕
+    .btn-buy{
+        img{
+            width: 48px;
+            height: 48px;
+        }
+    }
+}
+@include media-breakpoint-up(lg) {
+    // 收藏按鈕
+    .btn-bookmark{
+        &:hover{
+            img{
+                content: $fullHeart;
+            }
+        }
+    }
+    .btn-bookmark-delete{
+        &:hover{
+            img{
+                content: url('@/assets/images/image5.png');
+            }
+        }
+    }
+
+    // 購買按鈕
+    .btn-buy{
+        &:hover{
+            img{
+                content: url('@/assets/images/icon-cart-hover.png');
+            }
+        }
+    }
+}

@@ -56,7 +56,6 @@ export default {
     }
   },
   methods: {
-    // 不用得知使用者是否按食譜讚!!!!!
     ...mapActions(cartStore, ['pleaseReLogin', 'toastMessage', 'addCart']),
     // 取得食譜 前 10
     getPopularRecipes () {
@@ -250,48 +249,7 @@ export default {
   }
 }
 </script>
-<style>
-
-.fixedQ .card{
-  position: relative;
-}
-.fixedQ .card .card-img-overlay{
-  background-image: linear-gradient(180deg , transparent, rgba(0, 0, 0,0.1), rgba(255, 255, 255, 0.9));
-}
-
-.fixedQ .card:hover .card-img-overlay{
-  background-image: linear-gradient(180deg , transparent, rgba(255, 255, 255,0.2), rgba(255, 255, 255));
-}
-.fixedQ .card .card-img-overlay h5{
-  color: #493A25;
-  transition: all ease-in-out 0.4s;
-}
-.fixedQ .card:hover .card-img-overlay h5{
-  color: #493A25 !important;
-  transform: translateY(-50px);
-  transition: all ease-in-out 0.4s;
-}
-
-/* 不能用 display:block 和 none 不然沒有漸變效果 */
-.fixedQ .card .card-img-overlay p {
-  position: absolute;
-  bottom: 0;
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.fixedQ .card:hover .card-img-overlay p {
-  opacity: 1;
-  bottom: 20px;
-  transform: translateY(0);
-  transition: all ease-in-out 0.4s;
-}
-.banner-swiper{
-  height: 600px;
-}
-</style>
 <template>
-  <!-- style="overflow-x: hidden;" -->
     <div>
       <LoadingComponent :is-loading="isLoading"></LoadingComponent>
       <section data-aos="fade-up" class="mb-5">
@@ -309,8 +267,6 @@ export default {
                 <div class="row gx-76">
                 <div class="col-6 position-relative">
                   <!-- 圓形 -->
-                  <!-- <div class="position-absolute rounded-circle bg-ingredient-banner1"></div> -->
-
                   <div class="position-absolute white-circle"></div>
                   <div class="position-absolute rounded-circle border-dashed-purple"></div>
 
@@ -789,13 +745,12 @@ export default {
               <RouterLink :to="`/recipes/${recipe.id}`" class="card-img-hover position-relative">
                 <img :src="recipe.image" class="object-fit-cover card-img" :alt="recipe.title">
                 <span class="badge fs-md-6 rounded-pill bg-primary position-absolute start-0 bottom-0 m-2 m-md-3">{{ recipe.category }}</span>
-                <p class="detail d-none d-md-block position-absolute top-50 start-50 translate-middle fw-bold letter-spacing-5 link-darkBrown">查看詳細食譜</p>
               </RouterLink>
-              <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-lg-3" @click="()=>addBookmark('recipeBookmarks',recipe)">
+              <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>addBookmark('recipeBookmarks',recipe)">
                 <img src="../../assets/images/image5.png" alt="收藏按鈕-未收藏">
               </button>
               <div v-for="mark in recipeBookMarks" :key="mark">
-                <button v-if="mark === recipe.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-lg-3" @click="()=>deleteBookmark('recipeBookmarks', recipe.id)">
+                <button v-if="mark === recipe.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>deleteBookmark('recipeBookmarks', recipe.id)">
                     <img src="../../assets/images/image4.png"  alt="收藏按鈕-已收藏">
                 </button>
               </div>
@@ -814,8 +769,8 @@ export default {
             </div>
           </swiper-slide>
         </swiper>
-        <div class="d-flex">
-            <RouterLink to="/recipes" type="button" class="d-lg-none btn btn-gradient rounded-pill px-4 mx-auto mt-4">
+        <div class="text-center">
+            <RouterLink to="/recipes" type="button" class="d-lg-none btn btn-gradient rounded-pill px-4 mt-4">
               更多食譜
             </RouterLink>
         </div>
@@ -916,7 +871,7 @@ export default {
       </section>
 
       <section class="bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1678465952975-85cc1a08b2d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');">
-        <div class="py-lg-96 py-5 text-center bg-transGray-2">
+        <div class="py-96  text-center bg-transGray-2">
           <h2 class="text-white fs-md-3 fs-5 fw-bold mb-4 letter-spacing-10 text-shadow lh-base">每個月都有新好禮<br>超值大獎一次帶回</h2>
           <button type="button" class="hvr-sweep-to-right btn btn-primary fw-bold px-4 shadow-lg" @click="linkToLottery">
           立即抽獎
@@ -924,28 +879,28 @@ export default {
         </div>
       </section>
 
-        <!-- 優選食材 -->
-        <section class="container py-md-96 py-60" data-aos="fade-right">
-          <div class="d-lg-flex mb-2">
-            <h2 class="d-flex align-items-center justify-content-center justify-content-lg-start fw-bold">
-              <img src="../../assets/images/title3.png" class="me-lg-3 me-4 title-img" alt="優">
-              <span class="fs-lg-1 fs-4 letter-spacing-20">選食材</span>
-            </h2>
-            <span class="d-flex align-items-center justify-content-center fs-lg-6 fs-12">
-              <img src="../../assets/images/icon-speaker.png" class="me-2" style="width: 30px;" alt="大聲公圖示">
-              總消費額滿500即可獲得1次抽獎機會！
-            </span>
-          </div>
-          <!-- 桌機 -->
-          <swiper :slides-per-view="4" :space-between="25"
+      <!-- 優選食材 -->
+      <section class="container py-md-96 py-60" data-aos="fade-right">
+        <div class="d-lg-flex mb-2">
+          <h2 class="d-flex align-items-center justify-content-center justify-content-lg-start fw-bold">
+            <img src="../../assets/images/title3.png" class="me-lg-3 me-4 title-img" alt="優">
+            <span class="fs-lg-1 fs-4 letter-spacing-20">選食材</span>
+          </h2>
+          <span class="d-flex align-items-center justify-content-center fs-lg-6 fs-12">
+            <img src="../../assets/images/icon-speaker.png" class="me-2" style="width: 30px;" alt="大聲公圖示">
+            總消費額滿500即可獲得1次抽獎機會！
+          </span>
+        </div>
+        <!-- 桌機 -->
+        <swiper :slides-per-view="4" :space-between="25"
           :modules="modules"
           navigation
           :autoplay="{
-        delay: 2500,
-        disableOnInteraction: false,
-      }"
-      class="d-none d-lg-block swiper-home"
-          >
+            delay: 2500,
+            disableOnInteraction: false,
+          }"
+          class="d-none d-lg-block swiper-home"
+        >
           <swiper-slide v-for="product in goodProducts" :key="product.id">
             <div class="card position-relative">
               <div class="card-img-hover position-relative">
@@ -983,36 +938,34 @@ export default {
             </div>
           </swiper-slide>
         </swiper>
-            <!-- 手機 直向 -->
-
-          <swiper :slides-per-view="2" :space-between="25"
+          <!-- 手機 直向 -->
+        <swiper :slides-per-view="2" :space-between="25"
           :modules="modules"
-          navigation
-          :autoplay="{
-        delay: 2500,
-        disableOnInteraction: false,
-      }"
-      class="d-lg-none d-block swiper-home"
-          >
+              navigation
+              :autoplay="{
+            delay: 2500,
+            disableOnInteraction: false,
+          }"
+          class="d-lg-none d-block swiper-home"
+        >
           <swiper-slide v-for="product in goodProducts" :key="product.id">
             <div class="card position-relative">
               <div class="card-img-hover position-relative">
                 <RouterLink :to="`/products/${product.id}`">
                   <img :src="product.imgUrl" class="object-fit-cover card-img" :alt="product.title">
-                  <p class="detail position-absolute top-50 start-50 translate-middle fw-bold letter-spacing-5 link-darkBrown fs-xl-5 text-center">查看<br class="d-xl-none d-lg-block">商品資訊</p>
                   <span v-if="product.isCheaper" class="fs-14 text-white p-2 bg-primary position-absolute top-0 start-0">
                     {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                   </span>
                 </RouterLink>
-                <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-3 p-0" @click="()=>addBookmark('productBookmarks' ,product)">
+                <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>addBookmark('productBookmarks' ,product)">
                   <img src="../../assets/images/image5.png" alt="收藏按鈕-未收藏">
                 </button>
                 <div v-for="mark in productBookmarks" :key="mark">
-                  <button v-if="mark === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-3 p-0"  @click="()=>deleteBookmark('productBookmarks', product.id)">
+                  <button v-if="mark === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-md-3"  @click="()=>deleteBookmark('productBookmarks', product.id)">
                       <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
                   </button>
                 </div>
-                <button @click="()=>addCart(product)" type="button" class="btn-buy border-0 bg-transparent mx-md-2 my-md-3 m-2 position-absolute end-0 bottom-0 p-0">
+                <button @click="()=>addCart(product)" type="button" class="btn-buy border-0 bg-transparent position-absolute end-0 bottom-0 m-2 m-md-3 p-0">
                   <img src="../../assets/images/icon-cart.png" alt="購物車按鈕" class="shadow-sm">
                 </button>
               </div>
@@ -1037,14 +990,12 @@ export default {
               </RouterLink>
             </div>
           </swiper-slide>
-          </swiper>
-            <div class="d-flex">
-              <RouterLink to="/products" type="button" class="d-lg-none btn btn-gradient rounded-pill px-4 mx-auto mt-4">
-                更多商品
-              </RouterLink>
-            </div>
-
-        </section>
-
+        </swiper>
+        <div class="text-center">
+          <RouterLink to="/products" type="button" class="d-lg-none btn btn-gradient rounded-pill px-4 mt-4">
+            更多商品
+          </RouterLink>
+        </div>
+      </section>
     </div>
 </template>
