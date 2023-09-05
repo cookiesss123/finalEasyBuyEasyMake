@@ -2,26 +2,12 @@
 // 產品、食譜圖片效果
 .card{
   .card-img-hover{
-    overflow: hidden;
     .card-img{
       height: 120px !important;
-      transition: all .4s ease-out;
     }
   }
   .detail{
     opacity: 0;
-    transition: all .3s ease-out;
-  }
-  &:hover{
-    .card-img-hover{
-      .card-img{
-        opacity: .5;
-        transform: scale(1.2);
-      }
-    }
-    .detail{
-      opacity: 1;
-    }
   }
 }
 
@@ -65,11 +51,29 @@
 @include media-breakpoint-up(lg) {
   .card{
     .card-img-hover{
+      overflow: hidden;
       .card-img{
         height: 220px !important;
+        transition: all .4s ease-out;
+      }
+    }
+    .detail{
+      opacity: 0;
+      transition: all .3s ease-out;
+    }
+    &:hover{
+      .card-img-hover{
+        .card-img{
+          opacity: .5;
+          transform: scale(1.2);
+        }
+      }
+      .detail{
+        opacity: 1;
       }
     }
   }
+  
  
 
 // 產品、食譜 title 記得之後home 也要加

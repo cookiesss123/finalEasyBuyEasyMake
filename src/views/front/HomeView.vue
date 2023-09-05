@@ -953,7 +953,7 @@ export default {
               <div class="card-img-hover position-relative">
                 <RouterLink :to="`/products/${product.id}`">
                   <img :src="product.imgUrl" class="object-fit-cover card-img" :alt="product.title">
-                  <span v-if="product.isCheaper" class="fs-14 text-white p-2 bg-primary position-absolute top-0 start-0">
+                  <span v-if="product.isCheaper" class="fs-md-14 fs-12 text-white p-2 bg-primary position-absolute top-0 start-0">
                     {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                   </span>
                 </RouterLink>
@@ -980,7 +980,7 @@ export default {
                     <i class="bi bi-star-fill"></i>
                   </span>
                 </div>
-                <div class="text-end mt-1 d-md-none">
+                <div class="text-end mt-1 d-md-none fs-12">
                   <span class="badge rounded-pill text-yellow border border-yellow bg-lightYellow">
                     {{ product.averageRate }}
                     <i class="bi bi-star-fill"></i>

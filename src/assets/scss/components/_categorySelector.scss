@@ -15,11 +15,11 @@
   position: absolute;
   height: 2px;
   width: 6.5%;
-
   bottom: 0;
   transition: all .4s ease-in-out;
 }
-.active-all{
+// 食譜
+.active-all-recipe{
   left: 2.7%;
 }
 .active-taiwan{
@@ -37,26 +37,19 @@
 .active-italy{
   left: 90.8%;
 }
-
   // 材料購買 種類
-  // 1. 所有材料
-  .activeAllIngredient{
-    left: 9.3%;
-  }
-
-  // 2. 食材組合包
-  .activePackage{
-    left: 33%;
-    width: 9%;
-  }
-  // 3. 熱銷單品
-  .activeHot{
-    left: 59.5%;
-  }
-  // 4.特價商品
-  .activeSale{
-    left: 84.5%;
-  }
+.active-all-ingredient{
+  left: 7%;
+}
+.active-package{
+  left: 33.3%;
+}
+.active-hot{
+  left: 60%;
+}
+.active-sale{
+  left: 86.5%;
+}
 
   // 會員特報 1. 優惠折扣
   .activeDiscount{
@@ -69,17 +62,12 @@
 
   // 平板
   @include media-breakpoint-up(md) {
-  // .blueLine{
-  //     width: 45px;
-  // }
-  // 2. 食材組合包
-  // .activePackage{
-  //   left: 34.5%;
-  // }
+
   .blue-line {
     width: 8.5%;
   }
-  .active-all{
+  // 食譜
+  .active-all-recipe{
     left: 3%;
   }
   .active-taiwan{
@@ -97,6 +85,22 @@
   .active-italy{
     left: 88.5%;
   }
+  // 材料購買 種類
+.active-all-ingredient{
+  left: 7.1%;
+}
+.active-package{
+  left: 32.9%;
+}
+.active-hot{
+  left: 58.5%;
+}
+.active-sale{
+  left: 84.3%;
+}
+  // .activePackage{
+  //   left: 34.5%;
+  // }
 }
 
 // 電腦
@@ -111,42 +115,69 @@
       &:hover{
         color: $primary;
         border-bottom: 2px solid #c9d6ff;
+
+        .category-img1 {
+          content: url('@/assets/images/allDessert2.png');
+        }
+        .category-img2 {
+          content: url('@/assets/images/mooncake2.png');
+        }
+        .category-img3 {
+          content: url('@/assets/images/macaroon2.png');
+        }
+        .category-img4 {
+          content: url('@/assets/images/donut2.png');
+        }
+        .category-img5 {
+          content: url('@/assets/images/cakeStr2.png');
+        }
+        .category-img6 {
+          content: url('@/assets/images/pie2.png');
+        }
+
+        .product-img1 {
+          content: url('@/assets/images/fruit2.png');
+        }
+        .product-img2 {
+          content: url('@/assets/images/food2.png');
+        }
+        .product-img3 {
+          content: url('@/assets/images/strawberry2.png');
+        }
+        .product-img4 {
+          content: url('@/assets/images/discount2.png');
+        }
       }
     }
   }
 
-      // 2. 食材組合包
+    // 材料購買 種類
+.active-all-ingredient{
+  left: 7.1%;
+}
+.active-package{
+  left: 32%;
+  width: 10.5% !important;
+}
+.active-hot{
+  left: 58.5%;
+}
+.active-sale{
+  left: 84.3%;
+}
+        // 2. 食材組合包
   // .activePackage{
   //   left: 33.7%;
   //   width: 100px;
   // }
-
-  .category-selector li a:hover .categoryImg1 {
-    content: url('@/assets/images/allDessert2.png');
-  }
-  .category-selector li a:hover .categoryImg2 {
-    content: url('@/assets/images/mooncake2.png');
-  }
-  .category-selector li a:hover .categoryImg3 {
-    content: url('@/assets/images/macaroon2.png');
-  }
-  .category-selector li a:hover .categoryImg4 {
-    content: url('@/assets/images/donut2.png');
-  }
-  .category-selector li a:hover .categoryImg5 {
-    content: url('@/assets/images/cakeStr2.png');
-  }
-  .category-selector li a:hover .categoryImg6 {
-    content: url('@/assets/images/pie2.png');
-  }
 }
 
 @include media-breakpoint-up(xl) {
   .blue-line {
     width: 6.5%;
   }
-
-  .active-all{
+  // 食譜
+  .active-all-recipe{
     left: 4.2%;
   }
   .active-taiwan{
@@ -164,5 +195,18 @@
     .active-italy{
     left: 89.2%;
   }
-
+  // 材料購買 種類
+  .active-all-ingredient{
+    left: 8.5%;
+  }
+  .active-package{
+    left: 33.3%;
+    width: 8% !important;
+  }
+  .active-hot{
+    left: 59.3%;
+  }
+  .active-sale{
+    left: 85%;
+  }
 }
