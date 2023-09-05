@@ -7,7 +7,7 @@
 
             <div class="row">
                 <div class="col-md-6 d-none d-md-block my-auto">
-                  <h2 class="text-white  text-center fw-bold mb-0">
+                  <h2 class="text-white text-shadow text-center fw-bold mb-0">
                       您在找的
                       <span class="text-primary text-shadow-white"> 食譜材料 </span><br class="d-lg-none">
                       都在這裡

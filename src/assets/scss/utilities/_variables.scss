@@ -325,9 +325,10 @@ $theme-colors: (
   "yellow":#ff9500,// custom F5AE4C
   "darkBrown":#493A25,// custom
   "lightBrownGray": #AFA89F, // custom
-  "lightGray": #d3ccc1, // custom 
   "cyan": #d0fdfd, // custom
   "gray": $gray-600, // custom
+  "lightGray": #d3ccc1, // custom 
+  "whiteGray": $gray-200, // 超淺灰色 
   "purple": #5a5ad0, // custom
   "lightPurple": $lightPurple, // custom
 
@@ -403,6 +404,8 @@ $spacers: (
   80: 80px, // custom
   88: 88px, // custom
   96: 96px, // custom
+  120: 120px, // custom
+  160: 160px, // custom
   230: 230px, // custom
   380: 380px, // custom
 ) !default;

@@ -1,123 +1,168 @@
-// 甜點頁面 種類欄位
-.categorySelector li a span.titleSize{
-    font-size: 10px;
-    margin-top: 5px;
-  }
-
 // 全部的圖示大小
-.categorySelector li a img{
-    width: 30px;
+.category-selector{
+  a{
+    img{
+      width: 30px;
+    }
+    color: $gray-600;
+    border-bottom: 2px solid transparent;
+    transition: all .4s ease-in-out;
+
+  }
 }
-.categorySelector li a{
-  border-bottom: 2px solid transparent;
+
+.blue-line {
+  position: absolute;
+  height: 2px;
+  width: 6.5%;
+
+  bottom: 0;
   transition: all .4s ease-in-out;
 }
-
-.categorySelector li a:hover{
-  color: #4572c2 !important;
+.active-all{
+  left: 2.7%;
 }
-  /* 滑行測試 */
-  .blueLine{
-    transition: all .3s ease-in-out ;
-    width: 24px;
-  }
-
-  .activeAll{
-    left: 5% !important;
-  }
-  /*1 全部 */
-  
-    /* 2 台式甜點 */
-  .activeT{
-    left: 21.8% !important;
-  }
-
-
-  /* 3 法式甜點 */
-  .activeF{
-    left: 38.5% !important;
-  }
-
-    /* 4 美式甜點 */
-    .activeA{
-    left: 55% !important;
-  }
-
-    /* 5 日式甜點 */
-    .activeJ{
-    left: 72% !important;
-  }
-
-    /* 6 義式甜點 */
-    .activeI{
-    left: 88.5% !important;
-  }
+.active-taiwan{
+  left: 20.4%;
+}
+.active-france{
+  left: 38%;
+}
+.active-usa{
+  left: 55.8%;
+}
+.active-japan{
+  left: 73.2%;
+}
+.active-italy{
+  left: 90.8%;
+}
 
   // 材料購買 種類
   // 1. 所有材料
   .activeAllIngredient{
-    left: 9.3% !important;
+    left: 9.3%;
   }
+
   // 2. 食材組合包
   .activePackage{
-    left: 33% !important;
+    left: 33%;
     width: 9%;
-    // 或 8%
   }
   // 3. 熱銷單品
   .activeHot{
-    left: 59.5% !important;
+    left: 59.5%;
   }
   // 4.特價商品
   .activeSale{
-    left: 84.5% !important;
+    left: 84.5%;
   }
 
   // 會員特報 1. 優惠折扣
   .activeDiscount{
-    left: 21.7% !important;
+    left: 21.7%;
   }
   // 2.抽獎回饋
   .activeGift{
-    left: 71.8% !important;
+    left: 71.8%;
   }
 
-/* 選定禁止點擊 */
-  .liDisabled{
-    pointer-events: none;
+  // 平板
+  @include media-breakpoint-up(md) {
+  // .blueLine{
+  //     width: 45px;
+  // }
+  // 2. 食材組合包
+  // .activePackage{
+  //   left: 34.5%;
+  // }
+  .blue-line {
+    width: 8.5%;
   }
-
-// 平板
-@include media-breakpoint-up(md) {
- .blueLine{
-     width: 45px;
- }
-// 2. 食材組合包
-.activePackage{
-  left: 34.5% !important;
+  .active-all{
+    left: 3%;
+  }
+  .active-taiwan{
+    left: 20%;
+  }
+  .active-france{
+    left: 37%;
+  }
+  .active-usa{
+    left: 54.3%;
+  }
+  .active-japan{
+  left: 71.4%;
 }
+  .active-italy{
+    left: 88.5%;
+  }
 }
 
 // 電腦
 @include media-breakpoint-up(lg) {
-     .categorySelector li a span.titleSize{
-       font-size: 20px;
-     }
-     .categorySelector li a img{
+   
+  .category-selector{
+    a{
+      img{
         width: 40px;
+      }
+      
+      &:hover{
+        color: $primary;
+        border-bottom: 2px solid #c9d6ff;
+      }
     }
-    .blueLine{
-        width: 84px;
-    }
-    // 電腦滑鼠移動 底線效果
-    .categorySelector li a:hover{
-      border-bottom: 2px solid #c9d6ff;
-    }
-
-      // 2. 食材組合包
-  .activePackage{
-    left: 33.7% !important;
-    width: 100px !important;
   }
 
- }
+      // 2. 食材組合包
+  // .activePackage{
+  //   left: 33.7%;
+  //   width: 100px;
+  // }
+
+  .category-selector li a:hover .categoryImg1 {
+    content: url('@/assets/images/allDessert2.png');
+  }
+  .category-selector li a:hover .categoryImg2 {
+    content: url('@/assets/images/mooncake2.png');
+  }
+  .category-selector li a:hover .categoryImg3 {
+    content: url('@/assets/images/macaroon2.png');
+  }
+  .category-selector li a:hover .categoryImg4 {
+    content: url('@/assets/images/donut2.png');
+  }
+  .category-selector li a:hover .categoryImg5 {
+    content: url('@/assets/images/cakeStr2.png');
+  }
+  .category-selector li a:hover .categoryImg6 {
+    content: url('@/assets/images/pie2.png');
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  .blue-line {
+    width: 6.5%;
+  }
+
+  .active-all{
+    left: 4.2%;
+  }
+  .active-taiwan{
+    left: 21.2%;
+  }
+  .active-france{
+    left: 38.3%;
+  }
+    .active-usa{
+    left: 55.3%;
+  }
+    .active-japan{
+    left: 72.3%;
+  }
+    .active-italy{
+    left: 89.2%;
+  }
+
+}

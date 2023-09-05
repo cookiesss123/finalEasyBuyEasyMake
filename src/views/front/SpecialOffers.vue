@@ -29,14 +29,14 @@
         </section>
       <section class="container mt-4">
           <ul class="position-relative categorySelector row row-cols-2 gy-2 list-unstyled border-bottom">
-              <li class="col d-flex  align-items-center justify-content-center" :class="{'liDisabled': tabName === '優惠折扣'}">
+              <li class="col d-flex  align-items-center justify-content-center" :class="{'pointer-events-none': tabName === '優惠折扣'}">
                 <a href="#"  @click.prevent="()=>tabName = '優惠折扣'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': tabName === '優惠折扣', 'link-primary': tabName === '優惠折扣'}">
                   <img class="discountImg1" v-if="tabName !== '優惠折扣'" src="../../assets/images/discount1.png"  alt="">
                   <img v-else-if="tabName === '優惠折扣'" src="../../assets/images/discount3.png"  alt="">
                   <span  class="titleSize ">優惠折扣</span>
                 </a>
               </li>
-              <li class="col d-flex  align-items-center justify-content-center" :class="{'liDisabled': tabName === '抽獎回饋'}">
+              <li class="col d-flex  align-items-center justify-content-center" :class="{'pointer-events-none': tabName === '抽獎回饋'}">
                 <a href="#"  @click.prevent="()=>tabName = '抽獎回饋'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': tabName === '抽獎回饋', 'link-primary': tabName === '抽獎回饋'}">
                   <img class="discountImg2" v-if="tabName !== '抽獎回饋'" src="../../assets/images/giftBox1.png"  alt="">
                   <img v-else-if="tabName === '抽獎回饋'" src="../../assets/images/giftBox3.png"  alt="">

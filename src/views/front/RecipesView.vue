@@ -205,181 +205,143 @@ export default {
 }
 </script>
 <template>
-    <div class=""  style="overflow-x: hidden;" data-aos="fade-up">
+  <!-- style="overflow-x: hidden;" -->
+    <div  data-aos="fade-up">
     <LoadingComponent :is-loading="isLoading"></LoadingComponent>
-    <!-- <div class="loadingBackdrop"></div> -->
-        <section   class="bannerBg " style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
-          <!-- mask -->
-          <div class=" mask">
-            <div class="text" style="background: linear-gradient(to bottom, white 50% , #4572c2 50%); -webkit-background-clip: text;">
-              甜點種類
-            </div>
-          </div>
-        </section>
-        <section class="container mt-4"  >
-          <ul class="position-relative categorySelector row row-cols-6 gy-2 list-unstyled border-bottom">
-              <li class="col d-flex  align-items-center justify-content-center " :class="{'liDisabled': selectItem === '全部'}">
-                <a href="#"  @click.prevent="()=>selectCategory = '全部'" class="text-decoration-none d-flex flex-column align-items-center link-secondary " :class="{'fw-bold': selectItem === '全部', 'link-primary': selectItem === '全部'}">
-                  <img class="categoryImg1" v-if="selectItem !== '全部'" src="../../assets/images/allDessert1.png"  alt="">
-                  <img v-else-if="selectItem === '全部'" src="../../assets/images/allDessert3.png"  alt="">
-                  <span class="titleSize " >所有<br class="d-lg-none">甜點</span>
+
+      <section class="text-center">
+        <!-- 手機位置用top剛好 -->
+        <div class="py-lg-160 py-96 bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
+        <h2 class="text-purple mb-0  fs-lg-1 fs-5 letter-spacing-20 fw-bold bg-secondary-lightPurple py-2">甜點種類</h2>
+      </section>
+
+      <section class="container">
+        <div class="pt-lg-5 pt-4 position-relative">
+          <ul class="category-selector row row-cols-6 list-unstyled border-bottom">
+              <li class="col text-center" :class="{'pointer-events-none': selectItem === '全部'}">
+                <a href="#"  @click.prevent="()=>selectCategory = '全部'" class="text-decoration-none d-inline-block" :class="{'fw-bold': selectItem === '全部', 'link-primary': selectItem === '全部'}">
+                  <img v-if="selectItem !== '全部'" class="categoryImg1 d-block mx-auto" src="../../assets/images/allDessert1.png"  alt="所有甜點灰色圖示">
+                  <img v-else-if="selectItem === '全部'" src="../../assets/images/allDessert3.png" class="d-block mx-auto" alt="所有甜點藍色圖示">
+                  <span class="fs-12 fs-md-5 d-block py-2" >所有<br class="d-lg-none">甜點</span>
                 </a>
               </li>
-              <li class="col d-flex  align-items-center justify-content-center " :class="{'liDisabled': selectItem === '台式甜點'}">
-                <a href="#"  @click.prevent="()=>selectCategory = '台式甜點'" class="text-decoration-none d-flex flex-column align-items-center link-secondary " :class="{'fw-bold': selectItem === '台式甜點', 'link-primary': selectItem === '台式甜點'}">
-                  <img class="categoryImg2" v-if="selectItem !== '台式甜點'" src="../../assets/images/mooncake1.png"  alt="">
-                  <img v-else-if="selectItem === '台式甜點'" src="../../assets/images/mooncake3.png"  alt="">
-                  <span class="titleSize " >台式<br class="d-lg-none">甜點</span>
+              <li class="col text-center" :class="{'pointer-events-none': selectItem === '台式甜點'}">
+                <a href="#"  @click.prevent="()=>selectCategory = '台式甜點'" class="text-decoration-none d-inline-block" :class="{'fw-bold': selectItem === '台式甜點', 'link-primary': selectItem === '台式甜點'}">
+                  <img class="categoryImg2 d-block mx-auto" v-if="selectItem !== '台式甜點'" src="../../assets/images/mooncake1.png"  alt="台式甜點灰色圖示">
+                  <img v-else-if="selectItem === '台式甜點'" class="d-block mx-auto" src="../../assets/images/mooncake3.png"  alt="台式甜點藍色圖示">
+                  <span class="fs-12 fs-md-5 d-block py-2" >台式<br class="d-lg-none">甜點</span>
                 </a>
               </li>
-              <li class="col d-flex  align-items-center justify-content-center" :class="{'liDisabled': selectItem === '法式甜點'}">
-                <a href="#"  @click.prevent="()=>selectCategory = '法式甜點'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': selectItem === '法式甜點', 'link-primary': selectItem === '法式甜點'}">
-                  <img class="categoryImg3" v-if="selectItem !== '法式甜點'" src="../../assets/images/macaroon1.png"  alt="">
-                  <img v-else-if="selectItem === '法式甜點'" src="../../assets/images/macaroon3.png"  alt="">
-                  <span  class="titleSize ">法式<br class="d-lg-none">甜點</span>
+              <li class="col text-center" :class="{'pointer-events-none': selectItem === '法式甜點'}">
+                <a href="#"  @click.prevent="()=>selectCategory = '法式甜點'" class="text-decoration-none d-inline-block" :class="{'fw-bold': selectItem === '法式甜點', 'link-primary': selectItem === '法式甜點'}">
+                  <img class="categoryImg3 d-block mx-auto" v-if="selectItem !== '法式甜點'" src="../../assets/images/macaroon1.png"  alt="法式甜點灰色圖示">
+                  <img v-else-if="selectItem === '法式甜點'" class="d-block mx-auto" src="../../assets/images/macaroon3.png"  alt="法式甜點藍色圖示">
+                  <span  class="fs-12 fs-md-5 d-block py-2">法式<br class="d-lg-none">甜點</span>
                 </a>
               </li>
-              <li class="col d-flex  align-items-center justify-content-center" :class="{'liDisabled': selectItem === '美式甜點'}">
-                <a href="#"  @click.prevent="()=>selectCategory = '美式甜點'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': selectItem === '美式甜點', 'link-primary': selectItem === '美式甜點'}">
-                  <img class="categoryImg4" v-if="selectItem !== '美式甜點'" src="../../assets/images/donut1.png"  alt="">
-                  <img v-else-if="selectItem === '美式甜點'" src="../../assets/images/donut4.png"  alt="">
-                  <span  class="titleSize ">美式<br class="d-lg-none">甜點</span>
+              <li class="col text-center" :class="{'pointer-events-none': selectItem === '美式甜點'}">
+                <a href="#"  @click.prevent="()=>selectCategory = '美式甜點'" class="text-decoration-none d-inline-block" :class="{'fw-bold': selectItem === '美式甜點', 'link-primary': selectItem === '美式甜點'}">
+                  <img class="categoryImg4 d-block mx-auto" v-if="selectItem !== '美式甜點'" src="../../assets/images/donut1.png"  alt="美式甜點灰色圖示">
+                  <img v-else-if="selectItem === '美式甜點'" class="d-block mx-auto" src="../../assets/images/donut4.png"  alt="美式甜點藍色圖示">
+                  <span  class="fs-12 fs-md-5 d-block py-2">美式<br class="d-lg-none">甜點</span>
                 </a>
               </li>
-              <li class="col d-flex  align-items-center justify-content-center" :class="{'liDisabled': selectItem === '日式甜點'}">
-                <a href="#"  @click.prevent="()=>selectCategory = '日式甜點'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': selectItem === '日式甜點', 'link-primary': selectItem === '日式甜點'}">
-                  <img class="categoryImg5" v-if="selectItem !== '日式甜點'" src="../../assets/images/cakeStr1.png"  alt="">
-                  <img v-else-if="selectItem === '日式甜點'" src="../../assets/images/cake17.png"  alt="">
-                  <span  class="titleSize ">日式<br class="d-lg-none">甜點</span>
+              <li class="col text-center" :class="{'pointer-events-none': selectItem === '日式甜點'}">
+                <a href="#"  @click.prevent="()=>selectCategory = '日式甜點'" class="text-decoration-none d-inline-block" :class="{'fw-bold': selectItem === '日式甜點', 'link-primary': selectItem === '日式甜點'}">
+                  <img class="categoryImg5 d-block mx-auto" v-if="selectItem !== '日式甜點'" src="../../assets/images/cakeStr1.png"  alt="日式甜點灰色圖示">
+                  <img v-else-if="selectItem === '日式甜點'" class="d-block mx-auto" src="../../assets/images/cake17.png"  alt="日式甜點藍色圖示">
+                  <span  class="fs-12 fs-md-5 d-block py-2">日式<br class="d-lg-none">甜點</span>
                 </a>
               </li>
-              <li class="col d-flex align-items-center justify-content-center" :class="{'liDisabled': selectItem === '義式甜點'}">
-                <a href="#"  @click.prevent="()=>selectCategory = '義式甜點'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': selectItem === '義式甜點', 'link-primary': selectItem === '義式甜點'}">
-                  <img class="categoryImg6" v-if="selectItem !== '義式甜點'" src="../../assets/images/pie1.png"  alt="">
-                  <img v-else-if="selectItem === '義式甜點'" src="../../assets/images/pie3.png"  alt="">
-                  <span class="titleSize ">義式<br class="d-lg-none">甜點</span>
+              <li class="col text-center" :class="{'pointer-events-none': selectItem === '義式甜點'}">
+                <a href="#"  @click.prevent="()=>selectCategory = '義式甜點'" class="text-decoration-none d-inline-block" :class="{'fw-bold': selectItem === '義式甜點', 'link-primary': selectItem === '義式甜點'}">
+                  <img class="categoryImg6 d-block mx-auto" v-if="selectItem !== '義式甜點'" src="../../assets/images/pie1.png"  alt="義式甜點灰色圖示">
+                  <img v-else-if="selectItem === '義式甜點'" class="d-block mx-auto" src="../../assets/images/pie3.png"  alt="義式甜點藍色圖示">
+                  <span class="fs-12 fs-md-5 d-block py-2">義式<br class="d-lg-none">甜點</span>
                 </a>
               </li>
-              <li class="blueLine bg-primary position-absolute" style="height: 2px; bottom: 0px; left: 5.5%" :class="{'activeAll': selectItem === '全部', 'activeT': selectItem === '台式甜點', 'activeF': selectItem === '法式甜點', 'activeA': selectItem === '美式甜點', 'activeJ': selectItem === '日式甜點', 'activeI': selectItem === '義式甜點'}"></li>
           </ul>
-        </section>
+          <div class="blue-line bg-primary position-absolute" :class="{'active-all': selectItem === '全部', 'active-taiwan': selectItem === '台式甜點', 'active-france': selectItem === '法式甜點', 'active-usa': selectItem === '美式甜點', 'active-japan': selectItem === '日式甜點', 'active-italy': selectItem === '義式甜點'}"></div>
+        </div>
 
-        <section class="d-none d-lg-block container selectProduct my-5"  >
-          <div class="input-group">
-            <a class="btn btn-outline-primary px-5" @click="()=> this.costOrRateCollapse.toggle()">篩選對象 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{priceOrRate}}</span></a>
-            <button class="btn btn-outline-primary px-5" type="button" @click="()=> this.highOrLowCollapse.toggle()">篩選值 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{highOrLow}}</span> </button>
-            <input type="search" class="form-control border-primary border-end-0" placeholder="請輸入食譜名稱" aria-label="Example text with two button addons" v-model="recipeSearchName" @keyup.enter="searchRecipes">
-            <button type="submit" class="btn border border-primary border-start-0 bg-transparent d-flex" @click.prevent="searchRecipes">
-              <span class="material-icons-outlined text-primary ">search</span>
-            </button>
-          </div>
-          <div class="row g-0" id="myGroup">
-            <div class="col-2">
-              <div ref="costOrRateCollapse" class="collapse">
-                <div class="card card-body border-0" style="border: 0px !important;">
-                  <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
-                    <input type="radio" class="btn-check" value="成本" name="priceOrRate" id="selectprice" autocomplete="off"  v-model="priceOrRate">
-                    <label class="btn btn-outline-primary " for="selectprice">成本</label>
-                    <input type="radio" class="btn-check"  value="評價" name="priceOrRate" id="selectRate" autocomplete="off" v-model="priceOrRate">
-                    <label class="btn btn-outline-primary " for="selectRate">評價</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-2">
-              <div ref="highOrLowCollapse" class="collapse">
-                <div class="card card-body border-0" style="border: 0px !important;">
-                  <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
-                    <input type="radio" class="btn-check" value="不拘" name="highOrLow" id="noDifference" autocomplete="off" checked="" v-model="highOrLow">
-                    <label class="btn btn-outline-primary" for="noDifference">不拘</label>
-                    <input type="radio" class="btn-check" value="高到低" name="highOrLow" id="highToLow" autocomplete="off" v-model="highOrLow">
-                    <label class="btn btn-outline-primary" for="highToLow">高到低</label>
-                    <input type="radio" class="btn-check" value="低到高" name="highOrLow" id="lowToHigh" autocomplete="off" v-model="highOrLow">
-                    <label class="btn btn-outline-primary" for="lowToHigh">低到高</label>
-                  </div>
+        <div class="d-none d-lg-block  my-5">
+        <div class="input-group">
+          <a class="btn btn-outline-primary px-5" @click="()=> this.costOrRateCollapse.toggle()">篩選對象 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{priceOrRate}}</span></a>
+          <button class="btn btn-outline-primary px-5" type="button" @click="()=> this.highOrLowCollapse.toggle()">篩選值 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{highOrLow}}</span> </button>
+          <input type="search" class="form-control border-primary border-end-0" placeholder="請輸入食譜名稱" aria-label="Example text with two button addons" v-model="recipeSearchName" @keyup.enter="searchRecipes">
+          <button type="submit" class="btn border border-primary border-start-0 bg-transparent d-flex" @click.prevent="searchRecipes">
+            <span class="material-icons-outlined text-primary ">search</span>
+          </button>
+        </div>
+        <div class="row g-0" id="myGroup">
+          <div class="col-2">
+            <div ref="costOrRateCollapse" class="collapse">
+              <div class="card card-body border-0" style="border: 0px !important;">
+                <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
+                  <input type="radio" class="btn-check" value="成本" name="priceOrRate" id="selectprice" autocomplete="off"  v-model="priceOrRate">
+                  <label class="btn btn-outline-primary " for="selectprice">成本</label>
+                  <input type="radio" class="btn-check"  value="評價" name="priceOrRate" id="selectRate" autocomplete="off" v-model="priceOrRate">
+                  <label class="btn btn-outline-primary " for="selectRate">評價</label>
                 </div>
               </div>
             </div>
           </div>
-        </section>
-
-        <section class="container"  >
-          <div v-if="filterRecipes.length" class="row row-cols-lg-4 row-cols-2 gy-4">
-            <div class="col text-decoration-none" v-for="recipe in this.$refs.pagination.pageProducts" :key="recipe.id">
-              <div class="card position-relative bg-transparent" style="border-radius: 0; border: 1px solid transparent;">
-                <div class="cardImg" style="">
-                  <RouterLink :to="`/recipes/${recipe.id}`" class="enlargeImg">
-                    <img :src="recipe.image" class="card-img" style=" object-fit: cover;  max-width: 100%; max-height: 100%; border-radius: 0;" alt="">
-                  </RouterLink>
+          <div class="col-2">
+            <div ref="highOrLowCollapse" class="collapse">
+              <div class="card card-body border-0" style="border: 0px !important;">
+                <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
+                  <input type="radio" class="btn-check" value="不拘" name="highOrLow" id="noDifference" autocomplete="off" checked="" v-model="highOrLow">
+                  <label class="btn btn-outline-primary" for="noDifference">不拘</label>
+                  <input type="radio" class="btn-check" value="高到低" name="highOrLow" id="highToLow" autocomplete="off" v-model="highOrLow">
+                  <label class="btn btn-outline-primary" for="highToLow">高到低</label>
+                  <input type="radio" class="btn-check" value="低到高" name="highOrLow" id="lowToHigh" autocomplete="off" v-model="highOrLow">
+                  <label class="btn btn-outline-primary" for="lowToHigh">低到高</label>
                 </div>
-                <h5 class="card-text mb-0">
-                  <p class="detail d-none d-lg-block position-absolute fw-bold" style="top: 35%; left: 50%; transform: translateX(-50%); letter-spacing: 5px;">查看詳細食譜</p>
-
-                    <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent end-0 top-0 m-lg-3 m-2" @click="()=>addBookmark(recipe)">
-                      <img src="../../assets/images/image5.png">
-                    </button>
-                    <!-- 已收藏狀態 -->
-                    <div v-for="mark in bookMarks" :key="mark + 4567">
-                      <button v-if="mark === recipe.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>deleteBookmark(recipe.id)">
-                          <img src="../../assets/images/image4.png">
-                      </button>
-                    </div>
-                    <span style="pointer-events: none; " class="cardTextCategory badge rounded-pill bg-primary mt-4 border-0 m-3 position-absolute start-0">{{ recipe.category }}</span>
-                </h5>
-                <RouterLink :to="`/recipes/${recipe.id}`" class="card-footer bg-transparent border-0 pt-lg-3 text-decoration-none link-darkBrown">
-                  <h5 class="d-flex justify-content-between align-items-center fw-bold">
-                    <span class="cardTextTitle">{{recipe.title}}</span>
-                  </h5>
-                   <div class="cardTextPrice d-flex align-items-lg-center align-items-end">
-                    <div class="">
-                      <del v-if="recipe.total" class="me-2 text-muted d-block d-lg-inline-block" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
-                      <span><span v-if="recipe.price" :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{numberComma(recipe.price)}}</span> / {{ recipe.content }}</span>
-                    </div>
-                    <h5 class="starRates mb-0 ms-auto">
-                      <p class=" mb-0 badge rounded-pill border d-flex align-items-center" :class="{'border-primary': recipe.thumbs !== 0, 'border-lightBrownGray':  recipe.thumbs === 0, 'text-primary':recipe.thumbs !== 0,'text-lightBrownGray': recipe.thumbs === 0}">
-                        <span class="me-1">{{ recipe.thumbs }}</span>
-                        <i class="bi bi-hand-thumbs-up-fill"></i>
-                      </p>
-                    </h5>
-                  </div>
-                </RouterLink>
               </div>
             </div>
           </div>
-          <!-- 查無食譜 -->
-          <div v-else-if="!filterRecipes.length && search" class="py-96">
-            <img src="../../assets/images/undraw_Page_not_found_re_e9o6.png" class="mb-3" alt="" style="height: 250px; display: block; margin: auto;">
-            <h2 class="text-center">查無食譜，請您重新查詢</h2>
+        </div>
+        </div>
+
+        <div v-if="filterRecipes.length" class="row row-cols-xl-4 row-cols-lg-3 row-cols-2 gy-4">
+          <div class="col" v-for="recipe in this.$refs.pagination.pageProducts" :key="recipe.id">
+            <div class="card position-relative">
+              <RouterLink :to="`/recipes/${recipe.id}`" class="card-img-hover position-relative">
+                <!--  style=" object-fit: cover;  max-width: 100%; max-height: 100%; border-radius: 0;"  -->
+                <img :src="recipe.image" class="object-fit-cover card-img" :alt="recipe.title">
+                <span class="badge rounded-pill bg-primary position-absolute start-0 bottom-0 m-3">{{ recipe.category }}</span>
+                <p class="detail position-absolute top-50 start-50 translate-middle fw-bold letter-spacing-5 link-darkBrown fs-xl-5 text-center">查看<br class="d-xl-none d-lg-block">詳細食譜</p>
+              </RouterLink>
+              <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark(recipe)">
+                <img src="../../assets/images/image5.png" alt="收藏按鈕-未收藏">
+              </button>
+              <div v-for="mark in bookMarks" :key="mark + 4567">
+                <button v-if="mark === recipe.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-3"  @click="()=>deleteBookmark(recipe.id)">
+                    <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
+                </button>
+              </div>
+              <RouterLink :to="`/recipes/${recipe.id}`" class="card-body px-0 text-decoration-none link-darkBrown">
+                <h3 class="fw-bold fs-md-5 fs-6">{{recipe.title}}</h3>
+                  <div class="d-flex align-items-center flex-wrap fs-md-6 fs-12">
+                    <del v-if="recipe.total" class="me-2 text-muted" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
+                    <span class="me-1" :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{ numberComma(recipe.price) }}</span>
+                    <span> / {{ recipe.content }}</span>
+                    <span class="badge rounded-pill ms-auto border mt-1 mt-md-0" :class="{'border-primary': recipe.thumbs !== 0, 'border-gray':  recipe.thumbs === 0, 'text-primary':recipe.thumbs !== 0,'text-gray': recipe.thumbs === 0, 'bg-secondary':recipe.thumbs !== 0, 'bg-whiteGray':recipe.thumbs === 0}">
+                      {{ recipe.thumbs }}
+                      <i class="bi bi-hand-thumbs-up-fill" ></i>
+                    </span>
+                </div>
+              </RouterLink>
+            </div>
           </div>
-          <!-- 頁尾 -->
-          <PaginationComponent ref="pagination" :price-or-rate="priceOrRate" :filter-recipes="filterRecipes" class="mb-5"></PaginationComponent>
-        </section>
+        </div>
+        <!-- 查無食譜 -->
+        <div v-else-if="!filterRecipes.length && search" class="py-lg-4 text-center">
+          <img src="../../assets/images/undraw_Page_not_found_re_e9o6.png" class="mb-lg-3 mb-2 img-md-200-sm-150" alt="查無資訊">
+          <h3 class="fs-lg-3 fs-6">查無食譜，請您重新查詢</h3>
+        </div>
+        <!-- 頁尾 -->
+        <PaginationComponent ref="pagination" :price-or-rate="priceOrRate" :filter-recipes="filterRecipes" class="mb-5"></PaginationComponent>
+      </section>
     </div>
 </template>
-<style>
-  .categorySelector li a{
-    padding-bottom: 10px;
-  }
-
-  .categorySelector li a .categoryImg1, .categoryImg2, .categoryImg3, .categoryImg4, .categoryImg5, .categoryImg6{
-    opacity: .5;
-  }
-  .categorySelector li a:hover .categoryImg1 {
-    content: url('@/assets/images/allDessert2.png');
-  }
-  .categorySelector li a:hover .categoryImg2 {
-    content: url('@/assets/images/mooncake2.png');
-  }
-  .categorySelector li a:hover .categoryImg3 {
-    content: url('@/assets/images/macaroon2.png');
-  }
-  .categorySelector li a:hover .categoryImg4 {
-    content: url('@/assets/images/donut2.png');
-  }
-  .categorySelector li a:hover .categoryImg5 {
-    content: url('@/assets/images/cakeStr2.png');
-  }
-  .categorySelector li a:hover .categoryImg6 {
-    content: url('@/assets/images/pie2.png');
-  }
-</style>

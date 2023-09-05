@@ -270,28 +270,28 @@ export default {
         </section>
         <section class="container mt-4">
           <ul class="position-relative categorySelector row row-cols-4 gy-2 list-unstyled border-bottom">
-              <li class="col d-flex  align-items-center justify-content-center " :class="{'liDisabled': pageStatus === '全部'}">
+              <li class="col d-flex  align-items-center justify-content-center " :class="{'pointer-events-none': pageStatus === '全部'}">
                 <a href="#"  @click.prevent="()=>selectPage = '全部'" class="text-decoration-none d-flex flex-column align-items-center link-secondary " :class="{'fw-bold': pageStatus === '全部', 'link-primary': pageStatus === '全部'}">
                   <img class="productImg1" v-if="pageStatus !== '全部'" src="../../assets/images/fruit1.png"  alt="">
                   <img v-else-if="pageStatus === '全部'" src="../../assets/images/fruit3.png"  alt="">
                   <span class="titleSize " >所有<br class="d-lg-none">材料</span>
                 </a>
               </li>
-              <li class="col d-flex  align-items-center justify-content-center " :class="{'liDisabled': pageStatus === '食材組合包'}">
+              <li class="col d-flex  align-items-center justify-content-center " :class="{'pointer-events-none': pageStatus === '食材組合包'}">
                 <a href="#"  @click.prevent="()=>selectPage = '食材組合包'" class="text-decoration-none d-flex flex-column align-items-center link-secondary " :class="{'fw-bold': pageStatus === '食材組合包', 'link-primary': pageStatus === '食材組合包'}">
                   <img class="productImg2" v-if="pageStatus !== '食材組合包'" src="../../assets/images/food1.png"  alt="">
                   <img v-else-if="pageStatus === '食材組合包'" src="../../assets/images/food3.png"  alt="">
                   <span class="titleSize text-center" >食材<br class="d-lg-none">組合包</span>
                 </a>
               </li>
-              <li class="col d-flex  align-items-center justify-content-center" :class="{'liDisabled': pageStatus === '熱銷單品'}">
+              <li class="col d-flex  align-items-center justify-content-center" :class="{'pointer-events-none': pageStatus === '熱銷單品'}">
                 <a href="#"  @click.prevent="()=>selectPage = '熱銷單品'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': pageStatus === '熱銷單品', 'link-primary': pageStatus === '熱銷單品'}">
                   <img class="productImg3" v-if="pageStatus !== '熱銷單品'" src="../../assets/images/strawberry1.png"  alt="">
                   <img v-else-if="pageStatus === '熱銷單品'" src="../../assets/images/strawberry3.png"  alt="">
                   <span  class="titleSize ">熱銷<br class="d-lg-none">單品</span>
                 </a>
               </li>
-              <li class="col d-flex  align-items-center justify-content-center" :class="{'liDisabled': pageStatus === '特價商品'}">
+              <li class="col d-flex  align-items-center justify-content-center" :class="{'pointer-events-none': pageStatus === '特價商品'}">
                 <a href="#"  @click.prevent="()=>selectPage = '特價商品'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': pageStatus === '特價商品', 'link-primary': pageStatus === '特價商品'}">
                   <img class="productImg4" v-if="pageStatus !== '特價商品'" src="../../assets/images/discount1.png"  alt="">
                   <img v-else-if="pageStatus === '特價商品'" src="../../assets/images/discount3.png"  alt="">
@@ -406,7 +406,7 @@ export default {
 <style>
 
   .categorySelector li a .productImg1, .productImg2, .productImg3, .productImg4{
-    opacity: .5; /* 藍色 變淡藍 */
+    opacity: .5;
   }
   .categorySelector li a:hover .productImg1 {
     content: url('@/assets/images/fruit2.png');

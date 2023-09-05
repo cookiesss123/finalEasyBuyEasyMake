@@ -194,7 +194,7 @@
       <i class="bi bi-chat-dots-fill fs-35"></i>
     </button>
 
-    <footer class="mt-auto js-footer position-relative" :class="{'bg-secondary': this.$route.fullPath !== '/loginSignup', 'bg-white': this.$route.fullPath === '/loginSignup'}" >
+    <footer class="mt-auto js-footer position-relative bg-lightPurple-secondary">
         <div class="container d-flex flex-column flex-lg-row align-items-center py-3">
           <div class=" d-flex justify-content-center align-items-center mb-2 mb-lg-0">
               <img src="../assets/images/loadingLogo.png" class="logo me-1" alt="甜點食譜一鍵購網站logo">

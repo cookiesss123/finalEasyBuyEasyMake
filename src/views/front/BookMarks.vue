@@ -175,14 +175,14 @@ export default {
         </section>
         <section class="container  mt-4">
           <ul class="position-relative categorySelector row row-cols-2 gy-2 list-unstyled border-bottom">
-              <li class="col d-flex  align-items-center justify-content-center" :class="{'liDisabled': pageStatus === 'recipe'}">
+              <li class="col d-flex  align-items-center justify-content-center" :class="{'pointer-events-none': pageStatus === 'recipe'}">
                 <a href="#"  @click.prevent="()=>pageStatus = 'recipe'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': pageStatus === 'recipe', 'link-primary': pageStatus === 'recipe'}">
                   <img class="bookmarkImg1" v-if="pageStatus !== 'recipe'" src="../../assets/images/book1.png"  alt="">
                   <img v-else-if="pageStatus === 'recipe'" src="../../assets/images/book3.png"  alt="">
                   <span  class="titleSize ">食譜收藏</span>
                 </a>
               </li>
-              <li class="col d-flex  align-items-center justify-content-center" :class="{'liDisabled': pageStatus === 'product'}">
+              <li class="col d-flex  align-items-center justify-content-center" :class="{'pointer-events-none': pageStatus === 'product'}">
                 <a href="#"  @click.prevent="()=>pageStatus = 'product'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': pageStatus === 'product', 'link-primary': pageStatus === 'product'}">
                   <img class="bookmarkImg2" v-if="pageStatus !== 'product'" src="../../assets/images/fruit1.png"  alt="">
                   <img v-else-if="pageStatus === 'product'" src="../../assets/images/fruit3.png"  alt="">

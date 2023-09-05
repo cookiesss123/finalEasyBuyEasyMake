@@ -703,7 +703,7 @@ export default {
             <div class="card position-relative">
               <RouterLink :to="`/recipes/${recipe.id}`" class="card-img-hover position-relative">
                 <img :src="recipe.image" class="object-fit-cover card-img" :alt="recipe.title">
-                <span class="badge fs-6 rounded-pill bg-primary position-absolute start-0 bottom-0 m-3">{{ recipe.category }}</span>
+                <span class="badge rounded-pill bg-primary position-absolute start-0 bottom-0 m-3">{{ recipe.category }}</span>
                 <p class="detail position-absolute top-50 start-50 translate-middle fw-bold letter-spacing-5 link-darkBrown fs-xl-5 text-center">查看<br class="d-xl-none d-lg-block">詳細食譜</p>
               </RouterLink>
               <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('recipeBookmarks',recipe)">

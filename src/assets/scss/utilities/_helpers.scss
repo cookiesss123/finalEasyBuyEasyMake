@@ -136,6 +136,11 @@
 .title-img{
     height: 36px;
 }
+
+// 404 圖片
+.img-md-200-sm-150{
+    height: 150px;
+}
 @include media-breakpoint-up(lg) {
     // 橫向
     // 半淡紫色半淡藍色(副色 漸層 banner bar 顏色
@@ -155,5 +160,10 @@
     // 第一個區塊 熱門食譜
     .title-img{
         height: 64px;
+    }
+
+    // 404 圖片
+    .img-md-200-sm-150{
+        height: 200px;
     }
 }
