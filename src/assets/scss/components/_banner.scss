@@ -121,40 +121,12 @@
 .priceSize{
   font-size: 16px;
 }
-/* 獎品 */
-.prizes .card img{
-    /* transform: rotateY(-90deg); */
-    opacity: 0;
-    transform: rotateY(-180deg);
-    transition: all ease-in-out 0.5s;
-  }
-  .prizes .card:hover img{
-    opacity: 1;
-    transform: rotateY(0deg);
-  }
-  .prizes .card .questionMark{
-    /* transform: rotateY(0deg); */
-    transform: rotateY(0deg);
-    transition: all ease-in-out 0.5s;
-  }
-  .prizes .card:hover .questionMark{
-    /* transform: rotateY(-90deg); */
-    transform: rotateY(-180deg);
-    opacity: 0;
-  }
-  .prizes .card .card-footer{
-    opacity: 0;
-  }
-  
-  .prizes .card:hover .card-footer{
-    opacity: 1;
-  }
+
   
   // 每頁 banner
   .bannerBg {
     width: 100vw;
     height: 50vh;
-    // background-image: url("https://images.unsplash.com/photo-1604854391668-1beacc48417b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;

@@ -268,7 +268,7 @@ export default {
       </section>
 
       <section class="container">
-        <div class="pt-lg-5 pt-4 position-relative">
+        <div class="pt-lg-4 pt-3 position-relative">
           <ul class="category-selector row row-cols-4 list-unstyled border-bottom">
             <li class="col text-center" :class="{'pointer-events-none': pageStatus === '全部'}">
               <a href="#"  @click.prevent="()=>selectPage = '全部'" class="text-decoration-none d-inline-block" :class="{'fw-bold': pageStatus === '全部', 'link-primary': pageStatus === '全部'}">

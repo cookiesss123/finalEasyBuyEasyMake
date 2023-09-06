@@ -55,11 +55,17 @@
 .object-fit-cover{
     object-fit: cover;
 }
+.object-fit-contain{
+    object-fit: contain;
+}
 .blur-shadow{
     box-shadow: $primary 0px 0px 10px 0;
 }
 .letter-spacing-5{
     letter-spacing: 5px;
+}
+.letter-spacing-5-sm-0{
+    letter-spacing: 0px;
 }
 .letter-spacing-10{
     letter-spacing: 10px;
@@ -141,6 +147,20 @@
 .img-md-200-sm-150{
     height: 150px;
 }
+ // 獎品圖片
+ .img-lg-220-md-200{
+    height: 200px;
+}
+// 尚未抽中 黑色背景問號
+.bg-not-obtained {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.7));
+}
+// 抽獎卡片顏色
+.bg-gradient-card{
+    background: linear-gradient(90deg, #6ea3fe ,#cab8ff);
+}
 @include media-breakpoint-up(lg) {
     // 橫向
     // 半淡紫色半淡藍色(副色 漸層 banner bar 顏色
@@ -165,5 +185,12 @@
     // 404 圖片
     .img-md-200-sm-150{
         height: 200px;
+    }
+    // 獎品圖片
+    .img-lg-220-md-200{
+        height: 220px;
+    }
+    .letter-spacing-5-sm-0{
+        letter-spacing: 5px;
     }
 }

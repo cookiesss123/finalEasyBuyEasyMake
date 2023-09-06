@@ -1,5 +1,5 @@
 <template>
-    <div class="" data-aos="fade-up"  style="overflow-x: hidden;">
+    <div data-aos="fade-up" >
       <loading v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"
@@ -20,151 +20,174 @@
       </p>
     </div>
         </loading>
-      <section class="bannerBg" style="background-image: url('https://images.unsplash.com/photo-1678465952975-85cc1a08b2d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');">
-          <div class="mask">
-            <div class="text" style="background: linear-gradient(to bottom, white 50% , #4572c2 50%); -webkit-background-clip: text;">
-              優惠特報
-            </div>
-          </div>
-        </section>
-      <section class="container mt-4">
-          <ul class="position-relative categorySelector row row-cols-2 gy-2 list-unstyled border-bottom">
-              <li class="col d-flex  align-items-center justify-content-center" :class="{'pointer-events-none': tabName === '優惠折扣'}">
-                <a href="#"  @click.prevent="()=>tabName = '優惠折扣'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': tabName === '優惠折扣', 'link-primary': tabName === '優惠折扣'}">
-                  <img class="discountImg1" v-if="tabName !== '優惠折扣'" src="../../assets/images/discount1.png"  alt="">
-                  <img v-else-if="tabName === '優惠折扣'" src="../../assets/images/discount3.png"  alt="">
-                  <span  class="titleSize ">優惠折扣</span>
-                </a>
-              </li>
-              <li class="col d-flex  align-items-center justify-content-center" :class="{'pointer-events-none': tabName === '抽獎回饋'}">
-                <a href="#"  @click.prevent="()=>tabName = '抽獎回饋'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': tabName === '抽獎回饋', 'link-primary': tabName === '抽獎回饋'}">
-                  <img class="discountImg2" v-if="tabName !== '抽獎回饋'" src="../../assets/images/giftBox1.png"  alt="">
-                  <img v-else-if="tabName === '抽獎回饋'" src="../../assets/images/giftBox3.png"  alt="">
-                  <span  class="titleSize ">抽獎回饋</span>
-                </a>
-              </li>
-              <li class="blueLine bg-primary position-absolute" style="height: 2px; bottom: 0px; left: 5.5%" :class="{'activeDiscount': tabName === '優惠折扣', 'activeGift': tabName === '抽獎回饋'}"></li>
-          </ul>
-      </section>
-      <section v-if="tabName === '優惠折扣'" class="text-primary ">
-        <div class="container">
-          <div v-if="!isLoading" class="row row-cols-lg-4 g-4 py-3 text-darkBrown">
-          <div class="col hvr-hang" v-for="coupon in coupons" :key="coupon.id">
-              <div class="card">
-                  <div class="enlargeImg w-100 rounded">
-                    <div class="cardImg">
-                      <img :src="coupon.image" class="card-img-top" alt="..." height="200" style="object-fit: cover;">
-                    </div>
-                    <div class="card-body">
-                      <p class="">{{ new Date(coupon.startDate).toLocaleDateString() }} - {{ new Date(coupon.dueDate).toLocaleDateString() }}</p>
-                      <h5 class="card-title h4 fw-bold">{{  coupon.title }}</h5>
-                      <p class="card-text text-truncate">{{ coupon.description }}</p>
-                      <p class="detail d-none d-lg-block position-absolute fw-bold" style="top: 30%; left: 50%; transform: translateX(-50%); letter-spacing: 5px;">查看優惠資訊</p>
 
-                      <div class="d-flex">
-                          <RouterLink :to="`/discounts/${coupon.id}`" href="#" class="stretched-link btn btn-outline-primary rounded-0 ms-auto">查看完整優惠資訊</RouterLink>
+      <section class="text-center">
+        <div class="py-lg-200 py-96 bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1678465952975-85cc1a08b2d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');"></div>
+        <h2 class="text-purple mb-0  fs-lg-1 fs-5 letter-spacing-20 fw-bold bg-secondary-lightPurple py-2">優惠特報</h2>
+      </section>
+
+      <section class="container">
+        <div class="pt-lg-4 pt-3 position-relative">
+          <ul class="category-selector row row-cols-2 list-unstyled border-bottom">
+              <li class="col  text-center" :class="{'pointer-events-none': tabName === '優惠折扣'}">
+                <a href="#"  @click.prevent="()=>tabName = '優惠折扣'" class="text-decoration-none d-inline-block" :class="{'fw-bold': tabName === '優惠折扣', 'link-primary': tabName === '優惠折扣'}">
+                  <img class="discountImg1 d-block mx-auto" v-if="tabName !== '優惠折扣'" src="../../assets/images/discount1.png"  alt="優惠折扣灰色圖示">
+                  <img class="d-block mx-auto" v-else-if="tabName === '優惠折扣'" src="../../assets/images/discount3.png"  alt="優惠折扣藍色圖示">
+                  <span  class="fs-12 fs-md-5 d-block py-2">優惠折扣</span>
+                </a>
+              </li>
+              <li class="col text-center" :class="{'pointer-events-none': tabName === '抽獎回饋'}">
+                <a href="#"  @click.prevent="()=>tabName = '抽獎回饋'" class="text-decoration-none d-inline-block" :class="{'fw-bold': tabName === '抽獎回饋', 'link-primary': tabName === '抽獎回饋'}">
+                  <img class="discountImg2 d-block mx-auto" v-if="tabName !== '抽獎回饋'" src="../../assets/images/giftBox1.png"  alt="抽獎回饋灰色圖示">
+                  <img class="d-block mx-auto" v-else-if="tabName === '抽獎回饋'" src="../../assets/images/giftBox3.png"  alt="抽獎回饋藍色圖示">
+                  <span  class="fs-12 fs-md-5 d-block py-2">抽獎回饋</span>
+                </a>
+              </li>
+          </ul>
+          <div class="blue-line bg-primary position-absolute" :class="{'active-discount': tabName === '優惠折扣', 'active-gift': tabName === '抽獎回饋'}"></div>
+        </div>
+
+        <ul v-if="tabName === '優惠折扣'" class="list-unstyled row row-cols-lg-2 g-3 py-5 text-darkBrown">
+          <li class="col hvr-hang" v-for="coupon in coupons" :key="coupon.id">
+            <div class="card card-coupon mb-3">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img :src="coupon.image" class="w-100 object-fit-cover rounded-start" style="height: 200px;" :alt="coupon.title">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body h-100 d-flex flex-column">
+                    <p class="mb-2">{{ new Date(coupon.startDate).toLocaleDateString() }} - {{ new Date(coupon.dueDate).toLocaleDateString() }}</p>
+                    <h4 class="card-title fw-bold">{{  coupon.title }}</h4>
+                    <p class="card-text text-truncate">{{ coupon.description }}</p>
+
+                    <div class="text-end mt-auto">
+                      <RouterLink :to="`/discounts/${coupon.id}`" href="#" class="stretched-link btn btn-outline-primary">查看完整優惠資訊</RouterLink>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <div v-else-if="tabName === '抽獎回饋'">
+            <p><i class="bi bi-clock-fill me-1"></i>活動時間：{{ new Date(lottery.startDate).toLocaleDateString().split(' ')[0] }} ~ {{ new Date(lottery.dueDate).toLocaleString().split(' ')[0] }}</p>
+
+            <p v-if="uid" :class="{'text-danger':user.lotteryTicket === 0}"><i class="bi bi-ticket-perforated-fill me-1"></i>剩餘抽獎券：{{ user.lotteryTicket }} 張</p>
+
+            <div v-if="!getPrize || (getPrize && getPrize.id !== 1)">
+              <h4 class="mb-0 text-center fw-bold">本月指定抽獎食譜</h4>
+
+              <div class="row row-cols-lg-3 row-cols-1 g-3 mt-lg-4 mt-1">
+                <div v-for="(item, index) in drewProducts" :key="item" class="col ">
+                  <div class="card border mb-md-3" :class="{'border-primary': index === 0 || index === 2, 'border-purple': index === 1}">
+                    <div class="row g-0">
+                      <div class="col-md-5">
+                        <div v-for="(recipe, recipeIndex) in lottery.recipes" :key="recipe.id">
+                          <img v-if="recipeIndex === index" :src="recipe.image" :alt="recipe.title" class="w-100 object-fit-cover" style="height: 150px;">
+                        </div>
+                      </div>
+                      <div class="col-md-7">
+                        <div class="card-body d-flex flex-column justify-content-center align-items-center h-100">
+                          <h5 class="card-title fw-bold" :class="{'text-primary': index === 0 || index === 2, 'text-purple': index === 1}">{{item[0]}}</h5>
+                          <p v-if="drewArr[index] && drewArr[index][1]" class="mb-0" :class="{'text-danger': drewArr[index][1].length / item[1].length === 1}">完成度： {{ Math.round(drewArr[index][1].length / item[1].length * 100) === 0 ? '0' : Math.round(drewArr[index][1].length / item[1].length * 100) }} %</p>
+                          <p v-else-if="!drewArr[index] || !drewArr[index][1]" class="mb-0">完成度：0 %</p>
+                        </div>
                       </div>
                     </div>
                   </div>
-              </div>
-          </div>
-        </div>
-        </div>
 
-      </section>
-      <section  v-else-if="tabName === '抽獎回饋'">
-        <div class="container">
-          <div class="py-3 text-darkBrown d-flex flex-column">
-          <p class=""><i class="bi bi-clock-fill me-1"></i>活動時間：{{ new Date(lottery.startDate).toLocaleDateString().split(' ')[0] }} ~ {{ new Date(lottery.dueDate).toLocaleString().split(' ')[0] }}</p>
-
-          <p v-if="uid" :class="{'text-danger':user.lotteryTicket === 0}"><i class="bi bi-ticket-perforated-fill me-1"></i>剩餘抽獎券：{{ user.lotteryTicket }}張</p>
-
-          <div v-if="!getPrize || (getPrize && getPrize.id !== 1)" class="col-lg-12 align-self-center">
-            <h4 class="mb-0 text-center fw-bold">本月指定抽獎食譜</h4>
-            <div class="row row-cols-lg-3 row-cols-1 mt-4">
-              <div v-for="(item, index) in drewProducts" :key="item" class="border border-primary bg-secondary col" >
-                <h4 class="text-center fw-bold my-3">{{ item[0] }}</h4>
-                <div class="row">
-                  <div class="d-flex flex-column align-items-center position-relative col-4"
-                  v-for="(product) in item[1]" :key="product.id">
-                  <template v-if="product.category === '單一產品'">
-                    <img :src="product.imgUrl" alt="" height="100" width="100" style="object-fit: cover;">
-                    <p>{{ product.title }}</p>
-                    <div v-if="!drewArr[index] || !drewArr[index][1] || (drewArr[index] && drewArr[index][1] && !JSON.stringify(this.drewArr[index][1]).includes(product.title))" class="position-absolute bg-notObtained d-flex">
-                      <i class="bi bi-question-lg text-white fs-1 m-auto"></i>
-                    </div>
-                  </template>
-                </div>
+                  <ul class="row row-cols-xl-3 row-cols-lg-2 row-cols-3 pt-3 g-0 list-unstyled" :class="{'bg-secondary': index === 0 || index === 2, 'bg-lightPurple': index === 1}" >
+                    <li class="d-flex flex-column align-items-center position-relative col"
+                    v-for="(product) in item[1]" :key="product.id">
+                    <template v-if="product.category === '單一產品'">
+                      <img :src="product.imgUrl" :alt="product.title" height="100" width="100" class="object-fit-cover mb-1">
+                      <p>{{ product.title }}</p>
+                      <div v-if="!drewArr[index] || !drewArr[index][1] || (drewArr[index] && drewArr[index][1] && !JSON.stringify(this.drewArr[index][1]).includes(product.title))" class="position-absolute bg-not-obtained d-flex">
+                        <i class="bi bi-question-lg text-white fs-1 m-auto"></i>
+                      </div>
+                    </template>
+                    </li>
+                  </ul>
                 </div>
               </div>
+              <div class="text-center">
+                <button type="button" class="hvr-sweep-to-right mt-3 btn btn-primary" @click="addtLotteryResult">立即抽獎</button>
+              </div>
+              <p class="text-end mt-3">抽一次消耗一張抽獎券</p>
             </div>
-            <div class="d-flex">
-              <button type="button" class="hvr-sweep-to-right mx-auto mt-3 btn btn-primary" @click="addtLotteryResult" style="border-radius: 0px;">立即抽獎</button>
-            </div>
-            <p class="text-end">抽一次消耗一張抽獎券</p>
-          </div>
-          <!-- 完成食譜 -->
-          <div v-if="lotteryResult && this.getPrize && this.getPrize.id" class="d-flex flex-column align-items-center">
-            <h5 class="h3 text-center text-primary fw-bold">恭喜您完成{{ getPrize.id === 1 ? '全部' : getPrize.id === 2 ? '2份' : '1份' }}食譜，獲得：</h5>
-            <div class="col-lg-4 col-12">
-                <div class="card position-relative" style="border-radius: 0px; border: none !important;">
-                  <div class="card-header h4 fw-bold text-center mb-3 bg-white border-0" >
-                    {{ getPrize.id === 1 ? '大獎' : getPrize.id === 2 ? '二獎' : '三獎' }}
+
+            <!-- 完成食譜 -->
+            <!-- d-flex flex-column align-items-center -->
+            <div v-if="lotteryResult && this.getPrize && this.getPrize.id" class="text-center mt-lg-120 mt-5 ">
+
+              <h5 class="fs-md-3 fs-5 text-white fw-bold bg-primary-purple py-3 mb-0 d-flex align-items-center justify-content-center letter-spacing-5-sm-0">
+                <span class="material-icons-outlined me-md-3 me-2">
+                  celebration
+                </span>恭喜您完成
+                {{ getPrize.id === 1 ? '全部' : getPrize.id === 2 ? '2份' : '1份' }}食譜，獲得
+                <span class="material-icons-outlined fs-2">
+                  arrow_drop_down
+                </span>
+              </h5>
+              <div class="bg-secondary-lightPurple px-3">
+                <div class="col-lg-4 col-12 mx-auto pt-4">
+                <div class="card bg-transparent">
+                  <div class="card-header bg-transparent">
+                    <h3 class="fs-4 fw-bold text-center">{{ getPrize.id === 1 ? '大獎' : getPrize.id === 2 ? '二獎' : '三獎' }}</h3>
                   </div>
-                  <img :src="getPrize.img" class="card-img border" style="border-radius: 0px; height:300px; object-fit: contain;" alt="">
-                  <div class="card-footer bg-transparent border-0" style="background-color: white !important;">
-                    <h5 class="fw-bold">
-                      {{ getPrize.title }}
-                    </h5>
+                  <img :src="getPrize.img" class="card-img img-lg-220-md-200 object-fit-contain border bg-white" :alt="getPrize.title">
+                  <div class="card-footer bg-transparent">
+                    <h5 class="fw-bold">{{ getPrize.title }}</h5>
                     <p class="text-end">價值：NT$ {{ numberComma(getPrize.price) }} </p>
                   </div>
                 </div>
-                <p>本店會透過信箱與您聯絡獎品寄送時間，請時刻關注信件，並請留下電話、地址到@EasyMakeEasyBuy.gmail.com，感謝您的支持!<br>下期好禮更精彩，千萬別錯過!</p>
-            </div>
-          </div>
-          <section class="py-96 "  data-aos="zoom-in">
-          <div class="container">
-            <h2 class="display-6 fw-bold d-flex align-items-center mb-4 d-flex flex-column-reverse flex-lg-row align-items-center mb-4 justify-content-center justify-content-lg-start">
-              <div class="d-flex align-items-center">
-                <img src="../../assets/images/title4.png" class="me-lg-4 me-2 titleImg " alt="">
-                <span class="recipeTitle">月獎品</span>
               </div>
-              <span class="light-primary mb-lg-0 mb-2 h6 ms-2 speakerText d-flex align-items-center">
-                <img src="../../assets/images/icon-speaker.png" class="speaker" alt="">
-                超值大獎一次帶回!
-              </span>
-            </h2>
+              <p class="lh-lg pb-5 text-start text-md-center">本店會透過信箱與您聯絡獎品寄送時間，請時刻關注信件，並請留下電話、地址到 <a href="mailto:@EasyMakeEasyBuy.gmail.com">@EasyMakeEasyBuy.gmail.com</a>，感謝您的支持!<br>下期好禮更精彩，千萬別錯過!</p>
+              </div>
+            </div>
 
-          </div>
-          <!-- 抽獎 -->
+            <div class="py-96" data-aos="zoom-in">
+              <div class="d-lg-flex mb-2">
+                <h2 class="d-flex align-items-center justify-content-center justify-content-lg-start fw-bold">
+                  <img src="../../assets/images/title4.png" class="me-lg-3 me-4 title-img" alt="熱">
+                  <span class="fs-lg-1 fs-4 letter-spacing-20">月獎品</span>
+                </h2>
+                <span class="d-flex align-items-center justify-content-center fs-lg-6 fs-12">
+                  <img src="../../assets/images/icon-speaker.png" class="me-2" style="width: 30px;" alt="大聲公圖示">
+                  超值大獎一次帶回!
+                </span>
+              </div>
 
-            <div class="container">
-            <div class="prizes row row-cols-lg-3 row-cols-1 gy-4 ">
-              <div class="col" v-for="prize in lottery.prizes" :key="prize.id" data-aos="flip-right">
-                <div class="card position-relative" style="border-radius: 0; border: 1px transparent solid;">
-                  <div class="card-header border-0 h4 fw-bold text-center mb-3 bg-white" >
-                    {{ prize.id === 1 ? '大獎' : prize.id === 2 ? '二獎' : '三獎' }}
-                  </div>
-                  <div class="questionMark  position-absolute d-flex" style="top: 60px;  width: 100%; height: 220px;  background: linear-gradient(90deg, #6ea3fe ,#cab8ff);">
-                    <i class="bi bi-question-lg mx-auto text-white" style="font-size: 150px;"></i>
-                  </div>
-                  <img :src="prize.img" class="card-img border bg-white" style=" height:220px; object-fit: contain; border-radius: 0;" alt="">
-                  <div class="card-footer bg-transparent border-0">
-                    <h5 class="fw-bold">
-                      {{prize.title}}
-                    </h5>
-                    <p class="text-end">價值：NT$ {{numberComma(prize.price)}}</p>
+              <div class="row row-cols-lg-3 row-cols-1 gy-4 mb-4 ">
+                <div class="col" v-for="prize in lottery.prizes" :key="prize.id" data-aos="flip-right">
+                  <div class="card card-prize">
+                    <div class="card-header bg-white" >
+                      <h3 class="fs-4 fw-bold text-center">{{ prize.id === 1 ? '大獎' : prize.id === 2 ? '二獎' : '三獎' }}</h3>
+                    </div>
+
+                    <div class="card-body p-0 position-relative">
+                      <img :src="prize.img" class="card-img border bg-white object-fit-contain img-lg-220-md-200"  :alt="prize.title">
+
+                      <div class="question-mark position-absolute w-100 text-center top-0 img-lg-220-md-200 bg-gradient-card">
+                        <i class="bi bi-question-lg mx-auto text-white fs-150"></i>
+                      </div>
+                    </div>
+
+                    <div class="card-footer bg-transparent">
+                      <h5 class="fw-bold">{{ prize.title }}</h5>
+                      <p class="text-end">價值：NT$ {{ numberComma(prize.price) }}</p>
+                    </div>
                   </div>
                 </div>
               </div>
+
+              <h3 class="fw-bold">規則：</h3>
+              <ol>
+                <li v-for="rule in lottery.rules" :key="rule + 20">{{ rule }}</li>
+              </ol>
             </div>
-            </div>
-        </section>
-          <h5>規則：</h5>
-            <ol>
-              <li v-for="rule in lottery.rules" :key="rule + 20">{{ rule }}</li>
-            </ol>
-        </div>
+
         </div>
       </section>
     </div>
@@ -311,7 +334,7 @@ export default {
           title: `恭喜您抽中 ${this.drewProducts[firstNum][1][secondNum].title}`,
           iconHtml: `<img src="${this.drewProducts[firstNum][1][secondNum].imgUrl}" width="100">`,
           customClass: {
-            icon: 'no-border'
+            icon: 'border-0'
           },
           showConfirmButton: false
         })
@@ -343,9 +366,9 @@ export default {
         if (repeatItem) {
           this.$swal({
             title: '抽到重複的東西囉~ 非常sorry',
-            iconHtml: '<img src="https://images.unsplash.com/photo-1606823616058-541d59dadcb2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80">',
+            iconHtml: '<img src="https://images.unsplash.com/photo-1606823616058-541d59dadcb2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80" alt="非常sorry">',
             customClass: {
-              icon: 'no-border'
+              icon: 'border-0'
             },
             showConfirmButton: false
           })
@@ -355,7 +378,7 @@ export default {
             title: `恭喜您抽中 ${this.drewProducts[firstNum][1][secondNum].title}`,
             iconHtml: `<img src="${this.drewProducts[firstNum][1][secondNum].imgUrl}" width="100">`,
             customClass: {
-              icon: 'no-border'
+              icon: 'border-0'
             },
             showConfirmButton: false
           })
@@ -399,20 +422,3 @@ export default {
   }
 }
 </script>
-<style>
-.no-border {
-  border: 0 !important;
-}
-.bg-notObtained {
-  width: 100px;
-  height: 100px;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.7));
-}
-
-.categorySelector li a:hover .discountImg1 {
-    content: url('@/assets/images/discount2.png');
-  }
-  .categorySelector li a:hover .discountImg2 {
-    content: url('@/assets/images/giftBox2.png');
-  }
-</style>

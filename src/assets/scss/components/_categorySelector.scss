@@ -51,18 +51,17 @@
   left: 86.5%;
 }
 
-  // 會員特報 1. 優惠折扣
-  .activeDiscount{
-    left: 21.7%;
-  }
-  // 2.抽獎回饋
-  .activeGift{
-    left: 71.8%;
-  }
-
+// 會員特報
+.active-discount{
+  left: 17.5%;
+  width: 12%;
+}
+.active-gift{
+  left: 70.4%;
+  width: 12%;
+}
   // 平板
-  @include media-breakpoint-up(md) {
-
+@include media-breakpoint-up(md) {
   .blue-line {
     width: 8.5%;
   }
@@ -81,26 +80,33 @@
   }
   .active-japan{
   left: 71.4%;
-}
+  }
   .active-italy{
     left: 88.5%;
   }
   // 材料購買 種類
-.active-all-ingredient{
+  .active-all-ingredient{
   left: 7.1%;
-}
-.active-package{
+  }
+  .active-package{
   left: 32.9%;
-}
-.active-hot{
+  }
+  .active-hot{
   left: 58.5%;
-}
-.active-sale{
+  }
+  .active-sale{
   left: 84.3%;
-}
-  // .activePackage{
-  //   left: 34.5%;
-  // }
+  }
+
+  // 會員特報
+  .active-discount{
+    left: 20%;
+    width: 8%;
+  }
+  .active-gift{
+    left: 72.5%;
+    width: 8%;
+  }
 }
 
 // 電腦
@@ -147,6 +153,13 @@
         .product-img4 {
           content: url('@/assets/images/discount2.png');
         }
+
+        .discountImg1 {
+          content: url('@/assets/images/discount2.png');
+        }
+        .discountImg2 {
+          content: url('@/assets/images/giftBox2.png');
+        }
       }
     }
   }
@@ -165,11 +178,14 @@
 .active-sale{
   left: 84.3%;
 }
-        // 2. 食材組合包
-  // .activePackage{
-  //   left: 33.7%;
-  //   width: 100px;
-  // }
+
+  // 會員特報
+.active-discount{
+  left: 20%;
+}
+.active-gift{
+  left: 71.3%;
+}
 }
 
 @include media-breakpoint-up(xl) {
@@ -209,4 +225,11 @@
   .active-sale{
     left: 85%;
   }
+    // 會員特報
+.active-discount{
+  left: 21.2%;
+}
+.active-gift{
+  left: 72.3%;
+}
 }

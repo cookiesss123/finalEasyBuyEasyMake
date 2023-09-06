@@ -1,0 +1,48 @@
+
+// 本月獎品
+.card-prize{
+    img, .card-footer{
+        opacity: 1;
+        transition: all .5s ease-in-out;
+    }  
+    .question-mark{
+        opacity: 0;
+    }  
+}
+
+@include media-breakpoint-up(xl) {
+    // 優惠券
+    .card-coupon.card:hover .card-body{
+        background: #e8edfc;
+    }
+    
+    .card-prize{
+        .question-mark{
+            opacity: 1;
+            transition: all .5s ease-in-out;
+        }  
+        img{
+            transform: rotateY(-180deg);
+            opacity: 0;
+            // transition: all .5s ease-in-out;
+        }  
+        .card-footer{
+            opacity: 0;
+            // transition: all .5s ease-in-out;
+        } 
+        &:hover{
+            .question-mark{
+                opacity: 0;
+                transform: rotateY(-180deg);
+            }   
+            img{
+                transform: rotateY(0deg);
+                opacity: 1;
+            }
+            .card-footer{
+                opacity: 1;
+            } 
+        }
+    }
+    
+}  
