@@ -166,144 +166,122 @@ export default {
       </p>
     </div>
         </loading>
-        <section class="bannerBg" style="background-image: url('https://images.unsplash.com/photo-1678465952996-e4b010264a01?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80')">
-          <div class="mask">
-            <div class="text" style="background: linear-gradient(to bottom, white 50% , #4572c2 50%); -webkit-background-clip: text;">
-              我的收藏
+        <section class="text-center">
+          <div class="py-lg-200 py-96 bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1678465952996-e4b010264a01?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');"></div>
+          <h2 class="text-purple mb-0  fs-lg-1 fs-5 letter-spacing-20 fw-bold bg-secondary-lightPurple py-2">我的收藏</h2>
+        </section>
+
+        <section class="container">
+          <div class="pt-lg-4 pt-3 position-relative">
+            <ul class="category-selector row row-cols-2 list-unstyled border-bottom">
+              <li class="col text-center" :class="{'pointer-events-none': pageStatus === 'recipe'}">
+                <a href="#"  @click.prevent="()=>pageStatus = 'recipe'" class="text-decoration-none d-inline-block" :class="{'fw-bold': pageStatus === 'recipe', 'link-primary': pageStatus === 'recipe'}">
+                  <img class="bookmark-img1 d-block mx-auto" v-if="pageStatus !== 'recipe'" src="../../assets/images/book1.png"  alt="食譜收藏灰色圖示">
+                  <img v-else-if="pageStatus === 'recipe'" src="../../assets/images/book3.png" class="d-block mx-auto" alt="食譜收藏藍色圖示">
+                  <span class="fs-12 fs-md-5 d-block py-2">食譜收藏</span>
+                </a>
+              </li>
+              <li class="col text-center" :class="{'pointer-events-none': pageStatus === 'product'}">
+                <a href="#"  @click.prevent="()=>pageStatus = 'product'" class="text-decoration-none d-inline-block" :class="{'fw-bold': pageStatus === 'product', 'link-primary': pageStatus === 'product'}">
+                  <img class="bookmark-img2 d-block mx-auto" v-if="pageStatus !== 'product'" src="../../assets/images/fruit1.png"  alt="材料收藏灰色圖示">
+                  <img v-else-if="pageStatus === 'product'" src="../../assets/images/fruit3.png" class="d-block mx-auto" alt="材料收藏藍色圖示">
+                  <span class="fs-12 fs-md-5 d-block py-2">材料收藏</span>
+                </a>
+              </li>
+            </ul>
+            <div class="blue-line bg-primary position-absolute"  :class="{'active-recipes': pageStatus === 'recipe', 'active-products': pageStatus === 'product'}"></div>
+          </div>
+          <div class="py-4">
+            <div v-if="pageStatus === 'recipe' && bookMarks && !isLoading" class="row row-cols-xl-4 row-cols-lg-3 row-cols-2 gy-4">
+              <div class="col" v-for="recipe in bookMarks" :key="recipe.id">
+                <div class="card position-relative">
+                  <RouterLink :to="`/recipes/${recipe.id}`" class="card-img-hover position-relative">
+                    <img :src="recipe.image" class="object-fit-cover card-img" :alt="recipe.title">
+                    <span class="badge rounded-pill bg-primary position-absolute start-0 bottom-0 m-3">{{ recipe.category }}</span>
+                    <p class="detail position-absolute top-50 start-50 translate-middle fw-bold letter-spacing-5 link-darkBrown fs-xl-5 text-center">查看<br class="d-xl-none d-lg-block">詳細食譜</p>
+                  </RouterLink>
+                  <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3"  @click="()=>openDeleteModal(recipe.id, recipe)">
+                      <img src="../../assets/images/image4.png" alt="收藏按鈕-未收藏">
+                  </button>
+                  <div v-for="mark in bookMarks" :key="mark + 4567">
+                    <button v-if="mark === recipe.id" type="button" class="btn-buy border-0 bg-transparent m-2 m-md-3 p-0 position-absolute end-0 bottom-0"  @click="()=>deleteBookmark(recipe.id)">
+                        <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
+                    </button>
+                  </div>
+                  <RouterLink :to="`/recipes/${recipe.id}`" class="card-body px-0 text-decoration-none link-darkBrown">
+                    <h3 class="fw-bold fs-md-5 fs-6">{{recipe.title}}</h3>
+                    <div class="d-flex align-items-center flex-wrap fs-md-6 fs-12">
+                      <del v-if="recipe.total" class="me-2 text-muted" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
+                      <span class="me-1" :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{ numberComma(recipe.price) }}</span>
+                      <span> / {{ recipe.content }}</span>
+                      <span class="badge rounded-pill ms-auto border mt-1 mt-md-0" :class="{'border-primary': recipe.thumbs !== 0, 'border-gray':  recipe.thumbs === 0, 'text-primary':recipe.thumbs !== 0,'text-gray': recipe.thumbs === 0, 'bg-secondary':recipe.thumbs !== 0, 'bg-whiteGray':recipe.thumbs === 0}">
+                        {{ recipe.thumbs }}
+                        <i class="bi bi-hand-thumbs-up-fill" ></i>
+                      </span>
+                  </div>
+                  </RouterLink>
+                </div>
+              </div>
+            </div>
+            <!-- 產品 -->
+            <div v-else-if="pageStatus === 'product' && bookMarks && !isLoading" class="row row-cols-xl-4 row-cols-lg-3 row-cols-2 gy-4">
+              <div class="col" v-for="product in bookMarks" :key="product.id">
+                <div class="card position-relative">
+                  <div class="card-img-hover position-relative">
+                    <RouterLink :to="`/products/${product.id}`">
+                      <img :src="product.imgUrl" class="object-fit-cover card-img" :alt="product.title">
+                      <p class="detail position-absolute top-50 start-50 translate-middle fw-bold letter-spacing-5 link-darkBrown fs-xl-5 text-center">查看<br class="d-xl-none d-lg-block">商品資訊</p>
+                      <span v-if="product.isCheaper" class="fs-md-14 fs-12 text-white p-2 bg-primary position-absolute top-0 start-0">
+                        {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
+                      </span>
+                    </RouterLink>
+                    <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3"  @click="()=>openDeleteModal(product.id, product)">
+                      <img src="../../assets/images/image4.png" alt="收藏按鈕-未收藏">
+                    </button>
+                    <div v-for="mark in bookMarks" :key="mark">
+                      <button v-if="mark === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-md-3"  @click="()=>deleteBookmark(product.id)">
+                          <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
+                      </button>
+                    </div>
+                    <button :disabled="isLoading === 'loading'" @click="()=>addCart(product)" type="button" class="btn-buy border-0 bg-transparent m-2 m-md-3 p-0 position-absolute end-0 bottom-0" >
+                      <img src="../../assets/images/icon-cart.png"  alt="購物車按鈕" class="shadow-sm">
+                    </button>
+                  </div>
+                  <RouterLink :to="`/products/${product.id}`" class="card-body px-0 text-decoration-none link-darkBrown">
+                <h3 class="fs-md-5 fs-6 fw-bold">{{product.title}}</h3>
+                <div class="d-flex align-items-lg-center fs-md-6 fs-12">
+                  <del class="me-2 text-muted" :class="{'d-none': !product.isCheaper}">NT$ {{ numberComma(product.originalPrice) }}</del>
+                    <span class="me-1" :class="{'text-danger':product.isCheaper, 'fw-bold':product.isCheaper}">NT$ {{numberComma(product.price)}}</span>
+                    <span> / {{ product.num }}{{ product.unit }}</span>
+
+                    <span class="badge rounded-pill ms-auto border d-none d-md-block" :class="{'text-yellow': product.averageRate, 'border-yellow': product.averageRate, 'bg-lightYellow': product.averageRate, 'bg-whiteGray': !product.averageRate, 'text-gray': !product.averageRate, 'border-gray': !product.averageRate}">
+                      {{ product.averageRate }}
+                      <i class="bi bi-star-fill"></i>
+                    </span>
+                </div>
+                <div class="text-end mt-1 d-md-none fs-12">
+                  <span class="badge rounded-pill ms-auto border d-md-none" :class="{'text-yellow': product.averageRate, 'border-yellow': product.averageRate, 'bg-lightYellow': product.averageRate, 'bg-whiteGray': !product.averageRate, 'text-gray': !product.averageRate, 'border-gray': !product.averageRate}">
+                    {{ product.averageRate }}
+                    <i class="bi bi-star-fill"></i>
+                  </span>
+                </div>
+                  </RouterLink>
+                </div>
+              </div>
+            </div>
+            <!-- 沒有書籤 -->
+            <div v-if="!isLoading && !bookMarks" class="py-lg-4 text-center">
+              <img src="../../assets/images/undraw_Appreciation_r2a1.png" class="mb-lg-3 mb-2 img-md-200-sm-150" alt="收藏大圖示" >
+              <p class="fs-lg-3 fs-6 mb-lg-3 mb-2">您尚無任何<span v-if="pageStatus === 'recipe'">食譜</span><span v-else-if="pageStatus === 'product'">材料</span>收藏</p>
+              <RouterLink to="/recipes" v-if="pageStatus === 'recipe'" class="link-primary fs-lg-5">前往瀏覽食譜</RouterLink>
+              <RouterLink to="/products" v-else-if="pageStatus === 'product'" class="link-primary fs-lg-5">前往瀏覽食譜材料</RouterLink>
             </div>
           </div>
         </section>
-        <section class="container  mt-4">
-          <ul class="position-relative categorySelector row row-cols-2 gy-2 list-unstyled border-bottom">
-              <li class="col d-flex  align-items-center justify-content-center" :class="{'pointer-events-none': pageStatus === 'recipe'}">
-                <a href="#"  @click.prevent="()=>pageStatus = 'recipe'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': pageStatus === 'recipe', 'link-primary': pageStatus === 'recipe'}">
-                  <img class="bookmarkImg1" v-if="pageStatus !== 'recipe'" src="../../assets/images/book1.png"  alt="">
-                  <img v-else-if="pageStatus === 'recipe'" src="../../assets/images/book3.png"  alt="">
-                  <span  class="titleSize ">食譜收藏</span>
-                </a>
-              </li>
-              <li class="col d-flex  align-items-center justify-content-center" :class="{'pointer-events-none': pageStatus === 'product'}">
-                <a href="#"  @click.prevent="()=>pageStatus = 'product'" class="text-decoration-none d-flex flex-column align-items-center link-secondary" :class="{'fw-bold': pageStatus === 'product', 'link-primary': pageStatus === 'product'}">
-                  <img class="bookmarkImg2" v-if="pageStatus !== 'product'" src="../../assets/images/fruit1.png"  alt="">
-                  <img v-else-if="pageStatus === 'product'" src="../../assets/images/fruit3.png"  alt="">
-                  <span  class="titleSize ">材料收藏</span>
-                </a>
-              </li>
-              <li class="blueLine bg-primary position-absolute" style="height: 2px; bottom: 0px; left: 5.5%" :class="{'activeDiscount': pageStatus === 'recipe', 'activeGift': pageStatus === 'product'}"></li>
-          </ul>
-      </section>
 
-        <div class="container  py-4">
-          <div v-if="pageStatus === 'recipe' && bookMarks && !isLoading" class="row row-cols-lg-4 row-cols-2 gy-4">
-            <div class="col text-decoration-none" v-for="recipe in bookMarks" :key="recipe.id">
-              <div class="card position-relative bg-transparent" style="border-radius: 0; border: 1px solid transparent;">
-                <div class="cardImg" style="">
-                  <RouterLink :to="`/recipes/${recipe.id}`" class="enlargeImg">
-                    <img :src="recipe.image" class="card-img" style="border-radius: 0; object-fit: cover;  max-width: 100%; max-height: 100%;" alt="">
-                  </RouterLink>
-                </div>
-                <h5 class="card-text mb-0">
-                  <div>
-                    <p class="detail d-none d-lg-block position-absolute fw-bold" style="top: 35%; left: 50%; transform: translateX(-50%); letter-spacing: 5px;">查看詳細食譜</p>
-
-                    <button type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>openDeleteModal(recipe.id, recipe)">
-                        <img src="../../assets/images/image4.png">
-                    </button>
-                  </div>
-                    <div v-for="mark in bookMarks" :key="mark + 4567">
-                      <button v-if="mark === recipe.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>deleteBookmark(recipe.id)">
-                          <img src="../../assets/images/image4.png">
-                      </button>
-                    </div>
-                    <span style="pointer-events: none; " class="cardTextCategory badge rounded-pill bg-primary mt-4 border-0 m-3 position-absolute start-0">{{ recipe.category }}</span>
-                </h5>
-                <RouterLink :to="`/recipes/${recipe.id}`" class="pt-lg-3 card-footer bg-transparent border-0 text-decoration-none link-darkBrown">
-                  <h5 class="d-flex justify-content-between align-items-center fw-bold">
-                    <span class="cardTextTitle">{{recipe.title}}</span>
-                  </h5>
-                   <div class="cardTextPrice d-flex align-items-lg-center align-items-end">
-                    <div class="">
-                      <del v-if="recipe.total" class="me-2 text-muted d-block d-lg-inline-block" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
-                      <span><span v-if="recipe.price" :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{numberComma(recipe.price)}}</span> / {{ recipe.content }}</span>
-                    </div>
-                    <h5 class="starRates mb-0 ms-auto">
-                      <p class=" mb-0 badge rounded-pill border d-flex align-items-center" :class="{'border-primary': recipe.thumbs !== 0, 'border-lightBrownGray':  recipe.thumbs === 0, 'text-primary':recipe.thumbs !== 0,'text-lightBrownGray': recipe.thumbs === 0}">
-                        <span class="me-1">{{ recipe.thumbs }}</span>
-                        <i class="bi bi-hand-thumbs-up-fill"></i>
-                      </p>
-                    </h5>
-                  </div>
-                </RouterLink>
-              </div>
-            </div>
-          </div>
-          <!-- 產品 -->
-          <div v-else-if="pageStatus === 'product' && bookMarks && !isLoading" class="row row-cols-lg-4 row-cols-2 gy-4">
-            <div class="col text-decoration-none" v-for="product in bookMarks" :key="product.id">
-              <div class="card position-relative bg-transparent" style="border-radius: 0; border: 1px solid transparent;">
-                <div class="cardImg" style="">
-                  <RouterLink :to="`/products/${product.id}`" class="enlargeImg border-0">
-                    <img :src="product.imgUrl" class="card-img" height="220" style="border-radius: 0; object-fit: cover;  max-width: 100%; max-height: 100%;" alt="">
-                  </RouterLink>
-                </div>
-                <h5 class="card-text mb-0">
-                  <div>
-                    <p class="detail d-none d-lg-block position-absolute fw-bold" style="top: 35%; left: 50%; transform: translateX(-50%); letter-spacing: 5px;">查看商品資訊</p>
-                    <button type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>openDeleteModal(product.id, product)">
-                        <img src="../../assets/images/image4.png">
-                    </button>
-                  </div>
-                  <span v-if="product.isCheaper" style="pointer-events: none;" class="d-flex flex-column align-items-center text-white p-2 bg-primary  position-absolute top-0 start-0 ">
-                    {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
-                  </span>
-                  <div v-for="mark in bookMarks" :key="mark">
-                    <button v-if="mark === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent end-0 top-0 m-lg-3 m-2"  @click="()=>deleteBookmark(product.id)">
-                        <img src="../../assets/images/image4.png">
-                    </button>
-                  </div>
-                  <button :disabled="isLoading === 'loading'" @click="()=>addCart(product)" type="button" class="btn-buy position-absolute border-0 bg-transparent me-lg-2 me-1 end-0 " >
-                    <img src="../../assets/images/icon-cart.png"  alt="" class="rounded-circle shadow-sm">
-                  </button>
-                </h5>
-                <RouterLink :to="`/products/${product.id}`" class="pt-lg-3 card-footer bg-transparent border-0 text-decoration-none link-darkBrown">
-                <h5 class="fw-bold cardTextTitle">{{product.title}}</h5>
-                <div class="d-flex align-items-lg-center cardTextPrice" :class="{'align-items-end': product.isCheaper, 'align-items-center': !product.isCheaper}">
-                  <div class="">
-                    <del v-if="product.originalPrice" class="me-2 text-muted mt-1" :class="{'d-none': !product.isCheaper}">NT$ {{ numberComma(product.originalPrice) }}</del>
-                    <span class="mt-1 d-block d-lg-inline-block">
-                      <span v-if="product.price" :class="{'text-danger':product.isCheaper, 'fw-bold':product.isCheaper}">
-                        NT$ {{numberComma(product.price)}}</span> / {{ product.num }}{{ product.unit }}
-                    </span>
-                  </div>
-                  <h5 class="mb-0 ms-auto starRates">
-                    <div class=" badge border rounded-pill bg-white" :class="{'text-yellow': product.averageRate, 'border-yellow': product.averageRate, 'text-lightBrownGray': !product.averageRate, 'border-lightBrownGray': !product.averageRate}">
-                      <span class="me-1">
-                      {{ product.averageRate }}
-                      </span>
-                      <i class="bi bi-star-fill"></i>
-                    </div>
-                  </h5>
-                </div>
-              </RouterLink>
-              </div>
-            </div>
-          </div>
-            <!-- 沒有書籤 -->
-            <div v-if="!isLoading && !bookMarks" class="py-5 d-flex flex-column align-items-center">
-              <img src="../../assets/images/undraw_Appreciation_r2a1.png" class="" alt="" style="height: 250px;">
-              <h2 >您尚無任何<span v-if="pageStatus === 'recipe'">食譜</span><span v-else-if="pageStatus === 'product'">材料</span>收藏</h2>
-              <RouterLink to="/recipes" v-if="pageStatus === 'recipe'" class="link-primary h5">前往瀏覽食譜</RouterLink>
-              <RouterLink to="/products" v-else-if="pageStatus === 'product'" class="link-primary h5">前往瀏覽食譜材料</RouterLink>
-            </div>
-        </div>
         <DeleteBookmarksModal :id="deleteId" :item="deleteItem" :page-status="pageStatus" :open-delete-modal="openDeleteModal"></DeleteBookmarksModal>
     </div>
 </template>
 <style>
-.categorySelector li a:hover .bookmarkImg1 {
-    content: url('@/assets/images/book2.png');
-  }
-  .categorySelector li a:hover .bookmarkImg2 {
-    content: url('@/assets/images/fruit2.png');
-  }
+
 </style>

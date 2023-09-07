@@ -51,12 +51,12 @@
   left: 86.5%;
 }
 
-// 會員特報
-.active-discount{
+// 會員特報、收藏
+.active-discount, .active-recipes{
   left: 17.5%;
   width: 12%;
 }
-.active-gift{
+.active-gift, .active-products{
   left: 70.4%;
   width: 12%;
 }
@@ -98,12 +98,12 @@
   left: 84.3%;
   }
 
-  // 會員特報
-  .active-discount{
+  // 會員特報、收藏
+  .active-discount, .active-recipes{
     left: 20%;
     width: 8%;
   }
-  .active-gift{
+  .active-gift, .active-products{
     left: 72.5%;
     width: 8%;
   }
@@ -160,6 +160,13 @@
         .discountImg2 {
           content: url('@/assets/images/giftBox2.png');
         }
+
+        .bookmark-img1 {
+          content: url('@/assets/images/book2.png');
+        }
+        .bookmark-img2 {
+          content: url('@/assets/images/fruit2.png');
+        }
       }
     }
   }
@@ -179,11 +186,11 @@
   left: 84.3%;
 }
 
-  // 會員特報
-.active-discount{
+  // 會員特報、收藏
+.active-discount, .active-recipes{
   left: 20%;
 }
-.active-gift{
+.active-gift, .active-products{
   left: 71.3%;
 }
 }
@@ -225,11 +232,11 @@
   .active-sale{
     left: 85%;
   }
-    // 會員特報
-.active-discount{
+    // 會員特報、收藏
+.active-discount, .active-recipes{
   left: 21.2%;
 }
-.active-gift{
+.active-gift, .active-products{
   left: 72.3%;
 }
 }

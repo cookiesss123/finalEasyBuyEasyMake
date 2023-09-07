@@ -311,11 +311,11 @@ export default {
                 <span class="badge rounded-pill bg-primary position-absolute start-0 bottom-0 m-3">{{ recipe.category }}</span>
                 <p class="detail position-absolute top-50 start-50 translate-middle fw-bold letter-spacing-5 link-darkBrown fs-xl-5 text-center">查看<br class="d-xl-none d-lg-block">詳細食譜</p>
               </RouterLink>
-              <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark(recipe)">
+              <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>addBookmark(recipe)">
                 <img src="../../assets/images/image5.png" alt="收藏按鈕-未收藏">
               </button>
               <div v-for="mark in bookMarks" :key="mark + 4567">
-                <button v-if="mark === recipe.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-3"  @click="()=>deleteBookmark(recipe.id)">
+                <button v-if="mark === recipe.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-md-3"  @click="()=>deleteBookmark(recipe.id)">
                     <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
                 </button>
               </div>

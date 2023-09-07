@@ -240,19 +240,16 @@ export default {
       </p>
     </div>
         </loading>
-      <section class="bannerBg" style="background-image: url('https://images.unsplash.com/photo-1678465952850-0eb0bb982835?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
-        <div class="mask">
-          <div class="text" style="background: linear-gradient(to bottom, white 50% , #4572c2 50%); -webkit-background-clip: text;">
-            會員資料
-          </div>
-        </div>
+      <section class="text-center">
+        <div class="py-lg-200 py-96 bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1678465952850-0eb0bb982835?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
+        <h2 class="text-primary mb-0  fs-lg-1 fs-5 letter-spacing-20 fw-bold bg-secondary-lightPurple py-2">會員資料</h2>
       </section>
 
       <div class="container ">
         <div class="row row-cols-1 row-cols-lg-2 gx-5">
         <section class=" col-lg-4 py-5">
           <div class="d-flex flex-column align-items-center position-relative  bg-secondary pt-5">
-            <div v-if="!user.headshotImg" class="d-flex" style="height: 300px; width: 300px; ">
+            <div v-if="!user.headshotImg" class="d-flex" style="max-height: 300px; max-width: 300px; ">
               <i class="bi bi-person-fill m-auto text-primary" style="font-size: 200px;"></i>
             </div>
             <img v-else-if="user.headshotImg" :src="user.headshotImg"  style="object-fit: cover;  height: 300px; width: 300px;" class="mb-4 " alt="">
