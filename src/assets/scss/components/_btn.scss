@@ -102,4 +102,12 @@ $heart: url('@/assets/images/image5.png');
             }
         }
     }
+
+    // 食譜按讚按鈕 hover 效果
+    .btn-like{
+        background: white;
+        &:hover{
+            background: $secondary;
+        }
+    }
 }

@@ -255,17 +255,18 @@ export default {
               <span class="badge rounded-pill bg-primary fs-6 me-2">{{ recipe.category }}</span>
               <h2 class="mb-0 fs-lg-4 fs-5 fw-bold">{{ recipe.title }}</h2>
               <div class="d-flex align-items-center ms-auto">
-                <button v-if="!bookMark" type="button" class="border-0 bg-transparent text-tomato fs-4" @click="()=>addBookmark(recipe.id)">
+                <button v-if="!bookMark" type="button" class="border-0 bg-transparent text-tomato fs-4 p-0 mt-1" @click="()=>addBookmark(recipe.id)">
                   <i class="bi bi-heart"></i>
                 </button>
-                <button v-else-if="bookMark" type="button" class=" border-0 bg-transparent fs-4 text-tomato" @click="deleteBookmark">
+                <button v-else-if="bookMark" type="button" class=" border-0 bg-transparent fs-4 text-tomato p-0 mt-1" @click="deleteBookmark">
                   <i class="bi bi-heart-fill"></i>
                 </button>
-                <span class="mb-0 ms-3" :class="{'text-primary': allThumbNum,'text-gray': !allThumbNum}">{{ allThumbNum }}</span>
-                <button v-if="!myThumb" type="button" class="border-0 bg-transparent fs-4" :class="{'text-primary': allThumbNum,'text-gray': !allThumbNum}" @click="addThumb">
+                <button v-if="!myThumb" type="button" class="badge border border-primary rounded-pill fs-6 ms-4 btn-like" :class="{'text-primary': allThumbNum,'text-gray': !allThumbNum}" @click="addThumb">
+                  <span class="mb-0 me-1" :class="{'text-primary': allThumbNum,'text-gray': !allThumbNum}">{{ allThumbNum }}</span>
                   <i class="bi bi-hand-thumbs-up"></i>
                 </button>
-                <button v-else-if="myThumb" type="button" class="border-0 bg-transparent fs-4" :class="{'text-primary': allThumbNum,'text-gray': !allThumbNum}" @click="deleteThumb">
+                <button v-else-if="myThumb" type="button" class="badge border border-primary rounded-pill fs-6 ms-4 btn-like" :class="{'text-primary': allThumbNum,'text-gray': !allThumbNum}" @click="deleteThumb">
+                  <span class="mb-0 me-1" :class="{'text-primary': allThumbNum,'text-gray': !allThumbNum}">{{ allThumbNum }}</span>
                   <i class="bi bi-hand-thumbs-up-fill"></i>
                 </button>
               </div>
@@ -409,16 +410,14 @@ export default {
           </div>
         </form>
         <div class="row gy-5 mt-3">
-          <div class="col-12 border-bottom" v-for="comment in recipeComments" :key="comment + 3657">
-            <div class="d-flex align-items-center mb-2">
-              <img v-if="comment.userImg" :src="comment.userImg" alt="大頭貼" width="50" height="50" class="rounded-circle me-3 object-fit-cover">
-              <i v-else-if="!comment.userImg" class="bi bi-person-circle me-3 fs-45"></i>
-              <div>
-                <h5 class="mb-1">{{ comment.username }}</h5>
-                <p class="mb-0">{{ `${new Date(comment.createAt).toLocaleDateString()}` }}</p>
-              </div>
+          <div class="col-12 border-bottom d-flex align-items-center mb-2" v-for="comment in recipeComments" :key="comment + 3657">
+            <img v-if="comment.userImg" :src="comment.userImg" alt="大頭貼" width="50" height="50" class="rounded-circle me-3 object-fit-cover mb-auto">
+            <i v-else-if="!comment.userImg" class="bi bi-person-circle me-3 fs-45 lh-1 mb-auto"></i>
+            <div>
+              <h5 class="mb-0 fs-6">{{ comment.username }}</h5>
+              <p>{{ `${new Date(comment.createAt).toLocaleDateString()}` }}</p>
+              <p class="mb-2">{{ comment.message }}</p>
             </div>
-            <p class="mb-2 ms-64">{{ comment.message }}</p>
           </div>
         </div>
       </section>
