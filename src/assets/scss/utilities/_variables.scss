@@ -331,7 +331,7 @@ $theme-colors: (
   "whiteGray": $gray-200, // 超淺灰色 
   "purple": #5a5ad0, // custom
   "lightPurple": $lightPurple, // custom
-
+  "tomato": #fa6e42,
 
   // "blue":#4572c2,// custom 改成 primary
   // "lightBlue": #e8edfc, // custom 改成 secondary
@@ -616,6 +616,7 @@ $font-sizes: (
   12: 12px, // custom
   14: 14px, // custom
   35: 35px, // custom
+  45: 45px, // custom
   150: 150px, // custom
 ) !default;
 // scss-docs-end font-sizes

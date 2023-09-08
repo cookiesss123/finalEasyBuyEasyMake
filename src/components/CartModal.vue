@@ -2,7 +2,7 @@
     <div class="modal right" ref="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style=" overflow-y: hidden;">
         <div class="modal-dialog modal-fullscreen-md-down w-100" style="margin-right: 0; margin-top: 0;">
             <div class="modal-content" style="height: 100vh; overflow-y:auto">
-              <div class="modal-header bg-primary" style="border-radius: 0;">
+              <div class="modal-header bg-primary rounded-0">
                   <h5 class="modal-title text-white" v-if="uid">
                    {{ user.nickName }} 的購物車
                   </h5>

@@ -9,14 +9,14 @@
 .swiper-button-next, .swiper-button-prev{
   background: $primary;
   border-radius: 30px;
-  width: 20px !important;
-  height:20px !important;
+  width: 30px !important;
+  height:30px !important;
   position: absolute !important;
   /* 要加 important 否則點入換頁會有問題 */
   
   // 所有箭頭樣式
   &::after{
-    font-size: 10px !important;
+    font-size: 15px !important;
     color: white;
   }
   &:hover{
@@ -46,22 +46,31 @@
     left: 0;
   }
 }
+
+// 食譜、產品 副圖片 swiper
+.sub-picture-swiper{
+  .swiper-button-next{
+    top:90%;
+    right:0;
+  }
+  .swiper-button-prev{
+    top:90%;
+    left: 0;
+  }
+  img{
+    border: 3px solid transparent;
+    transition: all .3s ease-in-out;
+  }
+}
+
 @include media-breakpoint-up(md) {
-  .swiper-button-next, .swiper-button-prev{
-    width: 30px !important;
-    height:30px !important;
-    &::after{
-      font-size: 15px !important;
-      color: white;
+  // 首頁 swiper 
+  .swiper-home {
+    height: 380px;
+    .swiper-button-prev{
+      left: 85%;
     }
   }
-    // 首頁 swiper 
-    .swiper-home {
-      height: 380px;
-      .swiper-button-prev{
-        left: 85%;
-      }
-    }
 }
 // 除了首頁的手機swiper 有包含副圖 產品、食譜
 @include media-breakpoint-up(lg) {
@@ -69,6 +78,21 @@
   .swiper-home {
     .swiper-button-prev{
       left: 90%;
+    }
+  }
+
+  // 食譜、產品 副圖片 swiper
+  .sub-picture-swiper{
+    .swiper-button-next{
+      right:0;
+    }
+    .swiper-button-prev{
+      left: 79%;
+    }
+    img{
+      &:hover{
+        border: 3px solid #a6bcfe;
+      }
     }
   }
 }

@@ -115,6 +115,7 @@ export default {
         this.groupProduct = this.recipe.relativeProducts.filter(product => {
           return product.category === '組合包'
         })
+        console.log(this.groupProduct, '有什麼產品')
         this.groupProduct = this.groupProduct[0]
         this.isLoading = false
       })
@@ -198,8 +199,9 @@ export default {
   }
 }
 </script>
+
 <template>
-  <div data-aos="fade-up">
+  <div data-aos="fade-up" class="no-scroll-x">
     <loading v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"
@@ -220,222 +222,205 @@ export default {
       </p>
     </div>
         </loading>
-    <div class="mt-96" style="overflow-x: hidden;">
-
-<div class="container">
-  <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item ">
-        <RouterLink to="/recipes" class="link-primary">甜點食譜</RouterLink>
-        </li>
-        <li class="breadcrumb-item active " aria-current="page">{{ recipe.title }}</li>
-      </ol>
-  </nav>
-</div>
-<section class="container mt-lg-5">
-<div class="row row-cols-lg-2 row-cols-1 gx-5">
-  <div class="col">
-    <div class="d-flex recipeMainImg mb-4">
-      <img :src="mainImg" style="object-fit: cover; max-height: 300px;" class="w-100" alt="">
-    </div>
-    <div class="recipeSwiper position-relative">
-      <swiper :slides-per-view="3" :space-between="15"
-      :modules="modules"
-      navigation
-      style="height: 160px;"
-      class="w-100"
-      >
-        <swiper-slide style="cursor: pointer;" @click="()=>mainImg = recipe.image">
-          <div>
-            <img :src="recipe.image" alt="" style="object-fit: cover; height: 100px !important;" :class="{'border': mainImg === recipe.image, 'border-3': mainImg === recipe.image, 'border-primary': mainImg === recipe.image}">
+      <section class="container py-md-96 py-60">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <RouterLink to="/recipes" class="link-primary">甜點食譜</RouterLink>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">{{ recipe.title }}</li>
+            </ol>
+        </nav>
+        <div class="row row-cols-lg-2 row-cols-1 g-5">
+          <div class="col">
+            <!-- <div :style="{'background-image':`url(${mainImg})`}" class="w-100 py-160 bg-img-fixed main-img"></div> -->
+            <img :src="mainImg" style="height: 300px;" class="w-100 object-fit-cover mb-4" :alt="recipe.title">
+            <div class="sub-picture-swiper position-relative">
+              <swiper :slides-per-view="3" :space-between="15"
+              :modules="modules"
+              navigation
+              style="height: 160px;"
+              >
+                <swiper-slide>
+                  <img :src="recipe.image" alt="食譜主圖片" class="cursor-pointer object-fit-cover w-100" style="height: 100px;" :class="{'border': mainImg === recipe.image, 'border-3': mainImg === recipe.image, 'border-primary': mainImg === recipe.image}"  @click="()=>mainImg = recipe.image">
+                </swiper-slide>
+                <swiper-slide v-for="(pic, index) in recipe.imgsUrl" :key="pic">
+                  <img :src="pic" :alt="`食譜副圖片${ index + 1 }`" class="cursor-pointer object-fit-cover w-100" style="height: 100px;" :class="{'border': mainImg === pic, 'border-3': mainImg === pic, 'border-primary': mainImg === pic}"  @click="()=>mainImg = pic">
+                </swiper-slide>
+              </swiper>
+            </div>
           </div>
-        </swiper-slide>
-        <swiper-slide v-for="pic in recipe.imgsUrl" :key="pic + 45345" style="cursor: pointer;"  @click="()=>mainImg = pic">
-          <div>
-            <img :src="pic" alt="" style="object-fit: cover; height: 100px !important;" :class="{'border': mainImg === pic, 'border-3': mainImg === pic, 'border-primary': mainImg === pic}">
-          </div>
-        </swiper-slide>
-      </swiper>
-    </div>
-  </div>
-  <div class="col d-flex flex-column">
-    <div class=" d-flex align-items-center mb-3">
-      <h5 class="me-2 mb-0">
-        <span class="badge rounded-pill bg-primary">{{ recipe.category }}</span>
-      </h5>
-      <h2 class="mb-0 mainTitle">{{ recipe.title }}</h2>
-      <div class="d-flex align-items-center ms-auto">
-      <button v-if="!bookMark" type="button" class="border-0 bg-transparent text-primary fs-4" @click="()=>addBookmark(recipe.id)">
-        <i class="bi bi-heart"></i>
-      </button>
-      <button v-else-if="bookMark" type="button" class=" border-0 bg-transparent fs-4" @click="deleteBookmark" style="color: #fa6e42">
-        <i class="bi bi-heart-fill"></i>
-      </button>
-        <span class="mb-0 ms-3" :class="{'text-primary': allThumbNum,'text-lightGray': !allThumbNum}">{{ allThumbNum }}</span>
-        <button v-if="!myThumb" type="button" class="border-0 bg-transparent fs-4" :class="{'text-primary': allThumbNum,'text-lightGray': !allThumbNum}" @click="addThumb">
-          <i class="bi bi-hand-thumbs-up"></i>
-        </button>
-        <button v-else-if="myThumb" type="button" class="border-0 bg-transparent fs-4" :class="{'text-primary': allThumbNum,'text-lightGray': !allThumbNum}" @click="deleteThumb">
-          <i class="bi bi-hand-thumbs-up-fill"></i>
-        </button>
-      </div>
-    </div>
-    <h5 class="mb-3">食譜作者：{{ recipe.author }}</h5>
-    <h5 class="mb-3">份量：{{ recipe.content }}</h5>
-    <div class="mt-auto">
-      <h5>甜點介紹：</h5>
-      <p class="mb-5">{{recipe.description}}</p>
-    </div>
-  </div>
-</div>
-</section>
+          <div class="col d-flex flex-column">
+            <div class=" d-flex align-items-center mb-3">
+              <span class="badge rounded-pill bg-primary fs-6 me-2">{{ recipe.category }}</span>
+              <h2 class="mb-0 fs-lg-4 fs-5 fw-bold">{{ recipe.title }}</h2>
+              <div class="d-flex align-items-center ms-auto">
+                <button v-if="!bookMark" type="button" class="border-0 bg-transparent text-tomato fs-4" @click="()=>addBookmark(recipe.id)">
+                  <i class="bi bi-heart"></i>
+                </button>
+                <button v-else-if="bookMark" type="button" class=" border-0 bg-transparent fs-4 text-tomato" @click="deleteBookmark">
+                  <i class="bi bi-heart-fill"></i>
+                </button>
+                <span class="mb-0 ms-3" :class="{'text-primary': allThumbNum,'text-gray': !allThumbNum}">{{ allThumbNum }}</span>
+                <button v-if="!myThumb" type="button" class="border-0 bg-transparent fs-4" :class="{'text-primary': allThumbNum,'text-gray': !allThumbNum}" @click="addThumb">
+                  <i class="bi bi-hand-thumbs-up"></i>
+                </button>
+                <button v-else-if="myThumb" type="button" class="border-0 bg-transparent fs-4" :class="{'text-primary': allThumbNum,'text-gray': !allThumbNum}" @click="deleteThumb">
+                  <i class="bi bi-hand-thumbs-up-fill"></i>
+                </button>
+              </div>
+            </div>
 
-<section class="bg-secondary my-5" style="overflow-x: hidden;">
-  <div class="container py-5">
-    <div class="row row-cols-lg-2 row-cols-1 g-5">
-      <div class="col">
-        <h3 class="mb-3 fw-bold"><span class="material-icons">egg</span> 準備材料</h3>
-        <h5 class="me-3">成本：NT$ {{recipe.total}}</h5>
-        <div class="row mb-64">
-          <div class="col-12" v-for="(ingredient, index) in recipe.ingredients" :key="ingredient + 367657">
-            {{ index + 1 }}. {{ ingredient.name }} {{ ingredient.num }} {{ ingredient.unit }}
+            <table class="table fs-md-5 mb-2">
+              <thead>
+                <tr>
+                  <th class="fw-normal text-muted" width="150">食譜作者</th>
+                  <th class="fw-normal">{{ recipe.author }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-muted">份量</td>
+                  <td>{{ recipe.content }}</td>
+                </tr>
+                <tr>
+                  <td class="text-muted">甜點介紹</td>
+                  <td class="fs-6 lh-lg">{{ recipe.description }}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-        <h3 class="mb-3 fw-bold"><span class="material-icons-outlined">soup_kitchen</span> 製作步驟</h3>
-        <div v-if="recipe.instructions">
-          <p class="me-3" v-for="(instruction) in recipe.instructions.split('/')" :key="instruction + 346346">{{instruction}}</p>
-        </div>
-        <h3 class="mt-64 mb-3 fw-bold"><i class="bi bi-youtube"></i> 教學影片</h3>
-        <iframe width="560" height="315" :src="recipe.video" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-      </div>
-      <div class="col">
-        <h3 class="mb-4 fw-bold"><i class="bi bi-bag-check-fill"></i> 相關產品</h3>
-        <div class="row">
-          <div class="col-12 relativeProducts ">
-            <div v-for="product in recipe.relativeProducts" :key="product.id + 456496" class="subImg">
-              <RouterLink :to="`/products/${product.id}`"  class="link-primary d-flex flex-column align-items-center cardImg" v-if="product.category === '組合包'">
-                <div class="enlargeImg position-relative " style="width: 50% !important;">
-                  <img :src="product.imgUrl" alt="" class="w-100" height="150" style="object-fit: cover;">
-                  <p class="subDetail d-none d-lg-block position-absolute fw-bold text-darkBrown" style="top: 40%; left: 50%; transform: translateX(-50%); letter-spacing: 5px;">查看商品資訊</p>
+      </section>
+
+      <section class="bg-lightPurple-secondary">
+        <div class="container py-lg-96 py-5">
+          <div class="row row-cols-lg-2 row-cols-1 g-80">
+            <div class="col">
+              <h3 class="d-flex align-items-center mb-4 fw-bold text-purple border-bottom pb-1 border-purple">
+                <span class="material-icons me-2">
+                  auto_awesome
+                </span>
+                準備材料
+              </h3>
+              <table class="table table- table-hover mb-60">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">名稱</th>
+                    <th scope="col">單位</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(ingredient, index) in recipe.ingredients" :key="ingredient + 367657" >
+                    <th scope="row">{{ index + 1 }}</th>
+                    <td>{{  ingredient.name }}</td>
+                    <td> {{ ingredient.num }} {{ ingredient.unit }}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h3 class="d-flex align-items-center mb-4 fw-bold text-purple border-bottom pb-1 border-purple">
+                <span class="material-icons me-2">
+                  auto_awesome
+                </span>
+                相關產品
+              </h3>
+                <div class="d-flex mb-3">
+                  <div class="card bg-transparent w-50 mx-auto">
+                    <RouterLink :to="`/products/${groupProduct.id}`" class="card-img-hover position-relative mb-3">
+                      <img :src="groupProduct.imgUrl" class="object-fit-cover card-img" :alt="groupProduct.title">
+                      <p class="detail position-absolute top-50 start-50 translate-middle fw-bold letter-spacing-5 link-darkBrown fs-xl-5 text-center">查看<br class="d-xl-none d-lg-block">詳細食譜</p>
+                    </RouterLink>
+                    <RouterLink :to="`/products/${groupProduct.id}`" class="text-center">
+                      <h5 class="fs-md-5 fs-6">{{ groupProduct.title }}</h5>
+                    </RouterLink>
+                  </div>
                 </div>
-                <p class="fw-bold mt-2">{{ product.title }}</p>
-              </RouterLink>
+                <div class="d-flex justify-content-between align-items-end">
+                  <div class="mb-0 d-flex flex-column">
+                    <del class="text-gray fs-6 me-3">NT$ {{numberComma(groupProduct.originalPrice)}}</del>
+                    <span class="fs-5 text-danger fw-bold">NT$ {{numberComma(groupProduct.price)}} <span class="text-darkBrown"> / 組</span></span>
+                  </div>
+                  <div class="input-group w-50">
+                    <select name="" id="" class="form-select text-center" v-model="qty" style="width: 70px;">
+                      <option :value="number" v-for="number in 30" :key="number + 4596945">{{ number}}</option>
+                    </select>
+                    <button class="btn btn-primary" type="button" id="button-addon2" @click="()=>addCart(groupProduct, qty)">一鍵買齊</button>
+                  </div>
+                </div>
+              <div class="row mt-5 row-cols-lg-3 row-cols-2 g-3">
+                <div class="col" v-for="product in recipe.relativeProducts" :key="product.id + 456496">
+                  <div class="card bg-transparent">
+                    <RouterLink :to="`/products/${product.id}`"  class="card-img-hover position-relative mb-2" v-if="product.category === '單一產品'">
+                    <img :src="product.imgUrl" :alt="product.title" class="object-fit-cover card-img" style="height: 150px !important;">
+                    <p class="detail position-absolute top-50 start-50 translate-middle fw-bold link-darkBrown letter-spacing-5 text-center">查看<br>商品資訊</p>
+                    </RouterLink>
+                    <RouterLink :to="`/products/${product.id}`" v-if="product.category === '單一產品'" class="text-center">
+                      <h5 class="fs-6">{{ product.title }}</h5>
+                    </RouterLink>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <h3 class="d-flex align-items-center mb-4 fw-bold text-purple border-bottom pb-1 border-purple">
+                <span class="material-icons me-2">
+                  auto_awesome
+                </span>
+                製作步驟
+              </h3>
+              <div v-if="recipe.instructions" class="mb-60">
+                <p class="me-3 mb-4" v-for="(instruction) in recipe.instructions.split('/')" :key="instruction + 346346">{{instruction}}</p>
+              </div>
+              <h3 class="d-flex align-items-center mb-4 fw-bold text-purple border-bottom pb-1 border-purple">
+                <span class="material-icons me-2">
+                  auto_awesome
+                </span>
+                教學影片
+              </h3>
+              <iframe :src="recipe.video" class="w-100" style="height: 350px;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
           </div>
         </div>
-        <div class="d-flex justify-content-between align-items-end">
-          <p class="h5 mb-0 d-flex flex-column">
-            <del class="text-secondary me-3" style="font-size: 16px;">NT$ {{numberComma(recipe.total)}}</del>
-            <span class="text-danger fw-bold">NT$ {{numberComma(recipe.price)}} <span class="text-darkBrown"> / 組</span></span>
-          </p>
-          <div class="input-group w-50">
-            <select name="" id="" class="form-select text-center" v-model="qty" style="width: 70px;">
-              <option :value="number" v-for="number in 30" :key="number + 4596945">{{ number}}</option>
-            </select>
-            <button class="btn btn-primary" type="button" id="button-addon2" @click="()=>addCart(groupProduct, qty)">一鍵買齊</button>
+      </section>
+      <section class="container py-lg-96 py-5">
+        <h3 class="d-flex align-items-center fw-bold text-purple border-bottom pb-1 border-purple mb-4">
+          <span class="material-icons me-2">
+            auto_awesome
+          </span>
+          顧客評價
+          <div class="ms-3 badge border rounded-pill fs-6" :class="{'text-primary': recipeComments.length, 'text-gray': !recipeComments.length,'border-primary': recipeComments.length, 'border-gray': !recipeComments.length, 'bg-secondary': recipeComments.length, 'bg-whiteGray': !recipeComments.length}">
+            {{ recipeComments.length }} 則
           </div>
-        </div>
-        <div class="row mt-5 row-cols-lg-3 row-cols-2 relativeProducts">
-          <div class="col subImg" v-for="product in recipe.relativeProducts" :key="product.id + 456496">
-            <RouterLink :to="`/products/${product.id}`"  class="link-primary d-flex flex-column align-items-center cardImg" v-if="product.category === '單一產品'">
-              <div class="enlargeImg position-relative">
-                <img :src="product.imgUrl" alt="" height="150" style="object-fit: cover;" class="w-100">
-                <p class="subDetail d-none d-lg-block position-absolute fw-bold text-darkBrown" style="top: 40%; left: 50%; transform: translateX(-50%);">查看商品資訊</p>
+          <RouterLink to="/loginSignup" v-if="!uid" class="ms-auto mb-1 btn btn-outline-gradient rounded-pill">我要登入寫評價</RouterLink>
+        </h3>
+
+        <form v-if="uid">
+          <h5 class="mb-3 fw-bold d-flex align-items-center">
+            <img v-if="user.headshotImg" :src="user.headshotImg" alt="大頭貼" width="50" height="50" class="object-fit-cover rounded-circle me-3">
+            <i v-else-if="!user.headshotImg" class="bi bi-person-circle me-3 fs-45"></i>
+            {{ user.nickName }}
+          </h5>
+          <textarea class="form-control" name="" id="" cols="30" rows="10" v-model="recipeMessage"></textarea>
+          <div class="d-flex">
+            <button type="submit" class="ms-auto btn btn-primary mt-3" @click.prevent="addComments">送出</button>
+          </div>
+        </form>
+        <div class="row gy-5 mt-3">
+          <div class="col-12 border-bottom" v-for="comment in recipeComments" :key="comment + 3657">
+            <div class="d-flex align-items-center mb-2">
+              <img v-if="comment.userImg" :src="comment.userImg" alt="大頭貼" width="50" height="50" class="rounded-circle me-3 object-fit-cover">
+              <i v-else-if="!comment.userImg" class="bi bi-person-circle me-3 fs-45"></i>
+              <div>
+                <h5 class="mb-1">{{ comment.username }}</h5>
+                <p class="mb-0">{{ `${new Date(comment.createAt).toLocaleDateString()}` }}</p>
               </div>
-              <p class="fw-bold mt-2">{{ product.title }}</p>
-            </RouterLink>
+            </div>
+            <p class="mb-2 ms-64">{{ comment.message }}</p>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="container py-5">
-  <h3 class="d-flex align-items-center">
-    <i class="bi bi-stars"></i>
-    顧客評價
-    <div class="ms-2 badge border rounded-pill bg-white" :class="{'text-primary': recipeComments.length, 'text-lightBrownGray': !recipeComments.length,'border-primary': recipeComments.length, 'border-lightBrownGray': !recipeComments.length}" style="font-size: 16px;">
-      {{ recipeComments.length }} 則
-    </div>
-    <RouterLink to="/loginSignup" class="ms-3 btn btn-primary d-none d-lg-block" v-if="!uid">我要登入寫評價</RouterLink>
-  </h3>
-  <div class="d-flex">
-    <RouterLink to="/loginSignup" class="btn btn-primary d-lg-none ms-auto" v-if="!uid">我要登入寫評價</RouterLink>
-  </div>
-  <div class="my-5">
-    <form action="" v-if="uid">
-      <h5 class="mb-3 fw-bold d-flex align-items-center">
-        <img v-if="user.headshotImg" :src="user.headshotImg" alt="" width="50" height="50" style="object-fit: cover;" class="rounded-circle me-3">
-        <i v-else-if="!user.headshotImg" class="bi bi-person-circle me-3" style="font-size: 45px;"></i>
-        {{ user.nickName }}
-      </h5>
-      <textarea class="form-control" name="" id="" cols="30" rows="10" v-model="recipeMessage"></textarea>
-      <div class="d-flex">
-        <button type="submit" class="ms-auto btn btn-primary mt-3" @click.prevent="addComments">送出</button>
-      </div>
-    </form>
-    <div class="row gy-5">
-      <div class="col-12 border-bottom" v-for="comment in recipeComments" :key="comment + 3657">
-        <h5 class="mb-2 fw-bold d-flex align-items-center">
-          <img v-if="comment.userImg" :src="comment.userImg" alt="" width="50" height="50" style="object-fit: cover;" class="rounded-circle me-3">
-          <i  v-else-if="!comment.userImg" class="bi bi-person-circle me-3" style="font-size: 45px;"></i>
-          {{ comment.username }}
-        </h5>
-        <p class="mb-0">{{ `${new Date(comment.createAt).toLocaleDateString()}` }}</p>
-        <p>{{ comment.message }}</p>
-      </div>
-    </div>
-  </div>
-</section>
-    </div>
+      </section>
   </div>
 </template>
-<style>
-  .rates .form-check label{
-    cursor: pointer;
-  }
-  .rates .form-check .labelRate1:hover img{
-    content: url('./src/assets/images/icon-star-filled.png');
-  }
-/* 桌面手機 產品小圖 箭頭*/
-.recipeSwiper .swiper-button-next{
-  top:90%;
-  right:0
-}
-.recipeSwiper .swiper-button-next::after{
-  margin-left: 50%;
-  transform: translateX(-50%);
-}
-.recipeSwiper .swiper-button-prev{
-  top:90%;
-  left: 79%;
-}
-/* 副圖 hover  border效果 */
-.recipeSwiper img{
-  border: 3px solid transparent;
-}
-/* 改成淺紅 */
-.recipeSwiper img:hover{
-  border: 3px solid #a6bcfe;
-}
-
-/* 圖片 hover 效果 */
-.relativeProducts .cardImg{
-  opacity: 0.9;
-  overflow:hidden;
-}
-.relativeProducts .cardImg:hover{
-  opacity: 1;
-}
-.relativeProducts .enlargeImg{
-  width: 100%;
-  overflow:hidden;
-}
-.relativeProducts .cardImg img{
-  transform:scale(1,1);
-  transition: all .4s ease-out;
-}
-.relativeProducts .cardImg:hover .enlargeImg img{
-  transform:scale(1.2,1.2);
-}
-</style>
