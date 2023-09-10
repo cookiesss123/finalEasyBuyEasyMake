@@ -12,12 +12,17 @@ import { db, auth } from '../../firebase/db'
 import { ref, onValue, set, remove } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
 
-import LoadingComponent from '../../components/LoadingComponent.vue'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
+// 第二種
+// import LoadingComponent from '../../components/LoadingComponent.vue'
 export default {
   components: {
     Swiper,
     SwiperSlide,
-    LoadingComponent
+    Loading
+    // 第二種
+    // LoadingComponent
   },
   mixins: [numberCommaMixin],
   data () {
@@ -52,7 +57,8 @@ export default {
       productPriceOrRate: '價格',
       pageStatus: '全部',
       // loading
-      isLoading: false
+      isLoading: false,
+      fullPage: true
     }
   },
   methods: {
@@ -251,7 +257,28 @@ export default {
 </script>
 <template>
     <div>
-      <LoadingComponent :is-loading="isLoading"></LoadingComponent>
+         <loading v-model:active="isLoading"
+                 :can-cancel="false"
+                 :is-full-page="fullPage"
+                 :lock-scroll="true">
+                 <div class="d-flex flex-column align-items-center py-96">
+      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
+      <p class="text-center fw-bold text-primary h2">
+        <span class="me-1 animate-text">L</span>
+        <span class="mx-1 animate-text">o</span>
+        <span class="mx-1 animate-text">a</span>
+        <span class="mx-1 animate-text">d</span>
+        <span class="mx-1 animate-text">i</span>
+        <span class="mx-1 animate-text">n</span>
+        <span class="mx-1 animate-text">g</span>
+        <span class="mx-2 animate-text">.</span>
+        <span class="me-2 animate-text">.</span>
+        <span class="animate-text">.</span>
+      </p>
+    </div>
+        </loading>
+      <!-- 第二種 -->
+      <!-- <LoadingComponent :is-loading="isLoading"></LoadingComponent> -->
       <section data-aos="fade-up" class="mb-5">
         <!-- 桌機 -->
         <div class=" d-none d-lg-block pt-64 banner-swiper">

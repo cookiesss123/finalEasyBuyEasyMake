@@ -8,16 +8,18 @@ import Collapse from 'bootstrap/js/dist/collapse'
 import { db, auth } from '../../firebase/db'
 import { ref, onValue, set, remove } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
-import LoadingComponent from '../../components/LoadingComponent.vue'
+// 第二種
+// import LoadingComponent from '../../components/LoadingComponent.vue'
 
-// import Loading from 'vue-loading-overlay'
-// import 'vue-loading-overlay/dist/css/index.css'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
 export default {
   components: {
     RouterLink,
     PaginationComponent,
-    // Loading
-    LoadingComponent
+    Loading
+    // 第二種
+    // LoadingComponent
   },
   data () {
     return {
@@ -35,8 +37,8 @@ export default {
       pageStatus: '全部',
       selectPage: '全部',
       search: false,
-      isLoading: false
-      // fullPage: true
+      isLoading: false,
+      fullPage: true
     }
   },
   mixins: [numberCommaMixin],
@@ -240,8 +242,9 @@ export default {
 </script>
 <template>
     <div data-aos="fade-up">
-      <LoadingComponent :is-loading="isLoading"></LoadingComponent>
-        <!-- <loading v-model:active="isLoading"
+      <!-- 第二種 -->
+      <!-- <LoadingComponent :is-loading="isLoading"></LoadingComponent> -->
+        <loading v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"
                  :lock-scroll="true">
@@ -260,7 +263,7 @@ export default {
         <span class="animate-text">.</span>
       </p>
     </div>
-        </loading> -->
+        </loading>
 
       <section class="text-center">
         <div class="py-lg-200 py-96 bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1678465952860-422bf820209b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>

@@ -278,7 +278,7 @@ export default {
         <span class="animate-text">.</span>
       </p>
     </div>
-    </loading>
+        </loading>
 
     <section class="container py-md-96 py-60">
       <nav aria-label="breadcrumb">

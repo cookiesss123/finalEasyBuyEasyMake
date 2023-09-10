@@ -38,6 +38,10 @@ export default {
       this.pageProducts = products.slice(firstIndex, lastIndex)
       console.log(this.pageProducts, firstIndex, lastIndex, '分頁好的訂單')
 
+      // 換頁不滑到最上
+      if (this.$route.fullPath === '/member') {
+        return
+      }
       // 換頁到最上方
       window.scrollTo(0, 0)
     }
@@ -90,7 +94,8 @@ export default {
     </div>
      <!-- 訂單狀況 -->
      <nav v-else-if="this.$route.fullPath === '/member' && filterOrders.length">
-        <ul class="pagination d-flex justify-content-center align-items-center mt-5">
+      <!--  mt-5 -->
+        <ul class="pagination d-flex justify-content-center align-items-center mb-0">
           <li v-if="activePage !== 1" class="page-item mx-1">
             <a class="page-link border-0  rounded-circle d-flex" href="#" aria-label="Previous"  @click.prevent="() => renderPage(activePage - 1, filterOrders)" style="padding: 8px 12px;">
               <i class="bi bi-chevron-left mx-auto"></i>

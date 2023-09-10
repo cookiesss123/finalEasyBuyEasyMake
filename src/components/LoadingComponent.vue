@@ -24,21 +24,22 @@
 </template>
 <script>
 export default {
-  props: ['isLoading'],
-  watch: {
-    isLoading () {
-      if (this.isLoading) {
-        document.body.classList.add('no-scroll')
-        // 首頁外的header還是可以點擊 手動改成不能點擊
-        document.querySelector('.js-header').classList.add('pointer-events-none')
-        document.querySelector('.js-footer').classList.add('footer-backdrop')
-      } else if (!this.isLoading) {
-        document.body.classList.remove('no-scroll')
-        document.querySelector('.js-header').classList.remove('pointer-events-none')
-        document.querySelector('.js-footer').classList.remove('footer-backdrop')
-      }
-    }
-  }
+  props: ['isLoading']
+  // 暫時關閉
+  // watch: {
+  //   isLoading () {
+  //     if (this.isLoading) {
+  //       document.body.classList.add('no-scroll')
+  //       // 首頁外的header還是可以點擊 手動改成不能點擊
+  //       document.querySelector('.js-header').classList.add('pointer-events-none')
+  //       document.querySelector('.js-footer').classList.add('footer-backdrop')
+  //     } else if (!this.isLoading) {
+  //       document.body.classList.remove('no-scroll')
+  //       document.querySelector('.js-header').classList.remove('pointer-events-none')
+  //       document.querySelector('.js-footer').classList.remove('footer-backdrop')
+  //     }
+  //   }
+  // }
 }
 </script>
 <!-- <template>

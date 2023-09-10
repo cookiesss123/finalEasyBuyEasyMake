@@ -8,13 +8,19 @@ import Collapse from 'bootstrap/js/dist/collapse'
 import { db, auth } from '../../firebase/db'
 import { ref, set, remove, onValue } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
-import LoadingComponent from '../../components/LoadingComponent.vue'
+
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
+// 第二種
+// import LoadingComponent from '../../components/LoadingComponent.vue'
 
 export default {
   components: {
     RouterLink,
     PaginationComponent,
-    LoadingComponent
+    Loading
+    // 第二種
+    // LoadingComponent
   },
   mixins: [numberCommaMixin],
   data () {
@@ -33,7 +39,8 @@ export default {
       user: {},
       uid: '',
       search: false, // 在搜尋嗎? 用來判斷搜尋無值的狀況
-      isLoading: false // 初始值為什麼一定是false
+      isLoading: false,
+      fullPage: true
     }
   },
   methods: {
@@ -205,17 +212,37 @@ export default {
 }
 </script>
 <template>
-  <!-- style="overflow-x: hidden;" -->
-    <div  data-aos="fade-up">
-    <LoadingComponent :is-loading="isLoading"></LoadingComponent>
+    <div>
+      <loading v-model:active="isLoading"
+                 :can-cancel="false"
+                 :is-full-page="fullPage"
+                 :lock-scroll="true">
+                 <div class="d-flex flex-column align-items-center py-96">
+      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
+      <p class="text-center fw-bold text-primary h2">
+        <span class="me-1 animate-text">L</span>
+        <span class="mx-1 animate-text">o</span>
+        <span class="mx-1 animate-text">a</span>
+        <span class="mx-1 animate-text">d</span>
+        <span class="mx-1 animate-text">i</span>
+        <span class="mx-1 animate-text">n</span>
+        <span class="mx-1 animate-text">g</span>
+        <span class="mx-2 animate-text">.</span>
+        <span class="me-2 animate-text">.</span>
+        <span class="animate-text">.</span>
+      </p>
+    </div>
+      </loading>
+    <!-- 第二種 -->
+    <!-- <LoadingComponent :is-loading="isLoading"></LoadingComponent> -->
 
-      <section class="text-center">
+      <section class="text-center" data-aos="fade-up">
         <!-- 手機位置用top剛好 -->
         <div class="py-lg-200 py-96 bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
         <h2 class="text-purple mb-0  fs-lg-1 fs-5 letter-spacing-20 fw-bold bg-secondary-lightPurple py-2">甜點種類</h2>
       </section>
 
-      <section class="container">
+      <section class="container" data-aos="fade-up">
         <div class="pt-lg-4 pt-3 position-relative">
           <ul class="category-selector row row-cols-6 list-unstyled border-bottom">
               <li class="col text-center" :class="{'pointer-events-none': selectItem === '全部'}">
@@ -342,5 +369,6 @@ export default {
         <!-- 頁尾 -->
         <PaginationComponent ref="pagination" :price-or-rate="priceOrRate" :filter-recipes="filterRecipes" class="mb-5"></PaginationComponent>
       </section>
+
     </div>
 </template>

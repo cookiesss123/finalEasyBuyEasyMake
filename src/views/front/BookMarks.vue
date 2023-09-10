@@ -145,7 +145,7 @@ export default {
 }
 </script>
 <template>
-    <div class="" data-aos="fade-up" style="overflow-x: hidden;">
+    <div class=""  style="overflow-x: hidden;">
       <loading v-if="uid" v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"
@@ -166,12 +166,12 @@ export default {
       </p>
     </div>
         </loading>
-        <section class="text-center">
+        <section class="text-center" data-aos="fade-up">
           <div class="py-lg-200 py-96 bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1678465952996-e4b010264a01?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');"></div>
           <h2 class="text-purple mb-0  fs-lg-1 fs-5 letter-spacing-20 fw-bold bg-secondary-lightPurple py-2">我的收藏</h2>
         </section>
 
-        <section class="container">
+        <section class="container" data-aos="fade-up">
           <div class="pt-lg-4 pt-3 position-relative">
             <ul class="category-selector row row-cols-2 list-unstyled border-bottom">
               <li class="col text-center" :class="{'pointer-events-none': pageStatus === 'recipe'}">
@@ -282,6 +282,3 @@ export default {
         <DeleteBookmarksModal :id="deleteId" :item="deleteItem" :page-status="pageStatus" :open-delete-modal="openDeleteModal"></DeleteBookmarksModal>
     </div>
 </template>
-<style>
-
-</style>

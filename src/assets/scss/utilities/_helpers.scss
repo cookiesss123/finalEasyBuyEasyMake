@@ -120,15 +120,14 @@
 .cursor-pointer{
     cursor: pointer;
 }
-.loadingBackdrop{
-    position: fixed;
-    // top: 0;
-    // left: 0;
-    z-index: 2031; // 因為 frontlayout header 下了 1030
-    height: 100%;
-    width: 100%;
-    background: rgba(0, 0, 0, .4);
-}
+// 暫時關閉
+// .loadingBackdrop{
+//     position: fixed;
+//     z-index: 2031; // 因為 frontlayout header 下了 1030
+//     height: 100%;
+//     width: 100%;
+//     background: rgba(0, 0, 0, .4);
+// }
 .footer-backdrop{
     position: absolute;
     z-index: 2031; // 因為 frontlayout header 下了 1030

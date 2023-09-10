@@ -112,7 +112,7 @@
                 </div>
               </div>
               <div class="text-center">
-                <button type="button" class="hvr-sweep-to-right mt-3 btn btn-primary" @click="addtLotteryResult">立即抽獎</button>
+                <button type="button" class="hvr-sweep-to-right mt-3 btn btn-primary" @click.prevent="addtLotteryResult">立即抽獎</button>
               </div>
               <p class="text-end mt-3">抽一次消耗一張抽獎券</p>
             </div>
