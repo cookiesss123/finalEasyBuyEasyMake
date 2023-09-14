@@ -51,7 +51,7 @@
   left: 86.5%;
 }
 
-// 會員特報、收藏
+// 優惠特報、收藏
 .active-discount, .active-recipes{
   left: 17.5%;
   width: 12%;
@@ -60,6 +60,18 @@
   left: 70.4%;
   width: 12%;
 }
+
+// 會員
+.select-order-status{
+  li:hover a{
+    color: white !important;
+    font-weight: bold;
+  }
+}
+.active-order{
+  background: $primary !important;
+}
+
   // 平板
 @include media-breakpoint-up(md) {
   .blue-line {
@@ -192,6 +204,14 @@
 }
 .active-gift, .active-products{
   left: 71.3%;
+}
+
+// 會員選擇訂單hover效果
+.order-select{
+  transition: all .3s ease-in-out;
+  &:hover{
+    background-color: $secondary;
+  }
 }
 }
 

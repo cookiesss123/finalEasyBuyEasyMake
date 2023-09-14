@@ -8,6 +8,9 @@
 .bg-transGray-6{
     background-color: rgba(255, 255, 255, .6);
 }
+.bg-trans-dark-4{
+    background-color: rgba(0, 0, 0, .4)
+}
 // 半副色(淡藍色)半白色
 .bg-secondary-white{
     background: linear-gradient(to right, $secondary 50%, white 50%);
@@ -83,6 +86,7 @@
 .text-shadow-white{
     text-shadow: 2px 2px 0 white;
 }
+// style="text-shadow: 2px 2px 2px rgb(71, 71, 71);"
 .rounded-top-15{
    border-radius: 15px 15px 0px 0px !important;
 }
@@ -141,6 +145,11 @@
 //btn hover 效果
 .hvr-sweep-to-right::before{
     background: #7555ff !important;
+}
+
+// 會員訂單 方形 hover效果
+.hvr-rectangle-out::before {
+    background: $primary !important;
 }
 // 第一個區塊 熱門食譜
 // 手機

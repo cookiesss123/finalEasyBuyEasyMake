@@ -71,7 +71,8 @@ export default {
               item[1].id = item[0]
               return item[1]
             })
-            this.filterOrders = this.orders
+            // 反轉 最晚的訂單在前面
+            this.filterOrders = (this.orders).reverse()
             this.orderArrived = this.orders.filter(order => {
               return order.deliveryStatus === '待取貨'
             })
@@ -247,57 +248,6 @@ export default {
 
       <div class="container">
         <section class="row row-cols-1 row-cols-lg-2 g-5 py-lg-96 py-5">
-        <!-- <section class=" col-lg-4">
-          <div class="d-flex flex-column align-items-center position-relative  pt-5">
-            <div v-if="!user.headshotImg" class="d-flex" style="max-height: 300px; max-width: 300px; ">
-              <i class="bi bi-person-fill m-auto text-primary fs-200"></i>
-            </div>
-            <img v-else-if="user.headshotImg" :src="user.headshotImg"  style="height: 300px; width: 300px;" class="object-fit-cover mb-4 rounded-circle" alt="大頭貼">
-            <div class="row align-items-center">
-              <div class="col d-flex py-3 border border-white"  @click.prevent="selectImgUrl">
-                <a href="#" class="link-primary fw-bold mx-auto">上傳圖片網址</a>
-              </div>
-              <div class="col d-flex  py-3 border border-white" @click.prevent="selectFile">
-                <a href="#" class="link-primary fw-bold mx-auto">上傳本地圖片</a>
-              </div>
-            </div>
-          </div>
-          <div class="border border-secondary">
-            <div class="py-3 d-flex align-items-center">
-              <label for="nickName" class="form-label mb-0 fw-bold ms-1 ms-lg-3"><i class="bi bi-person-circle"></i> 暱稱</label>
-              <span v-if="nickNameEdit" class="ms-4">{{ user.nickName }}</span>
-              <div class="ms-auto">
-                <a href="#" v-if="nickNameEdit" class="link-primary fw-bold me-3" @click.prevent="()=>nickNameEdit = !nickNameEdit">修改暱稱</a>
-                <div class="input-group" :class="{'d-none': nickNameEdit}">
-                  <input type="text" class="form-control" placeholder="請輸入新暱稱" id="nickName" v-model="newNickName" style="width: 180px;">
-                  <button @click="()=>nickNameEdit = true" class="btn btn-outline-secondary btn-sm" type="button" id="button-addon2">取消</button>
-                  <button @click="()=>changeEmail()" class="btn btn-sm btn-outline-primary" type="button" id="button-addon2">確定</button>
-                </div>
-              </div>
-            </div>
-            <div class="bg-secondary py-3 d-flex align-items-center ">
-              <label for="email" class="form-label mb-0 fw-bold ms-1 ms-lg-3"><i class="bi bi-envelope-fill"></i> 信箱</label>
-              <span class="ms-4">{{user.email}}</span>
-            </div>
-            <div class="py-3 d-flex align-items-center">
-              <label for="password" class="form-label mb-0 fw-bold ms-1 ms-lg-3"><i class="bi bi-lock-fill"></i> 密碼</label>
-              <span v-if="passwordEdit" class="ms-4">* * * * * * * *</span>
-              <div class="ms-auto">
-                <a href="#" v-if="passwordEdit" class="link-primary fw-bold me-3" @click.prevent="()=>passwordEdit = !passwordEdit">變更密碼</a>
-                <div class="input-group" :class="{'d-none': passwordEdit}">
-                  <input type="password" class="form-control" placeholder="請輸入新密碼" id="password" v-model="newPassword" style="width: 180px;">
-                  <button @click="()=>passwordEdit = true" class="btn btn-sm btn-outline-secondary" type="button" id="button-addon2">取消</button>
-                  <button @click="()=>changePassword()" class="btn btn-sm btn-outline-primary" type="button" id="button-addon2">確定</button>
-                </div>
-              </div>
-            </div>
-            <div class="bg-secondary py-3 d-flex align-items-center">
-              <label for="ticket" class="form-label mb-0 fw-bold ms-1 ms-lg-3"><i class="bi bi-ticket-perforated-fill"></i> 我的抽獎券</label>
-              <span class="ms-4">{{ user.lotteryTicket }} 張</span>
-              <button type="button" class="btn btn-sm btn-outline-primary ms-auto me-2" @click="linkToLottery" style="border-radius: 0px;">立即抽獎</button>
-            </div>
-          </div>
-        </section> -->
           <div class="col-lg-4">
             <div class="card">
               <div v-if="!user.headshotImg" class="border border-2 border-primary">
@@ -360,108 +310,97 @@ export default {
                     <label for="ticket" class="form-label mb-0 fw-bold"><i class="bi bi-ticket-perforated-fill"></i> 我的抽獎券</label>
                     <span>{{ user.lotteryTicket }} 張</span>
                     <a href="#" class="link-primary fw-bold" @click.prevent="linkToLottery">立即抽獎</a>
-
-                    <!-- <button type="button" class="btn btn-sm btn-outline-primary rounded-0" @click="linkToLottery">立即抽獎</button> -->
                 </li>
               </ul>
             </div>
 
           </div>
-          <div class=" col-lg-8 d-flex flex-column">
-            <h3 class="d-flex align-items-center mb-4 fw-bold text-purple border-bottom pb-1 border-purple">
+          <div class="col-lg-8 d-flex flex-column">
+            <h3 class="d-flex align-items-center fw-bold text-purple border-bottom pb-1 border-purple">
               <span class="material-icons me-2"> auto_awesome </span>
               訂單狀況
             </h3>
-            <div class="selectOrderStatus d-flex justify-content-between justify-content-lg-start">
-              <button type="button" class="d-flex btn border-0 me-lg-5 hvr-rectangle-out bg-transparent" :class="{'activePage':selectItem === '全部'}" @click="() => selectItem ='全部'">
-                <i class="bi bi-border-all" :class="{'text-white':selectItem === '全部','fw-bold':selectItem === '全部'}"></i>
-
-                <span class="text-gray d-none d-lg-block ms-2" :class="{'text-white':selectItem === '全部','fw-bold':selectItem === '全部'}">
-                  全部
-                </span>
-                <span v-if="selectItem === '全部'" class="text-gray d-lg-none ms-2" :class="{'text-white':selectItem === '全部','fw-bold':selectItem === '全部'}">
-                  全部
-                </span>
-              </button>
-              <button type="button" class="d-flex btn border-0 me-lg-5 hvr-rectangle-out bg-transparent"   :class="{'activePage':selectItem === '待出貨'}" @click="() => selectItem ='待出貨'">
-                  <i class="bi bi-box-seam" :class="{'text-white':selectItem === '待出貨','fw-bold':selectItem === '待出貨'}"></i>
-                  <span class="text-gray d-none d-lg-block ms-2" :class="{'text-white':selectItem === '待出貨','fw-bold':selectItem === '待出貨'}">
-                  待出貨
-                </span>
-                <span v-if="selectItem === '待出貨'" class="text-gray d-lg-none ms-2" :class="{'text-white':selectItem === '待出貨','fw-bold':selectItem === '待出貨'}">
-                  待出貨
-                </span>
-              </button>
-              <button type="button" class="d-flex btn border-0 me-lg-5 hvr-rectangle-out bg-transparent" :class="{'activePage':selectItem === '運送中'}" @click="() => selectItem ='運送中'">
-                <i class="bi bi-truck" :class="{'text-white':selectItem === '運送中','fw-bold':selectItem === '運送中'}"></i>
-                <span class="text-gray d-none d-lg-block ms-2" :class="{'text-white':selectItem === '運送中','fw-bold':selectItem === '運送中'}">
-                  運送中
-                </span>
-                <span v-if="selectItem === '運送中'" class="text-gray d-lg-none ms-2" :class="{'text-white':selectItem === '運送中','fw-bold':selectItem === '運送中'}">
-                  運送中
-                </span>
-              </button>
-              <button type="button" class="d-flex btn border-0 me-lg-5 position-relative hvr-rectangle-out bg-transparent" :class="{'activePage':selectItem === '待取貨'}" @click="() => selectItem ='待取貨'">
-                  <i class="bi bi-house-check" :class="{'text-white':selectItem === '待取貨','fw-bold':selectItem === '待取貨'}"></i>
-                  <span class="text-gray d-none d-lg-block ms-2" :class="{'text-white':selectItem === '待取貨','fw-bold':selectItem === '待取貨'}">
-                  待取貨
-                </span>
-                <span v-if="selectItem === '待取貨'" class="text-gray d-lg-none ms-2" :class="{'text-white':selectItem === '待取貨','fw-bold':selectItem === '待取貨'}">
-                  待取貨
-                </span>
-              </button>
-              <button type="button" class="d-flex btn border-0 me-lg-5 hvr-rectangle-out bg-transparent" :class="{'activePage':selectItem === '訂單完成'}" @click="() => selectItem ='訂單完成'">
-                <i class="bi bi-clipboard-check" :class="{'text-white':selectItem === '訂單完成','fw-bold':selectItem === '訂單完成'}"></i>
-                <span class="text-gray d-none d-lg-block ms-2" :class="{'text-white':selectItem === '訂單完成','fw-bold':selectItem === '訂單完成'}">
-                  訂單完成
-                </span>
-                <span v-if="selectItem === '訂單完成'" class="text-gray d-lg-none ms-2" :class="{'text-white':selectItem === '訂單完成','fw-bold':selectItem === '訂單完成'}">
-                  訂單完成
-                </span>
-              </button>
-            </div>
+            <ul class="select-order-status list-unstyled d-flex justify-content-between mb-0 py-2">
+              <li>
+                <a href="#" class="hvr-rectangle-out bg-transparent text-decoration-none py-2 px-3 text-gray" :class="{'active-order':selectItem === '全部', 'text-white':selectItem === '全部','fw-bold':selectItem === '全部'}" @click.prevent="() => selectItem ='全部'">
+                  <i class="bi bi-border-all"></i>
+                  <span class="ms-lg-2 ms-1 d-lg-inline-block" :class="{'d-none': selectItem !== '全部'}">
+                    全部
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="hvr-rectangle-out bg-transparent text-decoration-none py-2 px-3 text-gray" :class="{'active-order':selectItem === '待出貨', 'text-white':selectItem === '待出貨','fw-bold':selectItem === '待出貨'}" @click.prevent="() => selectItem ='待出貨'">
+                  <i class="bi bi-box-seam"></i>
+                  <span class="ms-lg-2 ms-1 d-lg-inline-block" :class="{'d-none': selectItem !== '待出貨'}">
+                    待出貨
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="hvr-rectangle-out bg-transparent text-decoration-none py-2 px-3 text-gray" :class="{'active-order':selectItem === '運送中', 'text-white':selectItem === '運送中','fw-bold':selectItem === '運送中'}" @click.prevent="() => selectItem ='運送中'">
+                  <i class="bi bi-truck"></i>
+                  <span class="ms-lg-2 ms-1 d-lg-inline-block" :class="{'d-none': selectItem !== '運送中'}">
+                    運送中
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="hvr-rectangle-out bg-transparent text-decoration-none py-2 px-3 text-gray" :class="{'active-order':selectItem === '待取貨', 'text-white':selectItem === '待取貨','fw-bold':selectItem === '待取貨'}" @click.prevent="() => selectItem ='待取貨'">
+                  <i class="bi bi-house-check"></i>
+                  <span class="ms-lg-2 ms-1 d-lg-inline-block" :class="{'d-none': selectItem !== '待取貨'}">
+                    待取貨
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="hvr-rectangle-out bg-transparent text-decoration-none py-2 px-3 text-gray" :class="{'active-order':selectItem === '訂單完成', 'text-white':selectItem === '訂單完成','fw-bold':selectItem === '訂單完成'}" @click.prevent="() => selectItem ='訂單完成'">
+                  <i class="bi bi-clipboard-check"></i>
+                  <span class="ms-lg-2 ms-1 d-lg-inline-block" :class="{'d-none': selectItem !== '訂單完成'}">
+                    訂單完成
+                  </span>
+                </a>
+              </li>
+            </ul>
             <div class="row row-cols-1 py-3">
-                <h4 class="mb-3">
-                    總共有 {{ filterOrders.length }} 筆
-                </h4>
+                <h4 class="mb-3 fs-lg-4 fs-5 fw-bold">總共有 {{ filterOrders.length }} 筆</h4>
                 <!-- 確保渲染前資料有填入 -->
                 <div v-if="filterOrders.length">
-                  <RouterLink :to="`/orders/${order.id}`" class=" col text-decoration-none link-dark" v-for="order in this.$refs.pagination.pageProducts" :key="order.creatAt">
-                    <div class="orderSelect p-3">
-                      <span><i class="bi bi-clock"></i> {{ new Date(order.creatAt).toLocaleDateString() }}  {{ new Date(order.creatAt).getHours() }}:{{ new Date(order.creatAt).getMinutes() }} </span>
-                    <div class=" row row-cols-lg-4 row-cols-2 align-items-center mt-2" >
-                      <div class="col" v-for="(item, index) in order.cart.items" :key="item + 6603">
-                        <!-- 只顯示 長度 4 以內 v-if="order.cart.items.length < 4" 前面不行會整個隱藏 => 應該說只顯示 index 到 3 -->
-                        <!-- 最多顯示 7 個好了 ... -->
-                        <div v-if="index < 7 || (order.cart.items.length === 8 && index === 7)"  class="">
-                          <img :src="item.product.imgUrl" alt="" height="100" class="w-100" style="object-fit: cover;">
-                          <p class="mb-0 mt-2 text-center">
-                            <span class="subTitle me-1">{{ item.product.title.length > 9 ? (item.product.title).slice(0, 8) + '...' : item.product.title }}</span>
-                            <span class="text-primary fw-bold">x{{ numberComma(item.qty) }}</span>
-                          </p>
-                        </div>
-                        <!-- 多出來顯示的商品 -->
-                        <div v-if="index === 7 && order.cart.items.length !== 8"  class="position-relative" style="top: -16px; background-color: rgba(0, 0, 0, .4)">
-                          <img :src="item.product.imgUrl" alt="" height="100" class="w-100" style="object-fit: cover; opacity: .4;">
-                          <p class="mb-0 text-center position-absolute fs-1 text-white" style="top: 50%; left: 50%; transform: translateX(-50%) translateY(-50%); text-shadow: 2px 2px 2px rgb(71, 71, 71);">{{ order.cart.items.length - 7 }} +
-                          </p>
-                        </div>
+                  <RouterLink :to="`/orders/${order.id}`" class="col text-decoration-none link-dark" v-for="order in this.$refs.pagination.pageProducts" :key="order.creatAt">
+                    <div class="order-select p-3 ">
+                      <p><i class="bi bi-clock me-2"></i>{{ new Date(order.creatAt).toLocaleString().split(':')[0] }}:{{ new Date(order.creatAt).toLocaleString().split(':')[1] }}</p>
+
+                      <ul class="list-unstyled row row-cols-md-4 row-cols-2 g-3" >
+                        <li class="col" v-for="(item, index) in order.cart.items" :key="item + 6603">
+                          <!-- 最多顯示 7 個完整的 ... -->
+                          <div v-if="index < 8" class="position-relative">
+                            <img :src="item.product.imgUrl" :alt="item.product.title" height="100" class="w-100 object-fit-cover">
+                            <p v-if="index < 7 || order.cart.items.length === 8" class="mb-0 mt-2 text-center">
+                              <span class="fs-14  me-1">{{ item.product.title.length > 8 ? (item.product.title).slice(0, 5) + '...' : item.product.title }}</span>
+                              <span class="text-primary fw-bold">x{{ numberComma(item.qty) }}</span>
+                            </p>
+                            <div v-if="order.cart.items.length > 8 && index === 7" class="position-absolute w-100 h-100 top-0 bg-trans-dark-4">
+                            <p class="text-center fs-1 text-white text-shadow lh-lg">{{ order.cart.items.length - 7 }} +
+                            </p>
+                          </div>
+                          </div>
+                        </li>
+                      </ul>
+                      <div class="text-end fw-bold mt-4">
+                        <span class="me-3">
+                          <i class="bi me-1" :class="{'bi-box-seam': order.deliveryStatus === '待出貨', 'bi-truck': order.deliveryStatus === '運送中', 'bi-house-check': order.deliveryStatus === '待取貨', 'bi-clipboard-check': order.deliveryStatus === '訂單完成'}"></i>
+                          {{order.deliveryStatus}}
+                        </span>
+                        <span class="text-primary">NT$ {{  numberComma(order.cart.finalTotal)  }}</span>
+                        <i class="bi bi-search text-primary ms-3"></i>
                       </div>
-                    </div>
-                    <div class="d-flex mt-4">
-                        <div class="ms-auto d-flex align-items-center">
-                            <span class="me-3 fw-bold"><i v-if="order.deliveryStatus === '待出貨'" class="bi bi-box-seam me-1"></i><i  v-if="order.deliveryStatus === '運送中'" class="bi bi-truck me-1"></i><i v-if="order.deliveryStatus === '待取貨'" class="bi bi-house-check me-1"></i><i v-if="order.deliveryStatus === '訂單完成'" class="bi bi-clipboard-check me-1"></i>{{order.deliveryStatus}}</span>
-                            <span class="text-primary fw-bold">NT$ {{  numberComma(order.cart.finalTotal)  }}</span>
-                            <RouterLink :to="`/orders/${order.id}`" class="ms-3"><i class="bi bi-search text-primary"></i></RouterLink>
-                        </div>
-                    </div>
                     </div>
                     <hr>
                   </RouterLink>
                 </div>
-                <div v-else-if="!filterOrders.length" class=" d-flex flex-column align-items-center justify-content-center" >
-                  <img src="../../assets/images/undraw_No_data_re_kwbl.png" style="width: 300px;" alt="">
-                  <h3>無訂單</h3>
+                <div v-else-if="!filterOrders.length" class="py-lg-4 text-center" >
+                  <img src="../../assets/images/undraw_No_data_re_kwbl.png" style="" class="mb-lg-3 mb-2 img-md-200-sm-150" alt="無訂單圖示">
+                  <h3 class="fs-lg-3 fs-6">無訂單</h3>
                 </div>
             </div>
             <!-- 頁尾 -->
@@ -474,41 +413,5 @@ export default {
     </div>
 </template>
 <style>
-
-.selectOrderStatus .btn{
-  border-radius: 0;
-  }
-
-  .selectOrderStatus .btn:hover span {
-    color: white !important;
-    font-weight: bold;
-  }
-  .hvr-rectangle-out::before {
-    background: #4572c2;
-  }
-  .activePage{
-    background: #4572c2 !important;
-  }
-  .headshotImgBtn .col{
-    cursor:pointer;
-    transition: all .3s ease-in-out;
-  }
-  .headshotImgBtn .col:hover{
-    background-color: #4572c2;
-  }
-  .headshotImgBtn .col a{
-    transition: all .3s ease-in-out;
-  }
-  .headshotImgBtn .col:hover a{
-    color: white !important;
-  }
-  .orderSelect{
-    transition: all .3s ease-in-out;
-  }
-  .orderSelect:hover{
-    background-color: #e8edfc;
-  }
-  /* 文字背景顏色測試 */
-  /* https://images.unsplash.com/photo-1464219551459-ac14ae01fbe0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80 */
 
 </style>
