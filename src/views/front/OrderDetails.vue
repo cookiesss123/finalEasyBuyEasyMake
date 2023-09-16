@@ -62,7 +62,7 @@ export default {
 }
 </script>
 <template>
-    <div class="mt-96 container" style="overflow-x: hidden;">
+    <section class="py-md-96 py-60 container no-scroll-x">
         <loading v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"
@@ -82,85 +82,96 @@ export default {
         <span class="animate-text">.</span>
       </p>
     </div>
-    </loading>
-        <div>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item "><RouterLink to="/member" href="#" class="link-primary">會員專區</RouterLink></li>
-                    <li class="breadcrumb-item ">訂單狀況</li>
-                    <li class="breadcrumb-item active " aria-current="page">{{ order.deliveryStatus }}</li>
-                </ol>
-            </nav>
-            <p>訂單建立時間：{{ new Date(order.creatAt).toLocaleDateString() }} {{ new Date(order.creatAt).getHours() }}:{{ new Date(order.creatAt).getMinutes() }}</p>
-            <p class="">訂單編號：{{ order.id }}</p>
-            <div class="d-flex flex-column align-items-center mt-5">
-                <section class="col-12 col-lg-10 d-flex " id="orderProcess" style="color: #d3ccc1">
-                    <div class="d-flex flex-column align-items-center" :class="{'orderStatus': barWidth === 0}">
-                        <i class=" fs-1 bi bi-box-seam text-primary"></i>
-                        <h5 class=" fw-bold text-primary"  style="white-space: nowrap" >待出貨</h5>
+        </loading>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item "><RouterLink to="/member" href="#" class="link-primary">會員專區</RouterLink></li>
+                <li class="breadcrumb-item ">訂單狀況</li>
+                <li class="breadcrumb-item active " aria-current="page">{{ order.deliveryStatus }}</li>
+            </ol>
+        </nav>
+
+        <div class="col-lg-6">
+            <table class="table">
+            <thead>
+                <tr>
+                    <th class="fw-normal text-muted">訂單建立時間</th>
+                    <th class="fw-normal">{{ new Date(order.creatAt).toLocaleString().split(':')[0] }}:{{ new Date(order.creatAt).toLocaleString().split(':')[1] }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-muted">訂單編號</td>
+                    <td>{{ order.id }}</td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+
+        <div class="position-relative w-100 mt-lg-5 my-5">
+            <div class="border-top position-absolute w-100 border-2 z-index-n1 top-8"></div>
+            <div class="border-top border-primary position-absolute border-2  z-index-n1 top-8" :class="{'w-33': barWidth === 33, 'w-66': barWidth === 66, 'w-100': barWidth === 100}"></div>
+
+            <ul class="list-unstyled d-flex justify-content-between text-gray">
+                <li v-for="item in 4" :key="item + 394" class="d-flex flex-column align-items-center" :class="{'text-primary':(item === 1 && barWidth >= 0) || (item === 2 && barWidth >= 33) || (item === 3 && barWidth >= 66) || (item === 4 && barWidth === 100), 'fw-bold':(item === 1 && order.deliveryStatus === '待出貨') || (item === 2 && order.deliveryStatus === '運送中') || (item === 3 && order.deliveryStatus === '待取貨') || (item === 4 && order.deliveryStatus === '訂單完成')}">
+                    <!-- 目前進度 -->
+                    <div v-if="(item === 1 && order.deliveryStatus === '待出貨') || (item === 2 && order.deliveryStatus === '運送中') || (item === 3 && order.deliveryStatus === '待取貨') || (item === 4 && order.deliveryStatus === '訂單完成')" class="rounded-circle position-relative bg-white border border-primary d-block" style="width: 25px; height: 25px;">
+                        <i class="bi bi-circle-fill fs-14 position-absolute translate-middle start-50 top-50"></i>
                     </div>
-                    <div v-if="barWidth < 33" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #d3ccc1; width: 33%;"></div>
-                    <div v-else-if="barWidth >= 33" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #4572c2; width: 33%;"></div>
-                    <div class="d-flex flex-column align-items-center" :class="{'orderStatus': barWidth === 33}">
-                        <i class="bi bi-truck  fs-1" :class="{'text-primary': barWidth >= 33}"></i>
-                        <h5 class=" fw-bold" :class="{'text-primary': barWidth >= 33}" style="white-space: nowrap">運送中</h5>
+                    <!-- 實心圓 -->
+                    <i v-else class="bi bi-circle-fill d-block"></i>
+
+                    <div class="mt-2 text-center rounded-circle w-lg-90-md-70" :class="{'bg-secondary': (item === 1 && order.deliveryStatus === '待出貨') || (item === 2 && order.deliveryStatus === '運送中') || (item === 3 && order.deliveryStatus === '待取貨') || (item === 4 && order.deliveryStatus === '訂單完成')}">
+                        <!-- 手 ˙70 店 90 -->
+                        <i class="fs-lg-2 fs-4 bi" :class="{'bi-box-seam': item === 1, 'bi-truck': item === 2, 'bi-house-check': item === 3, 'bi-clipboard-check': item === 4}">
+                        </i>
+                        <p class="fs-lg-6 fs-14">{{ item === 1 ? '待出貨' : item === 2 ? '運送中' : item === 3 ? '已抵達' : '訂單完成' }}</p>
                     </div>
-                    <div v-if="barWidth < 66" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #d3ccc1; width: 33%;"></div>
-                    <div v-else-if="barWidth >= 66" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #4572c2; width: 33%;"></div>
-                    <div class="d-flex flex-column align-items-center" :class="{'orderStatus': barWidth === 66}">
-                        <i class="bi bi-house-check  fs-1" :class="{'text-primary': barWidth >= 66}" ></i>
-                        <h5 class=" fw-bold" :class="{'text-primary': barWidth >= 66}" style="white-space: nowrap">已抵達</h5>
-                    </div>
-                    <div v-if="barWidth < 100" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px dashed #d3ccc1; width: 33%;"></div>
-                    <div v-else-if="barWidth === 100" class="mt-4 mt-lg-5 mx-2" style="border-top: 2px solid #4572c2; width: 33%;"></div>
-                    <div class="d-flex flex-column align-items-center" :class="{'orderStatus-finished': barWidth === 100}">
-                        <i class="bi bi-clipboard-check  fs-1" :class="{'text-primary': barWidth === 100}" ></i>
-                        <h5 class=" fw-bold" :class="{'text-primary': barWidth === 100}" style="white-space: nowrap">訂單完成</h5>
-                    </div>
-                </section>
-                <div class="row gx-5 row-cols-1 row-cols-lg-2 my-5">
-                    <div class="col ">
-                        <h4  class="text-center fw-bold bg-secondary py-2">訂購商品資訊</h4>
-                        <div v-if="order.cart" class="row py-3">
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="col-12" v-for="(item, index) in order.cart.items" :key="index + 756345">
-                                <div class="card mb-3 border-0" style="border: 0px !important;">
-                                    <div class="row g-0">
+                </li>
+            </ul>
+        </div>
+
+        <div class="row gx-5 gy-5 row-cols-1 row-cols-lg-2">
+            <div class="col">
+                <h4  class="text-center fw-bold bg-secondary py-2">訂購商品資訊</h4>
+                <div v-if="order.cart" class="py-3">
+                    <ul class="list-unstyled row mb-0">
+                        <li class="col-12" v-for="(item, index) in order.cart.items" :key="index + 756345">
+                            <div class="card">
+                                <div class="row g-0">
                                     <div class="col-4">
-                                        <img :src="item.product.imgUrl" class="img-fluid rounded-start" style="object-fit: cover; height: 100px; width: 200px;">
+                                        <img :src="item.product.imgUrl" class="img-fluid object-fit-cover w-100" style="height: 100px;">
                                     </div>
                                     <div class="col-8">
                                         <div class="card-body">
-                                        <h5 class="card-title  mb-0 d-flex subTitle">{{ item.product.title }}
-                                            <span class="ms-auto">x {{ numberComma(item.qty) }}</span>
-                                        </h5>
-                                        <div class="card-text d-flex justify-content-end">
-                                            <del class="me-2 text-muted mt-1" style="font-size: 14px;" :class="{'d-none': !item.product.isCheaper}">NT$ {{ numberComma(item.product.originalPrice) }}</del>
-                                            <span class=" mt-1"> <span :class="{'text-danger':item.product.isCheaper, 'fw-bold':item.product.isCheaper}">NT$ {{numberComma(item.product.price)}}</span> / {{ item.product.num }}{{ item.product.unit }}</span><br>
-                                        </div>
+                                            <div class="d-flex">
+                                                <h5 class="card-title mb-0 d-flex fs-lg-6 fs-14">{{ item.product.title }}</h5>
+                                                <span class="ms-auto">x {{ numberComma(item.qty) }}</span>
+                                            </div>
 
-                                        <!-- 非組合包 -->
-                                        <p class="mb-0 text-danger text-end fw-bold" v-if="item.product.category !== '組合包'">小計：NT$ {{ numberComma(item.product.price * item.qty) }} / {{ numberComma(item.product.num * item.qty) }}{{ item.product.unit }}</p>
-                                        <!-- 組合包 -->
-                                        <p class="mb-0 text-danger text-end fw-bold" v-if="item.product.category === '組合包'">小計：NT$ {{ numberComma(item.product.price * item.qty) }} / {{ numberComma(item.qty) }}組</p>
+                                            <div class="card-text text-end">
+                                                <del class="me-2 text-muted mt-1 fs-14" :class="{'d-none': !item.product.isCheaper}">NT$ {{ numberComma(item.product.originalPrice) }}</del>
+                                                <span class=" mt-1"> <span :class="{'text-danger':item.product.isCheaper, 'fw-bold':item.product.isCheaper}">NT$ {{numberComma(item.product.price)}}</span> / {{ item.product.num }}{{ item.product.unit }}</span><br>
+                                            </div>
+
+                                            <p class="mb-0 text-danger text-end fw-bold" v-if="item.product.category !== '組合包'">小計：NT$ {{ numberComma(item.product.price * item.qty) }} / {{ numberComma(item.product.num * item.qty) }}{{ item.product.unit }}</p>
+                                            <p class="mb-0 text-danger text-end fw-bold" v-if="item.product.category === '組合包'">小計：NT$ {{ numberComma(item.product.price * item.qty) }} / {{ numberComma(item.qty) }}組</p>
                                         </div>
                                     </div>
-                                    </div>
-                                </div>
-                                <hr>
-                            </div>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <table class="table table-borderless">
-                            <thead>
-                            <tr>
-                                <th class="fw-normal">商品總金額</th>
-                                <th v-if="order.cart" class="text-end fw-normal">NT$ {{ numberComma(order.cart.total) }}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+                            <hr>
+                        </li>
+                    </ul>
+
+                    <table class="table table-borderless">
+                        <thead>
+                        <tr>
+                            <th class="fw-normal">商品總金額</th>
+                            <th v-if="order.cart" class="text-end fw-normal">NT$ {{ numberComma(order.cart.total) }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
                             <tr>
                                 <td>運費<span v-if="order.cart.total >= 1000">(滿千元免運)</span></td>
                                 <td v-if="order.cart" class="text-end">NT$ {{ order.cart.deliveryCharge }}</td>
@@ -173,21 +184,20 @@ export default {
                                 <td class="fw-bold text-danger">總計金額</td>
                                 <td class="text-end fw-bold text-danger">NT$ {{ numberComma(order.cart.finalTotal) }}</td>
                             </tr>
-                            </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col ">
-                        <h4  class="text-center fw-bold bg-cyan py-2">收件人資訊</h4>
-                        <table class="table table-borderless table-striped">
-                        <thead>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col">
+                <h4  class="text-center fw-bold bg-lightPurple py-2">收件人資訊</h4>
+                <table class="table table-borderless table-striped">
+                    <thead>
                         <tr>
                             <th class="fw-normal"><i class="bi bi-envelope-fill" ></i> 信箱</th>
                             <th class="fw-normal">{{ order.email }}</th>
                         </tr>
-                        </thead>
-                        <tbody>
+                    </thead>
+                    <tbody>
                         <tr>
                             <td><i class="bi bi-person-fill"></i> 收件人姓名</td>
                             <td>{{ order.name }}</td>
@@ -208,23 +218,9 @@ export default {
                             <td><i class="bi bi-chat-left-text-fill"></i> 留言</td>
                             <td>{{ order.message === '' ? '無' : order.message }}</td>
                         </tr>
-                        </tbody>
-                        </table>
-                    </div>
-                </div>
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>
+    </section>
 </template>
-<style>
- .orderStatus{
-    border-radius: 50%;
-    padding: 0 15px;
-    background-color: #e8edfc;
- }
- .orderStatus-finished{
-    border-radius: 50%;
-    padding: 0 10px;
-    background-color: #e8edfc;
- }
-</style>
