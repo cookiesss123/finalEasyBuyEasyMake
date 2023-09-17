@@ -31,7 +31,7 @@ export default {
 }
 </script>
 <template>
-    <div class="" style="overflow-x: hidden;">
+    <div class="no-scroll-x">
         <section class="text-center" data-aos="fade-up">
             <div class="py-lg-200 py-96 bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1681923786169-67be8db99af6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
             <h2 class="text-purple mb-0 fs-lg-1 fs-5 letter-spacing-20 fw-bold bg-secondary-lightPurple py-2">結帳</h2>
@@ -44,22 +44,22 @@ export default {
 
                 <ul class="list-unstyled d-flex justify-content-between text-gray">
                     <li class="d-flex flex-column align-items-center">
-                        <div class="circle-lg-40-md-35 bg-primary d-flex align-items-center justify-content-center mb-2">
-                            <i class="bi bi-check-lg fs-4 text-white"></i>
+                        <div class=" circle-lg-40-md-35 bg-primary d-flex align-items-center justify-content-center mb-2">
+                            <i class="bi bi-check-lg fs-lg-4 text-white"></i>
                         </div>
                         <p class="fs-lg-6 fs-14">確認購物車品項</p>
                     </li>
                     <li class="d-flex flex-column align-items-center">
-                        <div class="circle-lg-40-md-35 bg-primary text-white fs-4 d-flex align-items-center justify-content-center mb-2">
+                        <div class="circle-lg-40-md-35 bg-primary text-white fs-lg-4 d-flex align-items-center justify-content-center mb-2">
                             2
                         </div>
                         <p class="fs-lg-6 fs-14 text-primary fw-bold">填寫訂單資訊</p>
                     </li>
                     <li class="d-flex flex-column align-items-center">
-                        <div class="circle-lg-40-md-35 border border-gray bg-white fs-4 d-flex align-items-center justify-content-center mb-2">
+                        <div class="circle-lg-40-md-35 border border-gray bg-white fs-lg-4 d-flex align-items-center justify-content-center mb-2">
                             3
                         </div>
-                        <p class="fs-lg-6 fs-14">確認購物車品項</p>
+                        <p class="fs-lg-6 fs-14">成功下訂</p>
                     </li>
                 </ul>
             </div>
@@ -75,7 +75,7 @@ export default {
                                         <img :src="item.product.imgUrl" :alt="item.product.title" class="img-fluid w-100 object-fit-cover" style="height: 130px;">
                                     </div>
                                     <div class="col-8">
-                                        <div class="card-body d-flex flex-column h-100">
+                                        <div class="card-body d-flex flex-column h-100 pb-0">
                                             <div class="d-flex mb-auto">
                                                 <h5 class="card-title fs-lg-6 fs-14 mb-0">{{ item.product.title }}</h5>
                                                 <span class="ms-auto">x {{ numberComma(item.qty) }}</span>

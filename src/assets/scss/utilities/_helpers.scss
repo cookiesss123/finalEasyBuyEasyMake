@@ -195,14 +195,20 @@
 }
 // 結帳頁面灰色線
 .line-gray{
-    width: 75%;
+    width: 82%;
     top: 25%;
 }
 
 // 結帳頁面藍色線 一半
 .line-blue-50{
-    left: 10%;
-    width: 40%;
+    left: 9%;
+    width: 42%;
+    top: 25%;
+}
+// 結帳頁面藍色線 全部
+.line-blue-100{
+    right: 3.5%;
+    width: 43.5%;
     top: 25%;
 }
 // 結帳頁面圓形圈圈
@@ -214,7 +220,7 @@
 
 @include media-breakpoint-up(md) {
     .line-gray{
-        width: 85%;
+        width: 87%;
     }
 }
 @include media-breakpoint-up(lg) {
@@ -257,12 +263,13 @@
     
     // 結帳頁面灰色線
     .line-gray{
-        width: 90%;
+        width: 93%;
+        // width: 90%;
     }
 
     .line-blue-50{
         left: 5%;
-        width: 45%;
+        width: 46%;
     }
 
     // 結帳頁面圓形圈圈

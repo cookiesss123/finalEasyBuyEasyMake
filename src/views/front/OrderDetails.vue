@@ -140,11 +140,11 @@ export default {
                             <div class="card">
                                 <div class="row g-0">
                                     <div class="col-4">
-                                        <img :src="item.product.imgUrl" class="img-fluid object-fit-cover w-100" style="height: 100px;">
+                                        <img :src="item.product.imgUrl" class="img-fluid object-fit-cover w-100" style="height: 130px;">
                                     </div>
                                     <div class="col-8">
-                                        <div class="card-body">
-                                            <div class="d-flex">
+                                        <div class="card-body d-flex flex-column h-100 pb-0">
+                                            <div class="d-flex mb-auto">
                                                 <h5 class="card-title mb-0 d-flex fs-lg-6 fs-14">{{ item.product.title }}</h5>
                                                 <span class="ms-auto">x {{ numberComma(item.qty) }}</span>
                                             </div>
