@@ -189,10 +189,33 @@
 .w-66{
     width: 65%;
 }
-
 // 訂單active圓圈大小
 .w-lg-90-md-70{
     width: 70px;
+}
+// 結帳頁面灰色線
+.line-gray{
+    width: 75%;
+    top: 25%;
+}
+
+// 結帳頁面藍色線 一半
+.line-blue-50{
+    left: 10%;
+    width: 40%;
+    top: 25%;
+}
+// 結帳頁面圓形圈圈
+.circle-lg-40-md-35{
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+}
+
+@include media-breakpoint-up(md) {
+    .line-gray{
+        width: 85%;
+    }
 }
 @include media-breakpoint-up(lg) {
     // 橫向
@@ -231,4 +254,20 @@
     .w-lg-90-md-70{
         width: 90px;
     }
+    
+    // 結帳頁面灰色線
+    .line-gray{
+        width: 90%;
+    }
+
+    .line-blue-50{
+        left: 5%;
+        width: 45%;
+    }
+
+    // 結帳頁面圓形圈圈
+.circle-lg-40-md-35{
+    width: 40px;
+    height: 40px;
+}
 }
