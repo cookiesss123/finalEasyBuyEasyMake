@@ -109,17 +109,18 @@ export default {
         </div>
 
         <div class="position-relative w-100 mt-lg-5 my-5">
-            <div class="border-top position-absolute w-100 border-2 z-index-n1 top-8"></div>
-            <div class="border-top border-primary position-absolute border-2  z-index-n1 top-8" :class="{'w-33': barWidth === 33, 'w-66': barWidth === 66, 'w-100': barWidth === 100}"></div>
+            <!--  w-100  -->
+            <div class="line-gray border-top position-absolute border-2 z-index-n1 top-8"></div>
+            <div class="border-top border-primary position-absolute border-2 z-index-n1 top-8" :class="{'w-33': barWidth === 33, 'w-66': barWidth === 66, 'line-gray': barWidth === 100}"></div>
 
             <ul class="list-unstyled d-flex justify-content-between text-gray">
                 <li v-for="item in 4" :key="item + 394" class="d-flex flex-column align-items-center" :class="{'text-primary':(item === 1 && barWidth >= 0) || (item === 2 && barWidth >= 33) || (item === 3 && barWidth >= 66) || (item === 4 && barWidth === 100), 'fw-bold':(item === 1 && order.deliveryStatus === '待出貨') || (item === 2 && order.deliveryStatus === '運送中') || (item === 3 && order.deliveryStatus === '待取貨') || (item === 4 && order.deliveryStatus === '訂單完成')}">
                     <!-- 目前進度 -->
-                    <div v-if="(item === 1 && order.deliveryStatus === '待出貨') || (item === 2 && order.deliveryStatus === '運送中') || (item === 3 && order.deliveryStatus === '待取貨') || (item === 4 && order.deliveryStatus === '訂單完成')" class="rounded-circle position-relative bg-white border border-primary d-block" style="width: 25px; height: 25px;">
-                        <i class="bi bi-circle-fill fs-14 position-absolute translate-middle start-50 top-50"></i>
+                    <div v-if="(item === 1 && order.deliveryStatus === '待出貨') || (item === 2 && order.deliveryStatus === '運送中') || (item === 3 && order.deliveryStatus === '待取貨') || (item === 4 && order.deliveryStatus === '訂單完成')" class="order-dot-white rounded-circle position-relative bg-white border border-primary d-block mt-lg-n1">
+                        <i class="bi bi-circle-fill fs-lg-14 fs-12 position-absolute translate-middle start-50 top-50"></i>
                     </div>
                     <!-- 實心圓 -->
-                    <i v-else class="bi bi-circle-fill d-block"></i>
+                    <i v-else class="bi bi-circle-fill d-block fs-lg-6 fs-12"></i>
 
                     <div class="mt-2 text-center rounded-circle w-lg-90-md-70" :class="{'bg-secondary': (item === 1 && order.deliveryStatus === '待出貨') || (item === 2 && order.deliveryStatus === '運送中') || (item === 3 && order.deliveryStatus === '待取貨') || (item === 4 && order.deliveryStatus === '訂單完成')}">
                         <!-- 手 ˙70 店 90 -->

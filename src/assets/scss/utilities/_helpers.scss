@@ -153,6 +153,15 @@
     background: #7555ff !important;
 }
 
+// 結帳
+.hvr-sweep-to-left::before{
+    background: $primary !important;
+    color: white;
+}
+.hvr-sweep-to-left:hover{
+    color: white !important;
+}
+
 // 會員訂單 方形 hover效果
 .hvr-rectangle-out::before {
     background: $primary !important;
@@ -184,10 +193,13 @@
 
 // 訂單單頁 進度
 .w-33{
-    width: 34%;
+    left: 8.2%;
+    width: 25.5%;
 }
 .w-66{
-    width: 65%;
+    left: 8.2%;
+    // width: 62%;
+    width: 57%;
 }
 // 訂單active圓圈大小
 .w-lg-90-md-70{
@@ -195,8 +207,9 @@
 }
 // 結帳頁面灰色線
 .line-gray{
-    width: 82%;
-    top: 25%;
+    width: 83%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 // 結帳頁面藍色線 一半
@@ -205,22 +218,154 @@
     width: 42%;
     top: 25%;
 }
+.line-blue-50-animation{
+    animation-name: spread-to-right-2;
+    animation-duration: .8s;
+}
+@keyframes spread-to-right-2 {
+    from{
+        width: 0;
+      }
+    to{
+        width: 42%;
+      }
+}
+
 // 結帳頁面藍色線 全部
 .line-blue-100{
-    right: 3.5%;
+    left: 53%;
     width: 43.5%;
     top: 25%;
+
+    animation-name: spread-to-right-3;
+    animation-delay: .4s;
+    animation-duration: .8s;
+    animation-fill-mode: both;
 }
+@keyframes spread-to-right-3 {
+    from{
+        width: 0;
+      }
+    to{
+        width: 43.5%;
+      }
+}
+
 // 結帳頁面圓形圈圈
-.circle-lg-40-md-35{
+.circle{
     border-radius: 50%;
     width: 35px;
     height: 35px;
 }
+// 藍色
+.circle-animation{
+    animation-name: enlarge;
+    animation-duration: .6s;
+    animation-delay: .8s; 
+    animation-fill-mode: both;
+}
+@keyframes enlarge {
+    from{
+        // opacity: 0;
+        // transform: scale(0);
+        border: 1px solid $gray-600;
+        background: white;
+      }
+    to{
+        // opacity: 1;
+        // transform: scale(1);
+        border: none;
+        background: $primary;
+        color: white;
+      }
+}
+@keyframes gray-to-primary {
+    from{
+        color: $gray-600;
+    }
+    to{
+        color: $primary;
+        font-weight: bold;
+    }
+}
+// 灰色文字轉成藍色
+.text-gray-to-primary-2{
+    animation-name: gray-to-primary;
+    animation-duration: .4s;
+    animation-delay: .8s;
+    animation-fill-mode: both;
+}
+// 灰色文字轉成藍色
+.text-gray-to-primary-3{
+    animation-name: gray-to-primary;
+    animation-duration: .4s;
+    animation-delay: 1.4s;
+    animation-fill-mode: both;
+}
+
+.number-hide{
+    animation-name: hide;
+    animation-duration: .4s;
+    animation-fill-mode: both;
+}
+.number-hide-3{
+    animation-name: hide;
+    animation-delay: 1s;
+    animation-duration: .4s;
+    animation-fill-mode: both;
+}
+@keyframes hide {
+    from{
+        opacity: 1;
+        display: block;
+    }
+    to{
+        opacity: 0;
+        display: none;
+    }
+}
+.check-block{
+    animation-name: block;
+    animation-duration: .4s;
+    animation-delay: .4s;
+    animation-fill-mode: both;
+}
+.check-block-3{
+    animation-name: block;
+    animation-duration: .4s;
+    animation-delay: 1.4s;
+    animation-fill-mode: both;
+}
+@keyframes block {
+    from{
+        opacity: 0;
+        display: none;
+    }
+    to{
+        opacity: 1;
+        display: block;
+    }
+}
+// 會員訂單圓點
+.order-dot-white{
+    width: 20px;
+    height: 20px;
+}
 
 @include media-breakpoint-up(md) {
     .line-gray{
-        width: 87%;
+        width: 89%;
+    }
+
+    // 訂單單頁 進度
+    .w-33{
+        left: 5%;
+        width: 29%;
+    }
+
+    .w-66{
+        left: 5%;
+        width: 61%;
     }
 }
 @include media-breakpoint-up(lg) {
@@ -263,18 +408,34 @@
     
     // 結帳頁面灰色線
     .line-gray{
-        width: 93%;
-        // width: 90%;
+        // width: 93%;
+        width: 92%;
     }
 
+// 訂單單頁 進度
+.w-33{
+    left: 4%;
+    width: 31%;
+}
+.w-66{
+    left: 4%;
+    width: 62%;
+}
     .line-blue-50{
         left: 5%;
         width: 46%;
     }
 
     // 結帳頁面圓形圈圈
-.circle-lg-40-md-35{
-    width: 40px;
-    height: 40px;
+    .circle{
+        width: 40px;
+        height: 40px;
+    }
+
+// 會員訂單圓點
+.order-dot-white{
+    width: 25px; 
+    height: 25px;
 }
+
 }

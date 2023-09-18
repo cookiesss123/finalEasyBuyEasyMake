@@ -42,7 +42,7 @@ export default {
 }
 </script>
 <template>
-    <div data-aos="fade-up">
+    <div class="no-scroll-x">
         <section class="text-center" data-aos="fade-up">
             <div class="py-lg-200 py-96 bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1681923786169-67be8db99af6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
             <h2 class="text-purple mb-0 fs-lg-1 fs-5 letter-spacing-20 fw-bold bg-secondary-lightPurple py-2">訂單建立完成</h2>
@@ -50,29 +50,31 @@ export default {
 
       <section class="container my-5">
         <div class="position-relative w-100 mt-lg-5 my-5">
-                <div class="line-gray border-top position-absolute border-2 z-index-n1 start-50 translate-middle-x"></div>
+                <div class="line-gray border-top position-absolute border-2 z-index-n1 start-50 translate-middle-x" style="top: 25%"></div>
                 <div class="line-blue-50 border-top border-primary position-absolute border-2 z-index-n1"></div>
                 <!-- 動畫所以加另一條 -->
                 <div class="line-blue-100 border-top border-primary position-absolute border-2 z-index-n1"></div>
 
                 <ul class="list-unstyled d-flex justify-content-between text-gray">
                     <li class="d-flex flex-column align-items-center">
-                        <div class="circle-lg-40-md-35 bg-primary d-flex align-items-center justify-content-center mb-2">
+                        <div class="circle bg-primary d-flex align-items-center justify-content-center mb-2 ms-n2">
                             <i class="bi bi-check-lg fs-lg-4 text-white"></i>
                         </div>
                         <p class="fs-lg-6 fs-14">確認購物車品項</p>
                     </li>
                     <li class="d-flex flex-column align-items-center">
-                        <div class="circle-lg-40-md-35 bg-primary text-white fs-lg-4 d-flex align-items-center justify-content-center mb-2">
-                            <i class="bi bi-check-lg fs-lg-4 text-white"></i>
+                        <div class="circle bg-primary text-white fs-lg-4 d-flex align-items-center justify-content-center mb-2">
+                            <i class="check-block bi bi-check-lg fs-lg-4 text-white"></i>
+                            <span class="number-hide">2</span>
                         </div>
                         <p class="fs-lg-6 fs-14">填寫訂單資訊</p>
                     </li>
                     <li class="d-flex flex-column align-items-center">
-                        <div class="circle-lg-40-md-35 bg-primary text-white fs-lg-4 d-flex align-items-center justify-content-center mb-2">
-                            <i class="bi bi-check-lg fs-lg-4 text-white"></i>
+                        <div class="circle circle-animation fs-lg-4 d-flex align-items-center justify-content-center mb-2">
+                            <i class="check-block-3 bi bi-check-lg fs-lg-4"></i>
+                            <span class="number-hide-3">3</span>
                         </div>
-                        <p class="fs-lg-6 fs-14 text-primary fw-bold">成功下訂</p>
+                        <p class="text-gray-to-primary-3 fs-lg-6 fs-14 fw-bold">成功下訂</p>
                     </li>
                 </ul>
         </div>

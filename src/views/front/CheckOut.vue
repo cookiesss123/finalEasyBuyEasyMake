@@ -39,24 +39,23 @@ export default {
 
         <section class="container my-5">
             <div class="position-relative w-100 mt-lg-5 my-5">
-                <div class="line-gray border-top position-absolute border-2 z-index-n1 start-50 translate-middle-x"></div>
-                <div class="line-blue-50 border-top border-primary position-absolute border-2 z-index-n1"></div>
-
+                <div class="line-gray border-top position-absolute border-2 z-index-n1 start-50 translate-middle-x" style="top: 25%"></div>
+                <div class="line-blue-50 line-blue-50-animation border-top border-primary position-absolute border-2 z-index-n1"></div>
                 <ul class="list-unstyled d-flex justify-content-between text-gray">
                     <li class="d-flex flex-column align-items-center">
-                        <div class=" circle-lg-40-md-35 bg-primary d-flex align-items-center justify-content-center mb-2">
+                        <div class="circle bg-primary d-flex align-items-center justify-content-center mb-2 ms-n2">
                             <i class="bi bi-check-lg fs-lg-4 text-white"></i>
                         </div>
                         <p class="fs-lg-6 fs-14">確認購物車品項</p>
                     </li>
                     <li class="d-flex flex-column align-items-center">
-                        <div class="circle-lg-40-md-35 bg-primary text-white fs-lg-4 d-flex align-items-center justify-content-center mb-2">
+                        <div class="circle circle-animation fs-lg-4 d-flex align-items-center justify-content-center mb-2">
                             2
                         </div>
-                        <p class="fs-lg-6 fs-14 text-primary fw-bold">填寫訂單資訊</p>
+                        <p class="text-gray-to-primary-2 fs-lg-6 fs-14">填寫訂單資訊</p>
                     </li>
                     <li class="d-flex flex-column align-items-center">
-                        <div class="circle-lg-40-md-35 border border-gray bg-white fs-lg-4 d-flex align-items-center justify-content-center mb-2">
+                        <div class="circle border border-gray bg-white fs-lg-4 d-flex align-items-center justify-content-center mb-2">
                             3
                         </div>
                         <p class="fs-lg-6 fs-14">成功下訂</p>
@@ -210,11 +209,5 @@ export default {
     </div>
 </template>
 <style>
-.hvr-sweep-to-left::before{
-  background: #4572c2;
-  color: white;
-}
-.hvr-sweep-to-left:hover{
-  color: white !important;
-}
+
 </style>
