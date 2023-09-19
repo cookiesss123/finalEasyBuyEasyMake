@@ -4,8 +4,7 @@
             <div class="modal-content" style="height: 100vh; overflow-y:auto">
               <div class="modal-header bg-primary" style="border-radius: 0;">
                   <h5 class="modal-title text-white" v-if="uid">
-                    <img src="https://plus.unsplash.com/premium_photo-1672192166439-f20d9ec1dbbc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" style="height: 40px; width: 40px;" class="rounded-circle me-1" alt="">
-
+                    <img src="https://plus.unsplash.com/premium_photo-1672192166439-f20d9ec1dbbc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" style="height: 40px; width: 40px;" class="rounded-circle me-1" alt="客服大頭貼">
                     甜點食譜一鍵購客服
                   </h5>
                   <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -15,7 +14,7 @@
                 <div v-if="!user.admin">
                   <div v-for="chat in chats" :key="chat" class="">
                   <div v-if="chat.nickName === '甜點食譜一鍵購客服'" class="d-flex  mb-3">
-                    <img :src="chat.headshotImg" style="height: 40px; width: 40px;" class="mb-auto rounded-circle me-3" alt="">
+                    <img :src="chat.headshotImg" style="height: 40px; width: 40px;" class="mb-auto rounded-circle me-3" alt="客服大頭貼">
                     <div style="max-width: 90%;">
                       <p class="mb-1">{{ chat.nickName }}</p>
                       <p class="speech-bubble left bg-white px-3 py-1 d-inline-block rounded-4 mb-0" style="word-break: break-all;">{{ chat.message }}</p>
@@ -43,7 +42,7 @@
                     <div v-if="openId === index" class="pt-3">
                       <div v-for="chat in item" :key="chat" class="">
                         <div v-if="chat.nickName !== '甜點食譜一鍵購客服'" class="d-flex mb-3">
-                          <img :src="chat.headshotImg" style="height: 40px; width: 40px;" class="mb-auto rounded-circle me-3" alt="">
+                          <img :src="chat.headshotImg" style="height: 40px; width: 40px;" class="mb-auto rounded-circle me-3" alt="顧客大頭貼">
                           <div style="max-width: 90%;">
                             <p class="mb-1">{{ chat.nickName }}</p>
                             <p class="speech-bubble left bg-white px-3 py-1 d-inline-block rounded-4 mb-0" style="  word-break: break-all;">{{ chat.message }}</p>

@@ -11,6 +11,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
+
 // 第二種
 // import LoadingComponent from '../../components/LoadingComponent.vue'
 
@@ -143,6 +144,7 @@ export default {
       })
     },
     // 增加食譜收藏
+    // 不能加入 讚和評價的資訊 變動的資料會不同步
     addBookmark (recipe) {
       if (!this.uid) {
         this.toastMessage('登入才可使用收藏功能', 'error')
@@ -235,14 +237,15 @@ export default {
       </loading>
     <!-- 第二種 -->
     <!-- <LoadingComponent :is-loading="isLoading"></LoadingComponent> -->
-
       <section class="text-center" data-aos="fade-up">
         <div class="py-lg-200 py-96 bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
-        <h2 class="text-purple mb-0  fs-lg-1 fs-5 letter-spacing-20 fw-bold bg-secondary-lightPurple py-2">甜點種類</h2>
+        <h2 class="text-purple mb-0 fs-lg-1 fs-5 letter-spacing-20 fw-bold bg-secondary-lightPurple py-2">
+          <span class="ms-3">甜點種類</span>
+        </h2>
       </section>
 
-      <section class="container" data-aos="fade-up">
-        <div class="pt-lg-4 pt-3 position-relative">
+      <section class="container">
+        <div class="pt-lg-4 pt-3 position-relative" data-aos="fade-up">
           <ul class="category-selector row row-cols-6 list-unstyled border-bottom">
               <li class="col text-center" :class="{'pointer-events-none': selectItem === '全部'}">
                 <a href="#"  @click.prevent="()=>selectCategory = '全部'" class="text-decoration-none d-inline-block" :class="{'fw-bold': selectItem === '全部', 'link-primary': selectItem === '全部'}">
@@ -290,7 +293,7 @@ export default {
           <div class="blue-line bg-primary position-absolute" :class="{'active-all-recipe': selectItem === '全部', 'active-taiwan': selectItem === '台式甜點', 'active-france': selectItem === '法式甜點', 'active-usa': selectItem === '美式甜點', 'active-japan': selectItem === '日式甜點', 'active-italy': selectItem === '義式甜點'}"></div>
         </div>
 
-        <div class="d-none d-lg-block my-5">
+        <div class="d-none d-lg-block my-5" data-aos="fade-up">
         <div class="input-group">
           <a class="btn btn-outline-primary px-5" @click="()=> this.costOrRateCollapse.toggle()">篩選對象 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{priceOrRate}}</span></a>
           <button class="btn btn-outline-primary px-5" type="button" @click="()=> this.highOrLowCollapse.toggle()">篩選值 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{highOrLow}}</span> </button>
@@ -329,7 +332,7 @@ export default {
         </div>
         </div>
 
-        <div v-if="filterRecipes.length" class="row row-cols-xl-4 row-cols-lg-3 row-cols-2 gy-4">
+        <div v-if="filterRecipes.length" class="row row-cols-xl-4 row-cols-lg-3 row-cols-2 gy-4" data-aos="fade-up">
           <div class="col" v-for="recipe in this.$refs.pagination.pageProducts" :key="recipe.id">
             <div class="card position-relative">
               <RouterLink :to="`/recipes/${recipe.id}`" class="card-img-hover position-relative">

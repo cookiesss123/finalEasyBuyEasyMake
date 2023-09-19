@@ -15,7 +15,7 @@
                     <div class="col-4">
                         <label for="image" class="form-label">主圖網址</label>
                         <input type="text" id="image" class="form-control mb-3" v-model="tempCoupon.image">
-                        <img :src="tempCoupon.image" alt="" width="300">
+                        <img :src="tempCoupon.image" alt="優惠券照片" width="300">
                     </div>
                     <div class="col-8">
                       <div class="row gy-3">

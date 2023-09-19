@@ -257,26 +257,26 @@ export default {
 </script>
 <template>
     <div>
-         <loading v-model:active="isLoading"
-                 :can-cancel="false"
-                 :is-full-page="fullPage"
-                 :lock-scroll="true">
-                 <div class="d-flex flex-column align-items-center py-96">
-      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <p class="text-center fw-bold text-primary h2">
-        <span class="me-1 animate-text">L</span>
-        <span class="mx-1 animate-text">o</span>
-        <span class="mx-1 animate-text">a</span>
-        <span class="mx-1 animate-text">d</span>
-        <span class="mx-1 animate-text">i</span>
-        <span class="mx-1 animate-text">n</span>
-        <span class="mx-1 animate-text">g</span>
-        <span class="mx-2 animate-text">.</span>
-        <span class="me-2 animate-text">.</span>
-        <span class="animate-text">.</span>
-      </p>
-    </div>
-        </loading>
+      <loading v-model:active="isLoading"
+              :can-cancel="false"
+              :is-full-page="fullPage"
+              :lock-scroll="true">
+              <div class="d-flex flex-column align-items-center py-96">
+  <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
+  <p class="text-center fw-bold text-primary h2">
+    <span class="me-1 animate-text">L</span>
+    <span class="mx-1 animate-text">o</span>
+    <span class="mx-1 animate-text">a</span>
+    <span class="mx-1 animate-text">d</span>
+    <span class="mx-1 animate-text">i</span>
+    <span class="mx-1 animate-text">n</span>
+    <span class="mx-1 animate-text">g</span>
+    <span class="mx-2 animate-text">.</span>
+    <span class="me-2 animate-text">.</span>
+    <span class="animate-text">.</span>
+  </p>
+</div>
+      </loading>
       <!-- 第二種 -->
       <!-- <LoadingComponent :is-loading="isLoading"></LoadingComponent> -->
       <section data-aos="fade-up" class="mb-5">
@@ -898,7 +898,7 @@ export default {
       </section>
 
       <section class="bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1678465952975-85cc1a08b2d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');">
-        <div class="py-96  text-center bg-transGray-2">
+        <div data-aos="zoom-in-right" class="py-96  text-center bg-transGray-2">
           <h2 class="text-white fs-md-3 fs-5 fw-bold mb-4 letter-spacing-10 text-shadow lh-base">每個月都有新好禮<br>超值大獎一次帶回</h2>
           <button type="button" class="hvr-sweep-to-right btn btn-primary fw-bold px-4 shadow-lg" @click="linkToLottery">
           立即抽獎

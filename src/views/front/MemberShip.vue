@@ -220,7 +220,7 @@ export default {
 }
 </script>
 <template>
-    <div class="no-scroll-x" data-aos="fade-up">
+    <div class="no-scroll-x">
       <loading v-if="uid" v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"

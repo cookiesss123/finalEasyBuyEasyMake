@@ -1,5 +1,5 @@
 <template>
-    <div data-aos="fade-up" >
+    <div>
       <loading v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"
@@ -21,12 +21,12 @@
     </div>
         </loading>
 
-      <section class="text-center">
+      <section class="text-center" data-aos="fade-up" >
         <div class="py-lg-200 py-96 bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1678465952975-85cc1a08b2d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');"></div>
         <h2 class="text-primary mb-0  fs-lg-1 fs-5 letter-spacing-20 fw-bold bg-secondary-lightPurple py-2">優惠特報</h2>
       </section>
 
-      <section class="container">
+      <section class="container" data-aos="fade-up" >
         <div class="pt-lg-4 pt-3 position-relative">
           <ul class="category-selector row row-cols-2 list-unstyled border-bottom">
               <li class="col  text-center" :class="{'pointer-events-none': tabName === '優惠折扣'}">
@@ -79,7 +79,7 @@
               <h4 class="mb-0 text-center fw-bold">本月指定抽獎食譜</h4>
 
               <div class="row row-cols-lg-3 row-cols-1 g-3 mt-lg-4 mt-1">
-                <div v-for="(item, index) in drewProducts" :key="item" class="col ">
+                <div v-for="(item, index) in drewProducts" :key="item" class="col">
                   <div class="card border mb-md-3" :class="{'border-primary': index === 0 || index === 2, 'border-purple': index === 1}">
                     <div class="row g-0">
                       <div class="col-md-5">
@@ -89,7 +89,7 @@
                       </div>
                       <div class="col-md-7">
                         <div class="card-body d-flex flex-column justify-content-center align-items-center h-100">
-                          <h5 class="card-title fw-bold" :class="{'text-primary': index === 0 || index === 2, 'text-purple': index === 1}">{{item[0]}}</h5>
+                          <h5 class="card-title fw-bold" :class="{'text-primary': index === 0 || index === 2, 'text-purple': index === 1}">{{ item[0] }}</h5>
                           <p v-if="drewArr[index] && drewArr[index][1]" class="mb-0" :class="{'text-danger': drewArr[index][1].length / item[1].length === 1}">完成度： {{ Math.round(drewArr[index][1].length / item[1].length * 100) === 0 ? '0' : Math.round(drewArr[index][1].length / item[1].length * 100) }} %</p>
                           <p v-else-if="!drewArr[index] || !drewArr[index][1]" class="mb-0">完成度：0 %</p>
                         </div>
@@ -97,7 +97,7 @@
                     </div>
                   </div>
 
-                  <ul class="row row-cols-xl-3 row-cols-lg-2 row-cols-3 pt-3 g-0 list-unstyled" :class="{'bg-secondary': index === 0 || index === 2, 'bg-lightPurple': index === 1}" >
+                  <ul class="bg-lottery row row-cols-xl-3 row-cols-lg-2 row-cols-3 pt-3 g-0 list-unstyled" :class="{'bg-secondary': index === 0 || index === 2, 'bg-lightPurple': index === 1}" >
                     <li class="d-flex flex-column align-items-center position-relative col"
                     v-for="(product) in item[1]" :key="product.id">
                     <template v-if="product.category === '單一產品'">
@@ -111,8 +111,9 @@
                   </ul>
                 </div>
               </div>
+
               <div class="text-center">
-                <button type="button" class="hvr-sweep-to-right mt-3 btn btn-primary" @click.prevent="addtLotteryResult">立即抽獎</button>
+                <button type="button" class="hvr-sweep-to-right mt-xl-5 mt-3 btn btn-primary" @click.prevent="addtLotteryResult">立即抽獎</button>
               </div>
               <p class="text-end mt-3">抽一次消耗一張抽獎券</p>
             </div>
@@ -147,7 +148,7 @@
               </div>
             </div>
 
-            <div class="py-96" data-aos="zoom-in">
+            <div class="py-96"  data-aos="fade-up">
               <div class="d-lg-flex mb-2">
                 <h2 class="d-flex align-items-center justify-content-center justify-content-lg-start fw-bold">
                   <img src="../../assets/images/title4.png" class="me-lg-3 me-4 title-img" alt="熱">

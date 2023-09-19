@@ -19,7 +19,6 @@ export default {
   data () {
     return {
       uid: '',
-      user: {},
       bookMarks: [],
       pageStatus: 'recipe',
       deleteId: '',
@@ -42,78 +41,73 @@ export default {
         if (user) {
           this.uid = user.uid
 
-          const dataRef = ref(db, 'users/' + user.uid)
+          const dataRef = ref(db, `${dataName}/${this.uid}`)
           onValue(dataRef, snapshot => {
-            this.user = snapshot.val()
-            const dataRef = ref(db, `${dataName}/${this.uid}`)
-            onValue(dataRef, snapshot => {
-              this.bookMarks = snapshot.val()
-              if (!this.bookMarks) {
-                this.isLoading = false
-                return
-              }
-              this.bookMarks = Object.values(this.bookMarks)
-              // 得到食譜讚數
-              if (this.pageStatus === 'recipe') {
-                const dataRef = ref(db, 'recipeThumbs')
-                onValue(dataRef, snapshot => {
-                  const recipeThumbs = snapshot.val()
-                  Object.keys(recipeThumbs).forEach(item => {
-                    this.thumbs[item] = Object.values(recipeThumbs[item]).length
-                  })
-
-                  // 把讚數填入
-                  this.bookMarks.forEach((recipe, index) => {
-                    Object.keys(this.thumbs).forEach(thumbId => {
-                      if (recipe.id === thumbId) {
-                        this.bookMarks[index].thumbs = this.thumbs[recipe.id]
-                      }
-                    })
-                  })
-                  this.bookMarks.forEach((recipe, index) => {
-                    if (!recipe.thumbs) {
-                      this.bookMarks[index].thumbs = 0
-                    }
-                  })
-                })
-              } else if (this.pageStatus === 'product') { // 得到產品評價
-                // 得到星星評價數
-                const dataRef = ref(db, 'productRates/')
-                onValue(dataRef, snapshot => {
-                  // 先取得所有留言
-                  let rates = snapshot.val()
-                  rates = Object.values(rates).map((item) => {
-                    return Object.values(item)
-                  })
-                  rates = rates.flat()
-                  this.bookMarks.forEach((product, index) => {
-                    rates.forEach(item => {
-                      if (product.id === item.productId && !this.bookMarks[index].scores) {
-                        this.bookMarks[index].scores = item.score
-                        this.bookMarks[index].ratePeople = 1
-                        this.bookMarks[index].averageRate = Number((this.bookMarks[index].scores / this.bookMarks[index].ratePeople).toFixed(1))
-                      } else if (product.id === item.productId && this.bookMarks[index].scores) {
-                        this.bookMarks[index].scores += item.score
-                        this.bookMarks[index].ratePeople += 1
-                        this.bookMarks[index].averageRate = Number((this.bookMarks[index].scores / this.bookMarks[index].ratePeople).toFixed(1))
-                      }
-                    })
-                  })
-                  this.bookMarks.forEach((product, index) => {
-                    if (!product.averageRate) {
-                      this.bookMarks[index].scores = 0
-                      this.bookMarks[index].ratePeople = 0
-                      this.bookMarks[index].averageRate = 0
-                    }
-                  })
-                })
-              }
+            this.bookMarks = snapshot.val()
+            if (!this.bookMarks) {
               this.isLoading = false
-            })
+              return
+            }
+            this.bookMarks = Object.values(this.bookMarks)
+
+            // 得到食譜讚數
+            if (this.pageStatus === 'recipe') {
+              const dataRef = ref(db, 'recipeThumbs')
+              onValue(dataRef, snapshot => {
+                const recipeThumbs = snapshot.val()
+                Object.keys(recipeThumbs).forEach(item => {
+                  this.thumbs[item] = recipeThumbs[item].thumbs
+                })
+
+                // 把讚數填入
+                this.bookMarks.forEach((recipe, index) => {
+                  Object.keys(this.thumbs).forEach(thumbId => {
+                    if (recipe.id === thumbId) {
+                      this.bookMarks[index].thumbs = this.thumbs[thumbId]
+                    }
+                  })
+                })
+                this.bookMarks.forEach((recipe, index) => {
+                  if (!recipe.thumbs) {
+                    this.bookMarks[index].thumbs = 0
+                  }
+                })
+                this.isLoading = false
+              })
+            } else if (this.pageStatus === 'product') { // 得到產品評價
+              // 得到星星評價數
+              const dataRef = ref(db, 'productRates/')
+              onValue(dataRef, snapshot => {
+                // 先取得所有留言
+                const allRates = Object.values(snapshot.val())
+                console.log(allRates, '評價')
+                this.rates = {}
+                allRates.forEach(item => {
+                  if (!this.rates[item.productId]) {
+                    this.rates[item.productId] = { scores: item.score, ratePeople: 1, averageRate: item.score / 1 }
+                  } else if (this.rates[item.productId]) {
+                    this.rates[item.productId].scores += item.score
+                    this.rates[item.productId].ratePeople += 1
+                    this.rates[item.productId].averageRate = Number((this.rates[item.productId].scores / this.rates[item.productId].ratePeople).toFixed(1))
+                  }
+                })
+                this.bookMarks.forEach((item, index) => {
+                  if (!this.rates[item.id]) {
+                    this.bookMarks[index].scores = 0
+                    this.bookMarks[index].ratePeople = 0
+                    this.bookMarks[index].averageRate = 0
+                    return
+                  }
+                  this.bookMarks[index].scores = this.rates[item.id].scores
+                  this.bookMarks[index].ratePeople = this.rates[item.id].ratePeople
+                  this.bookMarks[index].averageRate = this.rates[item.id].averageRate
+                })
+                this.isLoading = false
+              })
+            }
           })
         } else {
           this.uid = null
-          this.user = {}
           if (!this.uid) {
             this.isLoading = false
             this.toastMessage('登入才可使用收藏功能', 'error')
@@ -145,8 +139,8 @@ export default {
 }
 </script>
 <template>
-    <div class=""  style="overflow-x: hidden;">
-      <loading v-if="uid" v-model:active="isLoading"
+    <div class="no-scroll-x">
+        <loading v-if="uid" v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"
                  :lock-scroll="true">
@@ -166,12 +160,12 @@ export default {
       </p>
     </div>
         </loading>
-        <section class="text-center" data-aos="fade-up">
+        <section class="text-center">
           <div class="py-lg-200 py-96 bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1678465952996-e4b010264a01?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');"></div>
           <h2 class="text-purple mb-0  fs-lg-1 fs-5 letter-spacing-20 fw-bold bg-secondary-lightPurple py-2">我的收藏</h2>
         </section>
 
-        <section class="container" data-aos="fade-up">
+        <section class="container py-5">
           <div class="pt-lg-4 pt-3 position-relative">
             <ul class="category-selector row row-cols-2 list-unstyled border-bottom">
               <li class="col text-center" :class="{'pointer-events-none': pageStatus === 'recipe'}">

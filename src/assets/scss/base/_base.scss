@@ -7,9 +7,4 @@ a{
     display: inline-block;
 }
 
-/* 隱藏input輸入框的上下按鈕 Chrome, Safari, Edge, Opera */
-input[type=number]::-webkit-outer-spin-button,
-input[type=number]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+
