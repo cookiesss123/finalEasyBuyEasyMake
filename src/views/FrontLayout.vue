@@ -5,7 +5,7 @@
         <div class="container">
           <h1 class="mb-0 me-auto">
             <RouterLink to="/home" @click="reload('/home')" class="navbar-brand d-flex align-items-center">
-              <img src="../assets/images/loadingLogo.png" class="logo me-1 mt-n1" alt="甜點食譜一鍵購logo">
+              <img src="../assets/images/loadingLogo.png" class="logo me-1 mt-n1" alt="logo">
               <div>
                 <p class="text-darkBrown mb-0 fs-6" >甜點食譜一鍵購</p>
                 <p class="fw-light mb-0 font-style-Chathura mt-n2 text-purple fs-5">Easy Buy Easy Make</p>
@@ -197,7 +197,7 @@
     <footer class="mt-auto js-footer position-relative bg-lightPurple-secondary">
         <div class="container d-flex flex-column flex-lg-row align-items-center py-3">
           <div class=" d-flex justify-content-center align-items-center mb-2 mb-lg-0">
-              <img src="../assets/images/loadingLogo.png" class="logo me-1" alt="甜點食譜一鍵購網站logo">
+              <img src="../assets/images/loadingLogo.png" class="logo me-1" alt="logo">
               <div>
                 <p class="text-darkBrown mb-0 fs-6">甜點食譜一鍵購</p>
                 <p class="fw-light mb-0 font-style-Chathura mt-n2 text-purple fs-5" >Easy Buy Easy Make</p>

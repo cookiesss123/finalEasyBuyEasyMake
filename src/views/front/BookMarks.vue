@@ -78,8 +78,10 @@ export default {
               // 得到星星評價數
               const dataRef = ref(db, 'productRates/')
               onValue(dataRef, snapshot => {
-                // 先取得所有留言
+                // 先取得所有評價
+
                 const allRates = Object.values(snapshot.val())
+
                 console.log(allRates, '評價')
                 this.rates = {}
                 allRates.forEach(item => {
@@ -93,6 +95,7 @@ export default {
                 })
                 this.bookMarks.forEach((item, index) => {
                   if (!this.rates[item.id]) {
+                    // 若沒收藏這裡會有問題
                     this.bookMarks[index].scores = 0
                     this.bookMarks[index].ratePeople = 0
                     this.bookMarks[index].averageRate = 0
@@ -145,8 +148,8 @@ export default {
                  :is-full-page="fullPage"
                  :lock-scroll="true">
                  <div class="d-flex flex-column align-items-center py-96">
-      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <p class="text-center fw-bold text-primary h2">
+      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" alt="logo" >
+      <p class="text-center fw-bold text-purple fs-md-2 fs-5">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -161,8 +164,10 @@ export default {
     </div>
         </loading>
         <section class="text-center">
-          <div class="py-lg-200 py-96 bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1678465952996-e4b010264a01?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');"></div>
-          <h2 class="text-purple mb-0  fs-lg-1 fs-5 letter-spacing-20 fw-bold bg-secondary-lightPurple py-2">我的收藏</h2>
+          <div class="py-lg-200 py-96 bg-cover-center" style="background-image: url('https://images.unsplash.com/photo-1681923615775-d84f619b8e6c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+          <h2 class="bg-banner-title text-purple mb-0  fs-lg-1 fs-5 letter-spacing-20 fw-bold py-2">
+            <span class="ms-3">我的收藏</span>
+          </h2>
         </section>
 
         <section class="container py-5">

@@ -44,8 +44,8 @@ export default {
 <template>
     <div class="no-scroll-x">
         <section class="text-center" data-aos="fade-up">
-            <div class="py-lg-200 py-96 bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1681923786169-67be8db99af6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
-            <h2 class="text-purple mb-0 fs-lg-1 fs-5 letter-spacing-20 fw-bold bg-secondary-lightPurple py-2">訂單建立完成</h2>
+            <div class="py-lg-200 py-96 bg-cover-center" style="background-image: url('https://images.unsplash.com/photo-1681923786169-67be8db99af6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+            <h2 class="bg-banner-title text-purple mb-0 fs-lg-1 fs-5 letter-spacing-20 ps-3 fw-bold bg-secondary-lightPurple py-2">訂單建立完成</h2>
         </section>
 
       <section class="container my-5">
@@ -82,7 +82,7 @@ export default {
         <div v-if="myOrder.cart">
             <div class="d-flex align-items-center mb-2">
                 <span>會員可到 <RouterLink to="/member" class="link-primary">會員專區</RouterLink> 查看訂單運送進度</span>
-                <RouterLink to="/products" class="btn btn-sm btn-primary hvr-sweep-to-right ms-auto">繼續購物</RouterLink>
+                <RouterLink to="/products" class="btn btn-sm btn-primary rounded-0 hvr-sweep-to-right ms-auto">繼續購物</RouterLink>
             </div>
             <p class="mb-5">訂單建立時間：{{ new Date(myOrder.creatAt).toLocaleString().split(':')[0] }}:{{ new Date(myOrder.creatAt).toLocaleString().split(':')[1] }}</p>
 

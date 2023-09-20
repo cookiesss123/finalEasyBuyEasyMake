@@ -184,7 +184,7 @@ export default {
     // 刪除食譜收藏
     deleteBookmark () {
       remove(ref(db, `recipeBookmarks/${this.uid}/${this.recipe.id}`))
-      this.toastMessage('刪除收藏')
+      this.toastMessage('已刪除收藏')
     }
   },
   mounted () {
@@ -201,14 +201,14 @@ export default {
 </script>
 
 <template>
-  <div data-aos="fade-up" class="no-scroll-x">
-    <loading v-model:active="isLoading"
+  <div class="no-scroll-x">
+      <loading v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"
                  :lock-scroll="true">
                  <div class="d-flex flex-column align-items-center py-96">
-      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <p class="text-center fw-bold text-primary h2">
+      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" alt="logo" >
+      <p class="text-center fw-bold text-purple fs-md-2 fs-5">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -221,7 +221,7 @@ export default {
         <span class="animate-text">.</span>
       </p>
     </div>
-        </loading>
+      </loading>
       <section class="container py-md-96 py-60">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -233,7 +233,6 @@ export default {
         </nav>
         <div class="row row-cols-lg-2 row-cols-1 g-5">
           <div class="col">
-            <!-- <div :style="{'background-image':`url(${mainImg})`}" class="w-100 py-160 bg-img-fixed main-img"></div> -->
             <img :src="mainImg" style="height: 300px;" class="w-100 object-fit-cover mb-4" :alt="recipe.title">
             <div class="sub-picture-swiper position-relative">
               <swiper :slides-per-view="3" :space-between="15"

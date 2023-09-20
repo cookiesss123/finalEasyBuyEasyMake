@@ -64,7 +64,6 @@ export default {
           onValue(dataRef, snapshot => {
             const orders = snapshot.val()
             if (!orders) {
-              // this.loading = false
               return
             }
             this.orders = Object.entries(orders).map(item => {
@@ -81,7 +80,6 @@ export default {
               // 頁碼
               this.$refs.pagination.renderPage(1, this.filterOrders)
             }
-            // this.loading = false
           })
         } else {
           this.uid = null
@@ -226,8 +224,8 @@ export default {
                  :is-full-page="fullPage"
                  :lock-scroll="true">
                  <div class="d-flex flex-column align-items-center py-96">
-      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <p class="text-center fw-bold text-primary h2">
+      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" alt="logo" >
+      <p class="text-center fw-bold text-purple fs-md-2 fs-md-2 fs-5">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -242,15 +240,15 @@ export default {
     </div>
       </loading>
       <section class="text-center">
-        <div class="py-lg-200 py-96 bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1678465952850-0eb0bb982835?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
-        <h2 class="text-primary mb-0  fs-lg-1 fs-5 letter-spacing-20 fw-bold bg-secondary-lightPurple py-2">會員資料</h2>
+        <div class="py-lg-200 py-96 bg-cover-center" style="background-image: url('https://images.unsplash.com/photo-1678465952850-0eb0bb982835?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
+        <h2 class="bg-banner-title text-purple mb-0  fs-lg-1 fs-5 letter-spacing-20 ps-3 fw-bold py-2">會員資料</h2>
       </section>
 
       <div class="container">
         <section class="row row-cols-1 row-cols-lg-2 g-5 py-lg-96 py-5">
           <div class="col-lg-4">
             <div class="card">
-              <div v-if="!user.headshotImg" class="border border-2 border-primary">
+              <div v-if="!user.headshotImg" class="border border-2 border-primary text-center bg-lightPurple">
                 <i  class="bi bi-person-fill m-auto text-primary fs-200"></i>
               </div>
               <img v-else-if="user.headshotImg" :src="user.headshotImg" class="object-fit-cover w-100 border border-2 border-primary" style="height: 300px;" alt="大頭貼">

@@ -1,4 +1,5 @@
   .loadingLogo {
+    width: 100px;
     animation: move 1.5s infinite;
   }
   @keyframes move {
@@ -57,3 +58,10 @@
       opacity: 0;
     }
   }
+
+  
+@include media-breakpoint-up(md){
+  .loadingLogo {
+    width: 150px;
+  }
+}

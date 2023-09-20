@@ -18,7 +18,7 @@
                 </p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                <button type="button" class="btn btn-gray" data-bs-dismiss="modal">關閉</button>
                 <button type="button" class="btn btn-danger" @click="()=>deleteBookmark()">確認刪除</button>
             </div>
             </div>
@@ -49,7 +49,7 @@ export default {
         bookMark = 'productBookmarks'
       }
       remove(ref(db, `${bookMark}/${this.uid}/${this.deleteId}`))
-      this.toastMessage('刪除收藏')
+      this.toastMessage('已刪除收藏')
       this.hide()
     }
   },

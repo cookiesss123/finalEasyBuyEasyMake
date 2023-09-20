@@ -166,7 +166,7 @@ export default {
         }
       })
     },
-    // 增加食譜收藏
+    // 增加產品收藏
     addBookmark (product) {
       if (!this.uid) {
         this.toastMessage('登入才可使用收藏功能', 'error')
@@ -176,10 +176,10 @@ export default {
       set(reference, product)
       this.toastMessage('收藏成功')
     },
-    // 刪除食譜收藏
+    // 刪除產品收藏
     deleteBookmark (id) {
       remove(ref(db, `productBookmarks/${this.uid}/${id}`))
-      this.toastMessage('刪除收藏')
+      this.toastMessage('已刪除收藏')
     }
   },
   mounted () {
@@ -242,15 +242,13 @@ export default {
 </script>
 <template>
     <div>
-      <!-- 第二種 -->
-      <!-- <LoadingComponent :is-loading="isLoading"></LoadingComponent> -->
         <loading v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"
                  :lock-scroll="true">
                  <div class="d-flex flex-column align-items-center py-96">
-      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-      <p class="text-center fw-bold text-primary h2">
+      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" alt="logo" >
+      <p class="text-center fw-bold text-purple fs-md-2 fs-5">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
         <span class="mx-1 animate-text">a</span>
@@ -266,8 +264,8 @@ export default {
         </loading>
 
       <section class="text-center" data-aos="fade-up">
-        <div class="py-lg-200 py-96 bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1678465952860-422bf820209b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
-        <h2 class="text-purple mb-0  fs-lg-1 fs-5 letter-spacing-20 fw-bold bg-secondary-lightPurple py-2">材料種類</h2>
+        <div class="py-lg-200 py-96 bg-cover-center" style="background-image: url('https://images.unsplash.com/photo-1678465952860-422bf820209b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
+        <h2 class="bg-banner-title text-purple mb-0  fs-lg-1 fs-5 letter-spacing-20 ps-3 fw-bold py-2">材料種類</h2>
       </section>
 
       <section class="container" data-aos="fade-up">

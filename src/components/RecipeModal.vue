@@ -128,6 +128,7 @@ import { db } from '../firebase/db'
 import { ref, onValue, update, set, push } from 'firebase/database'
 import { mapActions } from 'pinia'
 import cartStore from '../stores/carts'
+
 export default {
   data () {
     return {

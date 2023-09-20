@@ -14,15 +14,11 @@ import { onAuthStateChanged } from 'firebase/auth'
 
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
-// 第二種
-// import LoadingComponent from '../../components/LoadingComponent.vue'
 export default {
   components: {
     Swiper,
     SwiperSlide,
     Loading
-    // 第二種
-    // LoadingComponent
   },
   mixins: [numberCommaMixin],
   data () {
@@ -56,7 +52,6 @@ export default {
       productHighOrLow: '低到高',
       productPriceOrRate: '價格',
       pageStatus: '全部',
-      // loading
       isLoading: false,
       fullPage: true
     }
@@ -207,7 +202,7 @@ export default {
     // 刪除所有收藏
     deleteBookmark (bookMark, itemId) {
       remove(ref(db, `${bookMark}/${this.uid}/${itemId}`))
-      this.toastMessage('刪除收藏')
+      this.toastMessage('已刪除收藏')
     },
     // 搜尋食譜
     searchRecipes () {
@@ -262,23 +257,21 @@ export default {
               :is-full-page="fullPage"
               :lock-scroll="true">
               <div class="d-flex flex-column align-items-center py-96">
-  <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" style="width: 150px;" alt="" >
-  <p class="text-center fw-bold text-primary h2">
-    <span class="me-1 animate-text">L</span>
-    <span class="mx-1 animate-text">o</span>
-    <span class="mx-1 animate-text">a</span>
-    <span class="mx-1 animate-text">d</span>
-    <span class="mx-1 animate-text">i</span>
-    <span class="mx-1 animate-text">n</span>
-    <span class="mx-1 animate-text">g</span>
-    <span class="mx-2 animate-text">.</span>
-    <span class="me-2 animate-text">.</span>
-    <span class="animate-text">.</span>
-  </p>
-</div>
+                <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" alt="logo" >
+                <p class="text-center fw-bold text-purple fs-md-2 fs-5">
+                  <span class="me-1 animate-text">L</span>
+                  <span class="mx-1 animate-text">o</span>
+                  <span class="mx-1 animate-text">a</span>
+                  <span class="mx-1 animate-text">d</span>
+                  <span class="mx-1 animate-text">i</span>
+                  <span class="mx-1 animate-text">n</span>
+                  <span class="mx-1 animate-text">g</span>
+                  <span class="mx-2 animate-text">.</span>
+                  <span class="me-2 animate-text">.</span>
+                  <span class="animate-text">.</span>
+                </p>
+              </div>
       </loading>
-      <!-- 第二種 -->
-      <!-- <LoadingComponent :is-loading="isLoading"></LoadingComponent> -->
       <section data-aos="fade-up" class="mb-5">
         <!-- 桌機 -->
         <div class=" d-none d-lg-block pt-64 banner-swiper">
@@ -1026,3 +1019,9 @@ export default {
       </section>
     </div>
 </template>
+<style>
+/* 頁尾圓點 - 寫在這才有用 */
+.swiper-pagination span{
+  --swiper-pagination-color: #4572c2;
+}
+</style>

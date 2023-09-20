@@ -34,7 +34,7 @@
                       <div class="card-body mt-3">
                         <h4 class="text-primary text-center fs-3">歡迎來到</h4>
                         <div class="d-flex align-items-center justify-content-center">
-                          <img src="../../assets/images/loadingLogo.png" class=" me-1 mt-n1 img-lg-50-sm-30"  alt="甜點食譜一鍵購logo">
+                          <img src="../../assets/images/loadingLogo.png" class=" me-1 mt-n1 img-lg-50-sm-30"  alt="logo">
                           <div>
                             <p class="text-darkBrown mb-0 fs-5 fs-lg-4">甜點食譜一鍵購</p>
                             <p class="fw-light mb-0 font-style-Chathura mt-n3 text-purple fs-lg-3 fs-4">Easy Buy Easy Make</p>

@@ -36,6 +36,11 @@
     color: white;
 }
 
+// 半淡藍色(副色 半淡紫色 漸層 banner bar 顏色
+.bg-banner-title{
+    background: linear-gradient(to right, $secondary 30%, $lightPurple 70%);
+}
+
 .bg-img-150{
     background-size: 150%;
 }
@@ -46,6 +51,23 @@
     background-size: cover; 
     background-attachment: fixed; 
 }
+.bg-cover-center{
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-size: cover; 
+}
+// 尚未抽中 黑色背景問號
+.bg-not-obtained {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.7));
+}
+// 抽獎卡片顏色
+.bg-gradient-card{
+    background: linear-gradient(90deg, #6ea3fe ,#cab8ff);
+}
+
+
 .backdrop-blur-5{
     backdrop-filter: blur(5px);
 }
@@ -131,13 +153,13 @@
     top: 8%;
 }
 // 暫時關閉
-// .loadingBackdrop{
-//     position: fixed;
-//     z-index: 2031; // 因為 frontlayout header 下了 1030
-//     height: 100%;
-//     width: 100%;
-//     background: rgba(0, 0, 0, .4);
-// }
+.loadingBackdrop{
+    position: fixed;
+    z-index: 2031; // 因為 frontlayout header 下了 1030
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, .4);
+}
 .footer-backdrop{
     position: absolute;
     z-index: 2031; // 因為 frontlayout header 下了 1030
@@ -179,16 +201,6 @@
  // 獎品圖片
  .img-lg-220-md-200{
     height: 200px;
-}
-// 尚未抽中 黑色背景問號
-.bg-not-obtained {
-    width: 100px;
-    height: 100px;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.7));
-}
-// 抽獎卡片顏色
-.bg-gradient-card{
-    background: linear-gradient(90deg, #6ea3fe ,#cab8ff);
 }
 
 // 訂單單頁 進度
@@ -272,8 +284,6 @@
         background: white;
       }
     to{
-        // opacity: 1;
-        // transform: scale(1);
         border: none;
         background: $primary;
         color: white;
