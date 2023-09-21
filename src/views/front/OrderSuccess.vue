@@ -14,7 +14,7 @@ export default {
   },
   mixins: [numberCommaMixin],
   methods: {
-    ...mapActions(cartStore, ['getOrder', 'toastMessage']),
+    ...mapActions(cartStore, ['getOrder', 'toastMessage', 'goToTop']),
     getMyOrder () {
       onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -31,7 +31,7 @@ export default {
 
   },
   mounted () {
-    window.scrollTo(0, 0)
+    this.goToTop()
 
     this.toastMessage('恭喜您! 訂單建立完成')
     this.getMyOrder()

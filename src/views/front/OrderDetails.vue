@@ -1,4 +1,6 @@
 <script>
+import { mapActions } from 'pinia'
+import cartStore from '../../stores/carts'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
 import { db, auth } from '../../firebase/db'
 import { ref, onValue } from 'firebase/database'
@@ -21,6 +23,7 @@ export default {
   },
   mixins: [numberCommaMixin],
   methods: {
+    ...mapActions(cartStore, ['goToTop']),
     getOrder () { // 訂單完成
       this.isLoading = true
       const { id } = this.$route.params
@@ -55,8 +58,7 @@ export default {
     }
   },
   mounted () {
-    window.scrollTo(0, 0)
-
+    this.goToTop()
     this.getOrder()
   }
 }

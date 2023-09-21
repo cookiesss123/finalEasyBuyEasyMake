@@ -225,7 +225,7 @@ export default {
     Loading
   },
   methods: {
-    ...mapActions(cartStore, ['checkLogin', 'toastMessage']),
+    ...mapActions(cartStore, ['checkLogin', 'toastMessage', 'goToTop']),
     // 取得折價券 優惠折扣
     getCoupons () {
       const dataRef = ref(db, 'coupons/')
@@ -412,7 +412,7 @@ export default {
     }
   },
   mounted () {
-    window.scrollTo(0, 0)
+    this.goToTop()
     this.isLoading = true
     if (this.$route.query.tabName) {
       this.tabName = this.$route.query.tabName

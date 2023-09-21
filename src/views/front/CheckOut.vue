@@ -23,10 +23,10 @@ export default {
     }
   },
   mounted () {
-    window.scrollTo(0, 0)
+    this.goToTop()
   },
   computed: {
-    ...mapState(cartStore, ['cart', 'cartItems'])
+    ...mapState(cartStore, ['cart', 'cartItems', 'goToTop'])
   }
 }
 </script>

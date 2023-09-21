@@ -47,7 +47,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(cartStore, ['addCart', 'toastMessage']),
+    ...mapActions(cartStore, ['addCart', 'toastMessage', 'goToTop']),
     // 取得所有讚數 - 要先得到 uid
     getMyThumb () {
       onAuthStateChanged(auth, (user) => {
@@ -188,7 +188,7 @@ export default {
     }
   },
   mounted () {
-    window.scrollTo(0, 0)
+    this.goToTop()
 
     this.isLoading = true
     this.getAllThumbs()

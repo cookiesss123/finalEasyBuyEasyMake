@@ -33,7 +33,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(cartStore, ['toastMessage']),
+    ...mapActions(cartStore, ['toastMessage', 'goToTop']),
     getUserInformation () {
       onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -194,6 +194,8 @@ export default {
   },
   mounted () {
     // 每個頁面都要再填入一次token 和 其它相關使用者資料 因為刷新就不見了
+    this.goToTop()
+
     this.isLoading = true
     this.getUserInformation()
     this.getOrders()

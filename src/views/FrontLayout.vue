@@ -182,7 +182,7 @@
     <!-- chat 聊天室 -->
     <ChatModal ref="chatModal"></ChatModal>
     <!-- 向上箭頭 -->
-    <button type="button" ref="upArrow" class="rounded-circle  py-2 px-13 bg-primary hvr-float position-fixed border-0 bottom-0 end-0 m-3 z-index-1" :class="{'fade': !showScrollArrow, 'show': showScrollArrow}"  @click="goToTop" >
+    <button type="button" ref="upArrow" class="rounded-circle  py-2 px-13 bg-primary hvr-float position-fixed border-0 bottom-0 end-0 m-3 z-index-1" :class="{'fade': !showScrollArrow, 'show': showScrollArrow}"  @click.prevent="goToTop" >
       <i class="bi bi-chevron-up fs-5 text-white"></i>
     </button>
 
@@ -273,7 +273,7 @@ export default {
     ChatModal
   },
   methods: {
-    ...mapActions(cartStore, ['checkLogin', 'logout']),
+    ...mapActions(cartStore, ['checkLogin', 'logout', 'goToTop']),
     // 取出token 存到 headers 這裡的nickName必須和其他介面取得的nickName相同狀態 這樣當許可證過期才會不見
 
     // 判斷當前頁面是否重整
@@ -320,13 +320,6 @@ export default {
       this.productHighOrLow = '不拘'
       this.productPriceOrRate = '價格'
       this.pageStatus = '全部'
-    },
-    // 箭頭返回最上方
-    goToTop () {
-      // 方法一
-      // document.documentElement.scrollTop = 0
-      // 方法二 這也可以，比較短
-      window.scrollTo(0, 0)
     },
     handleScroll () {
       this.showScrollArrow = window.scrollY > 1000

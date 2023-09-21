@@ -53,6 +53,8 @@
 
 </template>
 <script>
+import { mapActions } from 'pinia'
+import cartStore from '../../stores/carts'
 import { db } from '../../firebase/db'
 import { ref, onValue } from 'firebase/database'
 import Loading from 'vue-loading-overlay'
@@ -69,6 +71,7 @@ export default {
     Loading
   },
   methods: {
+    ...mapActions(cartStore, ['goToTop']),
     getCoupon () {
       const { id } = this.$route.params
       const dataRef = ref(db, `coupons/${id}`)
@@ -79,7 +82,7 @@ export default {
     }
   },
   mounted () {
-    window.scrollTo(0, 0)
+    this.goToTop()
 
     this.isLoading = true
     this.getCoupon()

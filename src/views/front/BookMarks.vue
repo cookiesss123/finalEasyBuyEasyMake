@@ -33,7 +33,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(cartStore, ['addCart', 'toastMessage']),
+    ...mapActions(cartStore, ['addCart', 'toastMessage', 'goToTop']),
     // 取得個別使用者收藏 - 食譜、產品、文章(還沒)
     getBookmarks (dataName) {
       this.isLoading = true
@@ -126,8 +126,7 @@ export default {
     }
   },
   mounted () {
-    window.scrollTo(0, 0)
-
+    this.goToTop()
     this.getBookmarks('recipeBookmarks')
   },
   watch: {

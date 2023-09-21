@@ -563,6 +563,10 @@ const cartStore = defineStore('cart', {
         icon,
         title: message
       })
+    },
+    // 滑到最上方
+    goToTop () {
+      window.scrollTo(0, 0)
     }
   },
   // getters 概念同「computed」

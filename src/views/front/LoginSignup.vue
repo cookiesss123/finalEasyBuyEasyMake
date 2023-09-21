@@ -190,8 +190,9 @@
     </main>
 </template>
 <script>
+import { mapActions } from 'pinia'
+import cartStore from '../../stores/carts'
 import { RouterLink } from 'vue-router'
-
 import { auth, db } from '../../firebase/db'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 import { set, ref, onValue } from 'firebase/database'
@@ -235,6 +236,7 @@ export default {
     SwiperSlide
   },
   methods: {
+    ...mapActions(cartStore, ['goToTop']),
     // 登入 筆記寫的
     async login () {
       const email = this.loginUser.email
@@ -307,7 +309,7 @@ export default {
     }
   },
   mounted () {
-    window.scrollTo(0, 0)
+    this.goToTop()
   }
 }
 </script>

@@ -52,7 +52,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(cartStore, ['addCart', 'handleKeyDown', 'toastMessage']),
+    ...mapActions(cartStore, ['addCart', 'handleKeyDown', 'toastMessage', 'goToTop']),
     // 取得產品評價
     getAllProductRates () {
       const { id } = this.$route.params
@@ -209,7 +209,7 @@ export default {
     }
   },
   mounted () {
-    window.scrollTo(0, 0)
+    this.goToTop()
 
     this.isLoading = true
     this.getProduct()

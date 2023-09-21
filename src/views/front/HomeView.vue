@@ -57,7 +57,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(cartStore, ['pleaseReLogin', 'toastMessage', 'addCart']),
+    ...mapActions(cartStore, ['pleaseReLogin', 'toastMessage', 'addCart', 'goToTop']),
     // 取得食譜 前 10
     getPopularRecipes () {
       this.isLoading = true
@@ -242,7 +242,7 @@ export default {
     }
   },
   mounted () {
-    window.scrollTo(0, 0)
+    this.goToTop()
     this.getRecipeBookmarks()
     this.getProductBookmarks()
     this.getPopularRecipes()
