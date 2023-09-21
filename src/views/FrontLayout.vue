@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column min-height-100">
-    <header class="fixed-top js-header">
+    <header class="fixed-top">
       <nav class="navbar navbar-expand-lg navbar-light backdrop-blur-10 bg-transGray-4" :class="{'bg-white': searchToggle}">
         <div class="container">
           <h1 class="mb-0 me-auto">
@@ -182,19 +182,18 @@
     <!-- chat 聊天室 -->
     <ChatModal ref="chatModal"></ChatModal>
     <!-- 向上箭頭 -->
-    <button type="button" ref="upArrow" class="link-primary bg-transparent hvr-float position-fixed border-0 bottom-0 end-0 m-3" :class="{'fade': !showScrollArrow, 'show': showScrollArrow}"  @click="goToTop" >
-      <!-- <i class="bi bi-chevron-up fs-5"></i> -->
-      <i class="bi bi-arrow-up-circle-fill fs-35"></i>
+    <button type="button" ref="upArrow" class="rounded-circle  py-2 px-13 bg-primary hvr-float position-fixed border-0 bottom-0 end-0 m-3 z-index-1" :class="{'fade': !showScrollArrow, 'show': showScrollArrow}"  @click="goToTop" >
+      <i class="bi bi-chevron-up fs-5 text-white"></i>
     </button>
 
-    <button type="button" v-if="uid" class="link-primary bg-transparent position-fixed border-0 bottom-0 end-0 mx-88 my-3" @click="()=>this.$refs.chatModal.show()">
-      <span v-if="this.$refs.chatModal && this.$refs.chatModal.newChatNum !== 0" class="position-absolute text-primary fw-bold border border-primary alert-num rounded-circle fs-12  top-0 start-100 translate-middle">
+    <button type="button" v-if="uid" class="rounded-circle py-2 px-13 bg-primary hvr-float position-fixed border-0 bottom-0 end-0 mx-88 my-3 z-index-1" @click="()=>this.$refs.chatModal.show()">
+      <span v-if="this.$refs.chatModal && this.$refs.chatModal.newChatNum !== 0" class="position-absolute text-primary fw-bold border border-primary alert-num rounded-circle fs-12 top-0 start-100 translate-middle">
         {{ this.$refs.chatModal.newChatNum }}
       </span>
-      <i class="bi bi-chat-dots-fill fs-35"></i>
+      <i class="bi bi-three-dots fs-5 text-white"></i>
     </button>
 
-    <footer class="mt-auto js-footer position-relative bg-light-purple-secondary">
+    <footer class="mt-auto position-relative bg-light-purple-secondary">
         <div class="container d-flex flex-column flex-lg-row align-items-center py-3">
           <div class=" d-flex justify-content-center align-items-center mb-2 mb-lg-0">
               <img src="../assets/images/loadingLogo.png" class="logo me-1" alt="logo">
