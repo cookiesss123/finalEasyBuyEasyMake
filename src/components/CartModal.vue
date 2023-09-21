@@ -74,7 +74,7 @@
                     <label for="code" class="col-3 form-label mt-auto">優惠碼</label>
                     <div class="input-group mb-3" v-if="cart.total + cart.deliveryCharge === cart.finalTotal">
                       <input type="text" class="form-control" v-model="code">
-                      <button class="btn btn-outline-gradient fw-normal" type="button" @click="()=>checkCoupon(code)">套用優惠碼</button>
+                      <button class="btn btn-outline-primary fw-normal" type="button" @click="()=>checkCoupon(code)">套用優惠碼</button>
                     </div>
                     <div class="input-group mb-3" v-else-if="cart.total + cart.deliveryCharge !== cart.finalTotal">
                       <input v-if="cart.coupon" type="text" class="form-control" :value="cart.coupon.code" disabled>

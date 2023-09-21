@@ -789,11 +789,6 @@ export default {
             </div>
           </swiper-slide>
         </swiper>
-        <div class="text-center">
-            <RouterLink to="/recipes" type="button" class="d-lg-none btn btn-gradient rounded-pill px-4 mt-4">
-              更多食譜
-            </RouterLink>
-        </div>
       </section>
 
       <section class="bg-img-fixed" style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
@@ -1011,11 +1006,6 @@ export default {
             </div>
           </swiper-slide>
         </swiper>
-        <div class="text-center">
-          <RouterLink to="/products" type="button" class="d-lg-none btn btn-gradient rounded-pill px-4 mt-4">
-            更多商品
-          </RouterLink>
-        </div>
       </section>
     </div>
 </template>
