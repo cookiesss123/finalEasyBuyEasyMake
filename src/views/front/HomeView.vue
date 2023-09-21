@@ -895,7 +895,7 @@ export default {
       </section>
 
       <!-- 優選食材 -->
-      <section class="container py-md-96 py-60" data-aos="fade-right">
+      <section class="container py-md-96 py-60"  data-aos="fade-up">
         <div class="d-lg-flex mb-2">
           <h2 class="d-flex align-items-center justify-content-center justify-content-lg-start fw-bold">
             <img src="../../assets/images/title3.png" class="me-lg-3 me-4 img-lg-64-md-36" alt="優">

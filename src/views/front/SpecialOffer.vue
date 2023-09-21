@@ -1,5 +1,5 @@
 <template>
-  <div class="container my-96 ">
+  <div class="container  py-md-96 py-60 ">
     <loading v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"
@@ -26,21 +26,29 @@
             <li class="breadcrumb-item active" aria-current="page">{{ coupon.title }}</li>
           </ol>
         </nav>
-    <div class="d-flex justify-content-center py-5">
-        <div class="col-lg-8 col-12">
-            <div class="card">
-                <img :src="coupon.image" class="card-img-top" alt="..." height="300" style="object-fit: cover;">
-                <div class="card-body">
-                    <span>【優惠時間】：{{ new Date(coupon.startDate).toLocaleDateString() }}</span> ~
-                    <span>{{new Date(coupon.dueDate).toLocaleDateString()  }}</span>
-                    <h5 class="card-title h2 text-center mb-4">{{  coupon.title }}</h5>
-                    <p class="card-text " style="text-indent: 2em;">{{ coupon.description }}</p>
-                    <span>【活動優惠碼】：{{ coupon.code }}</span>
-                    <p> *此優惠不可與其他優惠同時使用</p>
-                </div>
+        <div class="d-flex justify-content-center py-lg-5">
+            <div class="col-lg-8 col-12">
+              <h2 class="fs-lg-2 fs-3 text-center fw-bold letter-spacing-5-sm-0 border-bottom border-2 border-primary text-primary py-2">{{  coupon.title }}</h2>
+              <img :src="coupon.image" class="w-100 object-fit-cover" alt="..." height="300">
+              <table class="table my-4">
+                <thead>
+                  <tr>
+                    <th class="fw-normal text-muted" width="150">優惠時間</th>
+                    <th class="fw-normal">{{ new Date(coupon.startDate).toLocaleDateString() }} ~
+                      {{new Date(coupon.dueDate).toLocaleDateString()  }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="text-muted">活動優惠碼</td>
+                    <td>{{ coupon.code }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="card-text text-indent-2 lh-lg">{{ coupon.description }}</p>
+              <p class="text-muted"> *此優惠不可與其他優惠同時使用</p>
             </div>
         </div>
-    </div>
   </div>
 
 </template>
