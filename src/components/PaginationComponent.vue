@@ -1,5 +1,4 @@
 <script>
-
 export default {
   props: ['priceOrRate', 'filterProducts', 'filterRecipes', 'filterOrders'],
   data () {
@@ -56,17 +55,17 @@ export default {
       <nav v-if="filterProducts && this.$route.fullPath.includes('/products')">
         <ul class="pagination d-flex justify-content-center align-items-center mt-5">
           <li v-if="activePage !== 1" class="page-item mx-1">
-            <a class="page-link border-0  rounded-circle d-flex" href="#" aria-label="Previous"  @click.prevent="() => renderPage(activePage - 1, filterProducts)" style="padding: 8px 12px;">
+            <a class="page-link fs-12 fs-lg-6 border-0  rounded-circle d-flex py-2 px-12" href="#" aria-label="Previous"  @click.prevent="() => renderPage(activePage - 1, filterProducts)">
               <i class="bi bi-chevron-left mx-auto"></i>
             </a>
           </li>
           <!-- 中間的頁碼 -->
           <li  class="page-item mx-1" :class="{'active': activePage === number}" v-for="number in Math.ceil(filterProducts.length / 12)" :key="number + 23423" >
-            <a v-if="activePage !== number" @click.prevent="() => renderPage(number, filterProducts)" class="page-link border-0 rounded-circle px-lg-3 py-lg-2"  href="#">{{number}}</a>
-            <span v-else-if="activePage === number" class="page-link border-0 rounded-circle px-lg-3 py-lg-2 active" style="pointer-events:none">{{ number }}</span>
+            <a v-if="activePage !== number" @click.prevent="() => renderPage(number, filterProducts)" class="page-link  fs-12 fs-lg-6 border-0 rounded-circle px-lg-3 py-lg-2"  href="#">{{number}}</a>
+            <span v-else-if="activePage === number" class="page-link fs-12 fs-lg-6 border-0 rounded-circle px-lg-3 py-lg-2 active pointer-events-none">{{ number }}</span>
           </li>
           <li v-if="activePage !== Math.ceil(filterProducts.length / 12)" class="page-item mx-1">
-            <a @click.prevent="() => renderPage(activePage + 1, filterProducts)" class="page-link border-0  rounded-circle d-flex" href="#" aria-label="Next" style="padding: 8px 12px;">
+            <a @click.prevent="() => renderPage(activePage + 1, filterProducts)" class="page-link fs-12 fs-lg-6 border-0  rounded-circle d-flex py-2 px-12" href="#" aria-label="Next">
               <i class="bi bi-chevron-right mx-auto"></i>
             </a>
           </li>
@@ -76,16 +75,16 @@ export default {
       <nav v-else-if="filterRecipes && this.$route.fullPath.includes('/recipes')">
         <ul class="pagination d-flex justify-content-center align-items-center mt-5">
           <li v-if="activePage !== 1" class="page-item mx-1">
-            <a class="page-link border-0  rounded-circle d-flex" href="#" aria-label="Previous"  @click.prevent="() => renderPage(activePage - 1, filterRecipes)" style="padding: 8px 12px;">
+            <a class="page-link fs-12 fs-lg-6 border-0  rounded-circle d-flex py-2 px-12" href="#" aria-label="Previous"  @click.prevent="() => renderPage(activePage - 1, filterRecipes)">
               <i class="bi bi-chevron-left mx-auto"></i>
             </a>
           </li>
           <li class="page-item mx-1" :class="{'active': activePage === number}" v-for="number in Math.ceil(filterRecipes.length / 12)" :key="number + 23423" >
-            <a v-if="activePage !== number" @click.prevent="() => renderPage(number, filterRecipes)" class="page-link border-0 rounded-circle px-lg-3 py-lg-2"  href="#">{{number}}</a>
-            <span v-else-if="activePage === number" class="page-link border-0 rounded-circle px-lg-3 py-lg-2 active" style="pointer-events:none">{{ number }}</span>
+            <a v-if="activePage !== number" @click.prevent="() => renderPage(number, filterRecipes)" class="page-link  fs-12 fs-lg-6 border-0 rounded-circle px-lg-3 py-lg-2"  href="#">{{number}}</a>
+            <span v-else-if="activePage === number" class="page-link fs-12 fs-lg-6 border-0 rounded-circle px-lg-3 py-lg-2 active pointer-events-none">{{ number }}</span>
           </li>
           <li v-if="activePage !== Math.ceil(filterRecipes.length / 12)" class="page-item mx-1">
-            <a @click.prevent="() => renderPage(activePage + 1, filterRecipes)" class="page-link border-0  rounded-circle d-flex" href="#" aria-label="Next" style="padding: 8px 12px;">
+            <a @click.prevent="() => renderPage(activePage + 1, filterRecipes)" class="page-link py-2 px-12 fs-12 fs-lg-6 border-0  rounded-circle d-flex" href="#" aria-label="Next">
               <i class="bi bi-chevron-right mx-auto"></i>
             </a>
           </li>
@@ -97,16 +96,16 @@ export default {
       <!--  mt-5 -->
         <ul class="pagination d-flex justify-content-center align-items-center mb-0">
           <li v-if="activePage !== 1" class="page-item mx-1">
-            <a class="page-link border-0  rounded-circle d-flex" href="#" aria-label="Previous"  @click.prevent="() => renderPage(activePage - 1, filterOrders)" style="padding: 8px 12px;">
+            <a class="page-link fs-12 fs-lg-6 border-0  rounded-circle d-flex py-2 px-12" href="#" aria-label="Previous"  @click.prevent="() => renderPage(activePage - 1, filterOrders)">
               <i class="bi bi-chevron-left mx-auto"></i>
             </a>
           </li>
           <li class="page-item mx-1" :class="{'active': activePage === number}" v-for="number in Math.ceil(filterOrders.length / 8)" :key="number + 23423" >
-            <a v-if="activePage !== number" @click.prevent="() => renderPage(number, filterOrders)" class="page-link border-0 rounded-circle px-lg-3 py-lg-2"  href="#">{{number}}</a>
-            <span v-else-if="activePage === number" class="page-link border-0 rounded-circle px-lg-3 py-lg-2 active" style="pointer-events:none">{{ number }}</span>
+            <a v-if="activePage !== number" @click.prevent="() => renderPage(number, filterOrders)" class="page-link  fs-12 fs-lg-6 border-0 rounded-circle px-lg-3 py-lg-2"  href="#">{{number}}</a>
+            <span v-else-if="activePage === number" class="page-link fs-12 fs-lg-6 border-0 rounded-circle px-lg-3 py-lg-2 active pointer-events-none">{{ number }}</span>
           </li>
           <li v-if="activePage !== Math.ceil(filterOrders.length / 8)" class="page-item mx-1">
-            <a @click.prevent="() => renderPage(activePage + 1, filterOrders)" class="page-link border-0  rounded-circle d-flex" href="#" aria-label="Next" style="padding: 8px 12px;">
+            <a @click.prevent="() => renderPage(activePage + 1, filterOrders)" class="page-link fs-12 fs-lg-6 border-0  rounded-circle d-flex py-2 px-12" href="#" aria-label="Next">
               <i class="bi bi-chevron-right mx-auto"></i>
             </a>
           </li>

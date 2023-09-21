@@ -1,4 +1,4 @@
-// 背景
+// 一、背景
 .bg-transGray-4{
     background-color: rgba(255, 255, 255, .4);
 }
@@ -11,40 +11,42 @@
 .bg-trans-dark-4{
     background-color: rgba(0, 0, 0, .4)
 }
-// 半副色(淡藍色)半白色
+.bg-trans-dark-8 {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.7));
+}
 .bg-secondary-white{
     background: linear-gradient(to right, $secondary 50%, white 50%);
 }
-// 半淡紫色半白色
-.bg-lightPurple-white{
+.bg-light-purple-white{
     background: linear-gradient(to right, $lightPurple 50%, white 50%);
 }
-
-// 直向
-// 半淡藍色(副色 半淡紫色 漸層 banner bar 顏色
-.bg-secondary-lightPurple{
+.bg-secondary-light-purple{
     background: linear-gradient(to bottom, $secondary 30%, $lightPurple 70%);
 }
-// 半淡紫色半淡藍色(副色 漸層 banner bar 顏色
-.bg-lightPurple-secondary{
+.bg-light-purple-secondary{
     background: linear-gradient(to bottom, $lightPurple 30%, $secondary 70%);
 }
-
-// 半藍色半紫色(副色 漸層 - 登入
 .bg-primary-purple{
     background: linear-gradient(to right, $primary , $purple);
     color: white;
 }
-
-// 半淡藍色(副色 半淡紫色 漸層 banner bar 顏色
-.bg-banner-title{
+.bg-secondary-light-purple-horizontal{
     background: linear-gradient(to right, $secondary 30%, $lightPurple 70%);
 }
-
+.bg-gradient-purple{
+    background: linear-gradient(90deg, #6ea3fe ,#cab8ff);
+}
+.backdrop-blur-5{
+    backdrop-filter: blur(5px);
+}
+.backdrop-blur-10{
+    backdrop-filter: blur(10px);
+}
 .bg-img-150{
     background-size: 150%;
 }
-
 .bg-img-fixed{
     background-position: center; 
     background-repeat: no-repeat; 
@@ -56,24 +58,22 @@
     background-repeat: no-repeat; 
     background-size: cover; 
 }
-// 尚未抽中 黑色背景問號
-.bg-not-obtained {
-    width: 100px;
-    height: 100px;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.7));
+
+// 二、通用類別
+.hvr-sweep-to-right::before{
+    background: #7555ff !important;
 }
-// 抽獎卡片顏色
-.bg-gradient-card{
-    background: linear-gradient(90deg, #6ea3fe ,#cab8ff);
+.hvr-sweep-to-left::before{
+    background: $primary !important;
+    color: white;
+}
+.hvr-sweep-to-left:hover{
+    color: white !important;
+}
+.hvr-rectangle-out::before {
+    background: $primary !important;
 }
 
-
-.backdrop-blur-5{
-    backdrop-filter: blur(5px);
-}
-.backdrop-blur-10{
-    backdrop-filter: blur(10px);
-}
 .rotate-90{
     transform: rotate(90deg);
 }
@@ -101,26 +101,41 @@
 .pointer-events-none{
     pointer-events: none;
 }
-
+.cursor-pointer{
+    cursor: pointer;
+}
 .text-shadow{
     text-shadow: 2px 2px 4px #000
 }
 .text-shadow-white{
     text-shadow: 2px 2px 0 white;
 }
-// style="text-shadow: 2px 2px 2px rgb(71, 71, 71);"
 .rounded-top-15{
    border-radius: 15px 15px 0px 0px !important;
 }
 .rounded-20{
     border-radius: 20px;
 }
-.rounded-topLeft-20{
+.rounded-top-left-20{
     border-radius: 20px 0 0 0; 
  }
-.rounded-topRight-20{
+.rounded-top-right-20{
     border-radius: 0 20px 0 0; 
 }
+.no-scroll-x{
+    overflow-x: hidden;
+}
+.z-index-1{
+    z-index: 1;
+}
+.z-index-n1{
+    z-index: -1;
+}
+.top-8{
+    top: 8%;
+}
+
+// 三、圖片大小
 .img-lg-50-sm-30{
     height: 30px !important;
     width: 30px !important;
@@ -131,326 +146,42 @@
 .min-height-100{
     min-height: 100vh;
 }
-.no-scroll{
-    overflow: hidden;
-}
-.no-scroll-x{
-    overflow-x: hidden;
-}
-.z-index-1{
-    z-index: 1;
-}
-.z-index-3{
-    z-index: 3;
-}
-.z-index-n1{
-    z-index: -1;
-}
-.cursor-pointer{
-    cursor: pointer;
-}
-.top-8{
-    top: 8%;
-}
-// 暫時關閉
-.loadingBackdrop{
-    position: fixed;
-    z-index: 2031; // 因為 frontlayout header 下了 1030
-    height: 100%;
-    width: 100%;
-    background: rgba(0, 0, 0, .4);
-}
-.footer-backdrop{
-    position: absolute;
-    z-index: 2031; // 因為 frontlayout header 下了 1030
-    background: rgba(0, 0, 0, .4);
-    position: fixed;
-}
-
-.img-35{
-    width: 35px !important;
-}
-//btn hover 效果
-.hvr-sweep-to-right::before{
-    background: #7555ff !important;
-}
-
-// 結帳
-.hvr-sweep-to-left::before{
-    background: $primary !important;
-    color: white;
-}
-.hvr-sweep-to-left:hover{
-    color: white !important;
-}
-
-// 會員訂單 方形 hover效果
-.hvr-rectangle-out::before {
-    background: $primary !important;
-}
-// 第一個區塊 熱門食譜
-// 手機
-.title-img{
+.img-lg-64-md-36{
     height: 36px;
 }
-
-// 404 圖片
 .img-md-200-sm-150{
     height: 150px;
 }
- // 獎品圖片
- .img-lg-220-md-200{
+.img-lg-220-md-200{
     height: 200px;
 }
 
-// 訂單單頁 進度
-.w-33{
-    left: 8.2%;
-    width: 25.5%;
-}
-.w-66{
-    left: 8.2%;
-    // width: 62%;
-    width: 57%;
-}
-// 訂單active圓圈大小
-.w-lg-90-md-70{
-    width: 70px;
-}
-// 結帳頁面灰色線
-.line-gray{
-    width: 83%;
-    left: 50%;
-    transform: translateX(-50%);
-}
 
-// 結帳頁面藍色線 一半
-.line-blue-50{
-    left: 9%;
-    width: 42%;
-    top: 25%;
-}
-.line-blue-50-animation{
-    animation-name: spread-to-right-2;
-    animation-duration: .8s;
-}
-@keyframes spread-to-right-2 {
-    from{
-        width: 0;
-      }
-    to{
-        width: 42%;
-      }
-}
-
-// 結帳頁面藍色線 全部
-.line-blue-100{
-    left: 53%;
-    width: 43.5%;
-    top: 25%;
-
-    animation-name: spread-to-right-3;
-    animation-delay: .4s;
-    animation-duration: .8s;
-    animation-fill-mode: both;
-}
-@keyframes spread-to-right-3 {
-    from{
-        width: 0;
-      }
-    to{
-        width: 43.5%;
-      }
-}
-
-// 結帳頁面圓形圈圈
-.circle{
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-}
-// 藍色
-.circle-animation{
-    animation-name: enlarge;
-    animation-duration: .6s;
-    animation-delay: .8s; 
-    animation-fill-mode: both;
-}
-@keyframes enlarge {
-    from{
-        // opacity: 0;
-        // transform: scale(0);
-        border: 1px solid $gray-600;
-        background: white;
-      }
-    to{
-        border: none;
-        background: $primary;
-        color: white;
-      }
-}
-@keyframes gray-to-primary {
-    from{
-        color: $gray-600;
-    }
-    to{
-        color: $primary;
-        font-weight: bold;
-    }
-}
-// 灰色文字轉成藍色
-.text-gray-to-primary-2{
-    animation-name: gray-to-primary;
-    animation-duration: .4s;
-    animation-delay: .8s;
-    animation-fill-mode: both;
-}
-// 灰色文字轉成藍色
-.text-gray-to-primary-3{
-    animation-name: gray-to-primary;
-    animation-duration: .4s;
-    animation-delay: 1.4s;
-    animation-fill-mode: both;
-}
-
-.number-hide{
-    animation-name: hide;
-    animation-duration: .4s;
-    animation-fill-mode: both;
-}
-.number-hide-3{
-    animation-name: hide;
-    animation-delay: 1s;
-    animation-duration: .4s;
-    animation-fill-mode: both;
-}
-@keyframes hide {
-    from{
-        opacity: 1;
-        display: block;
-    }
-    to{
-        opacity: 0;
-        display: none;
-    }
-}
-.check-block{
-    animation-name: block;
-    animation-duration: .4s;
-    animation-delay: .4s;
-    animation-fill-mode: both;
-}
-.check-block-3{
-    animation-name: block;
-    animation-duration: .4s;
-    animation-delay: 1.4s;
-    animation-fill-mode: both;
-}
-@keyframes block {
-    from{
-        opacity: 0;
-        display: none;
-    }
-    to{
-        opacity: 1;
-        display: block;
-    }
-}
-// 會員訂單圓點
-.order-dot-white{
-    width: 20px;
-    height: 20px;
-}
-
-@include media-breakpoint-up(md) {
-    .line-gray{
-        width: 89%;
-    }
-
-    // 訂單單頁 進度
-    .w-33{
-        left: 5%;
-        width: 29%;
-    }
-
-    .w-66{
-        left: 5%;
-        width: 61%;
-    }
-}
 @include media-breakpoint-up(lg) {
     // 橫向
-    // 半淡紫色半淡藍色(副色 漸層 banner bar 顏色
-    .bg-lightPurple-secondary{
+    .bg-light-purple-secondary{
         background: linear-gradient(to right, $lightPurple 30%, $secondary 70%);
     }
-    // 半淡藍色(副色 半淡紫色 漸層 banner bar 顏色
-    .bg-secondary-lightPurple{
+    .bg-secondary-light-purple{
         background: linear-gradient(to right, $secondary 30%, $lightPurple 70%);
-    }
-
-    .img-lg-50-sm-30{
-        height: 50px !important;
-        width: 50px !important;
-    }
-
-    // 第一個區塊 熱門食譜
-    .title-img{
-        height: 64px;
-    }
-
-    // 404 圖片
-    .img-md-200-sm-150{
-        height: 200px;
-    }
-    // 獎品圖片
-    .img-lg-220-md-200{
-        height: 220px;
     }
     .letter-spacing-5-sm-0{
         letter-spacing: 5px;
     }
-
-    // 訂單active圓圈大小
-    .w-lg-90-md-70{
-        width: 90px;
+    .h-80{
+        height: 80%;
     }
-    
-    // 結帳頁面灰色線
-    .line-gray{
-        // width: 93%;
-        width: 92%;
+    .img-lg-50-sm-30{
+        height: 50px !important;
+        width: 50px !important;
     }
-
-// 訂單單頁 進度
-.w-33{
-    left: 4%;
-    width: 31%;
-}
-.w-66{
-    left: 4%;
-    width: 62%;
-}
-    .line-blue-50{
-        left: 5%;
-        width: 46%;
+    .img-lg-64-md-36{
+        height: 64px;
     }
-
-    // 結帳頁面圓形圈圈
-    .circle{
-        width: 40px;
-        height: 40px;
+    .img-md-200-sm-150{
+        height: 200px;
     }
-
-// 會員訂單圓點
-.order-dot-white{
-    width: 25px; 
-    height: 25px;
-}
-
-// 抽獎頁面的背景長度
-.bg-lottery{
-    height: 80%;
-}
-
+    .img-lg-220-md-200{
+        height: 220px;
+    }
 }

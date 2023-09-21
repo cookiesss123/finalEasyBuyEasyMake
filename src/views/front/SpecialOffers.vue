@@ -5,7 +5,7 @@
                  :is-full-page="fullPage"
                  :lock-scroll="true">
                  <div class="d-flex flex-column align-items-center py-96">
-      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" alt="logo" >
+      <img src="../../assets/images/loadingLogo.png" class="loading-logo mb-3" alt="logo" >
       <p class="text-center fw-bold text-purple fs-md-2 fs-5">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
@@ -23,7 +23,7 @@
 
       <section class="text-center" data-aos="fade-up" >
         <div class="py-lg-200 py-96 bg-cover-center" style="background-image: url('https://images.unsplash.com/photo-1678465952975-85cc1a08b2d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');"></div>
-        <h2 class="bg-banner-title text-purple mb-0  fs-lg-1 fs-5 letter-spacing-20 ps-3 fw-bold py-2">優惠特報</h2>
+        <h2 class="bg-secondary-light-purple-horizontal text-purple mb-0  fs-lg-1 fs-5 letter-spacing-20 ps-3 fw-bold py-2">優惠特報</h2>
       </section>
 
       <section class="container" data-aos="fade-up" >
@@ -97,13 +97,13 @@
                     </div>
                   </div>
 
-                  <ul class="bg-lottery row row-cols-xl-3 row-cols-lg-2 row-cols-3 pt-3 g-0 list-unstyled" :class="{'bg-secondary': index === 0 || index === 2, 'bg-lightPurple': index === 1}" >
+                  <ul class="h-80 row row-cols-xl-3 row-cols-lg-2 row-cols-3 pt-3 g-0 list-unstyled" :class="{'bg-secondary': index === 0 || index === 2, 'bg-lightPurple': index === 1}" >
                     <li class="d-flex flex-column align-items-center position-relative col"
                     v-for="(product) in item[1]" :key="product.id">
                     <template v-if="product.category === '單一產品'">
                       <img :src="product.imgUrl" :alt="product.title" height="100" width="100" class="object-fit-cover mb-1">
                       <p>{{ product.title }}</p>
-                      <div v-if="!drewArr[index] || !drewArr[index][1] || (drewArr[index] && drewArr[index][1] && !JSON.stringify(this.drewArr[index][1]).includes(product.title))" class="position-absolute bg-not-obtained d-flex">
+                      <div v-if="!drewArr[index] || !drewArr[index][1] || (drewArr[index] && drewArr[index][1] && !JSON.stringify(this.drewArr[index][1]).includes(product.title))" class="position-absolute bg-trans-dark-8  d-flex">
                         <i class="bi bi-question-lg text-white fs-1 m-auto"></i>
                       </div>
                     </template>
@@ -131,7 +131,7 @@
                   arrow_drop_down
                 </span>
               </h5>
-              <div class="bg-secondary-lightPurple px-3">
+              <div class="bg-secondary-light-purple px-3">
                 <div class="col-lg-4 col-12 mx-auto pt-4">
                 <div class="card bg-transparent">
                   <div class="card-header bg-transparent">
@@ -151,7 +151,7 @@
             <div class="py-96"  data-aos="fade-up">
               <div class="d-lg-flex mb-2">
                 <h2 class="d-flex align-items-center justify-content-center justify-content-lg-start fw-bold">
-                  <img src="../../assets/images/title4.png" class="me-lg-3 me-4 title-img" alt="熱">
+                  <img src="../../assets/images/title4.png" class="me-lg-3 me-4 img-lg-64-md-36" alt="熱">
                   <span class="fs-lg-1 fs-4 letter-spacing-20">月獎品</span>
                 </h2>
                 <span class="d-flex align-items-center justify-content-center fs-lg-6 fs-12">
@@ -170,7 +170,7 @@
                     <div class="card-body p-0 position-relative">
                       <img :src="prize.img" class="card-img border bg-white object-fit-contain img-lg-220-md-200"  :alt="prize.title">
 
-                      <div class="question-mark position-absolute w-100 text-center top-0 img-lg-220-md-200 bg-gradient-card">
+                      <div class="question-mark position-absolute w-100 text-center top-0 img-lg-220-md-200 bg-gradient-purple">
                         <i class="bi bi-question-lg mx-auto text-white fs-150"></i>
                       </div>
                     </div>

@@ -207,7 +207,7 @@ export default {
                  :is-full-page="fullPage"
                  :lock-scroll="true">
                  <div class="d-flex flex-column align-items-center py-96">
-      <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" alt="logo" >
+      <img src="../../assets/images/loadingLogo.png" class="loading-logo mb-3" alt="logo" >
       <p class="text-center fw-bold text-purple fs-md-2 fs-5">
         <span class="me-1 animate-text">L</span>
         <span class="mx-1 animate-text">o</span>
@@ -293,7 +293,7 @@ export default {
         </div>
       </section>
 
-      <section class="bg-lightPurple-secondary">
+      <section class="bg-light-purple-secondary">
         <div class="container py-lg-96 py-5">
           <div class="row row-cols-lg-2 row-cols-1 g-80">
             <div class="col">

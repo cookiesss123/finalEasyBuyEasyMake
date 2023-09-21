@@ -10,19 +10,6 @@
     opacity: 0;
   }
 }
-
-// 單一產品或食譜關聯食譜、產品資訊
-// .subDetail{
-//   opacity: 0;
-//   pointer-events: none;
-// }
-// .subImg:hover img{
-//   opacity: .5;
-// }
-// .subImg:hover .subDetail{
-//   opacity: 1;
-// }
-
 // 平板
 @include media-breakpoint-up(md) {
   .card{

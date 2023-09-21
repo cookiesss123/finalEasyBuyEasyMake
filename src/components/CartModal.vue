@@ -119,7 +119,7 @@
                 </div>
                 <div v-else-if="this.$route.fullPath === '/checkout'" class="h-100 d-flex">
                   <p class="m-auto fs-3">
-                    <img src="../assets/images/loadingLogo.png" class="loadingLogo me-3" style="width: 60px;" alt="logo" >
+                    <img src="../assets/images/loadingLogo.png" class="loading-logo me-3" style="width: 60px;" alt="logo" >
                     <span class="animate-text me-1">結</span>
                     <span class="animate-text me-1">帳</span>
                     <span class="animate-text me-1">中</span>

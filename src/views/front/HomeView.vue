@@ -257,7 +257,7 @@ export default {
               :is-full-page="fullPage"
               :lock-scroll="true">
               <div class="d-flex flex-column align-items-center py-96">
-                <img src="../../assets/images/loadingLogo.png" class="loadingLogo mb-3" alt="logo" >
+                <img src="../../assets/images/loadingLogo.png" class="loading-logo mb-3" alt="logo" >
                 <p class="text-center fw-bold text-purple fs-md-2 fs-5">
                   <span class="me-1 animate-text">L</span>
                   <span class="mx-1 animate-text">o</span>
@@ -282,7 +282,7 @@ export default {
           }"
           navigation
           >
-            <swiper-slide class="py-5 bg-lightPurple-white">
+            <swiper-slide class="py-5 bg-light-purple-white">
               <div class="container">
                 <div class="row gx-76">
                 <div class="col-6 position-relative">
@@ -291,55 +291,55 @@ export default {
                   <div class="position-absolute rounded-circle border-dashed-purple"></div>
 
                   <!-- 長條圓形 -->
-                  <div class="banner-bar bg-lightPurple-secondary" style="left: 84%; top: -10%;" ></div>
+                  <div class="banner-bar bg-light-purple-secondary" style="left: 84%; top: -10%;" ></div>
                   <div class="banner-bar bg-white" style="left: 87%; top: -6%;" ></div>
 
-                  <div class="banner-bar bg-lightPurple-secondary" style=" left: 87%; top: -2%;" ></div>
-                  <div class="banner-bar-short bg-lightPurple-secondary" style="left: 112%; top: -2%;" ></div>
+                  <div class="banner-bar bg-light-purple-secondary" style=" left: 87%; top: -2%;" ></div>
+                  <div class="banner-bar-short bg-light-purple-secondary" style="left: 112%; top: -2%;" ></div>
 
                   <div class="banner-bar bg-white" style="left: 87%; top: 2%;"></div>
 
-                  <div class="banner-bar bg-lightPurple-secondary" style="left: 84%; top: 6%;"></div>
+                  <div class="banner-bar bg-light-purple-secondary" style="left: 84%; top: 6%;"></div>
 
                   <div class="banner-bar bg-white" style=" left: 84%; top: 10%;" ></div>
                   <div class="banner-dot bg-white" style="left: 75%; top: 10%;" ></div>
 
-                  <div class="banner-bar bg-lightPurple-secondary" style=" left: 87%; top: 14%;" ></div>
+                  <div class="banner-bar bg-light-purple-secondary" style=" left: 87%; top: 14%;" ></div>
                   <div class="banner-bar bg-white" style=" left: 84%; top: 18%;" ></div>
-                  <div class="banner-bar bg-lightPurple-secondary" style=" left: 90%; top: 22%;" ></div>
+                  <div class="banner-bar bg-light-purple-secondary" style=" left: 90%; top: 22%;" ></div>
                   <div class="banner-bar bg-white" style="left: 97%; top: 26%;" ></div>
-                  <div class="banner-bar bg-lightPurple-secondary" style=" left: 86%; top: 30%;" ></div>
+                  <div class="banner-bar bg-light-purple-secondary" style=" left: 86%; top: 30%;" ></div>
                   <div class="banner-bar bg-white" style=" left: 86%; top: 34%;" ></div>
 
-                  <div class="banner-bar bg-lightPurple-secondary" style="left: 87%; top: 38%;" ></div>
-                  <div class="banner-dot bg-lightPurple-secondary" style="left: 110%; top: 38%;" ></div>
+                  <div class="banner-bar bg-light-purple-secondary" style="left: 87%; top: 38%;" ></div>
+                  <div class="banner-dot bg-light-purple-secondary" style="left: 110%; top: 38%;" ></div>
 
                   <div class="banner-bar bg-white" style=" left: 89%; top: 42%;" ></div>
                   <div class="banner-bar-short bg-white" style="left: 76%; top: 42%;" ></div>
 
-                  <div class="banner-bar bg-lightPurple-secondary" style="left: 90%; top: 46%;" ></div>
+                  <div class="banner-bar bg-light-purple-secondary" style="left: 90%; top: 46%;" ></div>
                   <div class="banner-bar bg-white" style=" width: 90px; left: 98%; top: 50%;" ></div>
-                  <div class="banner-bar bg-lightPurple-secondary" style="left: 86%; top: 54%;" ></div>
+                  <div class="banner-bar bg-light-purple-secondary" style="left: 86%; top: 54%;" ></div>
                   <div class="banner-bar bg-white" style=" left: 86%; top: 58%;" ></div>
-                  <div class="banner-bar bg-lightPurple-secondary" style="left: 85%; top: 62%;" ></div>
+                  <div class="banner-bar bg-light-purple-secondary" style="left: 85%; top: 62%;" ></div>
                   <div class="banner-bar bg-white" style=" left: 95%; top: 66%;" ></div>
-                  <div class="banner-bar bg-lightPurple-secondary" style="left: 87%; top: 70%;" ></div>
+                  <div class="banner-bar bg-light-purple-secondary" style="left: 87%; top: 70%;" ></div>
                   <div class="banner-bar bg-white" style="left: 87%; top: 74%;" ></div>
-                  <div class="banner-bar bg-lightPurple-secondary" style="left: 85%; top: 78%;" ></div>
+                  <div class="banner-bar bg-light-purple-secondary" style="left: 85%; top: 78%;" ></div>
 
                   <div class="banner-bar bg-white" style="left: 95%; top: 82%;" ></div>
                   <div class="banner-dot bg-white" style="left: 88%; top: 82%;" ></div>
 
-                  <div class="banner-bar bg-lightPurple-secondary" style="left: 85%; top: 86%;" ></div>
+                  <div class="banner-bar bg-light-purple-secondary" style="left: 85%; top: 86%;" ></div>
 
                   <div class="banner-bar bg-white" style="left: 88%; top: 90%;" ></div>
-                  <div class="banner-bar bg-lightPurple-secondary" style="left: 95%; top: 94%;" ></div>
+                  <div class="banner-bar bg-light-purple-secondary" style="left: 95%; top: 94%;" ></div>
                   <div class="banner-bar bg-white" style="left: 98%; top: 98%;" ></div>
-                  <div class="banner-bar bg-lightPurple-secondary" style="left: 91%; top: 102%;" ></div>
-                  <div class="banner-bar-short bg-lightPurple-secondary" style="left: 113%; top: 102%;" ></div>
+                  <div class="banner-bar bg-light-purple-secondary" style="left: 91%; top: 102%;" ></div>
+                  <div class="banner-bar-short bg-light-purple-secondary" style="left: 113%; top: 102%;" ></div>
 
                   <div class="banner-bar bg-white" style="left: 89%; top: 106%;" ></div>
-                  <div class="banner-bar bg-lightPurple-secondary" style="left: 99%; top: 110%;" ></div>
+                  <div class="banner-bar bg-light-purple-secondary" style="left: 99%; top: 110%;" ></div>
 
                   <div class="spin position-absolute">
                     <div class="spin-container">
@@ -352,12 +352,12 @@ export default {
                 <div class="col-6 py-5  position-relative z-index-1">
                     <h2 class="fw-bold lh-base fs-1 text-purple letter-spacing-10">
                       <p class="d-flex align-items-center">
-                        <img src="../../assets/images/makeCupcake.png" class="me-3 img-35" alt="製作甜點圖示">
+                        <img src="../../assets/images/makeCupcake.png" class="me-3" style="width: 35px;" alt="製作甜點圖示">
                         甜點食譜加材料
                       </p>
                       <p class="d-flex  align-items-center">
                         一次購足好簡單
-                        <img src="../../assets/images/baking.png" class="ms-3 img-35" alt="烘焙圖示">
+                        <img src="../../assets/images/baking.png" class="ms-3" style="width: 35px;" alt="烘焙圖示">
                       </p>
                     </h2>
                     <p class="text-center text-lg-start mb-0">用最優惠的價格<br class="d-block d-lg-none"> 享受最高品質的食材</p>
@@ -416,55 +416,55 @@ export default {
                   <div class="position-absolute white-circle"></div>
                   <div class="position-absolute rounded-circle border-dashed-purple"></div>
 
-                  <div class="banner-bar bg-secondary-lightPurple" style="left: 84%; top: -10%;" ></div>
+                  <div class="banner-bar bg-secondary-light-purple" style="left: 84%; top: -10%;" ></div>
                   <div class="banner-bar bg-white" style="left: 87%; top: -6%;" ></div>
 
-                  <div class="banner-bar bg-secondary-lightPurple" style=" left: 87%; top: -2%;" ></div>
-                  <div class="banner-bar-short bg-secondary-lightPurple" style="left: 112%; top: -2%;" ></div>
+                  <div class="banner-bar bg-secondary-light-purple" style=" left: 87%; top: -2%;" ></div>
+                  <div class="banner-bar-short bg-secondary-light-purple" style="left: 112%; top: -2%;" ></div>
 
                   <div class="banner-bar bg-white" style="left: 87%; top: 2%;"></div>
 
-                  <div class="banner-bar bg-secondary-lightPurple" style="left: 84%; top: 6%;"></div>
+                  <div class="banner-bar bg-secondary-light-purple" style="left: 84%; top: 6%;"></div>
 
                   <div class="banner-bar bg-white" style=" left: 84%; top: 10%;" ></div>
                   <div class="banner-dot bg-white" style="left: 75%; top: 10%;" ></div>
 
-                  <div class="banner-bar bg-secondary-lightPurple" style=" left: 87%; top: 14%;" ></div>
+                  <div class="banner-bar bg-secondary-light-purple" style=" left: 87%; top: 14%;" ></div>
                   <div class="banner-bar bg-white" style=" left: 84%; top: 18%;" ></div>
-                  <div class="banner-bar bg-secondary-lightPurple" style=" left: 90%; top: 22%;" ></div>
+                  <div class="banner-bar bg-secondary-light-purple" style=" left: 90%; top: 22%;" ></div>
                   <div class="banner-bar bg-white" style="left: 97%; top: 26%;" ></div>
-                  <div class="banner-bar bg-secondary-lightPurple" style=" left: 86%; top: 30%;" ></div>
+                  <div class="banner-bar bg-secondary-light-purple" style=" left: 86%; top: 30%;" ></div>
                   <div class="banner-bar bg-white" style=" left: 86%; top: 34%;" ></div>
 
-                  <div class="banner-bar bg-secondary-lightPurple" style="left: 87%; top: 38%;" ></div>
-                  <div class="banner-dot bg-secondary-lightPurple" style="left: 110%; top: 38%;" ></div>
+                  <div class="banner-bar bg-secondary-light-purple" style="left: 87%; top: 38%;" ></div>
+                  <div class="banner-dot bg-secondary-light-purple" style="left: 110%; top: 38%;" ></div>
 
                   <div class="banner-bar bg-white" style=" left: 89%; top: 42%;" ></div>
                   <div class="banner-bar-short bg-white" style="left: 76%; top: 42%;" ></div>
 
-                  <div class="banner-bar bg-secondary-lightPurple" style="left: 90%; top: 46%;" ></div>
+                  <div class="banner-bar bg-secondary-light-purple" style="left: 90%; top: 46%;" ></div>
                   <div class="banner-bar bg-white" style=" width: 90px; left: 98%; top: 50%;" ></div>
-                  <div class="banner-bar bg-secondary-lightPurple" style="left: 86%; top: 54%;" ></div>
+                  <div class="banner-bar bg-secondary-light-purple" style="left: 86%; top: 54%;" ></div>
                   <div class="banner-bar bg-white" style=" left: 86%; top: 58%;" ></div>
-                  <div class="banner-bar bg-secondary-lightPurple" style="left: 85%; top: 62%;" ></div>
+                  <div class="banner-bar bg-secondary-light-purple" style="left: 85%; top: 62%;" ></div>
                   <div class="banner-bar bg-white" style=" left: 95%; top: 66%;" ></div>
-                  <div class="banner-bar bg-secondary-lightPurple" style="left: 87%; top: 70%;" ></div>
+                  <div class="banner-bar bg-secondary-light-purple" style="left: 87%; top: 70%;" ></div>
                   <div class="banner-bar bg-white" style="left: 87%; top: 74%;" ></div>
-                  <div class="banner-bar bg-secondary-lightPurple" style="left: 85%; top: 78%;" ></div>
+                  <div class="banner-bar bg-secondary-light-purple" style="left: 85%; top: 78%;" ></div>
 
                   <div class="banner-bar bg-white" style="left: 95%; top: 82%;" ></div>
                   <div class="banner-dot bg-white" style="left: 88%; top: 82%;" ></div>
 
-                  <div class="banner-bar bg-secondary-lightPurple" style="left: 85%; top: 86%;" ></div>
+                  <div class="banner-bar bg-secondary-light-purple" style="left: 85%; top: 86%;" ></div>
 
                   <div class="banner-bar bg-white" style="left: 88%; top: 90%;" ></div>
-                  <div class="banner-bar bg-secondary-lightPurple" style="left: 95%; top: 94%;" ></div>
+                  <div class="banner-bar bg-secondary-light-purple" style="left: 95%; top: 94%;" ></div>
                   <div class="banner-bar bg-white" style="left: 98%; top: 98%;" ></div>
-                  <div class="banner-bar bg-secondary-lightPurple" style="left: 91%; top: 102%;" ></div>
-                  <div class="banner-bar-short bg-secondary-lightPurple" style="left: 113%; top: 102%;" ></div>
+                  <div class="banner-bar bg-secondary-light-purple" style="left: 91%; top: 102%;" ></div>
+                  <div class="banner-bar-short bg-secondary-light-purple" style="left: 113%; top: 102%;" ></div>
 
                   <div class="banner-bar bg-white" style="left: 89%; top: 106%;" ></div>
-                  <div class="banner-bar bg-secondary-lightPurple" style="left: 99%; top: 110%;" ></div>
+                  <div class="banner-bar bg-secondary-light-purple" style="left: 99%; top: 110%;" ></div>
 
                   <div class="spin position-absolute">
                     <div class="spin-container">
@@ -478,12 +478,12 @@ export default {
                   <div class="col-6 py-5  position-relative z-index-1">
                     <h2 class="fw-bold lh-base fs-1 text-primary letter-spacing-10">
                       <p class="d-flex align-items-center">
-                        <img src="../../assets/images/cake18.png" class="me-3 img-35" alt="杯子蛋糕圖示">
+                        <img src="../../assets/images/cake18.png" class="me-3" style="width: 35px;" alt="杯子蛋糕圖示">
                         免費學習
                       </p>
                       <p class="d-flex  align-items-center">
                         各國甜點食譜
-                        <img src="../../assets/images/pannaCotta12.png" class="ms-3 img-35" alt="布丁圖示">
+                        <img src="../../assets/images/pannaCotta12.png" class="ms-3" style="width: 35px;" alt="布丁圖示">
                       </p>
                     </h2>
                     <p class="text-center text-lg-start mb-0">詳細的甜點教學<br class="d-block d-lg-none"> 保證您學到會</p>
@@ -545,7 +545,7 @@ export default {
           }"
           navigation
           >
-            <swiper-slide class="bg-secondary-lightPurple position-relative pb-4">
+            <swiper-slide class="bg-secondary-light-purple position-relative pb-4">
               <div class="py-4 bg-white "></div>
               <div class="banner-bar rotate-90 bg-white rotate-90" style="left: -45px; top: 9%;" ></div>
 
@@ -619,7 +619,7 @@ export default {
                   <p class="text-center mb-0">用最優惠的價格<br> 享受最高品質的食材</p>
               </div>
             </swiper-slide>
-            <swiper-slide class="bg-lightPurple-secondary position-relative pb-4">
+            <swiper-slide class="bg-light-purple-secondary position-relative pb-4">
               <div class="py-4 bg-white"></div>
               <div class="banner-bar rotate-90 bg-white rotate-90" style="left: -45px; top: 9%;" ></div>
 
@@ -675,7 +675,7 @@ export default {
               <div class="spin translate-middle-x">
                   <div class="spin-container">
                     <div class="shape">
-                        <div class="spin-img" style="background-image:url('https://images.unsplash.com/photo-1678465952838-c9d7f5daaa65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80'); "></div>
+                        <div class="spin-img bg-img-150" style="background-image:url('https://images.unsplash.com/photo-1678465952838-c9d7f5daaa65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80'); "></div>
                     </div>
                   </div>
               </div>
@@ -701,7 +701,7 @@ export default {
       <section class="container py-md-96 py-60" data-aos="fade-up">
         <div class="d-lg-flex mb-2">
           <h2 class="d-flex align-items-center justify-content-center justify-content-lg-start fw-bold">
-            <img src="../../assets/images/image1.png" class="me-lg-3 me-4 title-img" alt="熱">
+            <img src="../../assets/images/image1.png" class="me-lg-3 me-4 img-lg-64-md-36" alt="熱">
             <span class="fs-lg-1 fs-4 letter-spacing-20">門食譜</span>
           </h2>
           <span class="d-flex align-items-center justify-content-center fs-lg-6 fs-12">
@@ -903,7 +903,7 @@ export default {
       <section class="container py-md-96 py-60" data-aos="fade-right">
         <div class="d-lg-flex mb-2">
           <h2 class="d-flex align-items-center justify-content-center justify-content-lg-start fw-bold">
-            <img src="../../assets/images/title3.png" class="me-lg-3 me-4 title-img" alt="優">
+            <img src="../../assets/images/title3.png" class="me-lg-3 me-4 img-lg-64-md-36" alt="優">
             <span class="fs-lg-1 fs-4 letter-spacing-20">選食材</span>
           </h2>
           <span class="d-flex align-items-center justify-content-center fs-lg-6 fs-12">

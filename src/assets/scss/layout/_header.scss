@@ -2,7 +2,6 @@
     height: 30px;
 }
 
-// navbar
 .navbar-nav{
     .nav-link{
         /* 避免文字移動位置 */
@@ -26,12 +25,8 @@
     .active-link {
         color: $primary;
         border-bottom: 2px solid $primary;
-
-        // 註冊按鈕 必要
-        &.loginSignup{
+        &.login-signup{
             color: white;
-            // background: $primary;
-            // border-bottom: 1px solid $primary;
             background: linear-gradient(to right, $primary , $purple);
         }
     }

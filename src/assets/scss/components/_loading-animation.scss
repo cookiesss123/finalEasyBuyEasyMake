@@ -1,4 +1,4 @@
-  .loadingLogo {
+  .loading-logo {
     width: 100px;
     animation: move 1.5s infinite;
   }
@@ -17,7 +17,7 @@
   
   .animate-text {
     opacity: 0;
-    animation: fadeIn 2s ease-in-out infinite;
+    animation: fade-in 2s ease-in-out infinite;
   }
   
   .animate-text:nth-child(1) {
@@ -50,7 +50,7 @@
   .animate-text:nth-child(10) {
     animation-delay: 1s;
   }
-  @keyframes fadeIn {
+  @keyframes fade-in {
     0% {
       opacity: 1;
     }
@@ -61,7 +61,7 @@
 
   
 @include media-breakpoint-up(md){
-  .loadingLogo {
+  .loading-logo {
     width: 150px;
   }
 }

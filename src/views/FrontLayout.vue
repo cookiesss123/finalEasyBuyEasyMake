@@ -53,7 +53,7 @@
             </ul>
             <ul class="navbar-nav me-lg-4 mt-2 pb-3 mt-lg-0 pb-lg-0" v-if="!uid">
               <li class="nav-item text-center">
-                <RouterLink to="/loginSignup" @click="reload('/signup')" class="loginSignup btn-outline-gradient px-3 text-decoration-none rounded-pill fs-md-6 fs-14 py-2 fw-bold">登入 / 註冊</RouterLink>
+                <RouterLink to="/loginSignup" @click="reload('/signup')" class="login-signup btn-outline-gradient px-3 text-decoration-none rounded-pill fs-md-6 fs-14 py-2 fw-bold">登入 / 註冊</RouterLink>
               </li>
             </ul>
             <ul class="navbar-nav d-lg-flex align-items-lg-center me-lg-3 text-center" v-else-if="uid">
@@ -194,7 +194,7 @@
       <i class="bi bi-chat-dots-fill fs-35"></i>
     </button>
 
-    <footer class="mt-auto js-footer position-relative bg-lightPurple-secondary">
+    <footer class="mt-auto js-footer position-relative bg-light-purple-secondary">
         <div class="container d-flex flex-column flex-lg-row align-items-center py-3">
           <div class=" d-flex justify-content-center align-items-center mb-2 mb-lg-0">
               <img src="../assets/images/loadingLogo.png" class="logo me-1" alt="logo">

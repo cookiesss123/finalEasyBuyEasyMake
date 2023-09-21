@@ -16,18 +16,18 @@
                 <div class="col-md-6">
                   <div class="card border border-2 border-white bg-transGray-6 rounded-20">
                       <div class="card-header row bg-white rounded-top-15 p-0 m-0 text-center border-0 position-relative">
-                          <h3 class="header-active fw-bold py-3 col-6 bg-primary-purple position-absolute fs-4" :class="{'start-0': activePage === '登入', 'rounded-topLeft-20':  activePage === '登入', 'start-50': activePage === '註冊','rounded-topRight-20':  activePage === '註冊'}">
+                          <h3 class="header-active fw-bold py-3 col-6 bg-primary-purple position-absolute fs-4" :class="{'start-0': activePage === '登入', 'rounded-top-left-20':  activePage === '登入', 'start-50': activePage === '註冊','rounded-top-right-20':  activePage === '註冊'}">
                             {{ activePage }}
                           </h3>
 
                         <div class="col-6 m-0 px-0">
                           <h3 class="mb-0 fs-4">
-                            <a href="#" @click.prevent="activePage = '登入'" class="blueBottomLine py-3 d-inline-block w-100 text-decoration-none" >登入</a>
+                            <a href="#" @click.prevent="activePage = '登入'" class="border-bottom-blue py-3 d-inline-block w-100 text-decoration-none" >登入</a>
                           </h3>
                         </div>
                         <div class="col-6  m-0 px-0">
                           <h3 class="mb-0 fs-4">
-                            <a href="#" @click.prevent="activePage = '註冊'" class="blueBottomLine py-3 d-inline-block w-100 text-decoration-none" >註冊</a>
+                            <a href="#" @click.prevent="activePage = '註冊'" class="border-bottom-blue py-3 d-inline-block w-100 text-decoration-none" >註冊</a>
                           </h3>
                         </div>
                       </div>

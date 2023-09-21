@@ -1,4 +1,4 @@
-.blueBottomLine{
+.border-bottom-blue{
     transform: scale(.9);
     transition: all .4s ease-in-out;
 }
@@ -11,7 +11,7 @@
 
 // login signup 頁面圖片
 @include media-breakpoint-up(lg) {
-    .blueBottomLine{
+    .border-bottom-blue{
         &:hover{
             transform: scale(1);
             box-shadow: 0 -2px 0 0 $primary inset;

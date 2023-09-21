@@ -1,0 +1,197 @@
+// 訂單、結帳、成功 共同
+.line-gray{
+    width: 83%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+// 訂單單頁 進度
+.w-33{
+    left: 8.2%;
+    width: 25.5%;
+}
+.w-66{
+    left: 8.2%;
+    width: 57%;
+}
+.w-lg-90-md-70{
+    width: 70px;
+}
+.order-dot-white{
+    width: 20px;
+    height: 20px;
+}
+
+
+
+
+// 結帳、成功頁面
+.line-blue-50{
+    left: 9%;
+    width: 42%;
+    top: 25%;
+}
+
+@keyframes spread-to-right-2 {
+    from{
+        width: 0;
+      }
+    to{
+        width: 42%;
+      }
+}
+.line-blue-50-animation{
+    animation-name: spread-to-right-2;
+    animation-duration: .8s;
+}
+
+@keyframes spread-to-right-3 {
+    from{
+        width: 0;
+      }
+    to{
+        width: 43.5%;
+      }
+}
+.line-blue-100{
+    left: 53%;
+    width: 43.5%;
+    top: 25%;
+
+    animation-name: spread-to-right-3;
+    animation-delay: .4s;
+    animation-duration: .8s;
+    animation-fill-mode: both;
+}
+.circle{
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+}
+@keyframes enlarge {
+    from{
+        border: 1px solid $gray-600;
+        background: white;
+      }
+    to{
+        border: none;
+        background: $primary;
+        color: white;
+      }
+}
+.circle-animation{
+    animation-name: enlarge;
+    animation-duration: .6s;
+    animation-delay: .8s; 
+    animation-fill-mode: both;
+}
+@keyframes gray-to-primary {
+    from{
+        color: $gray-600;
+    }
+    to{
+        color: $primary;
+        font-weight: bold;
+    }
+}
+.text-gray-to-primary-2{
+    animation-name: gray-to-primary;
+    animation-duration: .4s;
+    animation-delay: .8s;
+    animation-fill-mode: both;
+}
+.text-gray-to-primary-3{
+    animation-name: gray-to-primary;
+    animation-duration: .4s;
+    animation-delay: 1.4s;
+    animation-fill-mode: both;
+}
+
+
+// 僅成功頁面
+@keyframes hide {
+    from{
+        opacity: 1;
+        display: block;
+    }
+    to{
+        opacity: 0;
+        display: none;
+    }
+}
+
+.number-hide{
+    animation-name: hide;
+    animation-duration: .4s;
+    animation-fill-mode: both;
+}
+.number-hide-3{
+    animation-name: hide;
+    animation-delay: 1s;
+    animation-duration: .4s;
+    animation-fill-mode: both;
+}
+@keyframes block {
+    from{
+        opacity: 0;
+        display: none;
+    }
+    to{
+        opacity: 1;
+        display: block;
+    }
+}
+.check-block{
+    animation-name: block;
+    animation-duration: .4s;
+    animation-delay: .4s;
+    animation-fill-mode: both;
+}
+.check-block-3{
+    animation-name: block;
+    animation-duration: .4s;
+    animation-delay: 1.4s;
+    animation-fill-mode: both;
+}
+
+@include media-breakpoint-up(md) {
+    .line-gray{
+        width: 89%;
+    }
+    .w-33{
+        left: 5%;
+        width: 29%;
+    }
+    .w-66{
+        left: 5%;
+        width: 61%;
+    }
+}
+@include media-breakpoint-up(lg) {
+    .w-lg-90-md-70{
+        width: 90px;
+    }
+    .line-gray{
+        width: 92%;
+    }
+    .w-33{
+        left: 4%;
+        width: 31%;
+    }
+    .w-66{
+        left: 4%;
+        width: 62%;
+    }
+    .line-blue-50{
+        left: 5%;
+        width: 46%;
+    }
+    .circle{
+        width: 40px;
+        height: 40px;
+    }
+    .order-dot-white{
+        width: 25px; 
+        height: 25px;
+    }
+}
