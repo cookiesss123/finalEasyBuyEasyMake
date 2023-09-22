@@ -28,7 +28,6 @@
                     <td>{{ product.id }}</td>
                     <td>{{ product.category }}</td>
                     <td>{{ product.title }}</td>
-                    <!-- 省略文字 -->
                     <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 400px;">
                       {{ product.relevantRecipes.toString() }}
                     </td>
@@ -36,7 +35,6 @@
                     <td>{{product.originalPrice }}</td>
                     <td class="text-success">{{product.price }}</td>
                     <td :class="{'text-success': product.isCheaper, 'fw-bold': product.isCheaper}">{{`${product.isCheaper ? "是" : "否"}`}}</td>
-                    <!-- <td>{{`${product.isCheaper}`}}</td> -->
                     <td>
                         <div class="btn-group">
                             <button type="button" class="btn btn-sm btn-outline-primary" @click="openModal(product.id)">編輯</button>
@@ -117,7 +115,6 @@ export default {
   mounted () {
     this.getProducts()
     this.getRecipes()
-    // console.log(this.$refs.deleteProductModal)
   }
 }
 </script>

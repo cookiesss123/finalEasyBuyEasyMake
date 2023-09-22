@@ -16,7 +16,7 @@ export default {
   },
   mixins: [numberCommaMixin],
   methods: {
-    ...mapActions(cartStore, ['getCart', 'addOrder']),
+    ...mapActions(cartStore, ['addOrder']),
     isPhone (value) {
       const phoneNumber = /^(09)[0-9]{8}$/
       return phoneNumber.test(value) ? true : '需要正確的電話號碼'
@@ -34,7 +34,6 @@ export default {
     <div class="no-scroll-x">
         <section class="text-center" data-aos="fade-up">
             <div class="py-lg-200 py-96 bg-cover-center" style="background-image: url('https://images.unsplash.com/photo-1681923786169-67be8db99af6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
-            <!-- bg-gradient-purple -->
             <h2 class="text-purple mb-0 fs-lg-1 fs-5 letter-spacing-20 ps-3 fw-bold bg-secondary-light-purple-horizontal py-2">結帳</h2>
         </section>
 

@@ -11,7 +11,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-lg-4">
                       <div class="row gy-3">
                         <div class="col-12">
                           <p class="mb-0">編號（id）：{{ tempOrder.id }}</p>
@@ -51,7 +51,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-8">
+                    <div class="col-lg-8">
                       <div class="row">
                         <div class="col-12">
                           <h3>訂單資訊</h3>

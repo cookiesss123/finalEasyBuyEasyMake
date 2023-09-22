@@ -23,7 +23,7 @@ export default {
   mixins: [numberCommaMixin],
   data () {
     return {
-      // swiper
+      uid: '',
       modules: [Navigation, Pagination, Autoplay],
       navigation: {
         nextEl: '.swiper-button-next',
@@ -34,20 +34,17 @@ export default {
         bulletClass: 'my-bullet-class',
         bulletActiveClass: 'my-bullet-active-class'
       },
-      thumbs: {}, // 所有人按讚分類
+      thumbs: {},
       recipeBookMarks: [],
       productBookmarks: [],
-      averageRate: [],
-      rates: {},
       products: [],
-      goodProducts: [], // 優選產品
+      goodProducts: [],
       recipeSearchName: '',
       selectItem: '全部',
       highOrLow: '不拘',
       priceOrRate: '成本',
       popularRecipes: [],
-      uid: '',
-      // 產品搜尋值
+
       productSearchName: '',
       productHighOrLow: '低到高',
       productPriceOrRate: '價格',
@@ -57,25 +54,20 @@ export default {
     }
   },
   methods: {
-    ...mapActions(cartStore, ['pleaseReLogin', 'toastMessage', 'addCart', 'goToTop']),
-    // 取得食譜 前 10
+    ...mapActions(cartStore, ['toastMessage', 'addCart', 'goToTop']),
     getPopularRecipes () {
       this.isLoading = true
-      // this.showLoading()
 
       const dataRef = ref(db, 'recipes/')
       onValue(dataRef, snapshot => {
         let recipes = snapshot.val()
-        // 把物件轉成陣列 並填入id
         recipes = Object.entries(recipes).map(item => {
           item[1].id = item[0]
           return item[1]
         })
-        // 得到讚數
         const dataRef = ref(db, 'recipeThumbs/')
         onValue(dataRef, snapshot => {
           this.thumbs = snapshot.val()
-
           // 把讚數填入
           recipes.forEach((recipe, index) => {
             Object.keys(this.thumbs).forEach(thumbId => {
@@ -98,21 +90,16 @@ export default {
         })
       })
     },
-    // 取得產品
     getProducts () {
       const dataRef = ref(db, 'products/')
       onValue(dataRef, snapshot => {
         this.products = snapshot.val()
-        // 把物件轉成陣列 並填入id
         this.products = Object.entries(this.products).map(item => {
           item[1].id = item[0]
           return item[1]
         })
-
-        // 得到星星評價數
         const dataRef = ref(db, 'productRates/')
         onValue(dataRef, snapshot => {
-        // 先取得所有留言
           let rates = snapshot.val()
           rates = Object.values(rates).map((rate, index) => {
             rate.id = Object.keys(rates)[index]
@@ -138,32 +125,24 @@ export default {
               this.products[index].averageRate = 0
             }
           })
-          // 優選食材
           this.goodProducts = this.products.filter(product => product.averageRate >= 4)
+          this.goodProducts = this.goodProducts.sort((a, b) => b.averageRate - a.averageRate)
         })
       })
     },
-    // 取得食譜收藏
-    // 需要驗證
     getRecipeBookmarks () {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           this.uid = user.uid
-          const dataRef = ref(db, 'users/' + user.uid)
+          const dataRef = ref(db, `recipeBookmarks/${this.uid}`)
           onValue(dataRef, snapshot => {
-            this.user = snapshot.val()
-            const dataRef = ref(db, `recipeBookmarks/${this.uid}`)
-            onValue(dataRef, snapshot => {
-              this.recipeBookMarks = snapshot.val()
-              if (this.recipeBookMarks) {
-                // 只取 id
-                this.recipeBookMarks = Object.keys(this.recipeBookMarks)
-              }
-            })
+            this.recipeBookMarks = snapshot.val()
+            if (this.recipeBookMarks) {
+              this.recipeBookMarks = Object.keys(this.recipeBookMarks)
+            }
           })
         } else {
           this.uid = null
-          this.user = {}
         }
       })
     },
@@ -171,25 +150,18 @@ export default {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           this.uid = user.uid
-          const dataRef = ref(db, 'users/' + user.uid)
+          const dataRef = ref(db, `productBookmarks/${this.uid}`)
           onValue(dataRef, snapshot => {
-            this.user = snapshot.val()
-            const dataRef = ref(db, `productBookmarks/${this.uid}`)
-            onValue(dataRef, snapshot => {
-              this.productBookmarks = snapshot.val()
-              if (this.productBookmarks) {
-                // 只取 id
-                this.productBookmarks = Object.keys(this.productBookmarks)
-              }
-            })
+            this.productBookmarks = snapshot.val()
+            if (this.productBookmarks) {
+              this.productBookmarks = Object.keys(this.productBookmarks)
+            }
           })
         } else {
           this.uid = null
-          this.user = {}
         }
       })
     },
-    // 增加所有收藏
     addBookmark (bookMark, item) {
       if (!this.uid) {
         this.toastMessage('登入才可使用收藏功能', 'error')
@@ -199,15 +171,11 @@ export default {
       set(reference, item)
       this.toastMessage('收藏成功')
     },
-    // 刪除所有收藏
     deleteBookmark (bookMark, itemId) {
       remove(ref(db, `${bookMark}/${this.uid}/${itemId}`))
       this.toastMessage('已刪除收藏')
     },
-    // 搜尋食譜
     searchRecipes () {
-      // 兩個頁面傳遞參數
-      // this.$router.push('/recipes')
       this.$router.push({
         name: 'RecipesView',
         query: {
@@ -218,9 +186,7 @@ export default {
         }
       })
     },
-    // 產品搜尋
     searchProducts () {
-      // 兩個頁面傳遞參數
       this.$router.push({
         name: 'products',
         query: {
@@ -232,7 +198,6 @@ export default {
       })
     },
     linkToLottery () {
-      // 兩個頁面傳遞參數
       this.$router.push({
         name: 'discountsView',
         query: {

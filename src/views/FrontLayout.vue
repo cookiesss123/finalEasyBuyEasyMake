@@ -35,7 +35,6 @@
               menu
             </span>
           </button>
-            <!-- 菜單桌機手機板 -->
           <div id="navbarNav" class="collapse navbar-collapse " ref="menuCollapse" >
             <ul class="mainMenu navbar-nav mx-auto text-center mb-1 mb-lg-0">
               <li class="nav-item me-lg-3">
@@ -86,7 +85,6 @@
           </div>
         </div>
       </nav>
-        <!-- 搜尋 -->
         <div class="bg-white collapse navbar-collapse pb-4" ref="searchCollapse">
           <div class="container">
             <!-- 食譜搜尋 -->
@@ -175,14 +173,10 @@
           </div>
         </div>
     </header>
-    <!-- 強制觸發路由跳轉 這樣即使在同個頁面搜尋 依然可以觸發搜尋 this.$router.push -->
     <RouterView :key="$route.fullPath" class="flex-grow-1"></RouterView>
-    <!-- cart選單 -->
     <CartModal ref="cartModal"></CartModal>
-    <!-- chat 聊天室 -->
     <ChatModal ref="chatModal"></ChatModal>
-    <!-- 向上箭頭 -->
-    <button type="button" ref="upArrow" class="rounded-circle  py-2 px-13 bg-primary hvr-float position-fixed border-0 bottom-0 end-0 m-3 z-index-1" :class="{'fade': !showScrollArrow, 'show': showScrollArrow}"  @click.prevent="goToTop" >
+    <button type="button" ref="upArrow" class="rounded-circle  py-2 px-13 bg-primary hvr-float position-fixed border-0 bottom-0 end-0 m-3 z-index-1 transition-fade" :class="{'fade': !showScrollArrow, 'show': showScrollArrow}"  @click.prevent="goToTop">
       <i class="bi bi-chevron-up fs-5 text-white"></i>
     </button>
 
@@ -190,7 +184,7 @@
       <span v-if="this.$refs.chatModal && this.$refs.chatModal.newChatNum !== 0" class="position-absolute text-primary fw-bold border border-primary alert-num rounded-circle fs-12 top-0 start-100 translate-middle">
         {{ this.$refs.chatModal.newChatNum }}
       </span>
-      <i class="bi bi-three-dots fs-5 text-white"></i>
+      <i class="bi bi-chat-dots fs-5 text-white"></i>
     </button>
 
     <footer class="mt-auto position-relative bg-light-purple-secondary">
@@ -204,14 +198,9 @@
           </div>
 
           <div class="ms-lg-auto d-flex flex-column align-items-lg-end align-items-center">
-            <ul class="list-unstyled d-flex justify-content-between w-50">
+            <ul class="list-unstyled d-flex justify-content-between w-25">
               <li class="hvr-bob">
-                <a href="#" class="text-decoration-none link-primary">
-                  <i class="bi bi-instagram fs-lg-35 fs-3"></i>
-                </a>
-              </li>
-              <li class="hvr-bob">
-                <a href="#" class="text-decoration-none link-primary">
+                <a href="https://www.facebook.com/profile.php?id=61551688473004" class="text-decoration-none link-primary">
                   <i class="bi bi-facebook fs-lg-35 fs-3"></i>
                 </a>
               </li>
@@ -235,35 +224,27 @@ import { RouterView, RouterLink } from 'vue-router'
 import Collapse from 'bootstrap/js/dist/collapse'
 import CartModal from '../components/CartModal.vue'
 import ChatModal from '../components/ChatModal.vue'
-// import { onAuthStateChanged } from 'firebase/auth'
-// import { db, auth } from '../firebase/db'
-// import { ref, onValue } from 'firebase/database'
 
 export default {
   data () {
     return {
-      // 禁止同時展開 menu 和 搜尋框
       menuToggle: false,
       searchToggle: false,
       menuCollapse: {},
       searchCollapse: {},
 
-      // 食譜搜尋
       recipeSearchName: '',
       selectItem: '全部',
       highOrLow: '不拘',
       priceOrRate: '成本',
-      // 產品搜尋
+
       productSearchName: '',
       productHighOrLow: '低到高',
       productPriceOrRate: '價格',
       pageStatus: '全部',
 
-      showScrollArrow: false, // 向上箭頭
-      searchItem: '食譜搜尋' // 搜尋可以選擇食譜或產品
-      // 先前傳入的 參數 對比目前參數 如果相同要 reload
-
-      // bookMarkIcon: 'favorite_border'
+      showScrollArrow: false,
+      searchItem: '食譜搜尋'
     }
   },
   components: {
@@ -274,16 +255,12 @@ export default {
   },
   methods: {
     ...mapActions(cartStore, ['checkLogin', 'logout', 'goToTop']),
-    // 取出token 存到 headers 這裡的nickName必須和其他介面取得的nickName相同狀態 這樣當許可證過期才會不見
-
-    // 判斷當前頁面是否重整
     reload (path) {
       if (this.$route.fullPath === path) {
         location.reload()
       }
     },
     searchRecipes () {
-      // 兩個頁面傳遞參數
       this.$router.push({
         name: 'RecipesView',
         query: {
@@ -295,7 +272,6 @@ export default {
       })
       this.searchToggle = false
 
-      // 傳送之後清空
       this.recipeSearchName = ''
       this.highOrLow = '不拘'
       this.priceOrRate = '成本'
@@ -303,7 +279,6 @@ export default {
     },
     // 產品搜尋
     searchProducts () {
-      // 兩個頁面傳遞參數
       this.$router.push({
         name: 'products',
         query: {
@@ -315,7 +290,6 @@ export default {
       })
       this.searchToggle = false
 
-      // 傳送之後清空
       this.productSearchName = ''
       this.productHighOrLow = '不拘'
       this.productPriceOrRate = '價格'
@@ -326,9 +300,7 @@ export default {
     }
   },
   mounted () {
-    // 沒用 因為跑得比其他頁面還慢
     this.checkLogin()
-    // 監聽滾動事件
     window.addEventListener('scroll', this.handleScroll)
     this.menuCollapse = new Collapse(this.$refs.menuCollapse, {
       toggle: false
@@ -337,15 +309,11 @@ export default {
     this.searchCollapse = new Collapse(this.$refs.searchCollapse, {
       toggle: false
     })
-
-    console.log(this.$refs.cartModal, '購物車內容')
   },
   computed: {
     ...mapState(cartStore, ['user', 'uid', 'cartItems', 'cartNum'])
-
   },
   watch: {
-    // 要可以直接切換 不用再按一次才關閉
     menuToggle () {
       if (this.menuToggle === true) {
         this.menuCollapse.show()
@@ -364,7 +332,6 @@ export default {
         this.searchCollapse.hide()
       }
     },
-    // 換頁關閉 菜單 還要關閉搜尋!!!!!
     '$route.fullPath' () {
       this.menuToggle = false
       this.searchToggle = false

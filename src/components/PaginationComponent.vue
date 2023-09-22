@@ -4,12 +4,11 @@ export default {
   data () {
     return {
       activePage: 1,
-      pageProducts: [] // 必須要在這
+      pageProducts: []
     }
   },
   methods: {
     renderPage (pageNumber, products) { // 渲染第幾頁
-      console.log(products, products.length, '篩選後的產品')
       // 分頁 都用 slice第1頁  1 ~ 12 (0,12) ;第2頁  13 ~ 24 (12, 24) ; 第3頁 25 ~ 36 (24, 36) 第四頁 37~40 (36, 40)
       let firstIndex = 0
       let lastIndex = 12
@@ -35,7 +34,6 @@ export default {
 
       // 產品頁面
       this.pageProducts = products.slice(firstIndex, lastIndex)
-      console.log(this.pageProducts, firstIndex, lastIndex, '分頁好的訂單')
 
       // 換頁不滑到最上
       if (this.$route.fullPath === '/member') {
@@ -49,7 +47,6 @@ export default {
 </script>
 <template>
   <div>
-    <!-- 若搜尋不到就不顯示 -->
     <div v-if="pageProducts.length && this.$route.fullPath !== '/member'">
       <!-- 材料 -->
       <nav v-if="filterProducts && this.$route.fullPath.includes('/products')">
@@ -59,7 +56,6 @@ export default {
               <i class="bi bi-chevron-left mx-auto"></i>
             </a>
           </li>
-          <!-- 中間的頁碼 -->
           <li  class="page-item mx-1" :class="{'active': activePage === number}" v-for="number in Math.ceil(filterProducts.length / 12)" :key="number + 23423" >
             <a v-if="activePage !== number" @click.prevent="() => renderPage(number, filterProducts)" class="page-link  fs-12 fs-lg-6 border-0 rounded-circle px-lg-3 py-lg-2"  href="#">{{number}}</a>
             <span v-else-if="activePage === number" class="page-link fs-12 fs-lg-6 border-0 rounded-circle px-lg-3 py-lg-2 active pointer-events-none">{{ number }}</span>
@@ -93,7 +89,6 @@ export default {
     </div>
      <!-- 訂單狀況 -->
      <nav v-else-if="this.$route.fullPath === '/member' && filterOrders.length">
-      <!--  mt-5 -->
         <ul class="pagination d-flex justify-content-center align-items-center mb-0">
           <li v-if="activePage !== 1" class="page-item mx-1">
             <a class="page-link fs-12 fs-lg-6 border-0  rounded-circle d-flex py-2 px-12" href="#" aria-label="Previous"  @click.prevent="() => renderPage(activePage - 1, filterOrders)">

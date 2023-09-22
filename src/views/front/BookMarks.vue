@@ -22,7 +22,7 @@ export default {
       bookMarks: [],
       pageStatus: 'recipe',
       deleteId: '',
-      deleteItem: {}, // 刪除資料
+      deleteItem: {},
       averageRate: [],
       rates: {},
       recipeThumbs: [],
@@ -34,7 +34,6 @@ export default {
   },
   methods: {
     ...mapActions(cartStore, ['addCart', 'toastMessage', 'goToTop']),
-    // 取得個別使用者收藏 - 食譜、產品、文章(還沒)
     getBookmarks (dataName) {
       this.isLoading = true
       onAuthStateChanged(auth, (user) => {
@@ -50,7 +49,6 @@ export default {
             }
             this.bookMarks = Object.values(this.bookMarks)
 
-            // 得到食譜讚數
             if (this.pageStatus === 'recipe') {
               const dataRef = ref(db, 'recipeThumbs')
               onValue(dataRef, snapshot => {
@@ -59,7 +57,6 @@ export default {
                   this.thumbs[item] = recipeThumbs[item].thumbs
                 })
 
-                // 把讚數填入
                 this.bookMarks.forEach((recipe, index) => {
                   Object.keys(this.thumbs).forEach(thumbId => {
                     if (recipe.id === thumbId) {
@@ -74,15 +71,11 @@ export default {
                 })
                 this.isLoading = false
               })
-            } else if (this.pageStatus === 'product') { // 得到產品評價
-              // 得到星星評價數
+            } else if (this.pageStatus === 'product') {
               const dataRef = ref(db, 'productRates/')
               onValue(dataRef, snapshot => {
-                // 先取得所有評價
-
                 const allRates = Object.values(snapshot.val())
 
-                console.log(allRates, '評價')
                 this.rates = {}
                 allRates.forEach(item => {
                   if (!this.rates[item.productId]) {
@@ -95,7 +88,6 @@ export default {
                 })
                 this.bookMarks.forEach((item, index) => {
                   if (!this.rates[item.id]) {
-                    // 若沒收藏這裡會有問題
                     this.bookMarks[index].scores = 0
                     this.bookMarks[index].ratePeople = 0
                     this.bookMarks[index].averageRate = 0
@@ -119,7 +111,6 @@ export default {
         }
       })
     },
-    // 打開刪除收藏確認
     openDeleteModal (id, item) {
       this.deleteId = id
       this.deleteItem = item

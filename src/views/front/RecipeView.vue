@@ -32,7 +32,7 @@ export default {
         bulletClass: 'my-bullet-class',
         bulletActiveClass: 'my-bullet-active-class'
       },
-      mainImg: '', // 控制圖片顯示
+      mainImg: '',
       bookMark: {},
       allThumbNum: 0,
       myThumb: {},
@@ -48,7 +48,6 @@ export default {
   },
   methods: {
     ...mapActions(cartStore, ['addCart', 'toastMessage', 'goToTop']),
-    // 取得所有讚數 - 要先得到 uid
     getMyThumb () {
       onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -67,7 +66,6 @@ export default {
     },
     getAllThumbs () {
       const { id } = this.$route.params
-      // 取得讚
       const dataRef = ref(db, `recipeThumbs/${id}`)
       onValue(dataRef, snapshot => {
         this.allThumbNum = snapshot.val()
@@ -78,7 +76,6 @@ export default {
         }
       })
     },
-    // 增加讚 recipeThumbs/食譜id/使用者id 這樣比較方便
     addThumb () {
       if (!this.uid) {
         this.toastMessage('登入才可按讚', 'error')
@@ -86,14 +83,12 @@ export default {
       }
       const reference = ref(db, `recipePersonalThumbs/${this.uid}/${this.recipe.id}`)
       set(reference, this.recipe)
-      // 先取得再增加
       const referenceThumb = ref(db, `recipeThumbs/${this.recipe.id}`)
       set(referenceThumb, {
         thumbs: this.allThumbNum + 1
       })
       this.toastMessage('按讚成功')
     },
-    // 刪除讚
     deleteThumb () {
       remove(ref(db, `recipePersonalThumbs/${this.uid}/${this.recipe.id}`))
       const referenceThumb = ref(db, `recipeThumbs/${this.recipe.id}`)
@@ -102,7 +97,6 @@ export default {
       })
       this.toastMessage('取消按讚')
     },
-    // 取得食譜資料
     getRecipe () {
       const { id } = this.$route.params
 
@@ -110,28 +104,23 @@ export default {
       onValue(dataRef, snapshot => {
         this.recipe = snapshot.val()
         this.recipe.id = id
-        this.mainImg = this.recipe.image // 控制圖片一開始是主圖
-        // 得到組合產品
+        this.mainImg = this.recipe.image
         this.groupProduct = this.recipe.relativeProducts.filter(product => {
           return product.category === '組合包'
         })
-        console.log(this.groupProduct, '有什麼產品')
         this.groupProduct = this.groupProduct[0]
         this.isLoading = false
       })
     },
-    // 取得所有食譜留言
     getAllComments () {
       const { id } = this.$route.params
       const dataRef = ref(db, 'recipeComments/')
       onValue(dataRef, snapshot => {
-        // 先取得所有留言
         let comments = snapshot.val()
         comments = Object.values(comments).map((item, index) => {
           item.id = Object.keys(item)[index]
           return item
         })
-        // 再篩選個別食譜的留言
         this.recipeComments = comments.filter(comment => {
           return comment.recipeId === id
         })
@@ -139,7 +128,6 @@ export default {
     },
     addComments () {
       const reference = ref(db, 'recipeComments')
-      // 要有亂數否則會重複
       const newUserRef = push(reference)
       set(newUserRef, {
         recipeId: this.recipe.id,
@@ -150,7 +138,6 @@ export default {
       })
       this.recipeMessage = ''
     },
-    // 食譜收藏 - 要先得到 uid
     getBookmark () {
       onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -171,7 +158,6 @@ export default {
         }
       })
     },
-    // 增加食譜收藏
     addBookmark () {
       if (!this.uid) {
         this.toastMessage('登入才可使用收藏功能', 'error')
@@ -181,7 +167,6 @@ export default {
       set(reference, this.recipe)
       this.toastMessage('收藏成功')
     },
-    // 刪除食譜收藏
     deleteBookmark () {
       remove(ref(db, `recipeBookmarks/${this.uid}/${this.recipe.id}`))
       this.toastMessage('已刪除收藏')

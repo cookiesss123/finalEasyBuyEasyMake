@@ -226,7 +226,6 @@ export default {
   },
   methods: {
     ...mapActions(cartStore, ['checkLogin', 'toastMessage', 'goToTop']),
-    // 取得折價券 優惠折扣
     getCoupons () {
       const dataRef = ref(db, 'coupons/')
       onValue(dataRef, snapshot => {
@@ -238,7 +237,6 @@ export default {
         this.isLoading = false
       })
     },
-    // 取得抽獎
     getLottery () {
       const dataRef = ref(db, 'lotteries/')
       onValue(dataRef, snapshot => {
@@ -251,7 +249,6 @@ export default {
         this.lottery = this.lottery[0]
 
         this.lottery.recipes.forEach(recipe => {
-          // 一定要先定義
           if (!this.drewProducts[recipe.title]) {
             this.drewProducts[recipe.title] = []
           }
@@ -265,7 +262,6 @@ export default {
         this.drewProducts = Object.entries(this.drewProducts)
       })
     },
-    // 個人抽獎結果
     getLotteryResult () {
       onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -293,9 +289,7 @@ export default {
         }
       })
     },
-    // 開始抽獎
     addtLotteryResult () {
-      // 沒抽獎券先禁止抽獎
       if (!this.uid) {
         this.toastMessage('登入即可抽獎', 'error')
         return
@@ -315,19 +309,15 @@ export default {
         })
         return
       }
-      // 扣除抽獎券
       update(ref(db), {
         [`users/${this.uid}/lotteryTicket/`]: this.user.lotteryTicket - 1
       })
-      // 0 ~ 1隨機數 x 產品陣列
       const firstNum = Math.floor(Math.random() * this.drewProducts.length)
       const secondNum = Math.floor(Math.random() * this.drewProducts[firstNum][1].length)
 
       // 1. 首次抽獎
       if (!this.drewArr.length) {
-        // 先定義抽獎結構
         this.drewProducts.forEach((item, index) => {
-          // 因為之前 this.products = [] 會複製到 所以不能用
           this.drewArr[index] = [item[0], []]
         })
         this.drewArr[firstNum][1].push(this.drewProducts[firstNum][1][secondNum])
@@ -346,16 +336,13 @@ export default {
           getPrize: {}
         })
       } else if (this.drewArr.length) { // 非首抽
-        // 先定義抽獎結構
         this.drewProducts.forEach((item, index) => {
-          // 因為之前 this.products = [] 會複製到 所以不能用
           if (!this.drewArr[index][1]) {
             this.drewArr[index][1] = []
           }
         })
         // 如果抽到相同的東西不要放進陣列
         let repeatItem = false
-        // firstNum
         if (this.drewArr[firstNum][1]) {
           this.drewArr[firstNum][1].forEach(item => {
             if (item.title === this.drewProducts[firstNum][1][secondNum].title) {
@@ -373,7 +360,7 @@ export default {
             },
             showConfirmButton: false
           })
-        } else if (!repeatItem) { // 沒有重複再放入
+        } else if (!repeatItem) {
           this.drewArr[firstNum][1].push(this.drewProducts[firstNum][1][secondNum])
           this.$swal({
             title: `恭喜您抽中 ${this.drewProducts[firstNum][1][secondNum].title}`,
@@ -388,20 +375,16 @@ export default {
           })
 
           let index = ''
-          // 一獎 全部收集完
           if (!this.drewArr[0][1] || !this.drewArr[1][1] || !this.drewArr[2][1]) {
             return
           }
           if (this.drewArr[0][1].length === this.drewProducts[0][1].length && this.drewArr[1][1].length === this.drewProducts[1][1].length && this.drewArr[2][1].length === this.drewProducts[2][1].length) {
             index = 0
-          // 二獎 收集2個
           } else if ((this.drewArr[0][1].length === this.drewProducts[0][1].length && this.drewArr[1][1].length === this.drewProducts[1][1].length) || (this.drewArr[2][1].length === this.drewProducts[2][1].length && this.drewArr[0][1].length === this.drewProducts[0][1].length) || (this.drewArr[2][1].length === this.drewProducts[2][1].length && this.drewArr[1][1].length === this.drewProducts[1][1].length)) {
             index = 1
-          // 二獎 收集其中1個
           } else if (this.drewArr[0][1].length === this.drewProducts[0][1].length || this.drewArr[1][1].length === this.drewProducts[1][1].length || this.drewArr[2][1].length === this.drewProducts[2][1].length) {
             index = 2
           }
-          // 增加獲獎項目
           if (index || index === 0) {
             update(ref(db), {
               [`lotteryResults/${this.uid}/getPrize/`]: this.lottery.prizes[index]

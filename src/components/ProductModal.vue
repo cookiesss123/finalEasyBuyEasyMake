@@ -12,7 +12,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-lg-4">
                         <label for="mainPic" class="form-label">主圖網址</label>
                         <input type="text" id="mainPic" class="form-control mb-3" v-model="tempProduct.imgUrl">
                         <img :src="tempProduct.imgUrl" alt="" width="300">
@@ -29,36 +29,36 @@
                           <button type="button" class="ms-auto btn btn-primary" @click="() => tempProduct.imgsUrl.push('')">新增圖片</button>
                         </div>
                     </div>
-                    <div class="col-8">
+                    <div class="col-lg-8">
                       <div class="row gy-3">
-                        <div class="col-2">
+                        <div class="col-lg-2">
                           <label for="serialNumber" class="form-label">編號（id）</label>
                           <input type="text" id="serialNumber" class="form-control" v-model="tempProduct.id" disabled>
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3">
                           <label for="category" class="form-label">產品分類</label>
                           <select name="" class="form-select" id="category" v-model="tempProduct.category">
                             <option value="單一產品">單一產品</option>
                             <option value="組合包">組合包</option>
                           </select>
                         </div>
-                        <div class="col-7">
+                        <div class="col-lg-7">
                           <label for="title" class="form-label">產品名稱</label>
                           <input type="text" id="title" class="form-control" v-model="tempProduct.title">
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3">
                           <label for="content" class="form-label">數量</label>
                           <input type="text" id="content" class="form-control" v-model.number="tempProduct.num">
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3">
                           <label for="content" class="form-label">單位</label>
                           <input type="text" id="content" class="form-control" v-model="tempProduct.unit">
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3">
                           <label for="price" class="form-label">喊得很高的原價</label>
                           <input type="text" id="price" class="form-control" v-model.number="tempProduct.originalPrice">
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3">
                           <label for="price" class="form-label">真實價格</label>
                           <input type="text" id="price" class="form-control" v-model.number="tempProduct.price">
                         </div>

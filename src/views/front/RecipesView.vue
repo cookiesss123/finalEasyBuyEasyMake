@@ -29,12 +29,11 @@ export default {
       priceOrRate: '成本',
       highOrLow: '不拘',
       recipeSearchName: '',
-      filterRecipes: [], // 選擇後改變的值 一定要變這個才可以
+      filterRecipes: [],
       bookMarks: [],
-      thumbs: {}, // 所有人按讚分類
-      user: {},
+      thumbs: {},
       uid: '',
-      search: false, // 在搜尋嗎? 用來判斷搜尋無值的狀況
+      search: false,
       isLoading: false,
       fullPage: true
     }
@@ -45,16 +44,13 @@ export default {
       const dataRef = ref(db, 'recipes/')
       onValue(dataRef, snapshot => {
         this.recipes = snapshot.val()
-        // 把物件轉成陣列 並填入id
         this.recipes = Object.entries(this.recipes).map(item => {
           item[1].id = item[0]
           return item[1]
         })
-        // 得到讚數
         const dataRef = ref(db, 'recipeThumbs/')
         onValue(dataRef, snapshot => {
           this.thumbs = snapshot.val()
-          // 把讚數填入
           this.recipes.forEach((recipe, index) => {
             Object.keys(this.thumbs).forEach(thumbId => {
               if (recipe.id === thumbId) {
@@ -70,25 +66,21 @@ export default {
           this.filterRecipes = this.recipes
           this.isLoading = false
 
-          if (!this.$route.query.category && this.$route.fullPath === '/recipes') { // 未傳值再渲染
-          // 從單頁按讚後這裡會出現錯誤警告 因為觸發了最上方的得到讚 this.$route.fullPath === '/recipes' 用這個在食譜單頁就不會觸發了
+          if (!this.$route.query.category && this.$route.fullPath === '/recipes') {
             this.$refs.pagination.renderPage(1, this.filterRecipes)
-          } else if (this.$route.query.category) { // 有外部傳值再搜索
+          } else if (this.$route.query.category) {
             this.searchRecipes()
           }
         })
       })
     },
     searchRecipes () {
-      // 先排序種類
       if (this.selectItem === '全部') {
         this.filterRecipes = this.recipes
       } else if (this.selectItem !== '全部') {
         this.filterRecipes = this.recipes.filter(item => item.category === this.selectItem)
       }
-      // 再排序其他篩選值
       if (this.priceOrRate === '成本' && this.highOrLow !== '不拘') {
-        // 判斷頁尾用
         if (this.highOrLow === '低到高') {
           this.filterRecipes = this.filterRecipes.sort((a, b) => {
             return a.price - b.price
@@ -98,7 +90,7 @@ export default {
             return b.price - a.price
           })
         }
-      } else if (this.priceOrRate === '評價' && this.highOrLow !== '不拘') { // 讚最多的
+      } else if (this.priceOrRate === '評價' && this.highOrLow !== '不拘') {
         if (this.highOrLow === '低到高') {
           this.filterRecipes = this.filterRecipes.sort((a, b) => {
             return a.thumbs - b.thumbs
@@ -109,11 +101,10 @@ export default {
           })
         }
       }
-      // 如果不拘直接搜尋
       this.filterRecipes = this.filterRecipes.filter(recipe => {
         return recipe.title.match(this.recipeSearchName)
       })
-      this.search = true // 在搜尋嗎? 用來判斷搜尋無值的狀況
+      this.search = true
       this.$refs.pagination.renderPage(1, this.filterRecipes)
     },
     // 需要驗證
@@ -121,25 +112,18 @@ export default {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           this.uid = user.uid
-          const dataRef = ref(db, 'users/' + user.uid)
+          const dataRef = ref(db, `recipeBookmarks/${this.uid}`)
           onValue(dataRef, snapshot => {
-            this.user = snapshot.val()
-            const dataRef = ref(db, `recipeBookmarks/${this.uid}`)
-            onValue(dataRef, snapshot => {
-              this.bookMarks = snapshot.val()
-              if (this.bookMarks) {
-                this.bookMarks = Object.keys(this.bookMarks)
-              }
-            })
+            this.bookMarks = snapshot.val()
+            if (this.bookMarks) {
+              this.bookMarks = Object.keys(this.bookMarks)
+            }
           })
         } else {
           this.uid = null
-          this.user = {}
         }
       })
     },
-    // 增加食譜收藏
-    // 不能加入 讚和評價的資訊 變動的資料會不同步
     addBookmark (recipe) {
       if (!this.uid) {
         this.toastMessage('登入才可使用收藏功能', 'error')
@@ -149,14 +133,12 @@ export default {
       set(reference, recipe)
       this.toastMessage('收藏成功')
     },
-    // 刪除食譜收藏
     deleteBookmark (id) {
       remove(ref(db, `recipeBookmarks/${this.uid}/${id}`))
       this.toastMessage('已刪除收藏')
     }
   },
   mounted () {
-    // 暫時關閉
     this.isLoading = true
 
     this.costOrRateCollapse = new Collapse(this.$refs.costOrRateCollapse, {
@@ -168,9 +150,7 @@ export default {
       parent: '#myGroup'
     })
 
-    // 搜尋框也要傳入
-
-    if (this.$route.query.category) { // 這個值一定有 有了外面的傳值 再傳入所有
+    if (this.$route.query.category) {
       this.selectItem = this.$route.query.category
       this.highOrLow = this.$route.query.valueHighOrLow
       this.priceOrRate = this.$route.query.valuePriceOrRate
@@ -192,15 +172,12 @@ export default {
       }
       this.$refs.pagination.renderPage(1, this.filterRecipes)
     },
-    // 選完收合
     priceOrRate () {
       this.costOrRateCollapse.hide()
     },
-    // 選完收合
     highOrLow () {
       this.highOrLowCollapse.hide()
     },
-    // 搜完 全部關閉
     filterRecipes () {
       this.costOrRateCollapse.hide()
       this.highOrLowCollapse.hide()

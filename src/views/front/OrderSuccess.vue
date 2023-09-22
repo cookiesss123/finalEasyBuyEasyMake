@@ -8,7 +8,6 @@ import { onAuthStateChanged } from 'firebase/auth'
 export default {
   data () {
     return {
-      user: {},
       uid: ''
     }
   },
@@ -22,7 +21,6 @@ export default {
           this.getOrder(this.uid)
         } else {
           this.uid = null
-          this.user = {}
           // 遊客
           this.getOrder('1')
         }
@@ -52,7 +50,6 @@ export default {
         <div class="position-relative w-100 mt-lg-5 my-5">
                 <div class="line-gray border-top position-absolute border-2 z-index-n1 start-50 translate-middle-x" style="top: 25%"></div>
                 <div class="line-blue-50 border-top border-primary position-absolute border-2 z-index-n1"></div>
-                <!-- 動畫所以加另一條 -->
                 <div class="line-blue-100 border-top border-primary position-absolute border-2 z-index-n1"></div>
 
                 <ul class="list-unstyled d-flex justify-content-between text-gray">

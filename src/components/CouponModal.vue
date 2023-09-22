@@ -12,38 +12,38 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-lg-4">
                         <label for="image" class="form-label">主圖網址</label>
                         <input type="text" id="image" class="form-control mb-3" v-model="tempCoupon.image">
                         <img :src="tempCoupon.image" alt="優惠券照片" width="300">
                     </div>
-                    <div class="col-8">
+                    <div class="col-lg-8">
                       <div class="row gy-3">
-                        <div class="col-4">
+                        <div class="col-lg-4">
                           <label for="serialNumber" class="form-label">編號（id）</label>
                           <input type="text" id="serialNumber" class="form-control" v-model="tempCoupon.id" disabled>
                         </div>
-                        <div class="col-6">
+                        <div class="col-lg-6">
                           <label for="title" class="form-label">優惠券名稱</label>
                           <input type="text" id="title" class="form-control" v-model="tempCoupon.title">
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2">
                           <label for="price" class="form-label">折扣(%)</label>
                           <input type="text" id="price" class="form-control" v-model.number="tempCoupon.discount">
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3">
                           <label for="date" class="form-label">起始日</label>
                           <input type="date" id="date" class="form-control" v-model="startDate">
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3">
                           <label for="date" class="form-label">到期日</label>
                           <input type="date" id="date" class="form-control" v-model="dueDate">
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3">
                           <label for="code" class="form-label">優惠碼</label>
                           <input type="text" id="code" class="form-control" v-model="tempCoupon.code">
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3">
                           <label for="condition" class="form-label">條件 >= 金額</label>
                           <input type="text" id="condition" class="form-control" v-model.number="tempCoupon.condition">
                         </div>

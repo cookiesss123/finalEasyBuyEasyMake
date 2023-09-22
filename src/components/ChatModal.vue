@@ -1,8 +1,8 @@
 <template>
-    <div class="modal right" ref="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style=" overflow-y: hidden;">
-        <div class="modal-dialog modal-fullscreen-md-down w-100" style="margin-right: 0; margin-top: 0;">
-            <div class="modal-content" style="height: 100vh; overflow-y:auto">
-              <div class="modal-header bg-primary" style="border-radius: 0;">
+    <div class="modal right" ref="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen-md-down w-100">
+            <div class="modal-content scroll-y min-height-100" >
+              <div class="modal-header bg-primary rounded-0">
                   <h5 class="modal-title text-white" v-if="uid">
                     <img src="https://plus.unsplash.com/premium_photo-1672192166439-f20d9ec1dbbc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" style="height: 40px; width: 40px;" class="rounded-circle me-1" alt="客服大頭貼">
                     甜點食譜一鍵購客服
@@ -10,26 +10,24 @@
                   <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body d-flex flex-column bg-secondary" >
-                <!-- 顧客聊天室 -->
                 <div v-if="!user.admin">
                   <div v-for="chat in chats" :key="chat" class="">
                   <div v-if="chat.nickName === '甜點食譜一鍵購客服'" class="d-flex  mb-3">
                     <img :src="chat.headshotImg" style="height: 40px; width: 40px;" class="mb-auto rounded-circle me-3" alt="客服大頭貼">
                     <div style="max-width: 90%;">
                       <p class="mb-1">{{ chat.nickName }}</p>
-                      <p class="speech-bubble left bg-white px-3 py-1 d-inline-block rounded-4 mb-0" style="word-break: break-all;">{{ chat.message }}</p>
-                      <p class="ms-1 text-muted" style="font-size: 14px;">{{ new Date(chat.time).toLocaleDateString() }} {{ new Date(chat.time).getHours() }}:{{ new Date(chat.time).getMinutes() }} </p>
+                      <p class="speech-bubble speech-bubble-left bg-white px-3 py-1 d-inline-block rounded-4 mb-0 text-newline">{{ chat.message }}</p>
+                      <p class="ms-1 text-muted fs-14">{{ new Date(chat.time).toLocaleDateString() }} {{ new Date(chat.time).getHours() }}:{{ new Date(chat.time).getMinutes() }} </p>
                     </div>
                   </div>
                   <div v-else-if="chat.nickName !== '甜點食譜一鍵購客服'" class="d-flex flex-column">
                     <div class="mb-2 ms-auto d-flex flex-column align-items-end" style="max-width: 90%;">
-                      <p class="mb-0 speech-bubble right bg-primary text-white px-3 py-1 d-inline-block rounded-4" style="  word-break: break-all;">{{ chat.message }}</p>
-                      <p class="text-muted me-1" style="font-size: 14px;">{{ new Date(chat.time).toLocaleDateString() }} {{ new Date(chat.time).getHours() }}：{{ new Date(chat.time).getMinutes() }} </p>
+                      <p class="mb-0 speech-bubble speech-bubble-right bg-primary text-white px-3 py-1 d-inline-block rounded-4 text-newline">{{ chat.message }}</p>
+                      <p class="text-muted me-1 fs-14">{{ new Date(chat.time).toLocaleDateString() }} {{ new Date(chat.time).getHours() }}：{{ new Date(chat.time).getMinutes() }} </p>
                     </div>
                   </div>
                   </div>
                 </div>
-                <!-- 管理者聊天室 -->
                 <div v-else-if="user.admin">
                   <div v-for="(item, index) in chats" :key="index">
                     <a href="#" class="text-decoration-none link-primary d-block border-bottom border-primary py-2 d-flex align-items-center">
@@ -45,13 +43,13 @@
                           <img :src="chat.headshotImg" style="height: 40px; width: 40px;" class="mb-auto rounded-circle me-3" alt="顧客大頭貼">
                           <div style="max-width: 90%;">
                             <p class="mb-1">{{ chat.nickName }}</p>
-                            <p class="speech-bubble left bg-white px-3 py-1 d-inline-block rounded-4 mb-0" style="  word-break: break-all;">{{ chat.message }}</p>
-                            <p class="ms-1 text-muted" style="font-size: 14px;">{{ new Date(chat.time).toLocaleDateString() }} {{ new Date(chat.time).getHours() }}:{{ new Date(chat.time).getMinutes() }} </p>
+                            <p class="speech-bubble speech-bubble-left bg-white px-3 py-1 d-inline-block rounded-4 mb-0 text-newline">{{ chat.message }}</p>
+                            <p class="ms-1 text-muted fs-14">{{ new Date(chat.time).toLocaleDateString() }} {{ new Date(chat.time).getHours() }}:{{ new Date(chat.time).getMinutes() }} </p>
                           </div>
                         </div>
                         <div v-else-if="chat.nickName === '甜點食譜一鍵購客服'" class="d-flex flex-column">
-                          <p class="mb-0 ms-auto speech-bubble right bg-primary text-white px-3 py-1 d-inline-block rounded-4" style="max-width: 90%; word-break: break-all;">{{ chat.message }}</p>
-                          <p class="ms-auto me-1 text-muted" style="font-size: 14px;">{{ new Date(chat.time).toLocaleDateString() }} {{ new Date(chat.time).getHours() }}:{{ new Date(chat.time).getMinutes() }} </p>
+                          <p class="mb-0 ms-auto speech-bubble speech-bubble-right bg-primary text-white px-3 py-1 d-inline-block rounded-4 text-newline" style="max-width: 90%;">{{ chat.message }}</p>
+                          <p class="ms-auto me-1 text-muted fs-14">{{ new Date(chat.time).toLocaleDateString() }} {{ new Date(chat.time).getHours() }}:{{ new Date(chat.time).getMinutes() }} </p>
                         </div>
                       </div>
                       <div class="input-group mt-5 mb-3">
@@ -86,8 +84,8 @@ export default {
       message: '',
       chats: [],
       newChatNum: 0,
-      oneChats: [], // 管理者用 只有一個聊天室的內容
-      openId: '' // 管理者聊天室用 顯示聊天室
+      oneChats: [],
+      openId: ''
     }
   },
   mixins: [modalMixin, numberCommaMixin],
@@ -134,7 +132,6 @@ export default {
                 this.newChatNum = 0
                 return
               }
-              // 新對話提醒： 不能顛倒陣列找客服的 因為顛倒之後最新的一個肯定會先找客服 顛倒找的是對方的
               if (this.chats[this.chats.length - 1].nickName === '甜點食譜一鍵購客服') {
                 const reverseArr = [...this.chats].reverse()
                 const index = reverseArr.findIndex((item) => item.nickName !== '甜點食譜一鍵購客服')
@@ -150,9 +147,7 @@ export default {
         }
       })
     },
-    // 客人用
     sendMessage () {
-      // 空字串不傳
       if (!this.message) {
         return
       }
@@ -169,9 +164,7 @@ export default {
       })
       this.message = ''
     },
-    // 管理者用
     sendCustomerMessage (uid) {
-      // 空字串不傳
       if (!this.message) {
         return
       }
@@ -185,7 +178,6 @@ export default {
       })
       this.message = ''
     },
-    // 點擊取得長度 以及改變  openId 管理者
     getInfo (uid) {
       this.openId = uid
       const dataRef = ref(db, `chats/${uid}/`)
@@ -202,54 +194,3 @@ export default {
   }
 }
 </script>
-<style>
-.right .modal-dialog{
-    transition: transform .3s ease-out;
-    position: fixed;
-    margin: auto;
-    height: 100%;
-}
-.modal.right .modal-content{
-  overflow-y: auto;
-  border-radius: 0;
-  border: none;
-  height: 100%;
-}
-.right .modal-dialog {
-    transform: translateX(250px);
-    right: 0;
-}
-
-.speech-bubble {
-    position: relative;
-    /* border-radius: .4em; */
-}
-
-.speech-bubble.left:after {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 1%;
-    width: 0;
-    height: 0;
-    border: 8px solid transparent;
-    border-right-color: white;
-    border-left: 0;
-    /* margin-top: -8px; */
-    margin-left: -4px;
-    transform: rotate(150deg)
-}
-/* 改好的 4572c2  */
-.speech-bubble.right:after {
-    content: '';
-    position: absolute;
-    right: -2px;
-    top: 1%;
-    width: 0;
-    height: 0;
-    border: 8px solid transparent;
-    border-right-color: #4572c2;
-    border-left: 0;
-    transform: rotate(40deg)
-}
-</style>

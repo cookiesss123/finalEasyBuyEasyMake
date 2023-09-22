@@ -10,7 +10,6 @@
                     <th>分類</th>
                     <th>食譜名稱</th>
                     <th>內容</th>
-                    <th>產品</th>
                     <th>成本</th>
                     <th>組合價</th>
                     <th>編輯</th>
@@ -22,11 +21,6 @@
                     <td>{{ recipe.category }}</td>
                     <td>{{ recipe.title }}</td>
                     <td>{{ recipe.content }}</td>
-                    <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 400px;">
-                      <template v-for="(product, index) in recipe.relativeProducts" :key="product.id">
-                        {{`${index + 1}${product.title} `}}
-                      </template>
-                    </td>
                     <td>{{ recipe.total }}</td>
                     <td>{{ recipe.price }}</td>
                     <td>
@@ -47,7 +41,6 @@ import RecipeModal from '@/components/RecipeModal.vue'
 import DeleteRecipeModal from '@/components/DeleteRecipeModal.vue'
 import { db } from '../../firebase/db'
 import { ref, onValue } from 'firebase/database'
-// const { VITE_PATH } = import.meta.env
 export default {
   components: {
     RecipeModal,
@@ -63,24 +56,10 @@ export default {
     }
   },
   methods: {
-    // recipes/1?_embed=products可以查到單一產品的細項
-    // getRecipes () {
-    //   this.$http.get(`${VITE_PATH}/recipes`)
-    //     .then(res => {
-    //       console.log(res.data)
-    //       this.recipes = res.data
-    //     }).catch(err => {
-    //       console.log(err)
-    //     })
-    // },
     getRecipes () {
-      // 1. const dataRef = ref(db, 'users/') 取得 users 項下所有資料
-      // 2. 取得 user s的特定子分支資料
-
       const dataRef = ref(db, 'recipes/')
       onValue(dataRef, snapshot => {
         this.recipes = snapshot.val()
-        // 把物件轉成陣列 並填入id
         this.recipes = Object.entries(this.recipes).map(item => {
           item[1].id = item[0]
           return item[1]
@@ -89,12 +68,9 @@ export default {
       })
     },
     getProducts () {
-      // 1. const dataRef = ref(db, 'users/') 取得 users 項下所有資料
-      // 2. 取得 user s的特定子分支資料
       const dataRef = ref(db, 'products/')
       onValue(dataRef, snapshot => {
         this.products = snapshot.val()
-        // 把物件轉成陣列 並填入id
         this.products = Object.entries(this.products).map(item => {
           item[1].id = item[0]
           return item[1]
@@ -107,7 +83,6 @@ export default {
     },
     openDeleteModal (id, item) {
       this.recipeDeleteId = id
-      // 加了這個
       this.recipeDeleteItem = item
     }
   },

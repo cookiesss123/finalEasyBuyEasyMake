@@ -8,8 +8,6 @@ import Collapse from 'bootstrap/js/dist/collapse'
 import { db, auth } from '../../firebase/db'
 import { ref, onValue, set, remove } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
-// 第二種
-// import LoadingComponent from '../../components/LoadingComponent.vue'
 
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
@@ -18,15 +16,11 @@ export default {
     RouterLink,
     PaginationComponent,
     Loading
-    // 第二種
-    // LoadingComponent
   },
   data () {
     return {
-      // 控制搜尋收合
       priceOrRateCollapse: {},
       highOrLowCollapse: {},
-      user: {},
       uid: '',
       products: [],
       priceOrRate: '價格',
@@ -53,10 +47,8 @@ export default {
           return item[1]
         })
 
-        // 得到星星評價數
         const dataRef = ref(db, 'productRates/')
         onValue(dataRef, snapshot => {
-        // 先取得所有留言
           let rates = snapshot.val()
           rates = Object.values(rates).map((rate, index) => {
             rate.id = Object.keys(rates)[index]
@@ -86,17 +78,15 @@ export default {
           this.filterProducts = this.products
           this.isLoading = false
 
-          if (!this.$route.query.pageStatus && this.$route.fullPath === '/products') { // 未傳值再渲染
+          if (!this.$route.query.pageStatus && this.$route.fullPath === '/products') {
             this.$refs.pagination.renderPage(1, this.filterProducts)
-          } else if (this.$route.query.pageStatus) { // 有外部傳值再搜索
+          } else if (this.$route.query.pageStatus) {
             this.searchProducts()
           }
         })
       })
     },
-    // 要加入分類頁面的
     searchProducts () {
-      // 先排序種類
       if (this.pageStatus === '全部') {
         this.filterProducts = this.products
       } else if (this.pageStatus === '食材組合包') {
@@ -107,9 +97,7 @@ export default {
         this.filterProducts = this.products.filter(product => product.isCheaper === true)
       }
 
-      // 再排序其他篩選值
       if (this.priceOrRate === '價格' && this.highOrLow !== '不拘') {
-        // 判斷頁尾用
         if (this.highOrLow === '低到高') {
           this.filterProducts = this.filterProducts.sort((a, b) => {
             return a.price - b.price
@@ -119,54 +107,45 @@ export default {
             return b.price - a.price
           })
         }
-      } else if (this.priceOrRate === '評價' && this.highOrLow !== '不拘') { // 讚最多的
+      } else if (this.priceOrRate === '評價' && this.highOrLow !== '不拘') {
         if (this.highOrLow === '低到高') {
           this.filterProducts = this.filterProducts.sort((a, b) => {
-            if (a.averageRate !== b.averageRate) { // 如果 averageRate 不相等就用 scores
+            if (a.averageRate !== b.averageRate) {
               return a.averageRate - b.averageRate
             }
             return a.scores - b.scores
           })
         } else if (this.highOrLow === '高到低') {
           this.filterProducts = this.filterProducts.sort((a, b) => {
-            if (a.averageRate !== b.averageRate) { // 如果 averageRate 不相等就用 scores
+            if (a.averageRate !== b.averageRate) {
               return b.averageRate - a.averageRate
             }
             return b.scores - a.scores
           })
         }
       }
-      // 如果不拘直接搜尋
       this.filterProducts = this.filterProducts.filter(product => {
         return product.title.match(this.productSearchName)
       })
-      // 搜尋了 用來判斷搜尋無值的狀況
       this.search = true
       this.$refs.pagination.renderPage(1, this.filterProducts)
     },
-    // 取得個別使用者收藏 - 產品
     getBookmarks () {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           this.uid = user.uid
-          const dataRef = ref(db, 'users/' + user.uid)
+          const dataRef = ref(db, `productBookmarks/${this.uid}`)
           onValue(dataRef, snapshot => {
-            this.user = snapshot.val()
-            const dataRef = ref(db, `productBookmarks/${this.uid}`)
-            onValue(dataRef, snapshot => {
-              this.bookMarks = snapshot.val()
-              if (this.bookMarks) {
-                this.bookMarks = Object.keys(this.bookMarks)
-              }
-            })
+            this.bookMarks = snapshot.val()
+            if (this.bookMarks) {
+              this.bookMarks = Object.keys(this.bookMarks)
+            }
           })
         } else {
           this.uid = null
-          this.user = {}
         }
       })
     },
-    // 增加產品收藏
     addBookmark (product) {
       if (!this.uid) {
         this.toastMessage('登入才可使用收藏功能', 'error')
@@ -176,7 +155,6 @@ export default {
       set(reference, product)
       this.toastMessage('收藏成功')
     },
-    // 刪除產品收藏
     deleteBookmark (id) {
       remove(ref(db, `productBookmarks/${this.uid}/${id}`))
       this.toastMessage('已刪除收藏')
@@ -184,8 +162,6 @@ export default {
   },
   mounted () {
     this.isLoading = true
-    // this.showLoading()
-    // 先關閉
     this.priceOrRateCollapse = new Collapse(this.$refs.priceOrRateCollapse, {
       toggle: false,
       parent: '#myGroup'
@@ -207,7 +183,6 @@ export default {
   watch: {
     selectPage () {
       this.pageStatus = this.selectPage
-      // 換頁把搜尋欄位清除
       this.productSearchName = ''
 
       if (this.pageStatus === '全部') {
@@ -221,15 +196,12 @@ export default {
       }
       this.$refs.pagination.renderPage(1, this.filterProducts)
     },
-    // 選完收合
     priceOrRate () {
       this.priceOrRateCollapse.hide()
     },
-    // 選完收合
     highOrLow () {
       this.highOrLowCollapse.hide()
     },
-    // 搜完 全部關閉
     filterProducts () {
       this.priceOrRateCollapse.hide()
       this.highOrLowCollapse.hide()
@@ -304,7 +276,6 @@ export default {
 
         </div>
 
-        <!-- 搜尋 -->
         <div class="d-none d-lg-block my-5">
           <div class="input-group">
             <a class="btn btn-outline-primary px-5" @click="()=> this.priceOrRateCollapse.toggle()">篩選對象 <i class="bi bi-caret-down-fill"></i><span class="ms-2 fw-bold">{{priceOrRate}}</span></a>
@@ -390,13 +361,11 @@ export default {
           </div>
         </div>
 
-        <!-- 查無產品 -->
         <div v-else-if="!filterProducts.length && search && !isLoading" class="py-lg-4 text-center">
           <img src="../../assets/images/undraw_Page_not_found_re_e9o6.png" class="mb-lg-3 mb-2 img-md-200-sm-150" alt="查無資訊">
           <p class="fs-lg-3 fs-6">查無商品，請您重新查詢</p>
         </div>
 
-        <!-- 頁尾 -->
         <PaginationComponent ref="pagination" :price-or-rate="priceOrRate" :filter-products="filterProducts"  class="mb-5"></PaginationComponent>
       </section>
 

@@ -1,12 +1,8 @@
 <template>
-  <!-- style=" overflow-y: hidden;" -->
     <div class="modal right" ref="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-      <!-- style="margin-right: 0; margin-top: 0;" -->
         <div class="modal-dialog modal-fullscreen-md-down w-100">
-          <!-- style="height: 100vh; overflow-y:auto" -->
             <div class="modal-content">
               <div class="modal-header bg-primary-purple rounded-0 d-flex">
-                <!--  v-if="uid" {{ user.nickName }}  -->
                   <h5 class="modal-title text-white ms-auto letter-spacing-5">購物車</h5>
                   <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
@@ -152,12 +148,10 @@ export default {
   mixins: [modalMixin, numberCommaMixin],
   methods: {
     ...mapActions(cartStore, ['updateCartNum', 'changeCartNum', 'handleKeyDown', 'deleteCart', 'deleteAllCarts', 'getCoupons', 'checkCoupon', 'reUseCoupon', 'getCart', 'toastMessage']),
-    // 取消優惠碼
     cancelCoupon () {
       this.code = ''
       this.reUseCoupon()
     },
-    // 清空購物車也要刪除優惠碼
     clearAllCarts () {
       this.code = ''
       this.deleteAllCarts()
@@ -175,7 +169,6 @@ export default {
         } else {
           this.uid = null
           this.user = {}
-          // 遊客
           this.getCart('1')
         }
       })
@@ -186,17 +179,14 @@ export default {
     this.getCartData()
   },
   watch: {
-    // 監聽 route.fullPath 變化
-    // 只要換頁就關閉cartModal
-    '$route.fullPath' (newVal) { // oldVal
+    '$route.fullPath' (newVal) {
       if (newVal === '/checkout') {
         this.code = ''
         this.hide()
-      } else if (newVal.includes('/products')) { // 點到產品頁面也關閉modal
+      } else if (newVal.includes('/products')) {
         this.hide()
       }
     }
-    // 清空購物車 也要刪除CODE
   },
   computed: {
     ...mapState(cartStore, ['cart', 'cartItems', 'cartNum', 'loadingItem'])
@@ -204,7 +194,6 @@ export default {
 }
 </script>
 <style>
-/* 要寫在這才有用 */
 /* 隱藏input輸入框的上下按鈕 Chrome, Safari, Edge, Opera */
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {

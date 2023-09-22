@@ -1,5 +1,4 @@
 <template>
-    <!-- ref 都要叫modal -->
     <div class="modal fade" ref="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -12,7 +11,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-lg-4">
                       <div class="row">
                         <div class="col-12">
                           <label for="imgUrl" class="form-label">圖片網址</label>
@@ -50,13 +49,13 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-8">
+                    <div class="col-lg-8">
                       <div class="row gy-3">
-                        <div class="col-4">
+                        <div class="col-lg-4">
                           <label for="title" class="form-label">食譜編號（id）</label>
                           <input type="text" id="title" class="form-control" disabled v-model="tempRecipe.id">
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3">
                           <label for="category" class="form-label">食譜類別</label>
                           <select name="" id="category" class="form-select" v-model="tempRecipe.category">
                             <option v-for="item in recipeType" :key="item" :value="item">
@@ -64,25 +63,25 @@
                             </option>
                           </select>
                         </div>
-                        <div class="col-5">
+                        <div class="col-lg-5">
                           <label for="title" class="form-label">食譜名稱</label>
                           <input type="text" id="title" class="form-control" v-model="tempRecipe.title">
                         </div>
-                        <div class="col-4">
+                        <div class="col-lg-4">
                           <label for="content" class="form-label">作者</label>
                           <input type="text" id="content" class="form-control" v-model="tempRecipe.author">
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3">
                           <label for="content" class="form-label">食譜內容</label>
                           <input type="text" id="content" class="form-control" v-model="tempRecipe.content">
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3">
                           <label for="costs" class="form-label">成本</label>
                           <div class="d-flex align-items-center">
                             <input type="text" id="costs" class="form-control me-2" v-model="tempRecipe.total">元
                           </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2">
                           <label for="costs" class="form-label">組合價</label>
                           <div class="d-flex align-items-center">
                             <input type="text" id="costs" class="form-control me-2" v-model.number="tempRecipe.price">元

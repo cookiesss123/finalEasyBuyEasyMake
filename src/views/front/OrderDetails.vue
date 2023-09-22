@@ -10,7 +10,6 @@ import 'vue-loading-overlay/dist/css/index.css'
 export default {
   data () {
     return {
-      user: {},
       uid: '',
       order: {},
       barWidth: 0,
@@ -24,7 +23,7 @@ export default {
   mixins: [numberCommaMixin],
   methods: {
     ...mapActions(cartStore, ['goToTop']),
-    getOrder () { // 訂單完成
+    getOrder () {
       this.isLoading = true
       const { id } = this.$route.params
       onAuthStateChanged(auth, (user) => {
@@ -48,7 +47,6 @@ export default {
           })
         } else {
           this.uid = null
-          this.user = {}
           if (!this.uid) {
             this.toastMessage('請先登入', 'error')
             this.$router.push('/loginSignup')

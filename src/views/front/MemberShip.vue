@@ -22,12 +22,10 @@ export default {
       filterOrders: [],
       selectItem: '全部',
       orderArrived: [],
-      nickNameEdit: true, // 預設關閉
-      passwordEdit: true, // 預設關閉
+      nickNameEdit: true,
+      passwordEdit: true,
       newNickName: '',
       newPassword: '',
-      nickName: '',
-      pageOrders: [],
       isLoading: false,
       fullPage: true
     }
@@ -77,7 +75,6 @@ export default {
             })
             // 避免錯誤
             if (this.filterOrders && this.$route.fullPath === '/member') {
-              // 頁碼
               this.$refs.pagination.renderPage(1, this.filterOrders)
             }
           })
@@ -91,7 +88,6 @@ export default {
         }
       })
     },
-    // 要記得也更新留言的資料
     changeEmail () {
       if (this.newNickName.length > 10) {
         this.toastMessage('暱稱不得超過10個字元', 'error')
@@ -113,7 +109,6 @@ export default {
       }
       const user = auth.currentUser
       updatePassword(user, this.newPassword).then(() => {
-        // Update successful.
         this.passwordEdit = true
         this.toastMessage('密碼變更成功')
       }).catch(() => {
@@ -121,9 +116,7 @@ export default {
         this.$router.push('/loginSignup')
       })
     },
-    // 連結到抽獎頁面
     linkToLottery () {
-      // 兩個頁面傳遞參數
       this.$router.push({
         name: 'discountsView',
         query: {
@@ -131,8 +124,6 @@ export default {
         }
       })
     },
-    // 要記得也更新留言的資料
-    // 上傳本地圖片
     async selectFile () {
       const { value: file } = await this.$swal({
         title: '選擇圖片',
@@ -146,7 +137,7 @@ export default {
       })
 
       if (file) {
-        const reader = new FileReader() // FileReader 接口提供讀取文件的方法和包含讀取结果的事件模型
+        const reader = new FileReader()
         reader.onload = (e) => {
           this.$swal({
             title: '圖片上傳成功!',
@@ -154,12 +145,11 @@ export default {
             imageAlt: 'The uploaded picture',
             imageHeight: 300
           })
-          // 更改 img
           update(ref(db), {
             [`users/${this.uid}/headshotImg/`]: e.target.result
           })
         }
-        reader.readAsDataURL(file) // 轉換為一個以 Base64 編碼的 URL 字符串
+        reader.readAsDataURL(file)
       } else {
         this.toastMessage('沒有檔案', 'error')
       }
@@ -193,7 +183,6 @@ export default {
     }
   },
   mounted () {
-    // 每個頁面都要再填入一次token 和 其它相關使用者資料 因為刷新就不見了
     this.goToTop()
 
     this.isLoading = true
@@ -201,7 +190,6 @@ export default {
     this.getOrders()
   },
   watch: {
-    // 選擇訂單狀況的子項目
     selectItem () {
       if (this.selectItem === '全部') {
         this.filterOrders = this.orders
@@ -210,10 +198,9 @@ export default {
           return order.deliveryStatus === this.selectItem
         })
       }
-      // 頁碼
       this.$refs.pagination.renderPage(1, this.filterOrders)
     },
-    user () { // user 資料載入後 把暱稱填入
+    user () {
       this.newNickName = this.user.nickName
     }
   }
@@ -403,7 +390,6 @@ export default {
                   <h3 class="fs-lg-3 fs-6">無訂單</h3>
                 </div>
             </div>
-            <!-- 頁尾 -->
             <PaginationComponent ref="pagination" :filter-orders="filterOrders" class="mt-auto"></PaginationComponent>
           </div>
         </section>

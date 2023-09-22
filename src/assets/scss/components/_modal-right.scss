@@ -3,7 +3,15 @@
         transition: transform .3s ease-out;
         position: fixed;
         margin: auto;
+        height: 100%;
         transform: translateX(250px);
         right: 0;
     }
+
+    .modal-content{
+        overflow-y: auto;
+        border-radius: 0;
+        border: none;
+        height: 100%;
+      }
 }

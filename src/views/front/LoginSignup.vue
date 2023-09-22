@@ -141,8 +141,7 @@
                           </div>
                         </VForm>
                       </div>
-                      <!-- 要循環只能 3 個 -->
-                      <div class="card-footer py-0 bg-transparent">
+                      <div class="card-footer pt-0 bg-transparent">
                             <swiper :slides-per-view="3" :space-between="10"
                             :loop="true"
                             :modules="modules"
@@ -223,7 +222,6 @@ export default {
         email: '',
         password: '',
         confirmPassword: '',
-        // 新增抽獎券
         lotteryTicket: 1,
         headshotImg: ''
       },
@@ -237,7 +235,6 @@ export default {
   },
   methods: {
     ...mapActions(cartStore, ['goToTop']),
-    // 登入 筆記寫的
     async login () {
       const email = this.loginUser.email
       const password = this.loginUser.password
@@ -251,7 +248,6 @@ export default {
           timer: 1500
         })
 
-        // 讀取使用者資料
         const dataRef = ref(db, 'users/' + userDetail.uid)
         onValue(dataRef, snapshot => {
           const data = snapshot.val()

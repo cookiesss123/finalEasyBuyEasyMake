@@ -1,5 +1,4 @@
 <template>
-    <!-- ref 都要叫modal -->
     <div class="modal fade" ref="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
         <div class="modal-dialog  modal-dialog-centered">
             <div class="modal-content">
@@ -42,7 +41,6 @@ export default {
   props: ['id', 'item', 'pageStatus', 'openDeleteModal'],
   methods: {
     ...mapActions(cartStore, ['toastMessage']),
-    // 刪除所有收藏
     deleteBookmark () {
       let bookMark = 'recipeBookmarks'
       if (this.pageStatus === 'product') {

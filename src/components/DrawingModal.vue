@@ -12,23 +12,23 @@
             </div>
             <div class="modal-body">
               <div class="row gy-3">
-                <div class="col-2">
+                <div class="col-lg-2">
                   <label for="serialNumber" class="form-label">編號（id）</label>
                   <input type="text" id="serialNumber" class="form-control" v-model="tempLottery.id" disabled>
                 </div>
-                <div class="col-4">
+                <div class="col-lg-4">
                   <label for="title" class="form-label">優惠券名稱</label>
                   <input type="text" id="title" class="form-control" v-model="tempLottery.name">
                 </div>
-                <div class="col-3">
+                <div class="col-lg-3">
                   <label for="date" class="form-label">起始日</label>
                   <input type="date" id="date" class="form-control" v-model="startDate">
                 </div>
-                <div class="col-3">
+                <div class="col-lg-3">
                   <label for="date" class="form-label">到期日</label>
                   <input type="date" id="date" class="form-control" v-model="dueDate">
                 </div>
-                <div class="col-4">
+                <div class="col-lg-4">
                   <label for="date" class="form-label">選擇抽獎食譜</label>
                   <select name="" id="" class="form-select" v-model="tempLottery.recipes" multiple>
                     <option :value="recipe" v-for="recipe in recipes" :key="recipe.id">
@@ -46,7 +46,7 @@
                     </li>
                   </ol>
                 </div>
-                <div class="col-8" >
+                <div class="col-lg-8" >
                   <div v-for="(rule, index) in tempLottery.rules" :key="index" class="mb-4">
                     <label for="description" class="form-label">抽獎券規則{{ index + 1 }}</label>
                     <textarea class="form-control" cols="10" rows="3" v-model="tempLottery.rules[index]"></textarea>
@@ -60,19 +60,19 @@
                   <h3>獎品</h3>
                     <div class="row" v-for="(prize, index) in tempLottery.prizes" :key="index + 500">
                      <h5>獎品{{ index + 1 }}</h5>
-                     <div class="col-1">
+                     <div class="col-lg-1">
                       <label for="number" class="form-label">序號：</label>
                       <input type="text" id="number" class=" form-control" v-model.number="prize.id">
                      </div>
-                     <div class="col-2">
+                     <div class="col-lg-2">
                       <label for="name" class="form-label">名稱：</label>
                       <input type="text" id="name" class=" form-control" v-model="prize.title">
                      </div>
-                     <div class="col-2">
+                     <div class="col-lg-2">
                         <label for="price" class="form-label">價格：</label>
                        <input type="text" id="price" class=" form-control" v-model.number="prize.price">
                      </div>
-                     <div class="col-7">
+                     <div class="col-lg-7">
                       <label for="img" class="form-label">圖片網址：</label>
                        <input type="text" id="img" class=" form-control" v-model="prize.img">
                      </div>

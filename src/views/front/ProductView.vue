@@ -42,7 +42,7 @@ export default {
         bulletClass: 'my-bullet-class',
         bulletActiveClass: 'my-bullet-active-class'
       },
-      mainImg: '', // 控制圖片顯示
+      mainImg: '',
       bookMark: {},
       qty: 1,
       user: {},
@@ -53,22 +53,18 @@ export default {
   },
   methods: {
     ...mapActions(cartStore, ['addCart', 'handleKeyDown', 'toastMessage', 'goToTop']),
-    // 取得產品評價
     getAllProductRates () {
       const { id } = this.$route.params
       const dataRef = ref(db, 'productRates/')
       onValue(dataRef, snapshot => {
-        // 先取得所有留言
         let rates = snapshot.val()
         rates = Object.values(rates).map((rate, index) => {
           rate.id = Object.keys(rates)[index]
           return rate
         })
-        // 再篩選個別食譜的留言
         this.productRates = rates.filter(rate => {
           return rate.productId === id
         })
-        // 篩選分數
         let scores = 0
         this.productRates.forEach(item => {
           scores += item.score
@@ -76,7 +72,6 @@ export default {
         this.averageRate = Number((scores / this.productRates.length).toFixed(1))
       })
     },
-    // 滑入滑出星級評價
     mouseoverStar (num) {
       if (num === 1 && !this.score) {
         this.$refs.rate1.src = this.fullStar
@@ -101,7 +96,7 @@ export default {
       }
     },
     mouseoutStar (num) {
-      if (num === 1 && !this.score) { // 因為滑入滑出效果影響所以要寫!this.score 的條件
+      if (num === 1 && !this.score) {
         this.$refs.rate1.src = this.star
       } else if (num === 2 && !this.score) {
         this.$refs.rate1.src = this.star
@@ -123,14 +118,12 @@ export default {
         this.$refs.rate5.src = this.star
       }
     },
-    // 增加產品評價
-    addProductRate () { // 一定要有 uid 這樣若個人資料更新 這個也可以循著uid 做更新 只有本人能寫入 所以本人id 一定要在前
+    addProductRate () {
       if (!this.score) {
         this.toastMessage('您尚未給予星級評價', 'error')
         return
       }
       const reference = ref(db, 'productRates/')
-      // 要有亂數否則會重複
       const newUserRef = push(reference)
       set(newUserRef, {
         productId: this.product.id,
@@ -152,18 +145,15 @@ export default {
       onValue(dataRef, snapshot => {
         this.product = snapshot.val()
         this.product.id = id
-        this.mainImg = this.product.imgUrl // 控制圖片一開始是主圖
+        this.mainImg = this.product.imgUrl
 
-        // 相關食譜
         const dataRef = ref(db, 'recipes/')
         onValue(dataRef, snapshot => {
           this.recipes = snapshot.val()
-          // 把物件轉成陣列 並填入id
           this.recipes = Object.entries(this.recipes).map(item => {
             item[1].id = item[0]
             return item[1]
           })
-          // 用 includes 配上 filter 找出相關食譜資料
           this.relevantRecipesInfo = this.recipes.filter(recipe => {
             return this.product.relevantRecipes.includes(recipe.title)
           })
@@ -171,7 +161,6 @@ export default {
         })
       })
     },
-    // 產品收藏 - 要先得到 uid !!!
     getBookmark () {
       onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -192,7 +181,6 @@ export default {
         }
       })
     },
-    // 增加產品收藏
     addBookmark () {
       if (!this.uid) {
         this.toastMessage('登入才可使用收藏功能', 'error')
@@ -202,7 +190,6 @@ export default {
       set(reference, this.product)
       this.toastMessage('收藏成功')
     },
-    // 刪除產品收藏
     deleteBookmark () {
       remove(ref(db, `productBookmarks/${this.uid}/${this.product.id}`))
       this.toastMessage('已刪除收藏')
@@ -224,7 +211,6 @@ export default {
         this.$refs.rate3.src = this.star
         this.$refs.rate4.src = this.star
         this.$refs.rate5.src = this.star
-        // 因為滑入滑出效果影響所以不行
       } else if (this.score === '2') {
         this.$refs.rate1.src = this.fullStar
         this.$refs.rate2.src = this.fullStar
