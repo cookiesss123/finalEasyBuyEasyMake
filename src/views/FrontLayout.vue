@@ -187,8 +187,8 @@
       <i class="bi bi-chat-dots fs-5 text-white"></i>
     </button>
 
-    <footer class="mt-auto position-relative bg-light-purple-secondary">
-        <div class="container d-flex flex-column flex-lg-row align-items-center py-3">
+    <footer class="mt-auto position-relative bg-light-purple-secondary py-4">
+        <div class="container d-flex flex-lg-row flex-column align-items-center justify-content-between">
           <div class=" d-flex justify-content-center align-items-center mb-2 mb-lg-0">
               <img src="../assets/images/loadingLogo.png" class="logo me-1" alt="logo">
               <div>
@@ -197,22 +197,23 @@
               </div>
           </div>
 
-          <div class="ms-lg-auto d-flex flex-column align-items-lg-end align-items-center">
-            <ul class="list-unstyled d-flex justify-content-between w-25">
-              <li class="hvr-bob">
-                <a href="https://www.facebook.com/profile.php?id=61551688473004" class="text-decoration-none link-primary">
-                  <i class="bi bi-facebook fs-lg-35 fs-3"></i>
-                </a>
-              </li>
-              <li class="hvr-bob">
-                <a href="mailto:@EasyMakeEasyBuy.gmail.com" class="text-decoration-none link-primary">
-                  <i class="bi bi-envelope fs-lg-35 fs-3"></i>
-                </a>
-              </li>
-            </ul>
+          <div>
             <p class="mb-0 text-center text-lg-start fs-10">本網站僅作為網頁製作練習使用<br class="d-block d-lg-none"><span class="d-none d-lg-inline-block">，</span>圖片、資料源自網路，無任何商業利益行為</p>
-            <p class="mb-0 fs-10">Copyright © 2022 甜點食譜一鍵購 All Rights Reserved.</p>
+            <p class="mb-lg-0 fs-10">Copyright © 2022 甜點食譜一鍵購 All Rights Reserved.</p>
           </div>
+          <ul class="text-center mb-0">
+            <li class="hvr-bob me-3 ms-n3">
+              <a href="https://www.facebook.com/profile.php?id=61551688473004" class="text-decoration-none link-primary">
+                <i class="bi bi-facebook fs-lg-35 fs-3"></i>
+              </a>
+            </li>
+            <li class="hvr-bob">
+              <a href="mailto:@EasyMakeEasyBuy.gmail.com" class="text-decoration-none link-primary">
+                <i class="bi bi-envelope fs-lg-35 fs-3"></i>
+              </a>
+            </li>
+          </ul>
+
         </div>
     </footer>
   </div>
