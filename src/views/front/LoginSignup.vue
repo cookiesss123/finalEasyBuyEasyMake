@@ -1,5 +1,5 @@
 <template>
-    <main class="py-64 bg-img-fixed d-flex" style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
+    <div class="py-64 bg-img-fixed d-flex" style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
           <div class="container my-auto">
             <span class="rounded-pill bg-transGray-6 backdrop-blur-10 badge fs-6 my-4">
               <RouterLink to="/home" class="">首頁</RouterLink><span class="text-darkBrown"> / {{ activePage }}</span>
@@ -186,7 +186,7 @@
                 </div>
             </div>
           </div>
-    </main>
+    </div>
 </template>
 <script>
 import { mapActions } from 'pinia'

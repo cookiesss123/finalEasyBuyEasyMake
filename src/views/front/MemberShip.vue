@@ -33,6 +33,8 @@ export default {
   methods: {
     ...mapActions(cartStore, ['toastMessage', 'goToTop']),
     getUserInformation () {
+      this.isLoading = true
+
       onAuthStateChanged(auth, (user) => {
         if (user) {
           this.uid = user.uid
@@ -44,12 +46,7 @@ export default {
         } else {
           this.uid = null
           this.user = {}
-          this.$swal({
-            icon: 'error',
-            title: '請先登入',
-            showConfirmButton: false,
-            timer: 1500
-          })
+          this.toastMessage('請先登入', 'error')
           this.$router.push('/loginSignup')
         }
       })
@@ -81,10 +78,6 @@ export default {
         } else {
           this.uid = null
           this.user = {}
-          if (!this.uid) {
-            this.toastMessage('請先登入', 'error')
-            this.$router.push('/loginSignup')
-          }
         }
       })
     },
@@ -184,8 +177,6 @@ export default {
   },
   mounted () {
     this.goToTop()
-
-    this.isLoading = true
     this.getUserInformation()
     this.getOrders()
   },

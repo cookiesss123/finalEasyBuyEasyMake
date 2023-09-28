@@ -393,7 +393,7 @@ export default {
             <button type="submit" class="ms-auto btn btn-primary mt-3" @click.prevent="addComments">送出</button>
           </div>
         </form>
-        <div class="row gy-5 mt-3">
+        <div class="row gy-5">
           <div class="col-12 border-bottom d-flex align-items-center mb-2" v-for="comment in recipeComments" :key="comment + 3657">
             <img v-if="comment.userImg" :src="comment.userImg" alt="大頭貼" width="50" height="50" class="rounded-circle me-3 object-fit-cover mb-auto">
             <i v-else-if="!comment.userImg" class="bi bi-person-circle me-3 fs-45 lh-1 mb-auto"></i>
