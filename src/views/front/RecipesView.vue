@@ -2,11 +2,12 @@
 import { RouterLink } from 'vue-router'
 import { mapActions } from 'pinia'
 import cartStore from '../../stores/carts'
+import markStore from '../../stores/bookmark'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
 import PaginationComponent from '../../components/PaginationComponent.vue'
 import Collapse from 'bootstrap/js/dist/collapse'
 import { db, auth } from '../../firebase/db'
-import { ref, set, remove, onValue } from 'firebase/database'
+import { ref, onValue } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
 
 import Loading from 'vue-loading-overlay'
@@ -40,6 +41,7 @@ export default {
   },
   methods: {
     ...mapActions(cartStore, ['toastMessage']),
+    ...mapActions(markStore, ['addBookmark', 'deleteBookmark']),
     getRecipes () {
       const dataRef = ref(db, 'recipes/')
       onValue(dataRef, snapshot => {
@@ -123,19 +125,6 @@ export default {
           this.uid = null
         }
       })
-    },
-    addBookmark (recipe) {
-      if (!this.uid) {
-        this.toastMessage('登入才可使用收藏功能', 'error')
-        return
-      }
-      const reference = ref(db, `recipeBookmarks/${this.uid}/${recipe.id}`)
-      set(reference, recipe)
-      this.toastMessage('收藏成功')
-    },
-    deleteBookmark (id) {
-      remove(ref(db, `recipeBookmarks/${this.uid}/${id}`))
-      this.toastMessage('已刪除收藏')
     }
   },
   mounted () {
@@ -311,11 +300,11 @@ export default {
                 <span class="badge rounded-pill bg-primary position-absolute start-0 bottom-0 m-3">{{ recipe.category }}</span>
                 <p class="detail position-absolute top-50 start-50 translate-middle fw-bold letter-spacing-5 link-darkBrown fs-xl-5 text-center">查看<br class="d-xl-none d-lg-block">詳細食譜</p>
               </RouterLink>
-              <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>addBookmark(recipe)">
+              <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>addBookmark('recipeBookmarks', recipe, uid)">
                 <img src="../../assets/images/image5.png" alt="收藏按鈕-未收藏">
               </button>
               <div v-for="mark in bookMarks" :key="mark + 4567">
-                <button v-if="mark === recipe.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-md-3"  @click="()=>deleteBookmark(recipe.id)">
+                <button v-if="mark === recipe.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-md-3"  @click="()=>deleteBookmark('recipeBookmarks', recipe.id, uid)">
                     <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
                 </button>
               </div>

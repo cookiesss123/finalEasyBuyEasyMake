@@ -2,11 +2,12 @@
 import { RouterLink } from 'vue-router'
 import { mapActions, mapState } from 'pinia'
 import cartStore from '../../stores/carts'
+import markStore from '../../stores/bookmark'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
 import PaginationComponent from '../../components/PaginationComponent.vue'
 import Collapse from 'bootstrap/js/dist/collapse'
 import { db, auth } from '../../firebase/db'
-import { ref, onValue, set, remove } from 'firebase/database'
+import { ref, onValue } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
 
 import Loading from 'vue-loading-overlay'
@@ -38,6 +39,7 @@ export default {
   mixins: [numberCommaMixin],
   methods: {
     ...mapActions(cartStore, ['addCart', 'toastMessage']),
+    ...mapActions(markStore, ['addBookmark', 'deleteBookmark']),
     getProducts () {
       const dataRef = ref(db, 'products/')
       onValue(dataRef, snapshot => {
@@ -145,19 +147,6 @@ export default {
           this.uid = null
         }
       })
-    },
-    addBookmark (product) {
-      if (!this.uid) {
-        this.toastMessage('登入才可使用收藏功能', 'error')
-        return
-      }
-      const reference = ref(db, `productBookmarks/${this.uid}/${product.id}`)
-      set(reference, product)
-      this.toastMessage('收藏成功')
-    },
-    deleteBookmark (id) {
-      remove(ref(db, `productBookmarks/${this.uid}/${id}`))
-      this.toastMessage('已刪除收藏')
     }
   },
   mounted () {
@@ -326,11 +315,11 @@ export default {
                   {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                 </span>
                 </RouterLink>
-                <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>addBookmark(product)">
+                <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>addBookmark('productBookmarks' ,product, uid)">
                   <img src="../../assets/images/image5.png" alt="收藏按鈕-未收藏">
                 </button>
                 <div v-for="mark in bookMarks" :key="mark">
-                  <button v-if="mark === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-md-3"  @click="()=>deleteBookmark(product.id)">
+                  <button v-if="mark === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-md-3"  @click="()=>deleteBookmark('productBookmarks', product.id, uid)">
                       <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
                   </button>
                 </div>

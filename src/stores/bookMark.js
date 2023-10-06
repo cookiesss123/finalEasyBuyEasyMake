@@ -1,70 +1,29 @@
 import { defineStore } from 'pinia'
-// 環境不屬於 vue 所以不能用 this 取得 axios
-import axios from 'axios'
-// import Swal from 'sweetalert2/dist/sweetalert2.js'
-import 'sweetalert2/src/sweetalert2.scss'
-// 在js檔案要引入才能用
-// import router from '../router'
+import { db } from '../firebase/db'
+import { ref, set, remove } from 'firebase/database'
+import useCartStore from './carts'
 
-const { VITE_PATH } = import.meta.env
+const cartStore = useCartStore()
 
-const bookMarkStore = defineStore('bookMark', {
+const markStore = defineStore('bookmark', {
   state: () => {
     return {
-      bookMarks: []
     }
   },
   actions: {
-    // 取得書籤 首頁、甜點食譜、材料頁面、書籤頁 都會有
-    getBookmarks (userId, bookMarkType, category) {
-      const url = `${VITE_PATH}/600/users/${userId}/${bookMarkType}?_expand=${category}`
-      axios.get(url, {
-        headers: {
-          authorization: `Bearer ${this.token}`
-        }
-      })
-        .then(res => {
-          console.log(res.data)
-          this.bookMarks = res.data
-        }).catch(err => {
-          console.log(err)
-          console.log('得不到最愛資料')
-        })
-    },
-    deleteBookmark (id) { // 可用600嗎?
-      let url = `${VITE_PATH}/600/recipeBookmarks/${id}`
-      if (this.pageStatus === 'product') {
-        url = `${VITE_PATH}/600/productBookmarks/${id}`
+    addBookmark (bookMark, item, uid) {
+      if (!uid) {
+        cartStore.toastMessage('登入才可使用收藏功能', 'error')
+        return
       }
-      axios.delete(url,
-        {
-          headers: {
-            authorization: `Bearer ${this.token}`
-          }
-        })
-        .then(res => {
-          console.log(res.data)
-          this.hide()
-          //   重新渲染頁面
-          if (this.pageStatus === 'recipe') {
-            this.getBookmarks(this.userId, 'recipeBookmarks', this.pageStatus)
-          } else if (this.pageStatus === 'product') {
-            this.getBookmarks(this.userId, 'productBookmarks', this.pageStatus)
-          }
-          this.$swal({
-            icon: 'success',
-            title: '收藏刪除成功',
-            showConfirmButton: false,
-            timer: 1500
-          })
-        }).catch(err => {
-          console.log(err)
-        })
+      const reference = ref(db, `${bookMark}/${uid}/${item.id}`)
+      set(reference, item)
+      cartStore.toastMessage('收藏成功')
+    },
+    deleteBookmark (bookMark, itemId, uid) {
+      remove(ref(db, `${bookMark}/${uid}/${itemId}`))
+      cartStore.toastMessage('已刪除收藏')
     }
-  },
-  // getters 概念同「computed」
-  getters: {}
+  }
 })
-
-// 可以是預設匯出 也可以是具名匯出
-export default bookMarkStore
+export default markStore

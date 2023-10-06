@@ -6,6 +6,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import { mapActions } from 'pinia'
 import cartStore from '../../stores/carts'
+import markStore from '../../stores/bookmark'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
 import { db, auth } from '../../firebase/db'
 import { ref, onValue, set, remove, push } from 'firebase/database'
@@ -48,6 +49,7 @@ export default {
   },
   methods: {
     ...mapActions(cartStore, ['addCart', 'toastMessage', 'goToTop']),
+    ...mapActions(markStore, ['addBookmark', 'deleteBookmark']),
     getMyThumb () {
       onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -157,19 +159,6 @@ export default {
           this.bookMark = null
         }
       })
-    },
-    addBookmark () {
-      if (!this.uid) {
-        this.toastMessage('登入才可使用收藏功能', 'error')
-        return
-      }
-      const reference = ref(db, `recipeBookmarks/${this.uid}/${this.recipe.id}`)
-      set(reference, this.recipe)
-      this.toastMessage('收藏成功')
-    },
-    deleteBookmark () {
-      remove(ref(db, `recipeBookmarks/${this.uid}/${this.recipe.id}`))
-      this.toastMessage('已刪除收藏')
     }
   },
   mounted () {
@@ -239,10 +228,10 @@ export default {
               <span class="badge rounded-pill bg-primary fs-6 me-2">{{ recipe.category }}</span>
               <h2 class="mb-0 fs-lg-4 fs-5 fw-bold">{{ recipe.title }}</h2>
               <div class="d-flex align-items-center ms-auto">
-                <button v-if="!bookMark" type="button" class="border-0 bg-transparent text-tomato fs-4 p-0 mt-1" @click="()=>addBookmark(recipe.id)">
+                <button v-if="!bookMark" type="button" class="border-0 bg-transparent text-tomato fs-4 p-0 mt-1" @click="()=>addBookmark('recipeBookmarks', recipe, uid)">
                   <i class="bi bi-heart"></i>
                 </button>
-                <button v-else-if="bookMark" type="button" class=" border-0 bg-transparent fs-4 text-tomato p-0 mt-1" @click="deleteBookmark">
+                <button v-else-if="bookMark" type="button" class=" border-0 bg-transparent fs-4 text-tomato p-0 mt-1" @click="()=>deleteBookmark('recipeBookmarks', recipe.id, uid)">
                   <i class="bi bi-heart-fill"></i>
                 </button>
                 <button v-if="!myThumb" type="button" class="badge border border-primary rounded-pill fs-6 ms-4 btn-like" :class="{'text-primary': allThumbNum,'text-gray': !allThumbNum}" @click="addThumb">

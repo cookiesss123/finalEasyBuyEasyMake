@@ -10,7 +10,7 @@ import cartStore from '../../stores/carts'
 import markStore from '../../stores/bookmark'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
 import { db, auth } from '../../firebase/db'
-import { ref, onValue } from 'firebase/database'
+import { ref, onValue, set, remove } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
 
 import Loading from 'vue-loading-overlay'
@@ -163,6 +163,19 @@ export default {
           this.uid = null
         }
       })
+    },
+    addBookmark (bookMark, item) {
+      if (!this.uid) {
+        this.toastMessage('登入才可使用收藏功能', 'error')
+        return
+      }
+      const reference = ref(db, `${bookMark}/${this.uid}/${item.id}`)
+      set(reference, item)
+      this.toastMessage('收藏成功')
+    },
+    deleteBookmark (bookMark, itemId) {
+      remove(ref(db, `${bookMark}/${this.uid}/${itemId}`))
+      this.toastMessage('已刪除收藏')
     },
     searchRecipes () {
       this.$router.push({
@@ -680,11 +693,11 @@ export default {
                 <span class="badge rounded-pill bg-primary position-absolute start-0 bottom-0 m-3">{{ recipe.category }}</span>
                 <p class="detail position-absolute top-50 start-50 translate-middle fw-bold letter-spacing-5 link-darkBrown fs-xl-5 text-center">查看<br class="d-xl-none d-lg-block">詳細食譜</p>
               </RouterLink>
-              <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('recipeBookmarks',recipe, uid)">
+              <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('recipeBookmarks',recipe)">
                 <img src="../../assets/images/image5.png" alt="收藏按鈕-未收藏">
               </button>
               <div v-for="mark in recipeBookMarks" :key="mark">
-                <button v-if="mark === recipe.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-3" @click="()=>deleteBookmark('recipeBookmarks', recipe.id, uid)">
+                <button v-if="mark === recipe.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-3" @click="()=>deleteBookmark('recipeBookmarks', recipe.id)">
                     <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
                 </button>
               </div>
@@ -720,11 +733,11 @@ export default {
                 <img :src="recipe.image" class="object-fit-cover card-img" :alt="recipe.title">
                 <span class="badge fs-md-6 rounded-pill bg-primary position-absolute start-0 bottom-0 m-2 m-md-3">{{ recipe.category }}</span>
               </RouterLink>
-              <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>addBookmark('recipeBookmarks',recipe, uid)">
+              <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>addBookmark('recipeBookmarks',recipe)">
                 <img src="../../assets/images/image5.png" alt="收藏按鈕-未收藏">
               </button>
               <div v-for="mark in recipeBookMarks" :key="mark">
-                <button v-if="mark === recipe.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>deleteBookmark('recipeBookmarks', recipe.id, uid)">
+                <button v-if="mark === recipe.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>deleteBookmark('recipeBookmarks', recipe.id)">
                     <img src="../../assets/images/image4.png"  alt="收藏按鈕-已收藏">
                 </button>
               </div>
@@ -880,11 +893,11 @@ export default {
                     {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                   </span>
                 </RouterLink>
-                <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('productBookmarks' ,product, uid)">
+                <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('productBookmarks' ,product)">
                   <img src="../../assets/images/image5.png" alt="收藏按鈕-未收藏">
                 </button>
                 <div v-for="mark in productBookmarks" :key="mark">
-                  <button v-if="mark === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-3"  @click="()=>deleteBookmark('productBookmarks', product.id, uid)">
+                  <button v-if="mark === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-3"  @click="()=>deleteBookmark('productBookmarks', product.id)">
                       <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
                   </button>
                 </div>
@@ -926,11 +939,11 @@ export default {
                     {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
                   </span>
                 </RouterLink>
-                <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>addBookmark('productBookmarks' ,product, uid)">
+                <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>addBookmark('productBookmarks' ,product)">
                   <img src="../../assets/images/image5.png" alt="收藏按鈕-未收藏">
                 </button>
                 <div v-for="mark in productBookmarks" :key="mark">
-                  <button v-if="mark === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-md-3"  @click="()=>deleteBookmark('productBookmarks', product.id, uid)">
+                  <button v-if="mark === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-md-3"  @click="()=>deleteBookmark('productBookmarks', product.id)">
                       <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
                   </button>
                 </div>

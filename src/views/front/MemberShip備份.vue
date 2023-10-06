@@ -33,35 +33,52 @@ export default {
   methods: {
     ...mapActions(cartStore, ['toastMessage', 'goToTop']),
     getUserInformation () {
-      return new Promise((resolve, reject) => {
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-            this.uid = user.uid
-            const dataRef = ref(db, 'users/' + this.uid)
-            onValue(dataRef, snapshot => {
-              const userData = snapshot.val()
-              resolve(userData)
-            })
-          } else {
+      this.isLoading = true
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          this.uid = user.uid
+          const dataRef = ref(db, 'users/' + user.uid)
+          onValue(dataRef, snapshot => {
+            this.user = snapshot.val()
             this.isLoading = false
-            this.uid = null
-            this.user = {}
-            this.toastMessage('請先登入', 'error')
-            this.$router.push('/loginSignup')
-          }
-        })
+          })
+        } else {
+          this.uid = null
+          this.user = {}
+          this.toastMessage('請先登入', 'error')
+          this.$router.push('/loginSignup')
+        }
       })
     },
     getOrders () {
-      return new Promise((resolve, reject) => {
-        const dataRef = ref(db, `orders/${this.uid}`)
-        onValue(dataRef, snapshot => {
-          let orders = snapshot.val()
-          if (!orders) {
-            orders = {}
-          }
-          resolve(orders)
-        })
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          this.uid = user.uid
+          const dataRef = ref(db, `orders/${this.uid}`)
+          onValue(dataRef, snapshot => {
+            const orders = snapshot.val()
+            if (!orders) {
+              return
+            }
+            this.orders = Object.entries(orders).map(item => {
+              item[1].id = item[0]
+              return item[1]
+            })
+            // 反轉 最晚的訂單在前面
+            this.filterOrders = (this.orders).reverse()
+            this.orderArrived = this.orders.filter(order => {
+              return order.deliveryStatus === '待取貨'
+            })
+            // 避免錯誤
+            if (this.filterOrders && this.$route.fullPath === '/member') {
+              this.$refs.pagination.renderPage(1, this.filterOrders)
+            }
+          })
+        } else {
+          this.uid = null
+          this.user = {}
+        }
       })
     },
     changeEmail () {
@@ -156,37 +173,12 @@ export default {
       } else {
         this.toastMessage('請勿輸入空值', 'error')
       }
-    },
-    async getAllData () {
-      try {
-        this.isLoading = true
-        this.user = await this.getUserInformation()
-        this.orders = await this.getOrders()
-        // 處理訂單資訊
-        this.orders = Object.entries(this.orders).map(item => {
-          item[1].id = item[0]
-          return item[1]
-        })
-        // 反轉 最晚的訂單在前面
-        this.filterOrders = (this.orders).reverse()
-        this.orderArrived = this.orders.filter(order => {
-          return order.deliveryStatus === '待取貨'
-        })
-        // 避免錯誤
-        if (this.filterOrders && this.$route.fullPath === '/member') {
-          this.$refs.pagination.renderPage(1, this.filterOrders)
-        }
-        this.isLoading = false
-      } catch (err) {
-        console.log(err, '錯誤')
-      }
     }
   },
   mounted () {
     this.goToTop()
     this.getUserInformation()
-    this.getAllData()
-    // this.getOrders()
+    this.getOrders()
   },
   watch: {
     selectItem () {
@@ -207,25 +199,25 @@ export default {
 </script>
 <template>
     <div class="no-scroll-x">
-      <loading v-model:active="isLoading"
-              :can-cancel="false"
-              :is-full-page="fullPage"
-              :lock-scroll="true">
-              <div class="d-flex flex-column align-items-center py-96">
-                <img src="../../assets/images/loadingLogo.png" class="loading-logo mb-3" alt="logo" >
-                <p class="text-center fw-bold text-purple fs-md-2 fs-5">
-                  <span class="me-1 animate-text">L</span>
-                  <span class="mx-1 animate-text">o</span>
-                  <span class="mx-1 animate-text">a</span>
-                  <span class="mx-1 animate-text">d</span>
-                  <span class="mx-1 animate-text">i</span>
-                  <span class="mx-1 animate-text">n</span>
-                  <span class="mx-1 animate-text">g</span>
-                  <span class="mx-2 animate-text">.</span>
-                  <span class="me-2 animate-text">.</span>
-                  <span class="animate-text">.</span>
-                </p>
-              </div>
+      <loading v-if="uid" v-model:active="isLoading"
+                 :can-cancel="false"
+                 :is-full-page="fullPage"
+                 :lock-scroll="true">
+                 <div class="d-flex flex-column align-items-center py-96">
+      <img src="../../assets/images/loadingLogo.png" class="loading-logo mb-3" alt="logo" >
+      <p class="text-center fw-bold text-purple fs-md-2 fs-md-2 fs-5">
+        <span class="me-1 animate-text">L</span>
+        <span class="mx-1 animate-text">o</span>
+        <span class="mx-1 animate-text">a</span>
+        <span class="mx-1 animate-text">d</span>
+        <span class="mx-1 animate-text">i</span>
+        <span class="mx-1 animate-text">n</span>
+        <span class="mx-1 animate-text">g</span>
+        <span class="mx-2 animate-text">.</span>
+        <span class="me-2 animate-text">.</span>
+        <span class="animate-text">.</span>
+      </p>
+    </div>
       </loading>
       <section class="text-center">
         <div class="py-lg-200 py-96 bg-cover-center" style="background-image: url('https://images.unsplash.com/photo-1678465952850-0eb0bb982835?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
@@ -332,13 +324,10 @@ export default {
                 </a>
               </li>
               <li>
-                <a href="#" class="hvr-rectangle-out position-relative bg-transparent text-decoration-none py-2 px-3 text-gray" :class="{'active-order':selectItem === '待取貨', 'text-white':selectItem === '待取貨','fw-bold':selectItem === '待取貨'}" @click.prevent="() => selectItem ='待取貨'">
+                <a href="#" class="hvr-rectangle-out bg-transparent text-decoration-none py-2 px-3 text-gray" :class="{'active-order':selectItem === '待取貨', 'text-white':selectItem === '待取貨','fw-bold':selectItem === '待取貨'}" @click.prevent="() => selectItem ='待取貨'">
                   <i class="bi bi-house-check"></i>
                   <span class="ms-lg-2 ms-1 d-lg-inline-block" :class="{'d-none': selectItem !== '待取貨'}">
                     待取貨
-                  </span>
-                  <span v-if="orderArrived.length" class="position-absolute top-0 start-100 translate-middle text-center rounded-circle border fw-bold border-primary text-primary fs-12 alert-num">
-                    {{ orderArrived.length }}
                   </span>
                 </a>
               </li>

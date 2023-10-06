@@ -6,24 +6,8 @@
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 export default {
-  mounted () { // 等資料都載入 元素也載入了 再載入AOS 有載入先後順序建議放app.vue
+  mounted () {
     AOS.init()
   }
 }
 </script>
-
-<style lang="scss">
-  body{
-      font-family: 'Noto Sans TC', sans-serif;
-      color: #493A25;
-  }
-  /* 更改 Select 组件的背景颜色和文本颜色 */
-// select:focus > option:checked {
-//     background: #faa635 !important;
-// }
-
-// select:focus > option:hover {
-//   background-color: #faa635 !important;
-// }
-
-</style>

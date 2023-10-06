@@ -6,11 +6,12 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import { mapActions, mapState } from 'pinia'
 import cartStore from '../../stores/carts'
+import markStore from '../../stores/bookmark'
 import fullStar from '../../assets/images/icon-star-filled.png'
 import star from '../../assets/images/icon-star.png'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
 import { db, auth } from '../../firebase/db'
-import { ref, onValue, set, remove, push } from 'firebase/database'
+import { ref, onValue, set, push } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
@@ -53,6 +54,7 @@ export default {
   },
   methods: {
     ...mapActions(cartStore, ['addCart', 'handleKeyDown', 'toastMessage', 'goToTop']),
+    ...mapActions(markStore, ['addBookmark', 'deleteBookmark']),
     getAllProductRates () {
       const { id } = this.$route.params
       const dataRef = ref(db, 'productRates/')
@@ -180,19 +182,6 @@ export default {
           this.bookMark = null
         }
       })
-    },
-    addBookmark () {
-      if (!this.uid) {
-        this.toastMessage('登入才可使用收藏功能', 'error')
-        return
-      }
-      const reference = ref(db, `productBookmarks/${this.uid}/${this.product.id}`)
-      set(reference, this.product)
-      this.toastMessage('收藏成功')
-    },
-    deleteBookmark () {
-      remove(ref(db, `productBookmarks/${this.uid}/${this.product.id}`))
-      this.toastMessage('已刪除收藏')
     }
   },
   mounted () {
@@ -301,13 +290,13 @@ export default {
             </span>
             <h2 class="mb-0 fs-lg-4 fs-5 fw-bold">{{ product.title }}</h2>
             <div class="d-flex align-items-center ms-auto ">
-              <button v-if="!bookMark" type="button" class="border-0 bg-transparent text-tomato p-0 mt-1" @click="()=>addBookmark(product.id)">
+              <button v-if="!bookMark" type="button" class="border-0 bg-transparent text-tomato p-0 mt-1" @click="()=>addBookmark('productBookmarks' ,product, uid)">
                 <i class="bi bi-heart fs-4"></i>
               </button>
-              <button v-else-if="bookMark" type="button" class=" border-0 bg-transparent text-tomato p-0 mt-1" @click="deleteBookmark">
+              <button v-else-if="bookMark" type="button" class=" border-0 bg-transparent text-tomato p-0 mt-1" @click="deleteBookmark('productBookmarks', product.id, uid)">
                 <i class="bi bi-heart-fill fs-4"></i>
               </button>
-              <div class="badge border rounded-pill ms-4" :class="{'text-yellow': averageRate, 'text-gray': !averageRate,'border-yellow': averageRate, 'border-gray': !averageRate, 'bg-lightYellow': averageRate, 'bg-whiteGray': !averageRate}" style="font-size: 16px;">
+              <div class="badge border rounded-pill ms-4 fs-6" :class="{'text-yellow': averageRate, 'text-gray': !averageRate,'border-yellow': averageRate, 'border-gray': !averageRate, 'bg-lightYellow': averageRate, 'bg-whiteGray': !averageRate}">
                 {{ averageRate ? averageRate : 0}}
                 <i class="bi bi-star-fill"></i>
               </div>
@@ -326,7 +315,6 @@ export default {
                 </select>
                 <button :disabled="loadingItem === 'loading'" class="btn btn-primary" type="button" @click="()=>addCart(product, qty)">
                   購買
-                  <font-awesome-icon v-if="loadingItem === 'loading'" icon="fa-solid fa-spinner" spin />
                 </button>
               </div>
           </div>
@@ -380,7 +368,7 @@ export default {
             auto_awesome
           </span>
           顧客評價
-          <div class="ms-3 badge border rounded-pill fs-6" :class="{'text-yellow': productRates.length, 'text-gray': !productRates.length,'border-yellow': productRates.length, 'border-gray': !productRates.length, 'bg-lightYellow': productRates.length, 'bg-whiteGray': !productRates.length}" style="font-size: 16px;">
+          <div class="ms-3 badge border rounded-pill fs-6" :class="{'text-yellow': productRates.length, 'text-gray': !productRates.length,'border-yellow': productRates.length, 'border-gray': !productRates.length, 'bg-lightYellow': productRates.length, 'bg-whiteGray': !productRates.length}">
           {{ productRates.length }} 則
         </div>
           <RouterLink to="/loginSignup" v-if="!uid" class="ms-auto mb-1 btn btn-outline-gradient rounded-pill">我要登入寫評價</RouterLink>

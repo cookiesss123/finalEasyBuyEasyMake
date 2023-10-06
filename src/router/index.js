@@ -91,11 +91,6 @@ const routes = [
         path: 'loginSignup',
         component: () => import('../views/front/LoginSignup.vue')
       },
-      // {
-      //   path: 'signup',
-      //   component: () => import('../views/front/SignUp.vue')
-      // },
-      // 404頁面
       {
         path: '/:pathMatch(.*)*',
         component: () => import('../views/front/NotFound.vue')
@@ -110,12 +105,6 @@ const routes = [
       name: 'homePage'
     }
   }
-  // {
-  //   path: '/loginSignup',
-  //   component: () => import('../views/LoginSignup.vue'),
-  //   children: [
-  //   ]
-  // }
 ]
 
 const router = createRouter({
