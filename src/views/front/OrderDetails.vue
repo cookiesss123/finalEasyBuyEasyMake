@@ -83,7 +83,7 @@ export default {
       </p>
     </div>
         </loading>
-        <nav aria-label="breadcrumb"  data-aos="fade-up">
+        <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item "><RouterLink to="/member" href="#" class="link-primary">會員專區</RouterLink></li>
                 <li class="breadcrumb-item ">訂單狀況</li>
@@ -91,7 +91,7 @@ export default {
             </ol>
         </nav>
 
-        <div class="col-lg-6"  data-aos="fade-up">
+        <div class="col-lg-6" >
             <table class="table">
             <thead>
                 <tr>
@@ -108,7 +108,7 @@ export default {
             </table>
         </div>
 
-        <div class="position-relative w-100 mt-lg-5 my-5"  data-aos="fade-up">
+        <div class="position-relative w-100 mt-lg-5 my-5" >
             <div class="line-gray border-top position-absolute border-2 z-index-n1 top-8"></div>
             <div class="border-top border-primary position-absolute border-2 z-index-n1 top-8" :class="{'w-33': barWidth === 33, 'w-66': barWidth === 66, 'line-gray': barWidth === 100}"></div>
 
@@ -130,7 +130,7 @@ export default {
             </ul>
         </div>
 
-        <div class="row gx-5 gy-5 row-cols-1 row-cols-lg-2"  data-aos="fade-up">
+        <div class="row gx-5 gy-5 row-cols-1 row-cols-lg-2" >
             <div class="col">
                 <h4  class="text-center fw-bold bg-secondary py-2">訂購商品資訊</h4>
                 <div v-if="order.cart" class="py-3">

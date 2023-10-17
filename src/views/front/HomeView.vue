@@ -5,16 +5,20 @@ import { Navigation, Pagination, Autoplay } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import { mapActions } from 'pinia'
+// mapState
+import { mapActions, mapState } from 'pinia'
 import cartStore from '../../stores/carts'
 import markStore from '../../stores/bookmark'
+import dataStore from '../../stores/mainData'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
-import { db, auth } from '../../firebase/db'
-import { ref, onValue } from 'firebase/database'
-import { onAuthStateChanged } from 'firebase/auth'
+// import { db, auth } from '../../firebase/db'
+// import { ref, onValue } from 'firebase/database'
+// import { onAuthStateChanged } from 'firebase/auth'
 
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
+
+import { problems, solutions } from '../../utils/publicData'
 export default {
   components: {
     Swiper,
@@ -24,7 +28,9 @@ export default {
   mixins: [numberCommaMixin],
   data () {
     return {
-      uid: '',
+      // uid: '',
+      problems,
+      solutions,
       modules: [Navigation, Pagination, Autoplay],
       navigation: {
         nextEl: '.swiper-button-next',
@@ -35,16 +41,14 @@ export default {
         bulletClass: 'my-bullet-class',
         bulletActiveClass: 'my-bullet-active-class'
       },
-      thumbs: {},
-      recipeBookMarks: [],
-      productBookmarks: [],
-      products: [],
+      // recipeBookMarks: [],
+      // productBookmarks: [],
+      popularRecipes: [],
       goodProducts: [],
       recipeSearchName: '',
       selectItem: '全部',
       highOrLow: '不拘',
       priceOrRate: '成本',
-      popularRecipes: [],
 
       productSearchName: '',
       productHighOrLow: '低到高',
@@ -56,113 +60,25 @@ export default {
   },
   methods: {
     ...mapActions(cartStore, ['toastMessage', 'addCart', 'goToTop']),
-    ...mapActions(markStore, ['addBookmark', 'deleteBookmark']),
-    getPopularRecipes () {
-      this.isLoading = true
+    ...mapActions(markStore, ['addBookmark', 'deleteBookmark', 'getBookmarks']),
+    ...mapActions(dataStore, ['getRecipes', 'getProducts']),
+    async getData () {
+      try {
+        const res = await Promise.all([this.getRecipes(), this.getProducts()])
+        const [recipes, products] = res
 
-      const dataRef = ref(db, 'recipes/')
-      onValue(dataRef, snapshot => {
-        let recipes = snapshot.val()
-        recipes = Object.entries(recipes).map(item => {
-          item[1].id = item[0]
-          return item[1]
+        this.popularRecipes = recipes.sort((a, b) => {
+          return b.thumbs - a.thumbs
         })
-        const dataRef = ref(db, 'recipeThumbs/')
-        onValue(dataRef, snapshot => {
-          this.thumbs = snapshot.val()
-          // 把讚數填入
-          recipes.forEach((recipe, index) => {
-            Object.keys(this.thumbs).forEach(thumbId => {
-              if (recipe.id === thumbId) {
-                recipes[index].thumbs = this.thumbs[recipe.id].thumbs
-              }
-            })
-          })
-          recipes.forEach((recipe, index) => {
-            if (!recipe.thumbs) {
-              recipes[index].thumbs = 0
-            }
-          })
-          this.popularRecipes = recipes.sort((a, b) => {
-            return b.thumbs - a.thumbs
-          })
-          this.popularRecipes = this.popularRecipes.slice(0, 10)
+        this.popularRecipes = this.popularRecipes.slice(0, 10)
 
-          this.isLoading = false
-        })
-      })
-    },
-    getProducts () {
-      const dataRef = ref(db, 'products/')
-      onValue(dataRef, snapshot => {
-        this.products = snapshot.val()
-        this.products = Object.entries(this.products).map(item => {
-          item[1].id = item[0]
-          return item[1]
-        })
-        const dataRef = ref(db, 'productRates/')
-        onValue(dataRef, snapshot => {
-          let rates = snapshot.val()
-          rates = Object.values(rates).map((rate, index) => {
-            rate.id = Object.keys(rates)[index]
-            return rate
-          })
-          this.products.forEach((product, index) => {
-            rates.forEach(item => {
-              if (product.id === item.productId && !this.products[index].scores) {
-                this.products[index].scores = item.score
-                this.products[index].ratePeople = 1
-                this.products[index].averageRate = Number((this.products[index].scores / this.products[index].ratePeople).toFixed(1))
-              } else if (product.id === item.productId && this.products[index].scores) {
-                this.products[index].scores += item.score
-                this.products[index].ratePeople += 1
-                this.products[index].averageRate = Number((this.products[index].scores / this.products[index].ratePeople).toFixed(1))
-              }
-            })
-          })
-          this.products.forEach((product, index) => {
-            if (!product.averageRate) {
-              this.products[index].scores = 0
-              this.products[index].ratePeople = 0
-              this.products[index].averageRate = 0
-            }
-          })
-          this.goodProducts = this.products.filter(product => product.averageRate >= 4)
-          this.goodProducts = this.goodProducts.sort((a, b) => b.averageRate - a.averageRate)
-        })
-      })
-    },
-    getRecipeBookmarks () {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          this.uid = user.uid
-          const dataRef = ref(db, `recipeBookmarks/${this.uid}`)
-          onValue(dataRef, snapshot => {
-            this.recipeBookMarks = snapshot.val()
-            if (this.recipeBookMarks) {
-              this.recipeBookMarks = Object.keys(this.recipeBookMarks)
-            }
-          })
-        } else {
-          this.uid = null
-        }
-      })
-    },
-    getProductBookmarks () {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          this.uid = user.uid
-          const dataRef = ref(db, `productBookmarks/${this.uid}`)
-          onValue(dataRef, snapshot => {
-            this.productBookmarks = snapshot.val()
-            if (this.productBookmarks) {
-              this.productBookmarks = Object.keys(this.productBookmarks)
-            }
-          })
-        } else {
-          this.uid = null
-        }
-      })
+        this.goodProducts = products.filter(product => product.averageRate >= 4)
+        this.goodProducts = this.goodProducts.sort((a, b) => b.averageRate - a.averageRate)
+
+        this.isLoading = false
+      } catch (e) {
+        throw new Error(e)
+      }
     },
     searchRecipes () {
       this.$router.push({
@@ -195,12 +111,16 @@ export default {
       })
     }
   },
+  computed: {
+    ...mapState(markStore, ['uid', 'recipeBookMarks', 'productBookmarks'])
+  },
   mounted () {
+    this.isLoading = true
+
     this.goToTop()
-    this.getRecipeBookmarks()
-    this.getProductBookmarks()
-    this.getPopularRecipes()
-    this.getProducts()
+    this.getBookmarks('recipeBookmarks')
+    this.getBookmarks('productBookmarks')
+    this.getData()
   }
 }
 </script>
@@ -751,29 +671,13 @@ export default {
           <h2 class="fs-lg-1 fs-md-3 fs-5 fw-bold text-center mb-4 text-white text-shadow">總是花錢花時間 尋找甜點材料嗎？</h2>
           <div class="px-5">
             <ul class="row row-cols-1 row-cols-lg-3 gy-4 list-unstyled text-shadow ">
-              <li class="col d-flex flex-column flex-lg-row align-items-center justify-content-center">
+              <li v-for="problem in problems" :key="problem.icon" class="col d-flex flex-column flex-lg-row align-items-center justify-content-center">
                 <div class="mb-2 me-lg-3 mb-lg-0">
-                  <i class="bi bi-coin fs-2 text-white"></i>
+                  <i :class="problem.icon" class="fs-2 text-white"></i>
                 </div>
-                <span class="fs-lg-5 fs-14 text-white">
-                  花了錢卻買不到好食材...
-                </span>
-              </li>
-              <li class="col d-flex flex-column flex-lg-row  align-items-center justify-content-center">
-                <div class="mb-2 me-lg-3 mb-lg-0">
-                  <i class="bi bi-clock fs-2 text-white"></i>
-                </div>
-                <span class="fs-lg-5 fs-14 text-white">
-                  花時間找尋食材卻找不到...
-                </span>
-              </li>
-              <li class="col  d-flex flex-column flex-lg-row  align-items-center justify-content-center">
-                <div class="mb-2 me-lg-3 mb-lg-0">
-                  <i class="bi bi-box-seam fs-2 text-white"></i>
-                </div>
-                <span class="fs-lg-5 fs-14 text-white">
-                  大包裝食材用不完好煩惱...
-                </span>
+                <h3 class="fs-lg-5 fs-14 text-white mb-0">
+                  {{ problem.title }}
+                </h3>
               </li>
             </ul>
           </div>
@@ -788,52 +692,19 @@ export default {
             <p class="mt-3">一站解決你的所有問題</p>
           </h2>
           <ul class="list-unstyled row gy-5">
-            <li class="col-12"  data-aos="fade-up">
+            <li v-for="(solution, index) in solutions" :key="solution.img" class="col-12"  data-aos="fade-up">
               <div class="row">
-                <div class="col-lg-4 col-md-6 d-none d-lg-block"></div>
+                <!-- 奇數出現 -->
+                <div v-if="(index + 1) % 2" class="col-lg-4 col-md-6 d-none d-lg-block"></div>
                 <div class="col-lg-4 col-md-6 mb-3 mb-md-0">
-                  <img src="../../assets/images/feature-image1.png" class="w-100 rounded-5 img-240 object-fit-cover" alt="食譜">
+                  <img :src="`/src/assets/images/${solution.img}`" class="w-100 rounded-5 img-240 object-fit-cover" :alt="solution.title">
                 </div>
                 <div class="col-lg-4 col-md-6 d-flex flex-column justify-content-center">
-                  <h5 class="fw-bold fs-md-4 fs-6 mb-md-3">立即取得食譜材料</h5>
-                  <p class="fs-md-6 fs-12 mb-0">使用首頁上方搜尋欄尋找食譜，所有食譜皆有列出製作材料、工具，點擊購買即可一次買齊。</p>
+                  <h5 class="fw-bold fs-md-4 fs-6 mb-md-3">{{ solution.title }}</h5>
+                  <p class="fs-md-6 fs-12 mb-0">{{ solution.content }}</p>
                 </div>
-              </div>
-            </li>
-            <li class="col-12" data-aos="fade-up">
-              <div class="row">
-                <div class="col-lg-4 col-md-6 mb-3 mb-md-0">
-                  <img src="../../assets/images/feature-image2.png" class="w-100 rounded-5 img-240 object-fit-cover" alt="食材">
-                </div>
-                <div class="col-lg-4 col-md-6 d-flex flex-column justify-content-center">
-                  <h5 class="fw-bold fs-md-4 fs-6 mb-md-3">便宜且份量適中的食材</h5>
-                  <p class="fs-md-6 fs-12 mb-0">使用首頁上方搜尋欄尋找食譜，所有食譜皆有列出製作材料、工具，點擊購買即可一次買齊。</p>
-                </div>
-                <div class="col-lg-4 col-md-6 d-none d-lg-block"></div>
-              </div>
-            </li>
-            <li class="col-12"  data-aos="fade-up">
-              <div class="row">
-                <div class="col-lg-4 col-md-6 d-none d-lg-block"></div>
-                <div class="col-lg-4 col-md-6 mb-3 mb-md-0">
-                  <img src="../../assets/images/feature-image3.png" class="w-100 rounded-5 img-240 object-fit-cover" alt="影片教學">
-                </div>
-                <div class="col-lg-4 col-md-6 d-flex flex-column justify-content-center ">
-                  <h5 class="fw-bold fs-md-4 fs-6 mb-md-3">甜點食譜＋影片教學</h5>
-                  <p class="fs-md-6 fs-12 mb-0">免費甜點食譜和完整講解的影片教學，一定帶你學到會！不上烘焙課也能有良好的製作體驗。</p>
-                </div>
-              </div>
-            </li>
-            <li class="col-12"  data-aos="fade-up">
-              <div class="row">
-                <div class="col-lg-4 col-md-6 mb-3 mb-md-0">
-                  <img src="../../assets/images/feature-image4.png" class="w-100 rounded-5 img-240 object-fit-cover" alt="甜點">
-                </div>
-                <div class="col-lg-4 col-md-6 d-flex flex-column justify-content-center ">
-                  <h5 class="fw-bold fs-md-4 fs-6 mb-md-3">優惠不間斷</h5>
-                  <p class="fs-md-6 fs-12 mb-0">消費滿千元免運費！每月抽獎活動，享價值千元以上好禮！買越多賺越多！</p>
-                </div>
-                <div class="col-lg-4 col-md-6 d-none d-lg-block"></div>
+                <!-- 偶數出現 -->
+                <div v-if="(index + 1) % 2 === 0" class="col-lg-4 col-md-6 d-none d-lg-block"></div>
               </div>
             </li>
           </ul>

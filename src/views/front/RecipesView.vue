@@ -1,15 +1,14 @@
 <script>
 import { RouterLink } from 'vue-router'
-import { mapActions } from 'pinia'
+import { mapActions, mapState } from 'pinia'
 import cartStore from '../../stores/carts'
 import markStore from '../../stores/bookmark'
+import dataStore from '../../stores/mainData'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
 import PaginationComponent from '../../components/PaginationComponent.vue'
 import Collapse from 'bootstrap/js/dist/collapse'
-import { db, auth } from '../../firebase/db'
+import { db } from '../../firebase/db'
 import { ref, onValue } from 'firebase/database'
-import { onAuthStateChanged } from 'firebase/auth'
-
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
 
@@ -31,9 +30,7 @@ export default {
       highOrLow: '不拘',
       recipeSearchName: '',
       filterRecipes: [],
-      bookMarks: [],
       thumbs: {},
-      uid: '',
       search: false,
       isLoading: false,
       fullPage: true
@@ -41,39 +38,33 @@ export default {
   },
   methods: {
     ...mapActions(cartStore, ['toastMessage']),
-    ...mapActions(markStore, ['addBookmark', 'deleteBookmark']),
-    getRecipes () {
-      const dataRef = ref(db, 'recipes/')
+    ...mapActions(markStore, ['addBookmark', 'deleteBookmark', 'getBookmarks']),
+    ...mapActions(dataStore, ['getRecipes']),
+    async getAllRecipes () {
+      this.recipes = await this.getRecipes()
+      const dataRef = ref(db, 'recipeThumbs/')
       onValue(dataRef, snapshot => {
-        this.recipes = snapshot.val()
-        this.recipes = Object.entries(this.recipes).map(item => {
-          item[1].id = item[0]
-          return item[1]
-        })
-        const dataRef = ref(db, 'recipeThumbs/')
-        onValue(dataRef, snapshot => {
-          this.thumbs = snapshot.val()
-          this.recipes.forEach((recipe, index) => {
-            Object.keys(this.thumbs).forEach(thumbId => {
-              if (recipe.id === thumbId) {
-                this.recipes[index].thumbs = this.thumbs[recipe.id].thumbs
-              }
-            })
-          })
-          this.recipes.forEach((recipe, index) => {
-            if (!recipe.thumbs) {
-              this.recipes[index].thumbs = 0
+        const thumbs = snapshot.val()
+        this.recipes.forEach((recipe, index) => {
+          Object.keys(thumbs).forEach(thumbId => {
+            if (recipe.id === thumbId) {
+              this.recipes[index].thumbs = thumbs[recipe.id].thumbs
             }
           })
-          this.filterRecipes = this.recipes
-          this.isLoading = false
-
-          if (!this.$route.query.category && this.$route.fullPath === '/recipes') {
-            this.$refs.pagination.renderPage(1, this.filterRecipes)
-          } else if (this.$route.query.category) {
-            this.searchRecipes()
+        })
+        this.recipes.forEach((recipe, index) => {
+          if (!recipe.thumbs) {
+            this.recipes[index].thumbs = 0
           }
         })
+        this.filterRecipes = this.recipes
+
+        if (!this.$route.query.category && this.$route.fullPath === '/recipes') {
+          this.$refs.pagination.renderPage(1, this.filterRecipes)
+        } else if (this.$route.query.category) {
+          this.searchRecipes()
+        }
+        this.isLoading = false
       })
     },
     searchRecipes () {
@@ -108,23 +99,6 @@ export default {
       })
       this.search = true
       this.$refs.pagination.renderPage(1, this.filterRecipes)
-    },
-    // 需要驗證
-    getBookmarks () {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          this.uid = user.uid
-          const dataRef = ref(db, `recipeBookmarks/${this.uid}`)
-          onValue(dataRef, snapshot => {
-            this.bookMarks = snapshot.val()
-            if (this.bookMarks) {
-              this.bookMarks = Object.keys(this.bookMarks)
-            }
-          })
-        } else {
-          this.uid = null
-        }
-      })
     }
   },
   mounted () {
@@ -145,9 +119,10 @@ export default {
       this.priceOrRate = this.$route.query.valuePriceOrRate
       this.recipeSearchName = this.$route.query.searchName
     }
-    this.getBookmarks()
-    this.getRecipes()
+    this.getBookmarks('recipeBookmarks')
+    this.getAllRecipes()
   },
+
   watch: {
     selectCategory () {
       this.recipeSearchName = ''
@@ -171,6 +146,9 @@ export default {
       this.costOrRateCollapse.hide()
       this.highOrLowCollapse.hide()
     }
+  },
+  computed: {
+    ...mapState(markStore, ['recipeBookMarks', 'uid'])
   }
 }
 </script>
@@ -205,6 +183,7 @@ export default {
       </section>
 
       <section class="container">
+
         <div class="pt-lg-4 pt-3 position-relative" data-aos="fade-up">
           <ul class="category-selector row row-cols-6 list-unstyled border-bottom">
               <li class="col text-center" :class="{'pointer-events-none': selectItem === '全部'}">
@@ -303,7 +282,7 @@ export default {
               <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>addBookmark('recipeBookmarks', recipe, uid)">
                 <img src="../../assets/images/image5.png" alt="收藏按鈕-未收藏">
               </button>
-              <div v-for="mark in bookMarks" :key="mark + 4567">
+              <div v-for="mark in recipeBookMarks" :key="mark + 4567">
                 <button v-if="mark === recipe.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-md-3"  @click="()=>deleteBookmark('recipeBookmarks', recipe.id, uid)">
                     <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
                 </button>

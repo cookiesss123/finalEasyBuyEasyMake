@@ -18,7 +18,7 @@ const cartStore = defineStore('cart', {
       coupons: [],
       orders: [],
       myOrder: {},
-      cartNum: 0,
+      // cartNum: 0,
       nickName: '',
       admin: '',
       user: {},
@@ -33,10 +33,8 @@ const cartStore = defineStore('cart', {
         this.cart = snapshot.val()
         if (this.cart) {
           this.cartItems = this.cart.items
-          this.cartNum = this.cart.items.length
         } else if (!this.cart) {
           this.cartItems = []
-          this.cartNum = 0
         }
       })
     },
@@ -264,7 +262,6 @@ const cartStore = defineStore('cart', {
       }
       remove(ref(db, `carts/${id}`))
 
-      this.cartNum = 0
       this.cart = {}
       this.cartItems = []
       this.loadingItem = ''
@@ -470,6 +467,11 @@ const cartStore = defineStore('cart', {
     },
     goToTop () {
       window.scrollTo(0, 0)
+    }
+  },
+  getters: {
+    cartNum (state) {
+      return state.cartItems.reduce((total, cur) => total + cur.qty, 0)
     }
   }
 })

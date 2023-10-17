@@ -219,7 +219,7 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState } from 'pinia'
+import { mapActions, mapState, mapGetters } from 'pinia'
 import cartStore from '../stores/carts'
 import { RouterView, RouterLink } from 'vue-router'
 import Collapse from 'bootstrap/js/dist/collapse'
@@ -312,7 +312,8 @@ export default {
     })
   },
   computed: {
-    ...mapState(cartStore, ['user', 'uid', 'cartItems', 'cartNum'])
+    ...mapState(cartStore, ['user', 'uid', 'cartItems']),
+    ...mapGetters(cartStore, ['cartNum'])
   },
   watch: {
     menuToggle () {

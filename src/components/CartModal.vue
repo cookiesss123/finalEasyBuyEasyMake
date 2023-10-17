@@ -131,7 +131,7 @@
 </template>
 <script>
 import modalMixin from '../mixins/modalMixin'
-import { mapActions, mapState } from 'pinia'
+import { mapActions, mapState, mapGetters } from 'pinia'
 import cartStore from '../stores/carts'
 import numberCommaMixin from '../mixins/numberCommaMixin'
 import { db, auth } from '../firebase/db'
@@ -189,7 +189,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(cartStore, ['cart', 'cartItems', 'cartNum', 'loadingItem'])
+    ...mapState(cartStore, ['cart', 'cartItems', 'loadingItem']),
+    ...mapGetters(cartStore, ['cartNum'])
   }
 }
 </script>

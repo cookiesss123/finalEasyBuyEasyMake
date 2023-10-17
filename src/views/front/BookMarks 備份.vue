@@ -2,10 +2,8 @@
 import { RouterLink } from 'vue-router'
 import DeleteBookmarksModal from '../../components/DeleteBookmarksModal.vue'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
-// mapState
 import { mapActions } from 'pinia'
 import cartStore from '../../stores/carts'
-// import markStore from '../../stores/bookmark'
 import { db, auth } from '../../firebase/db'
 import { ref, onValue } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
@@ -36,8 +34,6 @@ export default {
   },
   methods: {
     ...mapActions(cartStore, ['addCart', 'toastMessage', 'goToTop']),
-    // ...mapActions(markStore, ['getBookmarks']),
-
     getBookmarks (dataName) {
       this.isLoading = true
       onAuthStateChanged(auth, (user) => {
@@ -47,7 +43,6 @@ export default {
           const dataRef = ref(db, `${dataName}/${this.uid}`)
           onValue(dataRef, snapshot => {
             this.bookMarks = snapshot.val()
-            console.log(this.bookMarks, '書籤內容')
             if (!this.bookMarks) {
               this.isLoading = false
               return
@@ -119,8 +114,6 @@ export default {
     openDeleteModal (id, item) {
       this.deleteId = id
       this.deleteItem = item
-    },
-    getAllBookmarks () {
     }
   },
   mounted () {
@@ -135,9 +128,6 @@ export default {
         this.getBookmarks('recipeBookmarks')
       }
     }
-  },
-  computed: {
-    // ...mapState(markStore, ['recipeBookMarks', 'productBookmarks'])
   }
 }
 </script>

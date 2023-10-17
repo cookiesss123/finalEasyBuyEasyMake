@@ -178,7 +178,7 @@ export default {
         }
         this.isLoading = false
       } catch (err) {
-        console.log(err, '錯誤')
+        throw new Error(err)
       }
     }
   },
@@ -186,7 +186,6 @@ export default {
     this.goToTop()
     this.getUserInformation()
     this.getAllData()
-    // this.getOrders()
   },
   watch: {
     selectItem () {

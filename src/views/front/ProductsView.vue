@@ -3,12 +3,12 @@ import { RouterLink } from 'vue-router'
 import { mapActions, mapState } from 'pinia'
 import cartStore from '../../stores/carts'
 import markStore from '../../stores/bookmark'
+import dataStore from '../../stores/mainData'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
 import PaginationComponent from '../../components/PaginationComponent.vue'
 import Collapse from 'bootstrap/js/dist/collapse'
-import { db, auth } from '../../firebase/db'
+import { db } from '../../firebase/db'
 import { ref, onValue } from 'firebase/database'
-import { onAuthStateChanged } from 'firebase/auth'
 
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
@@ -22,13 +22,11 @@ export default {
     return {
       priceOrRateCollapse: {},
       highOrLowCollapse: {},
-      uid: '',
       products: [],
       priceOrRate: '價格',
       highOrLow: '不拘',
       productSearchName: '',
       filterProducts: [],
-      bookMarks: [],
       pageStatus: '全部',
       selectPage: '全部',
       search: false,
@@ -39,53 +37,49 @@ export default {
   mixins: [numberCommaMixin],
   methods: {
     ...mapActions(cartStore, ['addCart', 'toastMessage']),
-    ...mapActions(markStore, ['addBookmark', 'deleteBookmark']),
-    getProducts () {
-      const dataRef = ref(db, 'products/')
+    ...mapActions(markStore, ['addBookmark', 'deleteBookmark', 'getBookmarks']),
+    ...mapActions(dataStore, ['getProducts']),
+    async getAllProducts () {
+      this.products = await this.getProducts()
+      const dataRef = ref(db, 'productRates/')
       onValue(dataRef, snapshot => {
-        this.products = snapshot.val()
-        this.products = Object.entries(this.products).map(item => {
-          item[1].id = item[0]
-          return item[1]
+        const rates = snapshot.val()
+
+        this.products = this.products.map((item, index) => {
+          this.products[index].scores = 0
+          this.products[index].ratePeople = 0
+          this.products[index].averageRate = 0
+          return item
         })
 
-        const dataRef = ref(db, 'productRates/')
-        onValue(dataRef, snapshot => {
-          let rates = snapshot.val()
-          rates = Object.values(rates).map((rate, index) => {
-            rate.id = Object.keys(rates)[index]
-            return rate
-          })
-          this.products.forEach((product, index) => {
-            rates.forEach(item => {
-              if (product.id === item.productId && !this.products[index].scores) {
-                this.products[index].scores = item.score
-                this.products[index].ratePeople = 1
-                this.products[index].averageRate = Number((this.products[index].scores / this.products[index].ratePeople).toFixed(1))
-              } else if (product.id === item.productId && this.products[index].scores) {
-                this.products[index].scores += item.score
-                this.products[index].ratePeople += 1
-                this.products[index].averageRate = Number((this.products[index].scores / this.products[index].ratePeople).toFixed(1))
-              }
-            })
-          })
-          this.products.forEach((product, index) => {
-            if (!product.averageRate) {
-              this.products[index].scores = 0
-              this.products[index].ratePeople = 0
-              this.products[index].averageRate = 0
+        this.products.forEach((product, index) => {
+          Object.values(rates).forEach(item => {
+            if (product.id === item.productId && !this.products[index].scores) {
+              this.products[index].scores = item.score
+              this.products[index].ratePeople = 1
+              this.products[index].averageRate = Number((this.products[index].scores / this.products[index].ratePeople).toFixed(1))
+            } else if (product.id === item.productId && this.products[index].scores) {
+              this.products[index].scores += item.score
+              this.products[index].ratePeople += 1
+              this.products[index].averageRate = Number((this.products[index].scores / this.products[index].ratePeople).toFixed(1))
             }
           })
-
-          this.filterProducts = this.products
-          this.isLoading = false
-
-          if (!this.$route.query.pageStatus && this.$route.fullPath === '/products') {
-            this.$refs.pagination.renderPage(1, this.filterProducts)
-          } else if (this.$route.query.pageStatus) {
-            this.searchProducts()
+        })
+        this.products.forEach((product, index) => {
+          if (!product.averageRate) {
+            this.products[index].scores = 0
+            this.products[index].ratePeople = 0
+            this.products[index].averageRate = 0
           }
         })
+
+        this.filterProducts = this.products
+        if (!this.$route.query.pageStatus && this.$route.fullPath === '/products') {
+          this.$refs.pagination.renderPage(1, this.filterProducts)
+        } else if (this.$route.query.pageStatus) {
+          this.searchProducts()
+        }
+        this.isLoading = false
       })
     },
     searchProducts () {
@@ -131,22 +125,6 @@ export default {
       })
       this.search = true
       this.$refs.pagination.renderPage(1, this.filterProducts)
-    },
-    getBookmarks () {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          this.uid = user.uid
-          const dataRef = ref(db, `productBookmarks/${this.uid}`)
-          onValue(dataRef, snapshot => {
-            this.bookMarks = snapshot.val()
-            if (this.bookMarks) {
-              this.bookMarks = Object.keys(this.bookMarks)
-            }
-          })
-        } else {
-          this.uid = null
-        }
-      })
     }
   },
   mounted () {
@@ -166,8 +144,8 @@ export default {
       this.highOrLow = this.$route.query.valueHighOrLow
       this.productSearchName = this.$route.query.searchName
     }
-    this.getProducts()
-    this.getBookmarks()
+    this.getAllProducts()
+    this.getBookmarks('productBookmarks')
   },
   watch: {
     selectPage () {
@@ -197,7 +175,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(cartStore, ['loadingItem'])
+    ...mapState(cartStore, ['loadingItem']),
+    ...mapState(markStore, ['productBookmarks', 'uid'])
   }
 }
 </script>
@@ -318,7 +297,7 @@ export default {
                 <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>addBookmark('productBookmarks' ,product, uid)">
                   <img src="../../assets/images/image5.png" alt="收藏按鈕-未收藏">
                 </button>
-                <div v-for="mark in bookMarks" :key="mark">
+                <div v-for="mark in productBookmarks" :key="mark">
                   <button v-if="mark === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-md-3"  @click="()=>deleteBookmark('productBookmarks', product.id, uid)">
                       <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
                   </button>
