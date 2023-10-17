@@ -336,7 +336,7 @@ export default {
                   <span class="ms-lg-2 ms-1 d-lg-inline-block" :class="{'d-none': selectItem !== '待取貨'}">
                     待取貨
                   </span>
-                  <span v-if="orderArrived.length" class="position-absolute top-0 start-100 translate-middle text-center rounded-circle border fw-bold border-primary text-primary fs-12 alert-num">
+                  <span v-show="orderArrived.length" class="position-absolute top-0 start-100 translate-middle text-center rounded-circle border fw-bold border-primary text-primary fs-12 alert-num">
                     {{ orderArrived.length }}
                   </span>
                 </a>

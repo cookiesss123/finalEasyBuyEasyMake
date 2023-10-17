@@ -14,7 +14,7 @@
           </h1>
 
           <button class="btn position-relative border-0 d-lg-none pb-0 me-md-3"  @click="()=>this.$refs.cartModal.show()">
-            <span v-if="cartNum !== 0" class="position-absolute top-0 end-0 translate-middle-y rounded-circle border fw-bold border-primary text-primary fs-10 alert-num">
+            <span v-show="cartNum !== 0" class="position-absolute top-0 end-0 translate-middle-y rounded-circle border fw-bold border-primary text-primary fs-10 alert-num">
               {{ cartNum }}
             </span>
             <span class="material-icons text-gradient fs-5" >shopping_cart</span>
@@ -77,7 +77,7 @@
             </RouterLink>
 
             <button class="btn position-relative border-0 pb-0 d-none d-lg-block"  @click="()=>this.$refs.cartModal.show()">
-              <span v-if="cartNum !== 0" class="position-absolute top-0 end-0 translate-middle-y rounded-circle border fw-bold border-primary text-primary fs-12  alert-num">
+              <span v-show="cartNum !== 0" class="position-absolute top-0 end-0 translate-middle-y rounded-circle border fw-bold border-primary text-primary fs-12  alert-num">
                 {{ cartNum }}
               </span>
               <span class="material-icons text-gradient fs-4" >shopping_cart</span>
@@ -98,27 +98,19 @@
                 <li class=" mb-3 d-flex flex-column border-bottom border-lightBrownGray">
                   <label for="category" class="form-label fs-14">種類</label>
                   <select name="" id="category"  class="form-select border-0" v-model="selectItem">
-                    <option value="全部" selected>全部</option>
-                    <option value="台式甜點">台式甜點</option>
-                    <option value="法式甜點">法式甜點</option>
-                    <option value="美式甜點">美式甜點</option>
-                    <option value="日式甜點">日式甜點</option>
-                    <option value="義式甜點">義式甜點</option>
+                    <option v-for="item in selections.dessertCategory" :key="item" :value="item">{{ item }}</option>
                   </select>
                 </li>
                 <li class=" mb-3 d-flex flex-column border-bottom border-lightBrownGray">
                   <label for="category" class="form-label  fs-14" >成本或評價</label>
                   <select name="" id="category"  class="form-select border-0" v-model="priceOrRate">
-                    <option value="成本">成本</option>
-                    <option value="評價">評價</option>
+                    <option v-for="item in selections.rateOrCost" :key="item" :value="item">{{ item }}</option>
                   </select>
                 </li>
                 <li class=" d-flex flex-column border-bottom border-lightBrownGray ">
                   <label for="category" class="form-label fs-14" >由高到低或由低到高</label>
                   <select name="" id="category"  class="form-select border-0" v-model="highOrLow">
-                    <option value="不拘">不拘</option>
-                    <option value="高到低">高到低</option>
-                    <option value="低到高">低到高</option>
+                    <option v-for="item in selections.highOrLow" :key="item" :value="item">{{ item }}</option>
                   </select>
                 </li>
               </ul>
@@ -138,25 +130,19 @@
                 <li class=" mb-3 d-flex flex-column border-bottom  border-lightBrownGray">
                   <label for="category" class="form-label  fs-14" >種類</label>
                   <select name="" id="category"  class="form-select border-0" v-model="pageStatus">
-                    <option value="全部">全部</option>
-                    <option value="食材組合包">食材組合包</option>
-                    <option value="熱銷單品">熱銷單品</option>
-                    <option value="特價商品">特價商品</option>
+                    <option v-for="item in selections.productCategory" :key="item" :value="item">{{ item }}</option>
                   </select>
                 </li>
                 <li class=" mb-3 d-flex flex-column border-bottom border-lightBrownGray">
                   <label for="productPriceOrRate" class="form-label fs-14" >價格或評價</label>
                   <select name="" id="productPriceOrRate"  class="form-select border-0" v-model="productPriceOrRate">
-                    <option value="價格">價格</option>
-                    <option value="評價">評價</option>
+                    <option v-for="item in selections.rateOrPrice" :key="item" :value="item">{{ item }}</option>
                   </select>
                 </li>
                 <li class="d-flex flex-column border-bottom  border-lightBrownGray">
                   <label for="productHighOrLow" class="form-label fs-14" >由高到低或由低到高</label>
                   <select name="" id="productHighOrLow"  class="form-select border-0" v-model="productHighOrLow">
-                    <option value="不拘">不拘</option>
-                    <option value="高到低">高到低</option>
-                    <option value="低到高">低到高</option>
+                    <option v-for="item in selections.highOrLow" :key="item" :value="item">{{ item }}</option>
                   </select>
                 </li>
               </ul>
@@ -225,10 +211,12 @@ import { RouterView, RouterLink } from 'vue-router'
 import Collapse from 'bootstrap/js/dist/collapse'
 import CartModal from '../components/CartModal.vue'
 import ChatModal from '../components/ChatModal.vue'
+import { selections } from '../utils/publicData'
 
 export default {
   data () {
     return {
+      selections,
       menuToggle: false,
       searchToggle: false,
       menuCollapse: {},

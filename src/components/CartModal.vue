@@ -137,6 +137,7 @@ import numberCommaMixin from '../mixins/numberCommaMixin'
 import { db, auth } from '../firebase/db'
 import { onAuthStateChanged } from 'firebase/auth'
 import { ref, onValue } from 'firebase/database'
+
 export default {
   data () {
     return {

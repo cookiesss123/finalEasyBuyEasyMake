@@ -1,3 +1,11 @@
+export const selections = {
+  productCategory: ['全部', '食材組合包', '熱銷單品', '特價商品'],
+  rateOrPrice: ['不拘', '價格', '評價'],
+  highOrLow: ['不拘', '高到低', '低到高'],
+  dessertCategory: ['全部', '台式甜點', '法式甜點', '美式甜點', '日式甜點', '義式甜點'],
+  rateOrCost: ['不拘', '成本', '評價']
+}
+
 export const problems = [
   {
     icon: 'bi bi-coin',

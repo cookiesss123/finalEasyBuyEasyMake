@@ -174,6 +174,7 @@ export default {
       </p>
     </div>
       </loading>
+
       <section class="text-center" data-aos="fade-up">
         <div class="py-lg-200 py-96 bg-cover-center border" style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
         </div>
@@ -181,6 +182,41 @@ export default {
           <span class="ms-3">甜點種類</span>
         </h2>
       </section>
+
+      <!-- icon 暫放區 -->
+      <ul class="container">
+        <!-- style="font-size: 60px;" -->
+        <li>
+          <h2>全部</h2>
+          <i class="fi fi-ss-candy-corn fs-45 text-gray"></i>
+        </li>
+        <li>
+          <h2>台式甜點</h2>
+          <i class="fi fi-ss-cookie-alt fs-45 text-gray"></i>
+          <i class="fi fi-bs-cookie-alt fs-45 text-gray"></i>
+        </li>
+        <li>
+          <h2>法式甜點</h2>
+          <i class="fi fi-ss-bread fs-45 text-gray"></i>
+        </li>
+        <li>
+          <h2>美式甜點</h2>
+          <i class="fi fi-sr-pie fs-45 text-gray"></i>
+          <i class="fi fi-bs-pie fs-45 text-gray"></i>
+        </li>
+        <li>
+          <h2>日式甜點</h2>
+          <i class="fi fi-sr-cupcake fs-45 text-gray"></i>
+          <i class="fi fi-bs-cupcake fs-45 text-gray"></i>
+        </li>
+        <li>
+          <h2>義式甜點</h2>
+          <i class="fi fi-bs-stroopwafel fs-45 text-gray" ></i>
+          <i class="fi fi-bs-stroopwafel fs-45 text-primary" ></i>
+          <i class="fi fi-ss-stroopwafel fs-45 text-primary"></i>
+        </li>
+
+      </ul>
 
       <section class="container">
 

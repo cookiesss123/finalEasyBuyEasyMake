@@ -29,10 +29,14 @@ export default {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           this.uid = user.uid
-
           const dataRef = ref(db, `orders/${this.uid}/${id}`)
           onValue(dataRef, snapshot => {
             this.order = snapshot.val()
+            // 非本人驅逐
+            if (!this.order) {
+              this.$router.push('/loginSignup')
+              return
+            }
             this.order.id = id
             if (this.order.deliveryStatus === '待出貨') {
               this.barWidth = 0
@@ -48,7 +52,6 @@ export default {
         } else {
           this.uid = null
           if (!this.uid) {
-            this.toastMessage('請先登入', 'error')
             this.$router.push('/loginSignup')
           }
         }
@@ -62,7 +65,7 @@ export default {
 }
 </script>
 <template>
-    <section class="py-md-96 py-60 container no-scroll-x">
+    <section v-if="order" class="py-md-96 py-60 container no-scroll-x">
         <loading v-model:active="isLoading"
                  :can-cancel="false"
                  :is-full-page="fullPage"

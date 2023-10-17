@@ -18,7 +18,7 @@ import numberCommaMixin from '../../mixins/numberCommaMixin'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
 
-import { problems, solutions } from '../../utils/publicData'
+import { problems, solutions, selections } from '../../utils/publicData'
 export default {
   components: {
     Swiper,
@@ -29,6 +29,7 @@ export default {
   data () {
     return {
       // uid: '',
+      selections,
       problems,
       solutions,
       modules: [Navigation, Pagination, Autoplay],
@@ -242,26 +243,20 @@ export default {
                           <div class="row">
                             <div class="col-4 border-end border-purple">
                               <p class="card-title mb-0 fs-14 text-purple">種類</p>
-                              <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="pageStatus">
-                                <option selected >全部</option>
-                                <option value="食材組合包">食材組合包</option>
-                                <option value="熱銷單品">熱銷單品</option>
-                                <option value="特價商品">特價商品</option>
+                              <select name="種類" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="pageStatus">
+                                <option v-for="item in selections.productCategory" :key="item" :value="item">{{ item }}</option>
                               </select>
                             </div>
                             <div class="col-4 border-end border-purple">
                               <p class="card-title mb-0 fs-14 text-purple">價格或評價</p>
-                              <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="productPriceOrRate">
-                                <option value="價格">價格</option>
-                                <option value="評價">評價</option>
+                              <select name="價格或評價" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="productPriceOrRate">
+                                <option v-for="item in selections.rateOrPrice" :key="item" :value="item">{{ item }}</option>
                               </select>
                             </div>
                             <div class="col-4 border-purple">
                               <p class="card-title mb-0 fs-14 text-purple">高或低</p>
-                              <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="productHighOrLow">
-                                <option value="不拘" selected>不拘</option>
-                                <option value="高到低">高到低</option>
-                                <option value="低到高">低到高</option>
+                              <select name="高或低" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="productHighOrLow">
+                                <option v-for="item in selections.highOrLow" :key="item" :value="item">{{ item }}</option>
                               </select>
                             </div>
                           </div>
@@ -368,28 +363,20 @@ export default {
                           <div class="row">
                             <div class="col-4 border-end border-primary">
                               <p class="card-title mb-0 fs-14 text-primary">種類</p>
-                              <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="selectItem">
-                                <option selected >全部</option>
-                                <option value="台式甜點">台式甜點</option>
-                                <option value="法式甜點">法式甜點</option>
-                                <option value="美式甜點">美式甜點</option>
-                                <option value="日式甜點">日式甜點</option>
-                                <option value="義式甜點">義式甜點</option>
+                              <select name="種類" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="selectItem">
+                                <option v-for="item in selections.dessertCategory" :key="item" :value="item">{{ item }}</option>
                               </select>
                             </div>
                             <div class="col-4 border-end border-primary">
                               <p class="card-title mb-0  fs-14 text-primary">成本或評價</p>
-                              <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="priceOrRate">
-                                <option value="成本">成本</option>
-                                <option value="評價">評價</option>
+                              <select name="成本或評價" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="priceOrRate">
+                                <option v-for="item in selections.rateOrCost" :key="item" :value="item">{{ item }}</option>
                               </select>
                             </div>
                             <div class="col-4 border-primary">
                               <p class="card-title mb-0  fs-14 text-primary">高或低</p>
-                              <select name="全部" id="" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="highOrLow">
-                                <option value="不拘" selected>不拘</option>
-                                <option value="高到低">高到低</option>
-                                <option value="低到高">低到高</option>
+                              <select name="高或低" class="form-select border-0 text-darkBrown ps-0 text-center" v-model="highOrLow">
+                                <option v-for="item in selections.highOrLow" :key="item" :value="item">{{ item }}</option>
                               </select>
                             </div>
                           </div>

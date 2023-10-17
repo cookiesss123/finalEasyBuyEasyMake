@@ -12,6 +12,7 @@ import { ref, onValue } from 'firebase/database'
 
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
+import { selections } from '../../utils/publicData'
 export default {
   components: {
     RouterLink,
@@ -20,6 +21,7 @@ export default {
   },
   data () {
     return {
+      selections,
       priceOrRateCollapse: {},
       highOrLowCollapse: {},
       products: [],
@@ -207,6 +209,25 @@ export default {
         <div class="py-lg-200 py-96 bg-cover-center" style="background-image: url('https://images.unsplash.com/photo-1678465952860-422bf820209b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
         <h2 class="bg-secondary-light-purple-horizontal text-purple mb-0  fs-lg-1 fs-5 letter-spacing-20 ps-3 fw-bold py-2">材料種類</h2>
       </section>
+      <!-- 暫放區 -->
+      <ul class="container">
+        <li>
+          <h2>全部</h2>
+          <i class="fi fi-sr-salad"></i>
+        </li>
+        <li>
+          <h2>食材組合包</h2>
+          <i class="fi fi-ss-apple-crate  fs-45 text-gray"></i>
+        </li>
+        <li>
+          <h2>熱銷單品</h2>
+          <i class="fi fi-ss-apple-whole"></i>
+        </li>
+        <li>
+          <h2>特價商品</h2>
+          <i class="fi fi-sr-badge-percent"></i>
+        </li>
+      </ul>
 
       <section class="container" data-aos="fade-up">
         <div class="pt-lg-4 pt-3 position-relative">
