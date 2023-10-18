@@ -11,6 +11,7 @@ import { db } from '../../firebase/db'
 import { ref, onValue } from 'firebase/database'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
+import { selections } from '../../utils/publicData'
 
 export default {
   components: {
@@ -21,6 +22,7 @@ export default {
   mixins: [numberCommaMixin],
   data () {
     return {
+      selections,
       costOrRateCollapse: {},
       highOrLowCollapse: {},
       recipes: [],
@@ -183,85 +185,14 @@ export default {
         </h2>
       </section>
 
-      <!-- icon 暫放區 -->
-      <ul class="container">
-        <!-- style="font-size: 60px;" -->
-        <li>
-          <h2>全部</h2>
-          <i class="fi fi-ss-candy-corn fs-45 text-gray"></i>
-        </li>
-        <li>
-          <h2>台式甜點</h2>
-          <i class="fi fi-ss-cookie-alt fs-45 text-gray"></i>
-          <i class="fi fi-bs-cookie-alt fs-45 text-gray"></i>
-        </li>
-        <li>
-          <h2>法式甜點</h2>
-          <i class="fi fi-ss-bread fs-45 text-gray"></i>
-        </li>
-        <li>
-          <h2>美式甜點</h2>
-          <i class="fi fi-sr-pie fs-45 text-gray"></i>
-          <i class="fi fi-bs-pie fs-45 text-gray"></i>
-        </li>
-        <li>
-          <h2>日式甜點</h2>
-          <i class="fi fi-sr-cupcake fs-45 text-gray"></i>
-          <i class="fi fi-bs-cupcake fs-45 text-gray"></i>
-        </li>
-        <li>
-          <h2>義式甜點</h2>
-          <i class="fi fi-bs-stroopwafel fs-45 text-gray" ></i>
-          <i class="fi fi-bs-stroopwafel fs-45 text-primary" ></i>
-          <i class="fi fi-ss-stroopwafel fs-45 text-primary"></i>
-        </li>
-
-      </ul>
-
       <section class="container">
-
         <div class="pt-lg-4 pt-3 position-relative" data-aos="fade-up">
           <ul class="category-selector row row-cols-6 list-unstyled border-bottom">
-              <li class="col text-center" :class="{'pointer-events-none': selectItem === '全部'}">
-                <a href="#"  @click.prevent="()=>selectCategory = '全部'" class="text-decoration-none d-inline-block" :class="{'fw-bold': selectItem === '全部', 'link-primary': selectItem === '全部'}">
-                  <img v-if="selectItem !== '全部'" class="category-img1 d-block mx-auto" src="../../assets/images/allDessert1.png"  alt="所有甜點灰色圖示">
-                  <img v-else-if="selectItem === '全部'" src="../../assets/images/allDessert3.png" class="d-block mx-auto" alt="所有甜點藍色圖示">
-                  <span class="fs-12 fs-md-5 d-block py-2" >所有<br class="d-lg-none">甜點</span>
-                </a>
-              </li>
-              <li class="col text-center" :class="{'pointer-events-none': selectItem === '台式甜點'}">
-                <a href="#"  @click.prevent="()=>selectCategory = '台式甜點'" class="text-decoration-none d-inline-block" :class="{'fw-bold': selectItem === '台式甜點', 'link-primary': selectItem === '台式甜點'}">
-                  <img class="category-img2 d-block mx-auto" v-if="selectItem !== '台式甜點'" src="../../assets/images/mooncake1.png"  alt="台式甜點灰色圖示">
-                  <img v-else-if="selectItem === '台式甜點'" class="d-block mx-auto" src="../../assets/images/mooncake3.png"  alt="台式甜點藍色圖示">
-                  <span class="fs-12 fs-md-5 d-block py-2" >台式<br class="d-lg-none">甜點</span>
-                </a>
-              </li>
-              <li class="col text-center" :class="{'pointer-events-none': selectItem === '法式甜點'}">
-                <a href="#"  @click.prevent="()=>selectCategory = '法式甜點'" class="text-decoration-none d-inline-block" :class="{'fw-bold': selectItem === '法式甜點', 'link-primary': selectItem === '法式甜點'}">
-                  <img class="category-img3 d-block mx-auto" v-if="selectItem !== '法式甜點'" src="../../assets/images/macaroon1.png"  alt="法式甜點灰色圖示">
-                  <img v-else-if="selectItem === '法式甜點'" class="d-block mx-auto" src="../../assets/images/macaroon3.png"  alt="法式甜點藍色圖示">
-                  <span  class="fs-12 fs-md-5 d-block py-2">法式<br class="d-lg-none">甜點</span>
-                </a>
-              </li>
-              <li class="col text-center" :class="{'pointer-events-none': selectItem === '美式甜點'}">
-                <a href="#"  @click.prevent="()=>selectCategory = '美式甜點'" class="text-decoration-none d-inline-block" :class="{'fw-bold': selectItem === '美式甜點', 'link-primary': selectItem === '美式甜點'}">
-                  <img class="category-img4 d-block mx-auto" v-if="selectItem !== '美式甜點'" src="../../assets/images/donut1.png"  alt="美式甜點灰色圖示">
-                  <img v-else-if="selectItem === '美式甜點'" class="d-block mx-auto" src="../../assets/images/donut4.png"  alt="美式甜點藍色圖示">
-                  <span  class="fs-12 fs-md-5 d-block py-2">美式<br class="d-lg-none">甜點</span>
-                </a>
-              </li>
-              <li class="col text-center" :class="{'pointer-events-none': selectItem === '日式甜點'}">
-                <a href="#"  @click.prevent="()=>selectCategory = '日式甜點'" class="text-decoration-none d-inline-block" :class="{'fw-bold': selectItem === '日式甜點', 'link-primary': selectItem === '日式甜點'}">
-                  <img class="category-img5 d-block mx-auto" v-if="selectItem !== '日式甜點'" src="../../assets/images/cakeStr1.png"  alt="日式甜點灰色圖示">
-                  <img v-else-if="selectItem === '日式甜點'" class="d-block mx-auto" src="../../assets/images/cake17.png"  alt="日式甜點藍色圖示">
-                  <span  class="fs-12 fs-md-5 d-block py-2">日式<br class="d-lg-none">甜點</span>
-                </a>
-              </li>
-              <li class="col text-center" :class="{'pointer-events-none': selectItem === '義式甜點'}">
-                <a href="#"  @click.prevent="()=>selectCategory = '義式甜點'" class="text-decoration-none d-inline-block" :class="{'fw-bold': selectItem === '義式甜點', 'link-primary': selectItem === '義式甜點'}">
-                  <img class="category-img6 d-block mx-auto" v-if="selectItem !== '義式甜點'" src="../../assets/images/pie1.png"  alt="義式甜點灰色圖示">
-                  <img v-else-if="selectItem === '義式甜點'" class="d-block mx-auto" src="../../assets/images/pie3.png"  alt="義式甜點藍色圖示">
-                  <span class="fs-12 fs-md-5 d-block py-2">義式<br class="d-lg-none">甜點</span>
+              <li v-for="item in selections.dessertCategory" :key="item.icon" class="col text-center" :class="{'pointer-events-none': selectItem === item.title}">
+                <a href="#"  @click.prevent="()=>selectCategory = item.title" class="text-decoration-none d-inline-block" :class="{'fw-bold': selectItem === item.title, 'link-primary': selectItem === item.title}">
+                  <i v-if="selectItem !== item.title" :class="item.icon" class="text-gray"></i>
+                  <i v-if="selectItem === item.title" :class="item.iconSelected" class="text-primary"></i>
+                  <span class="fs-12 fs-md-5 d-block pb-2">{{ item.title === '全部' ? '所有' : item.title.slice(0, 2) }}<br class="d-lg-none">{{ item.title === '全部' ? '甜點' : item.title.slice(2, 4) }}</span>
                 </a>
               </li>
           </ul>

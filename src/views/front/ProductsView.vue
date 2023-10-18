@@ -209,60 +209,19 @@ export default {
         <div class="py-lg-200 py-96 bg-cover-center" style="background-image: url('https://images.unsplash.com/photo-1678465952860-422bf820209b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
         <h2 class="bg-secondary-light-purple-horizontal text-purple mb-0  fs-lg-1 fs-5 letter-spacing-20 ps-3 fw-bold py-2">材料種類</h2>
       </section>
-      <!-- 暫放區 -->
-      <ul class="container">
-        <li>
-          <h2>全部</h2>
-          <i class="fi fi-sr-salad"></i>
-        </li>
-        <li>
-          <h2>食材組合包</h2>
-          <i class="fi fi-ss-apple-crate  fs-45 text-gray"></i>
-        </li>
-        <li>
-          <h2>熱銷單品</h2>
-          <i class="fi fi-ss-apple-whole"></i>
-        </li>
-        <li>
-          <h2>特價商品</h2>
-          <i class="fi fi-sr-badge-percent"></i>
-        </li>
-      </ul>
 
       <section class="container" data-aos="fade-up">
         <div class="pt-lg-4 pt-3 position-relative">
           <ul class="category-selector row row-cols-4 list-unstyled border-bottom">
-            <li class="col text-center" :class="{'pointer-events-none': pageStatus === '全部'}">
-              <a href="#"  @click.prevent="()=>selectPage = '全部'" class="text-decoration-none d-inline-block" :class="{'fw-bold': pageStatus === '全部', 'link-primary': pageStatus === '全部'}">
-                <img class="product-img1 d-block mx-auto" v-if="pageStatus !== '全部'" src="../../assets/images/fruit1.png" alt="所有材料灰色圖示">
-                <img class="d-block mx-auto" v-else-if="pageStatus === '全部'" src="../../assets/images/fruit3.png"  alt="所有材料藍色圖示">
-                <span class="fs-12 fs-md-5 d-block py-2 " >所有<br class="d-lg-none">材料</span>
-              </a>
-            </li>
-            <li class="col text-center " :class="{'pointer-events-none': pageStatus === '食材組合包'}">
-              <a href="#"  @click.prevent="()=>selectPage = '食材組合包'" class="text-decoration-none d-inline-block" :class="{'fw-bold': pageStatus === '食材組合包', 'link-primary': pageStatus === '食材組合包'}">
-                <img class="product-img2 d-block mx-auto" v-if="pageStatus !== '食材組合包'" src="../../assets/images/food1.png"  alt="">
-                <img class="d-block mx-auto" v-else-if="pageStatus === '食材組合包'" src="../../assets/images/food3.png"  alt="">
-                <span class="fs-12 fs-md-5 d-block py-2 " >食材<br class="d-lg-none">組合包</span>
-              </a>
-            </li>
-            <li class="col text-center" :class="{'pointer-events-none': pageStatus === '熱銷單品'}">
-              <a href="#"  @click.prevent="()=>selectPage = '熱銷單品'" class="text-decoration-none d-inline-block" :class="{'fw-bold': pageStatus === '熱銷單品', 'link-primary': pageStatus === '熱銷單品'}">
-                <img class="product-img3 d-block mx-auto" v-if="pageStatus !== '熱銷單品'" src="../../assets/images/strawberry1.png"  alt="">
-                <img class="d-block mx-auto" v-else-if="pageStatus === '熱銷單品'" src="../../assets/images/strawberry3.png"  alt="">
-                <span  class="fs-12 fs-md-5 d-block py-2">熱銷<br class="d-lg-none">單品</span>
-              </a>
-            </li>
-            <li class="col text-center" :class="{'pointer-events-none': pageStatus === '特價商品'}">
-              <a href="#"  @click.prevent="()=>selectPage = '特價商品'" class="text-decoration-none d-inline-block" :class="{'fw-bold': pageStatus === '特價商品', 'link-primary': pageStatus === '特價商品'}">
-                <img class="product-img4 d-block mx-auto" v-if="pageStatus !== '特價商品'" src="../../assets/images/discount1.png"  alt="">
-                <img class="d-block mx-auto" v-else-if="pageStatus === '特價商品'" src="../../assets/images/discount3.png"  alt="">
-                <span  class="fs-12 fs-md-5 d-block py-2">特價<br class="d-lg-none">商品</span>
+            <li v-for="item in selections.productCategory" :key="item.icon" class="col text-center" :class="{'pointer-events-none': pageStatus === item.title}">
+              <a href="#"  @click.prevent="()=>selectPage = item.title" class="text-decoration-none d-inline-block" :class="{'fw-bold': pageStatus === item.title, 'link-primary': pageStatus === item.title}">
+                <i v-if="pageStatus !== item.title" :class="item.icon" class="text-gray"></i>
+                <i v-if="pageStatus === item.title" :class="item.iconSelected" class="text-primary"></i>
+                <span class="fs-12 fs-md-5 d-block pb-2">{{ item.title === '全部' ? '所有' : item.title.slice(0, 2) }}<br class="d-lg-none">{{ item.title === '全部' ? '材料' : item.title.slice(2, 5) }}</span>
               </a>
             </li>
           </ul>
           <div class="blue-line bg-primary position-absolute" :class="{'active-all-ingredient': pageStatus === '全部', 'active-package': pageStatus === '食材組合包', 'active-hot': pageStatus === '熱銷單品', 'active-sale': pageStatus === '特價商品'}"></div>
-
         </div>
 
         <div class="d-none d-lg-block my-5">

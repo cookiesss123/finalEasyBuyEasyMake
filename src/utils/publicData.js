@@ -1,9 +1,109 @@
 export const selections = {
-  productCategory: ['全部', '食材組合包', '熱銷單品', '特價商品'],
+  productCategory: [
+    {
+      iconSelected: 'fi fi-sr-salad',
+      icon: 'fi fi-bs-salad',
+      title: '全部'
+    },
+    {
+      iconSelected: 'fi fi-ss-apple-crate',
+      icon: 'fi fi-bs-apple-crate',
+      title: '食材組合包'
+    },
+    {
+      iconSelected: 'fi fi-ss-apple-whole',
+      icon: 'fi fi-bs-apple-whole',
+      title: '熱銷單品'
+    },
+    {
+      iconSelected: 'fi fi-sr-badge-percent',
+      icon: 'fi fi-bs-badge-percent',
+      title: '特價商品'
+    }
+  ],
   rateOrPrice: ['不拘', '價格', '評價'],
   highOrLow: ['不拘', '高到低', '低到高'],
-  dessertCategory: ['全部', '台式甜點', '法式甜點', '美式甜點', '日式甜點', '義式甜點'],
-  rateOrCost: ['不拘', '成本', '評價']
+  dessertCategory: [
+    {
+      iconSelected: 'fi fi-ss-candy-corn',
+      icon: 'fi fi-bs-candy-corn',
+      title: '全部'
+    },
+    {
+      iconSelected: 'fi fi-ss-cookie-alt',
+      icon: 'fi fi-bs-cookie-alt',
+      title: '台式甜點'
+    },
+    {
+      iconSelected: 'fi fi-ss-bread',
+      icon: 'fi fi-bs-bread',
+      title: '法式甜點'
+    },
+    {
+      iconSelected: 'fi fi-sr-pie',
+      icon: 'fi fi-bs-pie',
+      title: '美式甜點'
+    },
+    {
+      iconSelected: 'fi fi-sr-cupcake',
+      icon: 'fi fi-bs-cupcake',
+      title: '日式甜點'
+    },
+    {
+      iconSelected: 'fi fi-ss-stroopwafel',
+      icon: 'fi fi-bs-stroopwafel',
+      title: '義式甜點'
+    }
+  ],
+  rateOrCost: ['不拘', '成本', '評價'],
+  specialOfferCategory: [
+    {
+      iconSelected: 'fi fi-sr-badge-percent',
+      icon: 'fi fi-bs-badge-percent',
+      title: '優惠折扣'
+    },
+    {
+      iconSelected: 'fi fi-ss-gift',
+      icon: 'fi fi-bs-gift',
+      title: '抽獎回饋'
+    }
+  ],
+  bookmarks: [
+    {
+      iconSelected: 'fi fi-ss-book-open-cover',
+      icon: 'fi fi-bs-book-open-cover',
+      title: '食譜收藏',
+      value: 'recipe'
+    },
+    {
+      iconSelected: 'fi fi-sr-salad',
+      icon: 'fi fi-bs-salad',
+      title: '材料收藏',
+      value: 'product'
+    }
+  ],
+  memberShip: [
+    {
+      icon: 'bi bi-border-all',
+      title: '全部'
+    },
+    {
+      icon: 'bi bi-box-seam',
+      title: '待出貨'
+    },
+    {
+      icon: 'bi bi-truck',
+      title: '運送中'
+    },
+    {
+      icon: 'bi bi-house-check',
+      title: '待取貨'
+    },
+    {
+      icon: 'bi bi-clipboard-check',
+      title: '訂單完成'
+    }
+  ]
 }
 
 export const problems = [

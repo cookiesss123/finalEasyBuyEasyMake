@@ -8,6 +8,7 @@ import { ref, onValue, update } from 'firebase/database'
 import { onAuthStateChanged, updatePassword } from 'firebase/auth'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
+import { selections } from '../../utils/publicData'
 export default {
   components: {
     PaginationComponent,
@@ -16,6 +17,7 @@ export default {
   mixins: [numberCommaMixin],
   data () {
     return {
+      selections,
       user: {},
       uid: '',
       orders: [],
@@ -306,46 +308,15 @@ export default {
               訂單狀況
             </h3>
             <ul class="select-order-status list-unstyled d-flex justify-content-between mb-0 py-2">
-              <li>
-                <a href="#" class="hvr-rectangle-out bg-transparent text-decoration-none py-2 px-3 text-gray" :class="{'active-order':selectItem === '全部', 'text-white':selectItem === '全部','fw-bold':selectItem === '全部'}" @click.prevent="() => selectItem ='全部'">
-                  <i class="bi bi-border-all"></i>
-                  <span class="ms-lg-2 ms-1 d-lg-inline-block" :class="{'d-none': selectItem !== '全部'}">
-                    全部
+              <li v-for="item in selections.memberShip" :key="item.icon">
+                <a href="#" class="hvr-rectangle-out bg-transparent text-decoration-none py-2 px-3 text-gray" :class="{'active-order':selectItem === item.title, 'text-white':selectItem === item.title,'fw-bold':selectItem === item.title, 'position-relative': selectItem === '待取貨'}" @click.prevent="() => selectItem =item.title">
+                  <i :class="item.icon"></i>
+                  <span class="ms-lg-2 ms-1 d-lg-inline-block" :class="{'d-none': selectItem !== item.title}">
+                    {{ item.title }}
                   </span>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="hvr-rectangle-out bg-transparent text-decoration-none py-2 px-3 text-gray" :class="{'active-order':selectItem === '待出貨', 'text-white':selectItem === '待出貨','fw-bold':selectItem === '待出貨'}" @click.prevent="() => selectItem ='待出貨'">
-                  <i class="bi bi-box-seam"></i>
-                  <span class="ms-lg-2 ms-1 d-lg-inline-block" :class="{'d-none': selectItem !== '待出貨'}">
-                    待出貨
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="hvr-rectangle-out bg-transparent text-decoration-none py-2 px-3 text-gray" :class="{'active-order':selectItem === '運送中', 'text-white':selectItem === '運送中','fw-bold':selectItem === '運送中'}" @click.prevent="() => selectItem ='運送中'">
-                  <i class="bi bi-truck"></i>
-                  <span class="ms-lg-2 ms-1 d-lg-inline-block" :class="{'d-none': selectItem !== '運送中'}">
-                    運送中
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="hvr-rectangle-out position-relative bg-transparent text-decoration-none py-2 px-3 text-gray" :class="{'active-order':selectItem === '待取貨', 'text-white':selectItem === '待取貨','fw-bold':selectItem === '待取貨'}" @click.prevent="() => selectItem ='待取貨'">
-                  <i class="bi bi-house-check"></i>
-                  <span class="ms-lg-2 ms-1 d-lg-inline-block" :class="{'d-none': selectItem !== '待取貨'}">
-                    待取貨
-                  </span>
-                  <span v-show="orderArrived.length" class="position-absolute top-0 start-100 translate-middle text-center rounded-circle border fw-bold border-primary text-primary fs-12 alert-num">
+
+                  <span v-show="item.title === '待取貨' && orderArrived.length" class="position-absolute top-0 start-100 translate-middle text-center rounded-circle border fw-bold border-primary text-primary fs-12 alert-num">
                     {{ orderArrived.length }}
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="hvr-rectangle-out bg-transparent text-decoration-none py-2 px-3 text-gray" :class="{'active-order':selectItem === '訂單完成', 'text-white':selectItem === '訂單完成','fw-bold':selectItem === '訂單完成'}" @click.prevent="() => selectItem ='訂單完成'">
-                  <i class="bi bi-clipboard-check"></i>
-                  <span class="ms-lg-2 ms-1 d-lg-inline-block" :class="{'d-none': selectItem !== '訂單完成'}">
-                    訂單完成
                   </span>
                 </a>
               </li>
@@ -399,6 +370,3 @@ export default {
 
     </div>
 </template>
-<style>
-
-</style>

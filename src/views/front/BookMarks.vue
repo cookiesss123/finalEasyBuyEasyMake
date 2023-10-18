@@ -11,6 +11,7 @@ import { ref, onValue } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
+import { selections } from '../../utils/publicData'
 export default {
   components: {
     RouterLink,
@@ -20,6 +21,7 @@ export default {
   mixins: [numberCommaMixin],
   data () {
     return {
+      selections,
       uid: '',
       bookMarks: [],
       pageStatus: 'recipe',
@@ -173,18 +175,11 @@ export default {
         <section class="container py-5">
           <div class="pt-lg-4 pt-3 position-relative">
             <ul class="category-selector row row-cols-2 list-unstyled border-bottom">
-              <li class="col text-center" :class="{'pointer-events-none': pageStatus === 'recipe'}">
-                <a href="#"  @click.prevent="()=>pageStatus = 'recipe'" class="text-decoration-none d-inline-block" :class="{'fw-bold': pageStatus === 'recipe', 'link-primary': pageStatus === 'recipe'}">
-                  <img class="bookmark-img1 d-block mx-auto" v-if="pageStatus !== 'recipe'" src="../../assets/images/book1.png"  alt="食譜收藏灰色圖示">
-                  <img v-else-if="pageStatus === 'recipe'" src="../../assets/images/book3.png" class="d-block mx-auto" alt="食譜收藏藍色圖示">
-                  <span class="fs-12 fs-md-5 d-block py-2">食譜收藏</span>
-                </a>
-              </li>
-              <li class="col text-center" :class="{'pointer-events-none': pageStatus === 'product'}">
-                <a href="#"  @click.prevent="()=>pageStatus = 'product'" class="text-decoration-none d-inline-block" :class="{'fw-bold': pageStatus === 'product', 'link-primary': pageStatus === 'product'}">
-                  <img class="bookmark-img2 d-block mx-auto" v-if="pageStatus !== 'product'" src="../../assets/images/fruit1.png"  alt="材料收藏灰色圖示">
-                  <img v-else-if="pageStatus === 'product'" src="../../assets/images/fruit3.png" class="d-block mx-auto" alt="材料收藏藍色圖示">
-                  <span class="fs-12 fs-md-5 d-block py-2">材料收藏</span>
+              <li v-for="item in selections.bookmarks" :key="item.icon" class="col text-center" :class="{'pointer-events-none': pageStatus === item.value}">
+                <a href="#"  @click.prevent="()=>pageStatus = item.value" class="text-decoration-none d-inline-block" :class="{'fw-bold': pageStatus === item.value, 'link-primary': pageStatus === item.value}">
+                  <i v-if="pageStatus !== item.value" :class="item.icon" class="text-gray"></i>
+                <i v-if="pageStatus === item.value" :class="item.iconSelected" class="text-primary"></i>
+                <span  class="fs-12 fs-md-5 d-block pb-2">{{ item.title }}</span>
                 </a>
               </li>
             </ul>

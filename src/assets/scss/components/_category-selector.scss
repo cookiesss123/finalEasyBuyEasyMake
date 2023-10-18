@@ -1,13 +1,10 @@
 // 全部的圖示大小
 .category-selector{
   a{
-    img{
-      width: 30px;
-    }
+    font-size: 30px;
     color: $gray-600;
     border-bottom: 2px solid transparent;
     transition: all .4s ease-in-out;
-
   }
 }
 
@@ -126,58 +123,14 @@
    
   .category-selector{
     a{
-      img{
-        width: 40px;
-      }
-      
+      font-size: 40px;
       &:hover{
-        color: $primary;
         border-bottom: 2px solid #c9d6ff;
-
-        .category-img1 {
-          content: url('@/assets/images/allDessert2.png');
+        span{
+          color: $primary;
         }
-        .category-img2 {
-          content: url('@/assets/images/mooncake2.png');
-        }
-        .category-img3 {
-          content: url('@/assets/images/macaroon2.png');
-        }
-        .category-img4 {
-          content: url('@/assets/images/donut2.png');
-        }
-        .category-img5 {
-          content: url('@/assets/images/cakeStr2.png');
-        }
-        .category-img6 {
-          content: url('@/assets/images/pie2.png');
-        }
-
-        .product-img1 {
-          content: url('@/assets/images/fruit2.png');
-        }
-        .product-img2 {
-          content: url('@/assets/images/food2.png');
-        }
-        .product-img3 {
-          content: url('@/assets/images/strawberry2.png');
-        }
-        .product-img4 {
-          content: url('@/assets/images/discount2.png');
-        }
-
-        .discountImg1 {
-          content: url('@/assets/images/discount2.png');
-        }
-        .discountImg2 {
-          content: url('@/assets/images/giftBox2.png');
-        }
-
-        .bookmark-img1 {
-          content: url('@/assets/images/book2.png');
-        }
-        .bookmark-img2 {
-          content: url('@/assets/images/fruit2.png');
+        i{
+          color: $primary !important;
         }
       }
     }
@@ -259,5 +212,4 @@
 .active-gift, .active-products{
   left: 72.3%;
 }
-
 }

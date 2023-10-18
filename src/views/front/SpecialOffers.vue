@@ -25,34 +25,16 @@
         <div class="py-lg-200 py-96 bg-cover-center" style="background-image: url('https://images.unsplash.com/photo-1678465952975-85cc1a08b2d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80');"></div>
         <h2 class="bg-secondary-light-purple-horizontal text-purple mb-0  fs-lg-1 fs-5 letter-spacing-20 ps-3 fw-bold py-2">優惠特報</h2>
       </section>
-<!-- 暫放區 -->
-<ul class="container">
-        <li>
-          <h2>優惠折扣</h2>
-          <i class="fi fi-sr-badge-percent"></i>
-        </li>
-        <li>
-          <h2>抽獎回饋</h2>
-          <i class="fi fi-ss-gift"></i>
-        </li>
-      </ul>
       <section class="container" data-aos="fade-up" >
         <div class="pt-lg-4 pt-3 position-relative">
           <ul class="category-selector row row-cols-2 list-unstyled border-bottom">
-              <li class="col  text-center" :class="{'pointer-events-none': tabName === '優惠折扣'}">
-                <a href="#"  @click.prevent="()=>tabName = '優惠折扣'" class="text-decoration-none d-inline-block" :class="{'fw-bold': tabName === '優惠折扣', 'link-primary': tabName === '優惠折扣'}">
-                  <img class="discountImg1 d-block mx-auto" v-if="tabName !== '優惠折扣'" src="../../assets/images/discount1.png"  alt="優惠折扣灰色圖示">
-                  <img class="d-block mx-auto" v-else-if="tabName === '優惠折扣'" src="../../assets/images/discount3.png"  alt="優惠折扣藍色圖示">
-                  <span  class="fs-12 fs-md-5 d-block py-2">優惠折扣</span>
-                </a>
-              </li>
-              <li class="col text-center" :class="{'pointer-events-none': tabName === '抽獎回饋'}">
-                <a href="#"  @click.prevent="()=>tabName = '抽獎回饋'" class="text-decoration-none d-inline-block" :class="{'fw-bold': tabName === '抽獎回饋', 'link-primary': tabName === '抽獎回饋'}">
-                  <img class="discountImg2 d-block mx-auto" v-if="tabName !== '抽獎回饋'" src="../../assets/images/giftBox1.png"  alt="抽獎回饋灰色圖示">
-                  <img class="d-block mx-auto" v-else-if="tabName === '抽獎回饋'" src="../../assets/images/giftBox3.png"  alt="抽獎回饋藍色圖示">
-                  <span  class="fs-12 fs-md-5 d-block py-2">抽獎回饋</span>
-                </a>
-              </li>
+            <li v-for="item in selections.specialOfferCategory" :key="item.icon" class="col text-center" :class="{'pointer-events-none': tabName === item.title}">
+              <a href="#"  @click.prevent="()=>tabName = item.title" class="text-decoration-none d-inline-block" :class="{'fw-bold': tabName === item.title, 'link-primary': tabName === item.title}">
+                <i v-if="tabName !== item.title" :class="item.icon" class="text-gray"></i>
+                <i v-if="tabName === item.title" :class="item.iconSelected" class="text-primary"></i>
+                <span  class="fs-12 fs-md-5 d-block pb-2">{{ item.title }}</span>
+              </a>
+            </li>
           </ul>
           <div class="blue-line bg-primary position-absolute" :class="{'active-discount': tabName === '優惠折扣', 'active-gift': tabName === '抽獎回饋'}"></div>
         </div>
@@ -129,7 +111,6 @@
             </div>
 
             <!-- 完成食譜 -->
-            <!-- d-flex flex-column align-items-center -->
             <div v-if="lotteryResult && this.getPrize && this.getPrize.id" class="text-center mt-lg-120 mt-5 ">
 
               <h5 class="fs-md-3 fs-5 text-white fw-bold bg-primary-purple py-3 mb-0 d-flex align-items-center justify-content-center letter-spacing-5-sm-0">
@@ -212,10 +193,12 @@ import { ref, onValue, update, set } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
+import { selections } from '../../utils/publicData'
 export default {
   mixins: [numberCommaMixin],
   data () {
     return {
+      selections,
       coupons: {},
       lottery: {},
       lotteryResult: {},

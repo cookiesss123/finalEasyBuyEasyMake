@@ -98,7 +98,7 @@
                 <li class=" mb-3 d-flex flex-column border-bottom border-lightBrownGray">
                   <label for="category" class="form-label fs-14">種類</label>
                   <select name="" id="category"  class="form-select border-0" v-model="selectItem">
-                    <option v-for="item in selections.dessertCategory" :key="item" :value="item">{{ item }}</option>
+                    <option v-for="item in selections.dessertCategory" :key="item.icon" :value="item.title">{{ item.title }}</option>
                   </select>
                 </li>
                 <li class=" mb-3 d-flex flex-column border-bottom border-lightBrownGray">
@@ -130,7 +130,7 @@
                 <li class=" mb-3 d-flex flex-column border-bottom  border-lightBrownGray">
                   <label for="category" class="form-label  fs-14" >種類</label>
                   <select name="" id="category"  class="form-select border-0" v-model="pageStatus">
-                    <option v-for="item in selections.productCategory" :key="item" :value="item">{{ item }}</option>
+                    <option v-for="item in selections.productCategory" :key="item.icon" :value="item.title">{{ item.title }}</option>
                   </select>
                 </li>
                 <li class=" mb-3 d-flex flex-column border-bottom border-lightBrownGray">
