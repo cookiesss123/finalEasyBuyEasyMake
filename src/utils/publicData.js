@@ -1,3 +1,33 @@
+// alt要改
+export const bannerSwiper = [
+  {
+    title1: '甜點食譜加材料',
+    title2: '一次購足好簡單',
+    subTitle1: '用最優惠的價格',
+    subTitle2: '享受最高品質的食材',
+    img1: 'makeCupcake.png',
+    img2: 'baking.png',
+    mainImg: 'https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+    bgColor: 'bg-light-purple-white',
+    barColor: 'bg-light-purple-secondary',
+    barColorMobile: 'bg-secondary',
+    lineColor: 'border-dashed-purple'
+  },
+  {
+    title1: '免費學習',
+    title2: '各國甜點食譜',
+    subTitle1: '詳細的甜點教學',
+    subTitle2: '保證您學到會',
+    img1: 'cake18.png',
+    img2: 'pannaCotta12.png',
+    mainImg: 'https://images.unsplash.com/photo-1678465952838-c9d7f5daaa65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80&quot',
+    bgColor: 'bg-secondary-white',
+    barColor: 'bg-secondary-light-purple',
+    barColorMobile: 'bg-lightPurple',
+    lineColor: 'border-dashed-primary'
+  }
+]
+
 export const selections = {
   productCategory: [
     {
