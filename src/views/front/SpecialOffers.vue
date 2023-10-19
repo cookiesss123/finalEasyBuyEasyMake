@@ -59,7 +59,7 @@
         </ul>
 
         <div v-else-if="tabName === '抽獎回饋'">
-            <p><i class="bi bi-clock-fill me-1"></i>活動時間：{{ new Date(lottery.startDate).toLocaleDateString().split(' ')[0] }} ~ {{ new Date(lottery.dueDate).toLocaleString().split(' ')[0] }}</p>
+            <p><i class="bi bi-clock-fill me-1"></i>活動時間：{{ new Date(lottery.startDate).toLocaleDateString() }} ~ {{ new Date(lottery.dueDate).toLocaleDateString() }}</p>
 
             <p v-if="uid" :class="{'text-danger':user.lotteryTicket === 0}"><i class="bi bi-ticket-perforated-fill me-1"></i>剩餘抽獎券：{{ user.lotteryTicket }} 張</p>
 

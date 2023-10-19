@@ -3,8 +3,9 @@ import { RouterLink } from 'vue-router'
 import DeleteBookmarksModal from '../../components/DeleteBookmarksModal.vue'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
 // mapState
-import { mapActions } from 'pinia'
+import { mapActions, mapGetters } from 'pinia'
 import cartStore from '../../stores/carts'
+import dataStore from '../../stores/mainData'
 // import markStore from '../../stores/bookmark'
 import { db, auth } from '../../firebase/db'
 import { ref, onValue } from 'firebase/database'
@@ -51,7 +52,6 @@ export default {
           const dataRef = ref(db, `${dataName}/${this.uid}`)
           onValue(dataRef, snapshot => {
             this.bookMarks = snapshot.val()
-            console.log(this.bookMarks, '書籤內容')
             if (!this.bookMarks) {
               this.isLoading = false
               return
@@ -141,8 +141,9 @@ export default {
     }
   },
   computed: {
-    // ...mapState(markStore, ['recipeBookMarks', 'productBookmarks'])
+    ...mapGetters(dataStore, ['discount'])
   }
+  // ...mapState(markStore, ['recipeBookMarks', 'productBookmarks'])
 }
 </script>
 <template>
@@ -222,7 +223,7 @@ export default {
                       <img :src="product.imgUrl" class="object-fit-cover card-img" :alt="product.title">
                       <p class="detail position-absolute top-50 start-50 translate-middle fw-bold letter-spacing-5 link-darkBrown fs-xl-5 text-center">查看<br class="d-xl-none d-lg-block">商品資訊</p>
                       <span v-if="product.isCheaper" class="fs-md-14 fs-12 text-white p-2 bg-primary position-absolute top-0 start-0">
-                        {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
+                        {{ discount(product) }} 折
                       </span>
                     </RouterLink>
                     <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3"  @click="()=>openDeleteModal(product.id, product)">

@@ -79,6 +79,11 @@ const dataStore = defineStore('mainData', {
         })
       })
     }
+  },
+  getters: {
+    discount () {
+      return product => (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))
+    }
   }
 })
 export default dataStore

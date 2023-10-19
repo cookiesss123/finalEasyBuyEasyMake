@@ -16,11 +16,12 @@ export default {
     }
   },
   computed: {
+    // /recipes?searchName=&category=美式甜點 有時網址不只有/recipes 會傳參
     title () {
-      return banners[this.$route.fullPath].title
+      return banners[this.$route.fullPath.split('?')[0]].title
     },
     bgImg () {
-      return banners[this.$route.fullPath].img
+      return banners[this.$route.fullPath.split('?')[0]].img
     }
   }
 }

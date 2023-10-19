@@ -7,7 +7,7 @@ import 'swiper/css/pagination'
 import BannerSwiper from '../../components/BannerSwiper.vue'
 
 // mapState
-import { mapActions, mapState } from 'pinia'
+import { mapActions, mapState, mapGetters } from 'pinia'
 import cartStore from '../../stores/carts'
 import markStore from '../../stores/bookmark'
 import dataStore from '../../stores/mainData'
@@ -80,11 +80,11 @@ export default {
     }
   },
   computed: {
-    ...mapState(markStore, ['uid', 'recipeBookMarks', 'productBookmarks'])
+    ...mapState(markStore, ['uid', 'recipeBookMarks', 'productBookmarks']),
+    ...mapGetters(dataStore, ['discount'])
   },
   mounted () {
     this.isLoading = true
-
     this.goToTop()
     this.getBookmarks('recipeBookmarks')
     this.getBookmarks('productBookmarks')
@@ -292,7 +292,7 @@ export default {
                   <img :src="product.imgUrl" class="object-fit-cover card-img" :alt="product.title">
                   <p class="detail position-absolute top-50 start-50 translate-middle fw-bold letter-spacing-5 link-darkBrown fs-xl-5 text-center">查看<br class="d-xl-none d-lg-block">商品資訊</p>
                   <span v-if="product.isCheaper" class="fs-14 text-white p-2 bg-primary position-absolute top-0 start-0">
-                    {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
+                    {{ discount(product) }} 折
                   </span>
                 </RouterLink>
                 <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('productBookmarks' ,product, uid)">
@@ -338,7 +338,7 @@ export default {
                 <RouterLink :to="`/products/${product.id}`">
                   <img :src="product.imgUrl" class="object-fit-cover card-img" :alt="product.title">
                   <span v-if="product.isCheaper" class="fs-md-14 fs-12 text-white p-2 bg-primary position-absolute top-0 start-0">
-                    {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }} 折
+                    {{ discount(product) }} 折
                   </span>
                 </RouterLink>
                 <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>addBookmark('productBookmarks' ,product, uid)">

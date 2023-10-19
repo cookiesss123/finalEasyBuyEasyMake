@@ -4,9 +4,10 @@ import { Navigation, Pagination } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import { mapActions, mapState } from 'pinia'
+import { mapActions, mapState, mapGetters } from 'pinia'
 import cartStore from '../../stores/carts'
 import markStore from '../../stores/bookmark'
+import dataStore from '../../stores/mainData'
 import fullStar from '../../assets/images/icon-star-filled.png'
 import star from '../../assets/images/icon-star.png'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
@@ -228,7 +229,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(cartStore, ['loadingItem'])
+    ...mapState(cartStore, ['loadingItem']),
+    ...mapGetters(dataStore, ['discount'])
   }
 }
 </script>
@@ -285,8 +287,7 @@ export default {
         <div class="col d-flex flex-column">
           <div class="d-flex align-items-center mb-3">
             <span v-if="product.isCheaper" class="badge rounded-pill bg-primary fs-6 me-2">
-              {{ (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))) % 10 === 0 ? (100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0))).toString().charAt(0) : 100 - ((((product.originalPrice - product.price) / product.originalPrice) * 100).toFixed(0)) }}
-            折
+             {{ discount(product) }} 折
             </span>
             <h2 class="mb-0 fs-lg-4 fs-5 fw-bold">{{ product.title }}</h2>
             <div class="d-flex align-items-center ms-auto ">
