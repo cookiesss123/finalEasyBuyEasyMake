@@ -12,12 +12,14 @@ import { ref, onValue } from 'firebase/database'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
 import { selections } from '../../utils/publicData'
+import BannerComponent from '../../components/BannerComponent.vue'
 
 export default {
   components: {
     RouterLink,
     PaginationComponent,
-    Loading
+    Loading,
+    BannerComponent
   },
   mixins: [numberCommaMixin],
   data () {
@@ -176,15 +178,7 @@ export default {
       </p>
     </div>
       </loading>
-
-      <section class="text-center" data-aos="fade-up">
-        <div class="py-lg-200 py-96 bg-cover-center border" style="background-image: url('https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
-        </div>
-        <h2 class="text-purple mb-0 fs-lg-1 fs-5 letter-spacing-20 ps-1 fw-bold bg-secondary-light-purple-horizontal py-2">
-          <span class="ms-3">甜點種類</span>
-        </h2>
-      </section>
-
+      <BannerComponent></BannerComponent>
       <section class="container">
         <div class="pt-lg-4 pt-3 position-relative" data-aos="fade-up">
           <ul class="category-selector row row-cols-6 list-unstyled border-bottom">
@@ -211,7 +205,7 @@ export default {
         <div class="row g-0" id="myGroup">
           <div class="col-2">
             <div ref="costOrRateCollapse" class="collapse">
-              <div class="card card-body border-0" style="border: 0px !important;">
+              <div class="card card-body" >
                 <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
                   <input type="radio" class="btn-check" value="成本" name="priceOrRate" id="selectprice" autocomplete="off"  v-model="priceOrRate">
                   <label class="btn btn-outline-primary " for="selectprice">成本</label>
@@ -223,7 +217,7 @@ export default {
           </div>
           <div class="col-2">
             <div ref="highOrLowCollapse" class="collapse">
-              <div class="card card-body border-0" style="border: 0px !important;">
+              <div class="card card-body">
                 <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
                   <input type="radio" class="btn-check" value="不拘" name="highOrLow" id="noDifference" autocomplete="off" checked="" v-model="highOrLow">
                   <label class="btn btn-outline-primary" for="noDifference">不拘</label>

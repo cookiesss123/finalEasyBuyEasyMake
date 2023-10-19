@@ -12,11 +12,13 @@ import { onAuthStateChanged } from 'firebase/auth'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
 import { selections } from '../../utils/publicData'
+import BannerComponent from '../../components/BannerComponent.vue'
 export default {
   components: {
     RouterLink,
     Loading,
-    DeleteBookmarksModal
+    DeleteBookmarksModal,
+    BannerComponent
   },
   mixins: [numberCommaMixin],
   data () {
@@ -165,13 +167,7 @@ export default {
       </p>
     </div>
         </loading>
-        <section class="text-center">
-          <div class="py-lg-200 py-96 bg-cover-center" style="background-image: url('https://images.unsplash.com/photo-1681923615775-d84f619b8e6c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
-          <h2 class="bg-secondary-light-purple-horizontal text-purple mb-0  fs-lg-1 fs-5 letter-spacing-20 fw-bold py-2">
-            <span class="ms-3">我的收藏</span>
-          </h2>
-        </section>
-
+        <BannerComponent></BannerComponent>
         <section class="container py-5">
           <div class="pt-lg-4 pt-3 position-relative">
             <ul class="category-selector row row-cols-2 list-unstyled border-bottom">

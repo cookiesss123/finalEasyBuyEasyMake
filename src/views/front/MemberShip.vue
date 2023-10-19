@@ -9,10 +9,12 @@ import { onAuthStateChanged, updatePassword } from 'firebase/auth'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
 import { selections } from '../../utils/publicData'
+import BannerComponent from '../../components/BannerComponent.vue'
 export default {
   components: {
     PaginationComponent,
-    Loading
+    Loading,
+    BannerComponent
   },
   mixins: [numberCommaMixin],
   data () {
@@ -228,11 +230,7 @@ export default {
                 </p>
               </div>
       </loading>
-      <section class="text-center">
-        <div class="py-lg-200 py-96 bg-cover-center" style="background-image: url('https://images.unsplash.com/photo-1678465952850-0eb0bb982835?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
-        <h2 class="bg-secondary-light-purple-horizontal text-purple mb-0  fs-lg-1 fs-5 letter-spacing-20 ps-3 fw-bold py-2">會員資料</h2>
-      </section>
-
+      <BannerComponent></BannerComponent>
       <div class="container">
         <section class="row row-cols-1 row-cols-lg-2 g-5 py-lg-96 py-5">
           <div class="col-lg-4">
