@@ -309,6 +309,7 @@ $warning:       $yellow !default;
 $danger:        $red !default;
 $light:         $gray-100 !default;
 $dark:          $gray-900 !default;
+$lightGray:     #d3ccc1;
 // scss-docs-end theme-color-variables
 
 // scss-docs-start theme-colors-map
@@ -327,7 +328,7 @@ $theme-colors: (
   "lightBrownGray": #AFA89F, // custom
   "cyan": #d0fdfd, // custom
   "gray": $gray-600, // custom
-  "lightGray": #d3ccc1, // custom 
+  "lightGray": $lightGray, // custom 
   "whiteGray": $gray-200, // 超淺灰色 
   "purple": #5a5ad0, // custom
   "lightPurple": $lightPurple, // custom

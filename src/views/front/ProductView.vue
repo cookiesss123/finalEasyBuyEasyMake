@@ -382,33 +382,39 @@ export default {
       </h5>
       <form ref="form" @submit.prevent="addProductRate" class="mt-2" v-if="uid">
         <div class="d-flex mb-3">
+          <!-- <div v-for="item in 5" :key="item + 94000" class="form-check px-1">
+            <input class="form-check-input d-none"  type="radio" name="rate" :id="`star${item}`" :value="item" v-model="score" >
+            <label class="form-check-label cursor-pointer" :for="`star${item}`" @mouseover="() => mouseoverStar(item)" @mouseout="() => mouseoutStar(item)">
+              <img :ref="`rate${item}`" :src="star" width="25">
+            </label>
+          </div> -->
           <div class="form-check px-1">
-            <input class="form-check-input d-none"  type="radio" name="rate" id="star1" value="1" v-model="score" >
-            <label class="form-check-label labelRate1 cursor-pointer" for="star1" @mouseover="() => mouseoverStar(1)" @mouseout="() => mouseoutStar(1)">
+            <input class="form-check-input d-none"  type="radio" name="rate" id="star1"  value="1" v-model="score">
+            <label class="form-check-label cursor-pointer" for="star1" @mouseover="() => mouseoverStar(1)" @mouseout="() => mouseoutStar(1)" >
               <img ref="rate1" :src="star" width="25">
             </label>
           </div>
           <div class="form-check px-1">
             <input class="form-check-input d-none"  type="radio" name="rate" id="star2"  value="2" v-model="score">
-            <label class="form-check-label labelRate2 cursor-pointer" for="star2" @mouseover="() => mouseoverStar(2)" @mouseout="() => mouseoutStar(2)" >
+            <label class="form-check-label cursor-pointer" for="star2" @mouseover="() => mouseoverStar(2)" @mouseout="() => mouseoutStar(2)" >
               <img ref="rate2" :src="star" width="25">
             </label>
           </div>
           <div class="form-check px-1">
             <input class="form-check-input d-none"  type="radio" name="rate" id="star3" value="3" v-model="score">
-            <label class="form-check-label labelRate3 cursor-pointer" for="star3"  @mouseover="() => mouseoverStar(3)" @mouseout="() => mouseoutStar(3)" >
+            <label class="form-check-label cursor-pointer" for="star3"  @mouseover="() => mouseoverStar(3)" @mouseout="() => mouseoutStar(3)" >
               <img ref="rate3" :src="star" width="25">
             </label>
           </div>
           <div class="form-check px-1">
             <input class="form-check-input d-none"  type="radio" name="rate" id="star4" value="4" v-model="score">
-            <label class="form-check-label labelRate4 cursor-pointer" for="star4"  @mouseover="() => mouseoverStar(4)" @mouseout="() => mouseoutStar(4)">
+            <label class="form-check-label cursor-pointer" for="star4"  @mouseover="() => mouseoverStar(4)" @mouseout="() => mouseoutStar(4)">
               <img ref="rate4" :src="star" width="25">
             </label>
           </div>
           <div class="form-check px-1">
             <input class="form-check-input d-none"  type="radio" name="rate" id="star5" value="5" v-model="score">
-            <label class="form-check-label labelRate5 cursor-pointer" for="star5"  @mouseover="() => mouseoverStar(5)" @mouseout="() => mouseoutStar(5)" >
+            <label class="form-check-label cursor-pointer" for="star5"  @mouseover="() => mouseoverStar(5)" @mouseout="() => mouseoutStar(5)" >
               <img ref="rate5" :src="star" width="25">
             </label>
           </div>
