@@ -280,8 +280,6 @@ export default {
         bulletClass: 'my-bullet-class',
         bulletActiveClass: 'my-bullet-active-class'
       },
-      fullPage: true,
-
       recipeSearchName: '',
       selectItem: '全部',
       highOrLow: '不拘',

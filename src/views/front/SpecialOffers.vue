@@ -1,8 +1,6 @@
 <template>
     <div>
       <loading v-model:active="isLoading"
-                 :can-cancel="false"
-                 :is-full-page="fullPage"
                  :lock-scroll="true">
                  <div class="d-flex flex-column align-items-center py-96">
       <img src="../../assets/images/loadingLogo.png" class="loading-logo mb-3" alt="logo" >
@@ -207,7 +205,6 @@ export default {
       tabName: '優惠折扣', // 判斷在哪個頁籤
       articles: [],
       isLoading: false,
-      fullPage: true,
       couponIds: []
     }
   },

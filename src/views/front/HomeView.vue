@@ -44,8 +44,7 @@ export default {
       popularRecipes: [],
       goodProducts: [],
 
-      isLoading: false,
-      fullPage: true
+      isLoading: false
     }
   },
   methods: {
@@ -95,8 +94,6 @@ export default {
 <template>
     <div>
       <loading v-model:active="isLoading"
-              :can-cancel="false"
-              :is-full-page="fullPage"
               :lock-scroll="true">
               <div class="d-flex flex-column align-items-center py-96">
                 <img src="../../assets/images/loadingLogo.png" class="loading-logo mb-3" alt="logo" >
