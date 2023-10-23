@@ -5,8 +5,6 @@ export const bannerSwiper = [
     title2: '一次購足好簡單',
     subTitle1: '用最優惠的價格',
     subTitle2: '享受最高品質的食材',
-    img1: 'makeCupcake.png',
-    img2: 'baking.png',
     mainImg: 'https://images.unsplash.com/photo-1681923665434-b1ae711f3918?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
     bgColor: 'bg-light-purple-white',
     barColor: 'bg-light-purple-secondary',
@@ -18,8 +16,6 @@ export const bannerSwiper = [
     title2: '各國甜點食譜',
     subTitle1: '詳細的甜點教學',
     subTitle2: '保證您學到會',
-    img1: 'cake18.png',
-    img2: 'pannaCotta12.png',
     mainImg: 'https://images.unsplash.com/photo-1678465952838-c9d7f5daaa65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80&quot',
     bgColor: 'bg-secondary-white',
     barColor: 'bg-secondary-light-purple',
@@ -154,23 +150,19 @@ export const problems = [
 export const solutions = [
   {
     title: '立即取得食譜材料',
-    content: '使用首頁上方搜尋欄尋找食譜，所有食譜皆有列出製作材料、工具，點擊購買即可一次買齊。',
-    img: 'feature-image1.png'
+    content: '使用首頁上方搜尋欄尋找食譜，所有食譜皆有列出製作材料、工具，點擊購買即可一次買齊。'
   },
   {
     title: '便宜且份量適中的食材',
-    content: '使用首頁上方搜尋欄尋找食譜，所有食譜皆有列出製作材料、工具，點擊購買即可一次買齊。',
-    img: 'feature-image2.png'
+    content: '使用首頁上方搜尋欄尋找食譜，所有食譜皆有列出製作材料、工具，點擊購買即可一次買齊。'
   },
   {
     title: '甜點食譜＋影片教學',
-    content: '免費甜點食譜和完整講解的影片教學，一定帶你學到會！不上烘焙課也能有良好的製作體驗。',
-    img: 'feature-image3.png'
+    content: '免費甜點食譜和完整講解的影片教學，一定帶你學到會！不上烘焙課也能有良好的製作體驗。'
   },
   {
     title: '優惠不間斷',
-    content: '消費滿千元免運費！每月抽獎活動，享價值千元以上好禮！買越多賺越多！',
-    img: 'feature-image4.png'
+    content: '消費滿千元免運費！每月抽獎活動，享價值千元以上好禮！買越多賺越多！'
   }
 ]
 

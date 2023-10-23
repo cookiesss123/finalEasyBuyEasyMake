@@ -79,13 +79,12 @@
                         <div class="col-6 py-5  position-relative z-index-1">
                             <h2 class="fw-bold lh-base fs-1 letter-spacing-10" :class="{'text-purple ': index === 0, 'text-primary ': index === 1}">
                                 <p class="d-flex align-items-center">
-                                    <!-- src="../assets/images/makeCupcake.png" -->
-                                <img :src="`src/assets/images/${item.img1}`" class="me-3" style="width: 35px;" :alt="item.img1.split('.')[0]">
+                                <img :src="index ? img3 : img1" class="me-3" style="width: 35px;" alt="小圖示">
                                 {{ item.title1 }}
                                 </p>
                                 <p class="d-flex  align-items-center">
                                 {{ item.title2 }}
-                                <img :src="`src/assets/images/${item.img2}`" class="ms-3" style="width: 35px;" :alt="item.img2.split('.')[0]">
+                                <img :src="index ? img4 : img2" class="ms-3" style="width: 35px;" alt="小圖示">
                                 </p>
                             </h2>
                             <p class="text-center text-lg-start mb-0">{{ item.subTitle1 }}<br class="d-block d-lg-none"> {{ item.subTitle2 }}</p>
@@ -238,12 +237,12 @@
             <div class="mt-380">
                 <h2 class="fw-bold lh-base fs-4 letter-spacing-10" :class="{'text-purple': index === 0, 'text-primary': index === 1}">
                 <p class="d-flex align-items-center justify-content-center">
-                    <img :src="`src/assets/images/${item.img1}`" class="me-3 img-lg-50-sm-30" :alt="item.img1.split('.')[0]">
+                    <img :src="index ? img3 : img1" class="me-3 img-lg-50-sm-30" alt="小圖示">
                     {{ item.title1 }}
                 </p>
                 <p class="d-flex  align-items-center justify-content-center">
                     {{ item.title2 }}
-                    <img :src="`src/assets/images/${item.img2}`" class="ms-3 img-lg-50-sm-30" :alt="item.img2.split('.')[0]">
+                    <img :src="index ? img4 : img2" class="ms-3 img-lg-50-sm-30" alt="小圖示">
                 </p>
                 </h2>
                 <p class="text-center mb-0">{{ item.subTitle1 }}<br> {{ item.subTitle2 }}</p>
@@ -261,6 +260,10 @@ import { selections, bannerSwiper } from '../utils/publicData'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
+import img1 from '@/assets/images/makeCupcake.png'
+import img2 from '@/assets/images/baking.png'
+import img3 from '@/assets/images/cake18.png'
+import img4 from '@/assets/images/pannaCotta12.png'
 export default {
   components: {
     Swiper,
@@ -288,7 +291,11 @@ export default {
       productSearchName: '',
       productHighOrLow: '低到高',
       productPriceOrRate: '價格',
-      pageStatus: '全部'
+      pageStatus: '全部',
+      img1,
+      img2,
+      img3,
+      img4
     }
   },
   methods: {

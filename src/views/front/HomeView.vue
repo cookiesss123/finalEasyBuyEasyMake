@@ -14,6 +14,10 @@ import loadingStore from '../../stores/loadingStore'
 
 import numberCommaMixin from '../../mixins/numberCommaMixin'
 import { problems, solutions, selections } from '../../utils/publicData'
+import img1 from '@/assets/images/feature-image1.png'
+import img2 from '@/assets/images/feature-image2.png'
+import img3 from '@/assets/images/feature-image3.png'
+import img4 from '@/assets/images/feature-image4.png'
 
 export default {
   components: {
@@ -33,7 +37,11 @@ export default {
         prevEl: '.swiper-button-prev'
       },
       recipes: [],
-      products: []
+      products: [],
+      img1,
+      img2,
+      img3,
+      img4
     }
   },
   methods: {
@@ -206,7 +214,7 @@ export default {
                 <!-- 奇數出現 -->
                 <div v-if="(index + 1) % 2" class="col-lg-4 col-md-6 d-none d-lg-block"></div>
                 <div class="col-lg-4 col-md-6 mb-3 mb-md-0">
-                  <img :src="`/src/assets/images/${solution.img}`" class="w-100 rounded-5 img-240 object-fit-cover" :alt="solution.title">
+                  <img :src="index === 0 ? img1 : index === 1 ? img2 : index === 2 ? img3 : img4" class="w-100 rounded-5 img-240 object-fit-cover" :alt="solution.title">
                 </div>
                 <div class="col-lg-4 col-md-6 d-flex flex-column justify-content-center">
                   <h5 class="fw-bold fs-md-4 fs-6 mb-md-3">{{ solution.title }}</h5>
