@@ -1,8 +1,22 @@
+<script>
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
+export default {
+  data () {
+    return {
+      isLoading: false
+    }
+  },
+  components: {
+    Loading
+  }
+}
+</script>
 <template>
-   <VLoading v-model:active="isLoading"
+    <loading v-model:active="isLoading"
               :lock-scroll="true">
             <div class="d-flex flex-column align-items-center py-96">
-            <img src="./assets/images/loadingLogo.png" class="loading-logo mb-3" alt="logo" >
+            <img src="../../assets/images/loadingLogo.png" class="loading-logo mb-3" alt="logo" >
             <p class="text-center fw-bold text-purple fs-md-2 fs-5">
                 <span class="me-1 animate-text">L</span>
                 <span class="mx-1 animate-text">o</span>
@@ -16,21 +30,5 @@
                 <span class="animate-text">.</span>
             </p>
             </div>
-    </VLoading>
-  <router-view />
+    </loading>
 </template>
-
-<script>
-import AOS from 'aos'
-import 'aos/dist/aos.css'
-import loadingStore from './stores/loadingStore'
-import { mapState } from 'pinia'
-export default {
-  mounted () {
-    AOS.init()
-  },
-  computed: {
-    ...mapState(loadingStore, ['isLoading'])
-  }
-}
-</script>

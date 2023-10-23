@@ -1,27 +1,26 @@
 <script>
+import loadingStore from '../../stores/loadingStore'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Navigation, Pagination } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import { mapActions } from 'pinia'
+import { mapState, mapActions } from 'pinia'
 import cartStore from '../../stores/carts'
 import markStore from '../../stores/bookmark'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
 import { db, auth } from '../../firebase/db'
 import { ref, onValue, set, remove, push } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
-import Loading from 'vue-loading-overlay'
-import 'vue-loading-overlay/dist/css/index.css'
 export default {
   components: {
     Swiper,
-    SwiperSlide,
-    Loading
+    SwiperSlide
   },
   mixins: [numberCommaMixin],
   data () {
     return {
+      recipeId: '',
       recipe: {},
       modules: [Navigation, Pagination],
       navigation: {
@@ -34,40 +33,34 @@ export default {
         bulletActiveClass: 'my-bullet-active-class'
       },
       mainImg: '',
-      bookMark: {},
       allThumbNum: 0,
       myThumb: {},
       recipeComments: [],
       recipeMessage: '',
       qty: 1,
       groupProduct: {},
-      user: {},
-      uid: '',
       isLoading: false
     }
   },
   methods: {
     ...mapActions(cartStore, ['addCart', 'toastMessage', 'goToTop']),
-    ...mapActions(markStore, ['addBookmark', 'deleteBookmark']),
+    ...mapActions(markStore, ['addBookmark', 'deleteBookmark', 'getBookmark']),
+    ...mapActions(loadingStore, ['startLoading']),
     getMyThumb () {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          this.uid = user.uid
           const { id } = this.$route.params
-          const dataRef = ref(db, `recipePersonalThumbs/${this.uid}/${id}`)
+          const dataRef = ref(db, `recipePersonalThumbs/${user.uid}/${id}`)
           onValue(dataRef, snapshot => {
             this.myThumb = snapshot.val()
           })
         } else {
-          this.uid = null
-          this.user = {}
           this.myThumb = null
         }
       })
     },
     getAllThumbs () {
-      const { id } = this.$route.params
-      const dataRef = ref(db, `recipeThumbs/${id}`)
+      const dataRef = ref(db, `recipeThumbs/${this.recipeId}`)
       onValue(dataRef, snapshot => {
         this.allThumbNum = snapshot.val()
         if (this.allThumbNum) {
@@ -75,6 +68,27 @@ export default {
         } else {
           this.allThumbNum = 0
         }
+      })
+    },
+    getRecipe () {
+      const dataRef = ref(db, `recipes/${this.recipeId}`)
+      onValue(dataRef, snapshot => {
+        this.recipe = snapshot.val()
+        this.recipe.id = this.recipeId
+        this.mainImg = this.recipe.image
+        this.groupProduct = this.recipe.relativeProducts.filter(product => {
+          return product.category === '組合包'
+        })
+        this.groupProduct = this.groupProduct[0]
+      })
+    },
+    getAllComments () {
+      const dataRef = ref(db, 'recipeComments/')
+      onValue(dataRef, snapshot => {
+        const comments = snapshot.val()
+        this.recipeComments = Object.values(comments).filter(comment => {
+          return comment.recipeId === this.recipeId
+        })
       })
     },
     addThumb () {
@@ -98,35 +112,6 @@ export default {
       })
       this.toastMessage('取消按讚')
     },
-    getRecipe () {
-      const { id } = this.$route.params
-
-      const dataRef = ref(db, `recipes/${id}`)
-      onValue(dataRef, snapshot => {
-        this.recipe = snapshot.val()
-        this.recipe.id = id
-        this.mainImg = this.recipe.image
-        this.groupProduct = this.recipe.relativeProducts.filter(product => {
-          return product.category === '組合包'
-        })
-        this.groupProduct = this.groupProduct[0]
-        this.isLoading = false
-      })
-    },
-    getAllComments () {
-      const { id } = this.$route.params
-      const dataRef = ref(db, 'recipeComments/')
-      onValue(dataRef, snapshot => {
-        let comments = snapshot.val()
-        comments = Object.values(comments).map((item, index) => {
-          item.id = Object.keys(item)[index]
-          return item
-        })
-        this.recipeComments = comments.filter(comment => {
-          return comment.recipeId === id
-        })
-      })
-    },
     addComments () {
       const reference = ref(db, 'recipeComments')
       const newUserRef = push(reference)
@@ -138,61 +123,26 @@ export default {
         userImg: this.user.headshotImg
       })
       this.recipeMessage = ''
-    },
-    getBookmark () {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          this.uid = user.uid
-          const dataRef = ref(db, 'users/' + user.uid)
-          onValue(dataRef, snapshot => {
-            this.user = snapshot.val()
-            const { id } = this.$route.params
-            const dataRef = ref(db, `recipeBookmarks/${this.uid}/${id}`)
-            onValue(dataRef, snapshot => {
-              this.bookMark = snapshot.val()
-            })
-          })
-        } else {
-          this.uid = null
-          this.user = {}
-          this.bookMark = null
-        }
-      })
     }
   },
   mounted () {
+    this.startLoading()
+    const { id } = this.$route.params
+    this.recipeId = id
     this.goToTop()
-
-    this.isLoading = true
     this.getAllThumbs()
     this.getMyThumb()
-    this.getBookmark()
     this.getRecipe()
     this.getAllComments()
+    this.getBookmark('recipeBookmarks', id)
+  },
+  computed: {
+    ...mapState(markStore, ['recipeBookmark', 'uid', 'user'])
   }
 }
 </script>
-
 <template>
   <div class="no-scroll-x">
-      <loading v-model:active="isLoading"
-                 :lock-scroll="true">
-                 <div class="d-flex flex-column align-items-center py-96">
-      <img src="../../assets/images/loadingLogo.png" class="loading-logo mb-3" alt="logo" >
-      <p class="text-center fw-bold text-purple fs-md-2 fs-5">
-        <span class="me-1 animate-text">L</span>
-        <span class="mx-1 animate-text">o</span>
-        <span class="mx-1 animate-text">a</span>
-        <span class="mx-1 animate-text">d</span>
-        <span class="mx-1 animate-text">i</span>
-        <span class="mx-1 animate-text">n</span>
-        <span class="mx-1 animate-text">g</span>
-        <span class="mx-2 animate-text">.</span>
-        <span class="me-2 animate-text">.</span>
-        <span class="animate-text">.</span>
-      </p>
-    </div>
-      </loading>
       <section class="container py-md-96 py-60">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -225,10 +175,10 @@ export default {
               <span class="badge rounded-pill bg-primary fs-6 me-2">{{ recipe.category }}</span>
               <h2 class="mb-0 fs-lg-4 fs-5 fw-bold">{{ recipe.title }}</h2>
               <div class="d-flex align-items-center ms-auto">
-                <button v-if="!bookMark" type="button" class="border-0 bg-transparent text-tomato fs-4 p-0 mt-1" @click="()=>addBookmark('recipeBookmarks', recipe, uid)">
+                <button v-if="!recipeBookmark" type="button" class="border-0 bg-transparent text-tomato fs-4 p-0 mt-1" @click="()=>addBookmark('recipeBookmarks', recipe)">
                   <i class="bi bi-heart"></i>
                 </button>
-                <button v-else-if="bookMark" type="button" class=" border-0 bg-transparent fs-4 text-tomato p-0 mt-1" @click="()=>deleteBookmark('recipeBookmarks', recipe.id, uid)">
+                <button v-else-if="recipeBookmark" type="button" class=" border-0 bg-transparent fs-4 text-tomato p-0 mt-1" @click="()=>deleteBookmark('recipeBookmarks', recipe.id)">
                   <i class="bi bi-heart-fill"></i>
                 </button>
                 <button v-if="!myThumb" type="button" class="badge border border-primary rounded-pill fs-6 ms-4 btn-like" :class="{'text-primary': allThumbNum,'text-gray': !allThumbNum}" @click="addThumb">
@@ -385,7 +335,7 @@ export default {
             <i v-else-if="!comment.userImg" class="bi bi-person-circle me-3 fs-45 lh-1 mb-auto"></i>
             <div>
               <h5 class="mb-0 fs-6">{{ comment.username }}</h5>
-              <p>{{ `${new Date(comment.createAt).toLocaleDateString()}` }}</p>
+              <p>{{ new Date(comment.createAt).toLocaleString().split(':')[0] }}:{{ new Date(comment.createAt).toLocaleString().split(':')[1] }}</p>
               <p class="mb-2">{{ comment.message }}</p>
             </div>
           </div>

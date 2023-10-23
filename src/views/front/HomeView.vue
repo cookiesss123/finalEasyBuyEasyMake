@@ -6,31 +6,24 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import BannerSwiper from '../../components/BannerSwiper.vue'
 
-// mapState
 import { mapActions, mapState, mapGetters } from 'pinia'
 import cartStore from '../../stores/carts'
 import markStore from '../../stores/bookmark'
 import dataStore from '../../stores/mainData'
+import loadingStore from '../../stores/loadingStore'
+
 import numberCommaMixin from '../../mixins/numberCommaMixin'
-// import { db, auth } from '../../firebase/db'
-// import { ref, onValue } from 'firebase/database'
-// import { onAuthStateChanged } from 'firebase/auth'
-
-import Loading from 'vue-loading-overlay'
-import 'vue-loading-overlay/dist/css/index.css'
-
 import { problems, solutions, selections } from '../../utils/publicData'
+
 export default {
   components: {
     Swiper,
     SwiperSlide,
-    BannerSwiper,
-    Loading
+    BannerSwiper
   },
   mixins: [numberCommaMixin],
   data () {
     return {
-      // uid: '',
       selections,
       problems,
       solutions,
@@ -39,36 +32,15 @@ export default {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev'
       },
-      // recipeBookMarks: [],
-      // productBookmarks: [],
-      popularRecipes: [],
-      goodProducts: [],
-
-      isLoading: false
+      recipes: [],
+      products: []
     }
   },
   methods: {
-    ...mapActions(cartStore, ['toastMessage', 'addCart', 'goToTop']),
+    ...mapActions(cartStore, ['addCart', 'goToTop']),
     ...mapActions(markStore, ['addBookmark', 'deleteBookmark', 'getBookmarks']),
-    ...mapActions(dataStore, ['getRecipes', 'getProducts']),
-    async getData () {
-      try {
-        const res = await Promise.all([this.getRecipes(), this.getProducts()])
-        const [recipes, products] = res
-
-        this.popularRecipes = recipes.sort((a, b) => {
-          return b.thumbs - a.thumbs
-        })
-        this.popularRecipes = this.popularRecipes.slice(0, 10)
-
-        this.goodProducts = products.filter(product => product.averageRate >= 4)
-        this.goodProducts = this.goodProducts.sort((a, b) => b.averageRate - a.averageRate)
-
-        this.isLoading = false
-      } catch (e) {
-        throw new Error(e)
-      }
-    },
+    ...mapActions(dataStore, ['getRecipes', 'getProducts', 'getThumbs', 'getRates']),
+    ...mapActions(loadingStore, ['startLoading']),
     linkToLottery () {
       this.$router.push({
         name: 'discountsView',
@@ -76,41 +48,37 @@ export default {
           tabName: '抽獎回饋'
         }
       })
+    },
+    async getData () {
+      try {
+        this.startLoading()
+        const res = await Promise.all([this.getRecipes(), this.getProducts()])
+        const [recipes, products] = res
+        this.recipes = recipes
+        this.products = products
+
+        this.getBookmarks('recipeBookmarks')
+        this.getBookmarks('productBookmarks')
+      } catch (e) {
+        throw new Error(e)
+      }
     }
   },
   computed: {
-    ...mapState(markStore, ['uid', 'recipeBookMarks', 'productBookmarks']),
+    ...mapState(markStore, ['uid', 'recipeBookmarks', 'productBookmarks']),
+    ...mapState(dataStore, ['highThumbs', 'highRates']),
     ...mapGetters(dataStore, ['discount'])
   },
   mounted () {
-    this.isLoading = true
     this.goToTop()
-    this.getBookmarks('recipeBookmarks')
-    this.getBookmarks('productBookmarks')
+    this.getThumbs()
+    this.getRates()
     this.getData()
   }
 }
 </script>
 <template>
     <div>
-      <loading v-model:active="isLoading"
-              :lock-scroll="true">
-              <div class="d-flex flex-column align-items-center py-96">
-                <img src="../../assets/images/loadingLogo.png" class="loading-logo mb-3" alt="logo" >
-                <p class="text-center fw-bold text-purple fs-md-2 fs-5">
-                  <span class="me-1 animate-text">L</span>
-                  <span class="mx-1 animate-text">o</span>
-                  <span class="mx-1 animate-text">a</span>
-                  <span class="mx-1 animate-text">d</span>
-                  <span class="mx-1 animate-text">i</span>
-                  <span class="mx-1 animate-text">n</span>
-                  <span class="mx-1 animate-text">g</span>
-                  <span class="mx-2 animate-text">.</span>
-                  <span class="me-2 animate-text">.</span>
-                  <span class="animate-text">.</span>
-                </p>
-              </div>
-      </loading>
       <BannerSwiper></BannerSwiper>
       <!-- 熱門食譜 -->
       <section class="container py-md-96 py-60" data-aos="fade-up">
@@ -134,30 +102,30 @@ export default {
         }"
         class="d-none d-lg-block swiper-home"
           >
-          <swiper-slide v-for="recipe in popularRecipes" :key="recipe.id">
-            <div class="card position-relative">
-              <RouterLink :to="`/recipes/${recipe.id}`" class="card-img-hover position-relative">
-                <img :src="recipe.image" class="object-fit-cover card-img" :alt="recipe.title">
-                <span class="badge rounded-pill bg-primary position-absolute start-0 bottom-0 m-3">{{ recipe.category }}</span>
+          <swiper-slide v-for="(item, id) in highThumbs" :key="id">
+            <div v-if="recipes[id]" class="card position-relative">
+              <RouterLink :to="`/recipes/${id}`" class="card-img-hover position-relative">
+                <img :src="recipes[id].image" class="object-fit-cover card-img" :alt="recipes[id].title">
+                <span class="badge rounded-pill bg-primary position-absolute start-0 bottom-0 m-3">{{ recipes[id].category }}</span>
                 <p class="detail position-absolute top-50 start-50 translate-middle fw-bold letter-spacing-5 link-darkBrown fs-xl-5 text-center">查看<br class="d-xl-none d-lg-block">詳細食譜</p>
               </RouterLink>
-              <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('recipeBookmarks',recipe, uid)">
+              <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('recipeBookmarks',recipes[id])">
                 <img src="../../assets/images/image5.png" alt="收藏按鈕-未收藏">
               </button>
-              <div v-for="mark in recipeBookMarks" :key="mark">
-                <button v-if="mark === recipe.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-3" @click="()=>deleteBookmark('recipeBookmarks', recipe.id, uid)">
+              <div v-for="(mark, index) in recipeBookmarks" :key="index">
+                <button v-if="index === id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-3" @click="()=>deleteBookmark('recipeBookmarks', id)">
                     <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
                 </button>
               </div>
 
-              <RouterLink :to="`/recipes/${recipe.id}`" class="card-body px-0 text-decoration-none link-darkBrown">
-                <h3 class="fw-bold fs-5">{{recipe.title}}</h3>
+              <RouterLink :to="`/recipes/${id}`" class="card-body px-0 text-decoration-none link-darkBrown">
+                <h3 class="fw-bold fs-5">{{recipes[id].title}}</h3>
                 <div class="d-flex align-items-center fs-xl-6 fs-lg-12">
-                  <del class="me-2 text-muted" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
-                  <span class="me-1" :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{ numberComma(recipe.price) }}</span>
-                  <span> / {{ recipe.content }}</span>
+                  <del class="me-2 text-muted" :class="{'d-none': recipes[id].price === recipes[id].total}">NT$ {{ numberComma(recipes[id].total) }}</del>
+                  <span class="me-1" :class="{'text-danger':recipes[id].price !== recipes[id].total, 'fw-bold':recipes[id].price !== recipes[id].total}">NT$ {{ numberComma(recipes[id].price) }}</span>
+                  <span> / {{ recipes[id].content }}</span>
                   <span class="badge rounded-pill text-primary border border-primary ms-auto bg-secondary">
-                    {{ recipe.thumbs }}
+                    {{ item }}
                     <i class="bi bi-hand-thumbs-up-fill" ></i>
                   </span>
                 </div>
@@ -175,28 +143,28 @@ export default {
       }"
         class="d-lg-none d-block swiper-home"
         >
-          <swiper-slide v-for="recipe in popularRecipes" :key="recipe.id">
-            <div class="card position-relative">
-              <RouterLink :to="`/recipes/${recipe.id}`" class="card-img-hover position-relative">
-                <img :src="recipe.image" class="object-fit-cover card-img" :alt="recipe.title">
-                <span class="badge fs-md-6 rounded-pill bg-primary position-absolute start-0 bottom-0 m-2 m-md-3">{{ recipe.category }}</span>
+          <swiper-slide v-for="(item, id) in highThumbs" :key="id">
+            <div v-if="recipes[id]" class="card position-relative">
+              <RouterLink :to="`/recipes/${id}`" class="card-img-hover position-relative">
+                <img :src="recipes[id].image" class="object-fit-cover card-img" :alt="recipes[id].title">
+                <span class="badge fs-md-6 rounded-pill bg-primary position-absolute start-0 bottom-0 m-2 m-md-3">{{ recipes[id].category }}</span>
               </RouterLink>
-              <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>addBookmark('recipeBookmarks',recipe, uid)">
+              <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>addBookmark('recipeBookmarks',recipes[id])">
                 <img src="../../assets/images/image5.png" alt="收藏按鈕-未收藏">
               </button>
-              <div v-for="mark in recipeBookMarks" :key="mark">
-                <button v-if="mark === recipe.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>deleteBookmark('recipeBookmarks', recipe.id, uid)">
+              <div v-for="(mark, index) in recipeBookmarks" :key="index">
+                <button v-if="index === id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>deleteBookmark('recipeBookmarks', id)">
                     <img src="../../assets/images/image4.png"  alt="收藏按鈕-已收藏">
                 </button>
               </div>
-              <RouterLink :to="`/recipes/${recipe.id}`" class="card-body px-0 py-2 py-md-3 text-decoration-none link-darkBrown">
-                <h3 class="fw-bold fs-md-5 fs-6">{{recipe.title}}</h3>
+              <RouterLink :to="`/recipes/${id}`" class="card-body px-0 py-2 py-md-3 text-decoration-none link-darkBrown">
+                <h3 class="fw-bold fs-md-5 fs-6">{{recipes[id].title}}</h3>
                 <div class="d-flex align-items-center flex-wrap fs-md-6 fs-12">
-                  <del class="me-2 text-muted" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
-                  <span class="me-1" :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{ numberComma(recipe.price) }}</span>
-                  <span> / {{ recipe.content }}</span>
+                  <del class="me-2 text-muted" :class="{'d-none': recipes[id].price === recipes[id].total}">NT$ {{ numberComma(recipes[id].total) }}</del>
+                  <span class="me-1" :class="{'text-danger':recipes[id].price !== recipes[id].total, 'fw-bold':recipes[id].price !== recipes[id].total}">NT$ {{ numberComma(recipes[id].price) }}</span>
+                  <span> / {{ recipes[id].content }}</span>
                   <span class="badge rounded-pill text-primary border border-primary ms-auto bg-secondary mt-1 mt-md-0">
-                    {{ recipe.thumbs }}
+                    {{ item }}
                     <i class="bi bi-hand-thumbs-up-fill" ></i>
                   </span>
                 </div>
@@ -282,36 +250,36 @@ export default {
           }"
           class="d-none d-lg-block swiper-home"
         >
-          <swiper-slide v-for="product in goodProducts" :key="product.id">
-            <div class="card position-relative">
+          <swiper-slide v-for="(rate, id) in highRates" :key="id">
+            <div v-if="products[id]" class="card position-relative">
               <div class="card-img-hover position-relative">
-                <RouterLink :to="`/products/${product.id}`">
-                  <img :src="product.imgUrl" class="object-fit-cover card-img" :alt="product.title">
+                <RouterLink :to="`/products/${id}`">
+                  <img :src="products[id].imgUrl" class="object-fit-cover card-img" :alt="products[id].title">
                   <p class="detail position-absolute top-50 start-50 translate-middle fw-bold letter-spacing-5 link-darkBrown fs-xl-5 text-center">查看<br class="d-xl-none d-lg-block">商品資訊</p>
-                  <span v-if="product.isCheaper" class="fs-14 text-white p-2 bg-primary position-absolute top-0 start-0">
-                    {{ discount(product) }} 折
+                  <span v-if="products[id].isCheaper" class="fs-14 text-white p-2 bg-primary position-absolute top-0 start-0">
+                    {{ discount(products[id]) }} 折
                   </span>
                 </RouterLink>
-                <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('productBookmarks' ,product, uid)">
+                <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-3" @click="()=>addBookmark('productBookmarks' ,products[id])">
                   <img src="../../assets/images/image5.png" alt="收藏按鈕-未收藏">
                 </button>
-                <div v-for="mark in productBookmarks" :key="mark">
-                  <button v-if="mark === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-3"  @click="()=>deleteBookmark('productBookmarks', product.id, uid)">
+                <div v-for="(mark, index) in productBookmarks" :key="index">
+                  <button v-if="index === id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-3"  @click="()=>deleteBookmark('productBookmarks', index)">
                       <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
                   </button>
                 </div>
-                <button @click="()=>addCart(product)" type="button" class="btn-buy border-0 bg-transparent mx-2 my-3 position-absolute end-0 bottom-0">
+                <button @click="()=>addCart(products[id])" type="button" class="btn-buy border-0 bg-transparent mx-2 my-3 position-absolute end-0 bottom-0">
                   <img src="../../assets/images/icon-cart.png" alt="購物車按鈕" class="shadow-sm">
                 </button>
               </div>
-              <RouterLink :to="`/products/${product.id}`" class="card-body px-0 text-decoration-none link-darkBrown">
-                <h3 class=" fs-5 fw-bold">{{product.title}}</h3>
+              <RouterLink :to="`/products/${id}`" class="card-body px-0 text-decoration-none link-darkBrown">
+                <h3 class=" fs-5 fw-bold">{{products[id].title}}</h3>
                 <div class="d-flex align-items-center fs-xl-6 fs-lg-12">
-                  <del class="me-2 text-muted" :class="{'d-none': !product.isCheaper}">NT$ {{ numberComma(product.originalPrice) }}</del>
-                  <span class="me-1" :class="{'text-danger':product.isCheaper, 'fw-bold':product.isCheaper}">NT$ {{ numberComma(product.price)}}</span>
-                  <span > / {{ product.num }}{{ product.unit }}</span>
+                  <del class="me-2 text-muted" :class="{'d-none': !products[id].isCheaper}">NT$ {{ numberComma(products[id].originalPrice) }}</del>
+                  <span class="me-1" :class="{'text-danger':products[id].isCheaper, 'fw-bold':products[id].isCheaper}">NT$ {{ numberComma(products[id].price)}}</span>
+                  <span > / {{ products[id].num }}{{ products[id].unit }}</span>
                   <span class="badge rounded-pill text-yellow border border-yellow ms-auto bg-lightYellow">
-                    {{ product.averageRate }}
+                    {{ rate.averageRate }}
                     <i class="bi bi-star-fill"></i>
                   </span>
                 </div>
@@ -329,41 +297,41 @@ export default {
           }"
           class="d-lg-none d-block swiper-home"
         >
-          <swiper-slide v-for="product in goodProducts" :key="product.id">
-            <div class="card position-relative">
+          <swiper-slide v-for="(rate, id) in highRates" :key="id">
+            <div v-if="products[id]" class="card position-relative">
               <div class="card-img-hover position-relative">
-                <RouterLink :to="`/products/${product.id}`">
-                  <img :src="product.imgUrl" class="object-fit-cover card-img" :alt="product.title">
-                  <span v-if="product.isCheaper" class="fs-md-14 fs-12 text-white p-2 bg-primary position-absolute top-0 start-0">
-                    {{ discount(product) }} 折
+                <RouterLink :to="`/products/${id}`">
+                  <img :src="products[id].imgUrl" class="object-fit-cover card-img" :alt="products[id].title">
+                  <span v-if="products[id].isCheaper" class="fs-md-14 fs-12 text-white p-2 bg-primary position-absolute top-0 start-0">
+                    {{ discount(products[id]) }} 折
                   </span>
                 </RouterLink>
-                <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>addBookmark('productBookmarks' ,product, uid)">
+                <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>addBookmark('productBookmarks' ,products[id])">
                   <img src="../../assets/images/image5.png" alt="收藏按鈕-未收藏">
                 </button>
-                <div v-for="mark in productBookmarks" :key="mark">
-                  <button v-if="mark === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-md-3"  @click="()=>deleteBookmark('productBookmarks', product.id, uid)">
+                <div v-for="(mark, index) in productBookmarks" :key="index">
+                  <button v-if="index === id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-md-3"  @click="()=>deleteBookmark('productBookmarks', id)">
                       <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
                   </button>
                 </div>
-                <button @click="()=>addCart(product)" type="button" class="btn-buy border-0 bg-transparent position-absolute end-0 bottom-0 m-2 m-md-3 p-0">
+                <button @click="()=>addCart(products[id])" type="button" class="btn-buy border-0 bg-transparent position-absolute end-0 bottom-0 m-2 m-md-3 p-0">
                   <img src="../../assets/images/icon-cart.png" alt="購物車按鈕" class="shadow-sm">
                 </button>
               </div>
-              <RouterLink :to="`/products/${product.id}`" class="card-body px-0 py-2 py-md-3 text-decoration-none link-darkBrown">
-                <h3 class="fw-bold fs-md-5 fs-6">{{product.title}}</h3>
+              <RouterLink :to="`/products/${id}`" class="card-body px-0 py-2 py-md-3 text-decoration-none link-darkBrown">
+                <h3 class="fw-bold fs-md-5 fs-6">{{products[id].title}}</h3>
                 <div class="d-flex align-items-center flex-wrap fs-md-6 fs-12">
-                  <del class="me-2 text-muted" :class="{'d-none': !product.isCheaper}">NT$ {{ numberComma(product.originalPrice) }}</del>
-                  <span class="me-1" :class="{'text-danger':product.isCheaper, 'fw-bold':product.isCheaper}">NT$ {{ numberComma(product.price)}}</span>
-                  <span > / {{ product.num }}{{ product.unit }}</span>
+                  <del class="me-2 text-muted" :class="{'d-none': !products[id].isCheaper}">NT$ {{ numberComma(products[id].originalPrice) }}</del>
+                  <span class="me-1" :class="{'text-danger':products[id].isCheaper, 'fw-bold':products[id].isCheaper}">NT$ {{ numberComma(products[id].price)}}</span>
+                  <span > / {{ products[id].num }}{{ products[id].unit }}</span>
                   <span class="badge rounded-pill text-yellow border border-yellow ms-auto bg-lightYellow d-none d-md-block">
-                    {{ product.averageRate }}
+                    {{ rate.averageRate }}
                     <i class="bi bi-star-fill"></i>
                   </span>
                 </div>
                 <div class="text-end mt-1 d-md-none fs-12">
                   <span class="badge rounded-pill text-yellow border border-yellow bg-lightYellow">
-                    {{ product.averageRate }}
+                    {{ rate.averageRate }}
                     <i class="bi bi-star-fill"></i>
                   </span>
                 </div>

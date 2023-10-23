@@ -17,6 +17,9 @@ import { localize, setLocale } from '@vee-validate/i18n'
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'
 import 'material-icons/iconfont/material-icons.css'
 
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
+
 const app = createApp(App)
 Object.keys(AllRules).forEach(rule => {
   defineRule(rule, AllRules[rule])
@@ -27,6 +30,9 @@ configure({
 })
 const pinia = createPinia()
 
+// 不能放太後面 否則 因為App.vue會先解析
+app.use(pinia)
+app.component('VLoading', Loading)
 // 設定預設語系
 setLocale('zh_TW')
 app.use(router)
@@ -35,4 +41,3 @@ app.component('VForm', Form)
 app.component('VField', Field)
 app.component('ErrorMessage', ErrorMessage)
 app.mount('#app')
-app.use(pinia)

@@ -5,7 +5,12 @@ import { ref, onValue } from 'firebase/database'
 const dataStore = defineStore('mainData', {
   state: () => {
     return {
-      // thumbs: {}
+      thumbs: {},
+      // 3個讚以上
+      highThumbs: {},
+      rates: {},
+      // 4 星以上
+      highRates: {}
     }
   },
   actions: {
@@ -15,29 +20,11 @@ const dataStore = defineStore('mainData', {
       return new Promise((resolve, reject) => {
         const dataRef = ref(db, 'recipes/')
         onValue(dataRef, snapshot => {
-          let recipes = snapshot.val()
-          recipes = Object.keys(recipes).map(item => {
-            recipes[item].id = item
-            return recipes[item]
-          })
-          const dataRef = ref(db, 'recipeThumbs/')
-          onValue(dataRef, snapshot => {
-            const thumbs = snapshot.val()
-            // 把讚數填入
-            recipes.forEach((recipe, index) => {
-              Object.keys(thumbs).forEach(thumbId => {
-                if (recipe.id === thumbId) {
-                  recipes[index].thumbs = thumbs[recipe.id].thumbs
-                }
-              })
-            })
-            recipes.forEach((recipe, index) => {
-              if (!recipe.thumbs) {
-                recipes[index].thumbs = 0
-              }
-            })
-            resolve(recipes)
-          })
+          const recipes = snapshot.val()
+          for (const id in recipes) {
+            recipes[id].id = id
+          }
+          resolve(recipes)
         })
       })
     },
@@ -46,37 +33,88 @@ const dataStore = defineStore('mainData', {
       return new Promise((resolve, reject) => {
         const dataRef = ref(db, 'products/')
         onValue(dataRef, snapshot => {
-          let products = snapshot.val()
-          products = Object.entries(products).map(item => {
-            item[1].id = item[0]
-            return item[1]
-          })
-          const dataRef = ref(db, 'productRates/')
-          onValue(dataRef, snapshot => {
-            const rates = snapshot.val()
-            products.forEach((product, index) => {
-              Object.values(rates).forEach(item => {
-                if (product.id === item.productId && !products[index].scores) {
-                  products[index].scores = item.score
-                  products[index].ratePeople = 1
-                  products[index].averageRate = Number((products[index].scores / products[index].ratePeople).toFixed(1))
-                } else if (product.id === item.productId && products[index].scores) {
-                  products[index].scores += item.score
-                  products[index].ratePeople += 1
-                  products[index].averageRate = Number((products[index].scores / products[index].ratePeople).toFixed(1))
-                }
-              })
-            })
-            products.forEach((product, index) => {
-              if (!product.averageRate) {
-                products[index].scores = 0
-                products[index].ratePeople = 0
-                products[index].averageRate = 0
-              }
-            })
-            resolve(products)
-          })
+          const products = snapshot.val()
+          for (const id in products) {
+            products[id].id = id
+          }
+          resolve(products)
         })
+      })
+    },
+    getThumbs () {
+      const dataRef = ref(db, 'recipeThumbs/')
+      onValue(dataRef, snapshot => {
+        const thumbs = snapshot.val()
+        // 把讚數填入
+        // recipes.forEach((recipe, index) => {
+        //   Object.keys(thumbs).forEach(thumbId => {
+        //     if (recipe.id === thumbId) {
+        //       recipes[index].thumbs = thumbs[recipe.id].thumbs
+        //     }
+        //   })
+        // })
+        // recipes.forEach((recipe, index) => {
+        //   if (!recipe.thumbs) {
+        //     recipes[index].thumbs = 0
+        //   }
+        // })
+        this.thumbs = thumbs
+        Object.entries(this.thumbs).forEach(item => {
+          if (item[1].thumbs > 2) {
+            this.highThumbs[item[0]] = item[1].thumbs
+          }
+        })
+      })
+    },
+    getRates () {
+      const dataRef = ref(db, 'productRates/')
+      onValue(dataRef, snapshot => {
+        const rates = snapshot.val()
+        const obj = {}
+        // 整理評價
+        Object.values(rates).forEach(item => {
+          if (!obj[item.productId]) {
+            obj[item.productId] = {
+              score: item.score,
+              ratePeople: 1,
+              averageRate: item.score
+            }
+          } else if (obj[item.productId]) {
+            obj[item.productId].score += item.score
+            obj[item.productId].ratePeople += 1
+            obj[item.productId].averageRate = Number((obj[item.productId].score / obj[item.productId].ratePeople).toFixed(1))
+          }
+        })
+        this.rates = obj
+
+        // 4星以上
+        this.highRates = {}
+        Object.keys(this.rates).forEach(key => {
+          if (this.rates[key].averageRate >= 4) {
+            this.highRates[key] = this.rates[key]
+          }
+        })
+
+        // products.forEach((product, index) => {
+        //   Object.values(rates).forEach(item => {
+        //     if (product.id === item.productId && !products[index].scores) {
+        //       products[index].scores = item.score
+        //       products[index].ratePeople = 1
+        //       products[index].averageRate = Number((products[index].scores / products[index].ratePeople).toFixed(1))
+        //     } else if (product.id === item.productId && products[index].scores) {
+        //       products[index].scores += item.score
+        //       products[index].ratePeople += 1
+        //       products[index].averageRate = Number((products[index].scores / products[index].ratePeople).toFixed(1))
+        //     }
+        //   })
+        // })
+        // products.forEach((product, index) => {
+        //   if (!product.averageRate) {
+        //     products[index].scores = 0
+        //     products[index].ratePeople = 0
+        //     products[index].averageRate = 0
+        //   }
+        // })
       })
     }
   },

@@ -8,6 +8,10 @@ import dataStore from '../../stores/mainData'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
 import PaginationComponent from '../../components/PaginationComponent.vue'
 import Collapse from 'bootstrap/js/dist/collapse'
+import { db } from '../../firebase/db'
+import { ref, onValue } from 'firebase/database'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
 import { selections } from '../../utils/publicData'
 import BannerComponent from '../../components/BannerComponent.vue'
 
@@ -15,6 +19,7 @@ export default {
   components: {
     RouterLink,
     PaginationComponent,
+    Loading,
     BannerComponent
   },
   mixins: [numberCommaMixin],
@@ -23,37 +28,56 @@ export default {
       selections,
       costOrRateCollapse: {},
       highOrLowCollapse: {},
-      selectCategory: '全部', // 選單點選
-      selectItem: '全部', // 跨頁、手機搜尋
+      recipes: [],
+      selectCategory: '全部',
+      selectItem: '全部',
       priceOrRate: '成本',
       highOrLow: '不拘',
       recipeSearchName: '',
-      recipes: [],
       filterRecipes: [],
-      search: false
+      thumbs: {},
+      search: false,
+      isLoading: false
     }
   },
   methods: {
-    // selectItem 用於跨頁和手機 selectCategory 用於電腦的菜單 可以合一嗎?
     ...mapActions(cartStore, ['toastMessage']),
     ...mapActions(markStore, ['addBookmark', 'deleteBookmark', 'getBookmarks']),
-    ...mapActions(dataStore, ['getRecipes', 'getThumbs']),
-    ...mapActions(loadingStore, ['startLoading']),
-    searchRecipes () {
-      this.filterRecipes.forEach((item, index) => {
-        if (this.thumbs[item.id]) {
-          this.filterRecipes[index].thumbs = this.thumbs[item.id].thumbs
-        } else if (!this.thumbs[item.id]) {
-          this.filterRecipes[index].thumbs = 0
-        }
-      })
+    ...mapActions(dataStore, ['getRecipes']),
+    ...mapActions(loadingStore, ['startLoading', 'endLoading']),
+    async getAllRecipes () {
+      this.recipes = await this.getRecipes()
+      const dataRef = ref(db, 'recipeThumbs/')
+      onValue(dataRef, snapshot => {
+        const thumbs = snapshot.val()
+        this.recipes.forEach((recipe, index) => {
+          Object.keys(thumbs).forEach(thumbId => {
+            if (recipe.id === thumbId) {
+              this.recipes[index].thumbs = thumbs[recipe.id].thumbs
+            }
+          })
+        })
+        this.recipes.forEach((recipe, index) => {
+          if (!recipe.thumbs) {
+            this.recipes[index].thumbs = 0
+          }
+        })
+        this.filterRecipes = this.recipes
 
+        if (!this.$route.query.category && this.$route.fullPath === '/recipes') {
+          this.$refs.pagination.renderPage(1, this.filterRecipes)
+        } else if (this.$route.query.category) {
+          this.searchRecipes()
+        }
+        this.isLoading = false
+      })
+    },
+    searchRecipes () {
       if (this.selectItem === '全部') {
         this.filterRecipes = this.recipes
       } else if (this.selectItem !== '全部') {
         this.filterRecipes = this.recipes.filter(item => item.category === this.selectItem)
       }
-
       if (this.priceOrRate === '成本' && this.highOrLow !== '不拘') {
         if (this.highOrLow === '低到高') {
           this.filterRecipes = this.filterRecipes.sort((a, b) => {
@@ -80,28 +104,10 @@ export default {
       })
       this.search = true
       this.$refs.pagination.renderPage(1, this.filterRecipes)
-    },
-    async getData () {
-      this.recipes = await this.getRecipes()
-      this.recipes = Object.values(this.recipes)
-      this.filterRecipes = this.recipes
-
-      if (!this.$route.query.category && this.$route.fullPath === '/recipes') {
-        this.$refs.pagination.renderPage(1, this.filterRecipes)
-      } else if (this.$route.query.category) {
-        this.searchRecipes()
-      }
-      this.getBookmarks('recipeBookmarks')
-    },
-    // 選擇菜單
-    select (name) {
-      this.selectCategory = name
-      this.recipeSearchName = ''
-      this.highOrLow = '不拘'
     }
   },
   mounted () {
-    this.startLoading()
+    this.isLoading = true
 
     this.costOrRateCollapse = new Collapse(this.$refs.costOrRateCollapse, {
       toggle: false,
@@ -114,22 +120,24 @@ export default {
 
     if (this.$route.query.category) {
       this.selectItem = this.$route.query.category
-      this.selectCategory = this.selectItem
       this.highOrLow = this.$route.query.valueHighOrLow
       this.priceOrRate = this.$route.query.valuePriceOrRate
       this.recipeSearchName = this.$route.query.searchName
     }
-    this.getThumbs()
-    this.getData()
+    this.getBookmarks('recipeBookmarks')
+    this.getAllRecipes()
   },
 
   watch: {
     selectCategory () {
-      this.selectItem = this.selectCategory
+      this.recipeSearchName = ''
       if (this.selectCategory === '全部') {
+        this.selectItem = '全部'
         this.filterRecipes = this.recipes
+        this.$refs.pagination.renderPage(1, this.filterRecipes)
       } else if (this.selectCategory !== '全部') {
-        this.filterRecipes = this.recipes.filter(recipe => recipe.category === this.selectCategory)
+        this.selectItem = this.selectCategory
+        this.filterRecipes = this.recipes.filter(recipe => recipe.category === this.selectItem)
       }
       this.$refs.pagination.renderPage(1, this.filterRecipes)
     },
@@ -145,19 +153,36 @@ export default {
     }
   },
   computed: {
-    ...mapState(markStore, ['recipeBookmarks', 'uid']),
-    ...mapState(dataStore, ['thumbs'])
+    ...mapState(markStore, ['recipeBookmarks', 'uid'])
   }
 }
 </script>
 <template>
     <div>
+      <loading v-model:active="isLoading"
+                 :lock-scroll="true">
+                 <div class="d-flex flex-column align-items-center py-96">
+      <img src="../../assets/images/loadingLogo.png" class="loading-logo mb-3" alt="logo" >
+      <p class="text-center fw-bold text-purple fs-md-2 fs-5">
+        <span class="me-1 animate-text">L</span>
+        <span class="mx-1 animate-text">o</span>
+        <span class="mx-1 animate-text">a</span>
+        <span class="mx-1 animate-text">d</span>
+        <span class="mx-1 animate-text">i</span>
+        <span class="mx-1 animate-text">n</span>
+        <span class="mx-1 animate-text">g</span>
+        <span class="mx-2 animate-text">.</span>
+        <span class="me-2 animate-text">.</span>
+        <span class="animate-text">.</span>
+      </p>
+    </div>
+      </loading>
       <BannerComponent></BannerComponent>
       <section class="container">
         <div class="pt-lg-4 pt-3 position-relative" data-aos="fade-up">
           <ul class="category-selector row row-cols-6 list-unstyled border-bottom">
               <li v-for="item in selections.dessertCategory" :key="item.icon" class="col text-center" :class="{'pointer-events-none': selectItem === item.title}">
-                <a href="#"  @click.prevent="()=>select(item.title)" class="text-decoration-none d-inline-block" :class="{'fw-bold': selectItem === item.title, 'link-primary': selectItem === item.title}">
+                <a href="#"  @click.prevent="()=>selectCategory = item.title" class="text-decoration-none d-inline-block" :class="{'fw-bold': selectItem === item.title, 'link-primary': selectItem === item.title}">
                   <i v-if="selectItem !== item.title" :class="item.icon" class="text-gray"></i>
                   <i v-if="selectItem === item.title" :class="item.iconSelected" class="text-primary"></i>
                   <span class="fs-12 fs-md-5 d-block pb-2">{{ item.title === '全部' ? '所有' : item.title.slice(0, 2) }}<br class="d-lg-none">{{ item.title === '全部' ? '甜點' : item.title.slice(2, 4) }}</span>
@@ -228,13 +253,8 @@ export default {
                     <del v-if="recipe.total" class="me-2 text-muted" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
                     <span class="me-1" :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{ numberComma(recipe.price) }}</span>
                     <span> / {{ recipe.content }}</span>
-
-                    <span v-if="thumbs[recipe.id]" class="badge rounded-pill ms-auto border mt-1 mt-md-0" :class="{'border-primary': thumbs[recipe.id].thumbs !== 0, 'border-gray':  thumbs[recipe.id].thumbs === 0, 'text-primary':thumbs[recipe.id].thumbs !== 0,'text-gray': thumbs[recipe.id].thumbs === 0, 'bg-secondary':thumbs[recipe.id].thumbs !== 0, 'bg-whiteGray':thumbs[recipe.id].thumbs === 0}">
-                      {{ thumbs[recipe.id].thumbs }}
-                      <i class="bi bi-hand-thumbs-up-fill" ></i>
-                    </span>
-                    <span v-else-if="!thumbs[recipe.id]" class="badge rounded-pill ms-auto border mt-1 mt-md-0 border-gray bg-whiteGray text-gray">
-                      0
+                    <span class="badge rounded-pill ms-auto border mt-1 mt-md-0" :class="{'border-primary': recipe.thumbs !== 0, 'border-gray':  recipe.thumbs === 0, 'text-primary':recipe.thumbs !== 0,'text-gray': recipe.thumbs === 0, 'bg-secondary':recipe.thumbs !== 0, 'bg-whiteGray':recipe.thumbs === 0}">
+                      {{ recipe.thumbs }}
                       <i class="bi bi-hand-thumbs-up-fill" ></i>
                     </span>
                 </div>
@@ -247,9 +267,9 @@ export default {
           <img src="../../assets/images/undraw_Page_not_found_re_e9o6.png" class="mb-lg-3 mb-2 img-md-200-sm-150" alt="查無資訊">
           <h3 class="fs-lg-3 fs-6">查無食譜，請您重新查詢</h3>
         </div>
+        <!-- 頁尾 -->
+        <PaginationComponent ref="pagination" :price-or-rate="priceOrRate" :filter-recipes="filterRecipes" class="mb-5"></PaginationComponent>
       </section>
-      <!-- 頁尾 -->
-      <PaginationComponent ref="pagination" :price-or-rate="priceOrRate" :filter-recipes="filterRecipes" class="mb-5"></PaginationComponent>
 
     </div>
 </template>

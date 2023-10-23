@@ -1,23 +1,19 @@
 <script>
+import loadingStore from '../../stores/loadingStore'
+
 import { RouterLink } from 'vue-router'
 import DeleteBookmarksModal from '../../components/DeleteBookmarksModal.vue'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
 // mapState
-import { mapActions, mapGetters } from 'pinia'
+import { mapActions, mapState, mapGetters } from 'pinia'
 import cartStore from '../../stores/carts'
 import dataStore from '../../stores/mainData'
-// import markStore from '../../stores/bookmark'
-import { db, auth } from '../../firebase/db'
-import { ref, onValue } from 'firebase/database'
-import { onAuthStateChanged } from 'firebase/auth'
-import Loading from 'vue-loading-overlay'
-import 'vue-loading-overlay/dist/css/index.css'
+import markStore from '../../stores/bookmark'
 import { selections } from '../../utils/publicData'
 import BannerComponent from '../../components/BannerComponent.vue'
 export default {
   components: {
     RouterLink,
-    Loading,
     DeleteBookmarksModal,
     BannerComponent
   },
@@ -31,140 +27,43 @@ export default {
       deleteId: '',
       deleteItem: {},
       averageRate: [],
-      rates: {},
-      recipeThumbs: [],
-      thumbs: {},
-
-      isLoading: false
+      recipeThumbs: []
     }
   },
   methods: {
+    ...mapActions(loadingStore, ['startLoading']),
     ...mapActions(cartStore, ['addCart', 'toastMessage', 'goToTop']),
-    // ...mapActions(markStore, ['getBookmarks']),
+    ...mapActions(markStore, ['getBookmarks']),
+    ...mapActions(dataStore, ['getThumbs', 'getRates']),
 
-    getBookmarks (dataName) {
-      this.isLoading = true
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          this.uid = user.uid
-
-          const dataRef = ref(db, `${dataName}/${this.uid}`)
-          onValue(dataRef, snapshot => {
-            this.bookMarks = snapshot.val()
-            if (!this.bookMarks) {
-              this.isLoading = false
-              return
-            }
-            this.bookMarks = Object.values(this.bookMarks)
-
-            if (this.pageStatus === 'recipe') {
-              const dataRef = ref(db, 'recipeThumbs')
-              onValue(dataRef, snapshot => {
-                const recipeThumbs = snapshot.val()
-                Object.keys(recipeThumbs).forEach(item => {
-                  this.thumbs[item] = recipeThumbs[item].thumbs
-                })
-
-                this.bookMarks.forEach((recipe, index) => {
-                  Object.keys(this.thumbs).forEach(thumbId => {
-                    if (recipe.id === thumbId) {
-                      this.bookMarks[index].thumbs = this.thumbs[thumbId]
-                    }
-                  })
-                })
-                this.bookMarks.forEach((recipe, index) => {
-                  if (!recipe.thumbs) {
-                    this.bookMarks[index].thumbs = 0
-                  }
-                })
-                this.isLoading = false
-              })
-            } else if (this.pageStatus === 'product') {
-              const dataRef = ref(db, 'productRates/')
-              onValue(dataRef, snapshot => {
-                const allRates = Object.values(snapshot.val())
-
-                this.rates = {}
-                allRates.forEach(item => {
-                  if (!this.rates[item.productId]) {
-                    this.rates[item.productId] = { scores: item.score, ratePeople: 1, averageRate: item.score / 1 }
-                  } else if (this.rates[item.productId]) {
-                    this.rates[item.productId].scores += item.score
-                    this.rates[item.productId].ratePeople += 1
-                    this.rates[item.productId].averageRate = Number((this.rates[item.productId].scores / this.rates[item.productId].ratePeople).toFixed(1))
-                  }
-                })
-                this.bookMarks.forEach((item, index) => {
-                  if (!this.rates[item.id]) {
-                    this.bookMarks[index].scores = 0
-                    this.bookMarks[index].ratePeople = 0
-                    this.bookMarks[index].averageRate = 0
-                    return
-                  }
-                  this.bookMarks[index].scores = this.rates[item.id].scores
-                  this.bookMarks[index].ratePeople = this.rates[item.id].ratePeople
-                  this.bookMarks[index].averageRate = this.rates[item.id].averageRate
-                })
-                this.isLoading = false
-              })
-            }
-          })
-        } else {
-          this.uid = null
-          if (!this.uid) {
-            this.isLoading = false
-            this.toastMessage('登入才可使用收藏功能', 'error')
-            this.$router.push('/loginSignup')
-          }
-        }
-      })
-    },
     openDeleteModal (id, item) {
       this.deleteId = id
       this.deleteItem = item
-    },
-    getAllBookmarks () {
     }
   },
   mounted () {
+    this.startLoading()
     this.goToTop()
     this.getBookmarks('recipeBookmarks')
+    this.getBookmarks('productBookmarks')
+    this.getThumbs()
+    this.getRates()
   },
   watch: {
-    pageStatus () {
-      if (this.pageStatus === 'product') {
-        this.getBookmarks('productBookmarks')
-      } else if (this.pageStatus === 'recipe') {
-        this.getBookmarks('recipeBookmarks')
-      }
+    recipeBookmarks () {
+      // if (this.recipeBookmarks) {
+      // }
     }
   },
   computed: {
-    ...mapGetters(dataStore, ['discount'])
+    ...mapGetters(dataStore, ['discount']),
+    ...mapState(markStore, ['recipeBookmarks', 'productBookmarks']),
+    ...mapState(dataStore, ['thumbs', 'rates'])
   }
-  // ...mapState(markStore, ['recipeBookMarks', 'productBookmarks'])
 }
 </script>
 <template>
     <div class="no-scroll-x">
-        <loading v-if="uid" v-model:active="isLoading"
-                 :lock-scroll="true">
-                 <div class="d-flex flex-column align-items-center py-96">
-      <img src="../../assets/images/loadingLogo.png" class="loading-logo mb-3" alt="logo" >
-      <p class="text-center fw-bold text-purple fs-md-2 fs-5">
-        <span class="me-1 animate-text">L</span>
-        <span class="mx-1 animate-text">o</span>
-        <span class="mx-1 animate-text">a</span>
-        <span class="mx-1 animate-text">d</span>
-        <span class="mx-1 animate-text">i</span>
-        <span class="mx-1 animate-text">n</span>
-        <span class="mx-1 animate-text">g</span>
-        <span class="mx-2 animate-text">.</span>
-        <span class="me-2 animate-text">.</span>
-        <span class="animate-text">.</span>
-      </p>
-    </div>
-        </loading>
         <BannerComponent></BannerComponent>
         <section class="container py-5">
           <div class="pt-lg-4 pt-3 position-relative">
@@ -180,8 +79,8 @@ export default {
             <div class="blue-line bg-primary position-absolute"  :class="{'active-recipes': pageStatus === 'recipe', 'active-products': pageStatus === 'product'}"></div>
           </div>
           <div class="py-4">
-            <div v-if="pageStatus === 'recipe' && bookMarks && !isLoading" class="row row-cols-xl-4 row-cols-lg-3 row-cols-2 gy-4">
-              <div class="col" v-for="recipe in bookMarks" :key="recipe.id">
+            <div v-if="pageStatus === 'recipe'" class="row row-cols-xl-4 row-cols-lg-3 row-cols-2 gy-4">
+              <div class="col" v-for="(recipe, id) in recipeBookmarks" :key="recipe.id">
                 <div class="card position-relative">
                   <RouterLink :to="`/recipes/${recipe.id}`" class="card-img-hover position-relative">
                     <img :src="recipe.image" class="object-fit-cover card-img" :alt="recipe.title">
@@ -189,21 +88,20 @@ export default {
                     <p class="detail position-absolute top-50 start-50 translate-middle fw-bold letter-spacing-5 link-darkBrown fs-xl-5 text-center">查看<br class="d-xl-none d-lg-block">詳細食譜</p>
                   </RouterLink>
                   <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3"  @click="()=>openDeleteModal(recipe.id, recipe)">
-                      <img src="../../assets/images/image4.png" alt="收藏按鈕-未收藏">
+                      <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
                   </button>
-                  <div v-for="mark in bookMarks" :key="mark + 4567">
-                    <button v-if="mark === recipe.id" type="button" class="btn-buy border-0 bg-transparent m-2 m-md-3 p-0 position-absolute end-0 bottom-0"  @click="()=>deleteBookmark(recipe.id)">
-                        <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
-                    </button>
-                  </div>
                   <RouterLink :to="`/recipes/${recipe.id}`" class="card-body px-0 text-decoration-none link-darkBrown">
                     <h3 class="fw-bold fs-md-5 fs-6">{{recipe.title}}</h3>
                     <div class="d-flex align-items-center flex-wrap fs-md-6 fs-12">
                       <del v-if="recipe.total" class="me-2 text-muted" :class="{'d-none': recipe.price === recipe.total}">NT$ {{ numberComma(recipe.total) }}</del>
                       <span class="me-1" :class="{'text-danger':recipe.price !== recipe.total, 'fw-bold':recipe.price !== recipe.total}">NT$ {{ numberComma(recipe.price) }}</span>
                       <span> / {{ recipe.content }}</span>
-                      <span class="badge rounded-pill ms-auto border mt-1 mt-md-0" :class="{'border-primary': recipe.thumbs !== 0, 'border-gray':  recipe.thumbs === 0, 'text-primary':recipe.thumbs !== 0,'text-gray': recipe.thumbs === 0, 'bg-secondary':recipe.thumbs !== 0, 'bg-whiteGray':recipe.thumbs === 0}">
-                        {{ recipe.thumbs }}
+                      <span v-if="thumbs[id]" class="badge rounded-pill ms-auto border mt-1 mt-md-0" :class="{'border-primary': thumbs[id].thumbs !== 0, 'border-gray':  thumbs[id].thumbs === 0, 'text-primary':thumbs[id].thumbs !== 0,'text-gray': thumbs[id].thumbs === 0, 'bg-secondary':thumbs[id].thumbs !== 0, 'bg-whiteGray':thumbs[id].thumbs === 0}">
+                        {{ thumbs[id].thumbs }}
+                        <i class="bi bi-hand-thumbs-up-fill" ></i>
+                      </span>
+                       <span v-else-if="!thumbs[id]" class="badge rounded-pill ms-auto border mt-1 mt-md-0 border-gray bg-whiteGray text-gray">
+                        0
                         <i class="bi bi-hand-thumbs-up-fill" ></i>
                       </span>
                   </div>
@@ -212,8 +110,8 @@ export default {
               </div>
             </div>
             <!-- 產品 -->
-            <div v-else-if="pageStatus === 'product' && bookMarks && !isLoading" class="row row-cols-xl-4 row-cols-lg-3 row-cols-2 gy-4">
-              <div class="col" v-for="product in bookMarks" :key="product.id">
+            <div v-else-if="pageStatus === 'product'" class="row row-cols-xl-4 row-cols-lg-3 row-cols-2 gy-4">
+              <div class="col" v-for="(product, id) in productBookmarks" :key="product.id">
                 <div class="card position-relative">
                   <div class="card-img-hover position-relative">
                     <RouterLink :to="`/products/${product.id}`">
@@ -231,7 +129,7 @@ export default {
                           <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
                       </button>
                     </div>
-                    <button :disabled="isLoading === 'loading'" @click="()=>addCart(product)" type="button" class="btn-buy border-0 bg-transparent m-2 m-md-3 p-0 position-absolute end-0 bottom-0" >
+                    <button @click="()=>addCart(product)" type="button" class="btn-buy border-0 bg-transparent m-2 m-md-3 p-0 position-absolute end-0 bottom-0" >
                       <img src="../../assets/images/icon-cart.png"  alt="購物車按鈕" class="shadow-sm">
                     </button>
                   </div>
@@ -242,14 +140,22 @@ export default {
                     <span class="me-1" :class="{'text-danger':product.isCheaper, 'fw-bold':product.isCheaper}">NT$ {{numberComma(product.price)}}</span>
                     <span> / {{ product.num }}{{ product.unit }}</span>
 
-                    <span class="badge rounded-pill ms-auto border d-none d-md-block" :class="{'text-yellow': product.averageRate, 'border-yellow': product.averageRate, 'bg-lightYellow': product.averageRate, 'bg-whiteGray': !product.averageRate, 'text-gray': !product.averageRate, 'border-gray': !product.averageRate}">
-                      {{ product.averageRate }}
+                    <span v-if="rates[id]" class="badge rounded-pill ms-auto border d-none d-md-block" :class="{'text-yellow': rates[id].averageRate, 'border-yellow': rates[id].averageRate, 'bg-lightYellow': rates[id].averageRate, 'bg-whiteGray': !rates[id].averageRate, 'text-gray': !rates[id].averageRate, 'border-gray': !rates[id].averageRate}">
+                      {{ rates[id].averageRate }}
+                      <i class="bi bi-star-fill"></i>
+                    </span>
+                    <span v-else-if="!rates[id]" class="badge rounded-pill ms-auto border d-none d-md-block bg-whiteGray text-gray border-gray">
+                      0
                       <i class="bi bi-star-fill"></i>
                     </span>
                 </div>
                 <div class="text-end mt-1 d-md-none fs-12">
-                  <span class="badge rounded-pill ms-auto border d-md-none" :class="{'text-yellow': product.averageRate, 'border-yellow': product.averageRate, 'bg-lightYellow': product.averageRate, 'bg-whiteGray': !product.averageRate, 'text-gray': !product.averageRate, 'border-gray': !product.averageRate}">
-                    {{ product.averageRate }}
+                  <span v-if="rates[id]" class="badge rounded-pill ms-auto border d-md-none" :class="{'text-yellow': rates[id].averageRate, 'border-yellow': rates[id].averageRate, 'bg-lightYellow': rates[id].averageRate, 'bg-whiteGray': !rates[id].averageRate, 'text-gray': !rates[id].averageRate, 'border-gray': !rates[id].averageRate}">
+                    {{ rates[id].averageRate }}
+                    <i class="bi bi-star-fill"></i>
+                  </span>
+                  <span v-else-if="!rates[id]" class="badge rounded-pill ms-auto border d-md-none bg-whiteGray text-gray border-gray">
+                    0
                     <i class="bi bi-star-fill"></i>
                   </span>
                 </div>
@@ -258,11 +164,15 @@ export default {
               </div>
             </div>
             <!-- 沒有書籤 -->
-            <div v-if="!isLoading && !bookMarks" class="py-lg-4 text-center">
+            <div v-if="!recipeBookmarks && pageStatus === 'recipe'" class="py-lg-4 text-center">
               <img src="../../assets/images/undraw_Appreciation_r2a1.png" class="mb-lg-3 mb-2 img-md-200-sm-150" alt="收藏大圖示" >
-              <p class="fs-lg-3 fs-6 mb-lg-3 mb-2">您尚無任何<span v-if="pageStatus === 'recipe'">食譜</span><span v-else-if="pageStatus === 'product'">材料</span>收藏</p>
-              <RouterLink to="/recipes" v-if="pageStatus === 'recipe'" class="link-primary fs-lg-5">前往瀏覽食譜</RouterLink>
-              <RouterLink to="/products" v-else-if="pageStatus === 'product'" class="link-primary fs-lg-5">前往瀏覽食譜材料</RouterLink>
+              <p class="fs-lg-3 fs-6 mb-lg-3 mb-2">您尚無任何食譜收藏</p>
+              <RouterLink to="/recipes" class="link-primary fs-lg-5">前往瀏覽食譜</RouterLink>
+            </div>
+            <div v-else-if="!productBookmarks && pageStatus === 'product'" class="py-lg-4 text-center">
+              <img src="../../assets/images/undraw_Appreciation_r2a1.png" class="mb-lg-3 mb-2 img-md-200-sm-150" alt="收藏大圖示" >
+              <p class="fs-lg-3 fs-6 mb-lg-3 mb-2">您尚無任何材料收藏</p>
+              <RouterLink to="/products" class="link-primary fs-lg-5">前往瀏覽食譜材料</RouterLink>
             </div>
           </div>
         </section>

@@ -12,8 +12,9 @@ import dataStore from '../../stores/mainData'
 import fullStar from '../../assets/images/icon-star-filled.png'
 import star from '../../assets/images/icon-star.png'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
-import { db } from '../../firebase/db'
+import { db, auth } from '../../firebase/db'
 import { ref, onValue, set, push } from 'firebase/database'
+import { onAuthStateChanged } from 'firebase/auth'
 export default {
   components: {
     Swiper,
@@ -22,7 +23,6 @@ export default {
   mixins: [numberCommaMixin],
   data () {
     return {
-      productId: '',
       product: {},
       recipes: [],
       relevantRecipesInfo: [],
@@ -43,20 +43,28 @@ export default {
         bulletActiveClass: 'my-bullet-active-class'
       },
       mainImg: '',
-      qty: 1
+      bookMark: {},
+      qty: 1,
+      user: {},
+      uid: ''
     }
   },
   methods: {
-    ...mapActions(cartStore, ['addCart', 'toastMessage', 'goToTop']),
-    ...mapActions(markStore, ['addBookmark', 'deleteBookmark', 'getBookmark']),
-    ...mapActions(loadingStore, ['startLoading']),
+    ...mapActions(cartStore, ['addCart', 'handleKeyDown', 'toastMessage', 'goToTop']),
+    ...mapActions(markStore, ['addBookmark', 'deleteBookmark']),
+    ...mapActions(loadingStore, ['startLoading', 'endLoading']),
     ...mapActions(dataStore, ['getRecipes', 'getRates']),
-    getAllRateComment () {
+    getAllProductRates () {
+      const { id } = this.$route.params
       const dataRef = ref(db, 'productRates/')
       onValue(dataRef, snapshot => {
-        const rates = snapshot.val()
-        this.productRates = Object.values(rates).filter(rate => {
-          return rate.productId === this.productId
+        let rates = snapshot.val()
+        rates = Object.values(rates).map((rate, index) => {
+          rate.id = Object.keys(rates)[index]
+          return rate
+        })
+        this.productRates = rates.filter(rate => {
+          return rate.productId === id
         })
         let scores = 0
         this.productRates.forEach(item => {
@@ -66,17 +74,49 @@ export default {
       })
     },
     mouseoverStar (num) {
-      if (!this.score) {
-        for (let i = 1; i <= num; i++) {
-          this.$refs[`rate${i}`].src = this.fullStar
-        }
+      if (num === 1 && !this.score) {
+        this.$refs.rate1.src = this.fullStar
+      } else if (num === 2 && !this.score) {
+        this.$refs.rate1.src = this.fullStar
+        this.$refs.rate2.src = this.fullStar
+      } else if (num === 3 && !this.score) {
+        this.$refs.rate1.src = this.fullStar
+        this.$refs.rate2.src = this.fullStar
+        this.$refs.rate3.src = this.fullStar
+      } else if (num === 4 && !this.score) {
+        this.$refs.rate1.src = this.fullStar
+        this.$refs.rate2.src = this.fullStar
+        this.$refs.rate3.src = this.fullStar
+        this.$refs.rate4.src = this.fullStar
+      } else if (num === 5 && !this.score) {
+        this.$refs.rate1.src = this.fullStar
+        this.$refs.rate2.src = this.fullStar
+        this.$refs.rate3.src = this.fullStar
+        this.$refs.rate4.src = this.fullStar
+        this.$refs.rate5.src = this.fullStar
       }
     },
     mouseoutStar (num) {
-      if (!this.score) {
-        for (let i = 1; i <= num; i++) {
-          this.$refs[`rate${i}`].src = this.star
-        }
+      if (num === 1 && !this.score) {
+        this.$refs.rate1.src = this.star
+      } else if (num === 2 && !this.score) {
+        this.$refs.rate1.src = this.star
+        this.$refs.rate2.src = this.star
+      } else if (num === 3 && !this.score) {
+        this.$refs.rate1.src = this.star
+        this.$refs.rate2.src = this.star
+        this.$refs.rate3.src = this.star
+      } else if (num === 4 && !this.score) {
+        this.$refs.rate1.src = this.star
+        this.$refs.rate2.src = this.star
+        this.$refs.rate3.src = this.star
+        this.$refs.rate4.src = this.star
+      } else if (num === 5 && !this.score) {
+        this.$refs.rate1.src = this.star
+        this.$refs.rate2.src = this.star
+        this.$refs.rate3.src = this.star
+        this.$refs.rate4.src = this.star
+        this.$refs.rate5.src = this.star
       }
     },
     addProductRate () {
@@ -100,44 +140,95 @@ export default {
       this.toastMessage('評價成功')
     },
     getProduct () {
-      return new Promise((resolve, reject) => {
-        const dataRef = ref(db, `products/${this.productId}`)
+      const { id } = this.$route.params
+
+      const dataRef = ref(db, `products/${id}`)
+      onValue(dataRef, snapshot => {
+        this.product = snapshot.val()
+        this.product.id = id
+        this.mainImg = this.product.imgUrl
+
+        const dataRef = ref(db, 'recipes/')
         onValue(dataRef, snapshot => {
-          const product = snapshot.val()
-          resolve(product)
+          this.recipes = snapshot.val()
+          this.recipes = Object.entries(this.recipes).map(item => {
+            item[1].id = item[0]
+            return item[1]
+          })
+          this.relevantRecipesInfo = this.recipes.filter(recipe => {
+            return this.product.relevantRecipes.includes(recipe.title)
+          })
+          this.endLoading()
         })
       })
     },
-    async getData () {
-      this.product = await this.getProduct()
-      this.product.id = this.productId
-      this.mainImg = this.product.imgUrl
-      this.recipes = await this.getRecipes()
-      this.relevantRecipesInfo = Object.values(this.recipes).filter(recipe => {
-        return this.product.relevantRecipes.includes(recipe.title)
+    getBookmark () {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          this.uid = user.uid
+          const dataRef = ref(db, 'users/' + user.uid)
+          onValue(dataRef, snapshot => {
+            this.user = snapshot.val()
+            const { id } = this.$route.params
+            const dataRef = ref(db, `productBookmarks/${this.uid}/${id}`)
+            onValue(dataRef, snapshot => {
+              this.bookMark = snapshot.val()
+            })
+          })
+        } else {
+          this.uid = null
+          this.user = {}
+          this.bookMark = null
+        }
       })
-      this.getBookmark('productBookmarks', this.productId)
     }
   },
   mounted () {
-    this.startLoading()
-    const { id } = this.$route.params
-    this.productId = id
     this.goToTop()
-    this.getAllRateComment()
-    this.getData()
+
+    this.startLoading()
+    this.getProduct()
+    this.getAllProductRates()
+    this.getBookmark()
   },
   watch: {
     score () {
-      for (let i = 1; i <= 5; i++) {
-        this.$refs[`rate${i}`].src = this.score >= i ? this.fullStar : this.star
+      if (this.score === '1') {
+        this.$refs.rate1.src = this.fullStar
+        this.$refs.rate2.src = this.star
+        this.$refs.rate3.src = this.star
+        this.$refs.rate4.src = this.star
+        this.$refs.rate5.src = this.star
+      } else if (this.score === '2') {
+        this.$refs.rate1.src = this.fullStar
+        this.$refs.rate2.src = this.fullStar
+        this.$refs.rate3.src = this.star
+        this.$refs.rate4.src = this.star
+        this.$refs.rate5.src = this.star
+      } else if (this.score === '3') {
+        this.$refs.rate1.src = this.fullStar
+        this.$refs.rate2.src = this.fullStar
+        this.$refs.rate3.src = this.fullStar
+        this.$refs.rate4.src = this.star
+        this.$refs.rate5.src = this.star
+      } else if (this.score === '4') {
+        this.$refs.rate1.src = this.fullStar
+        this.$refs.rate2.src = this.fullStar
+        this.$refs.rate3.src = this.fullStar
+        this.$refs.rate4.src = this.fullStar
+        this.$refs.rate5.src = this.star
+      } else if (this.score === '5') {
+        this.$refs.rate1.src = this.fullStar
+        this.$refs.rate2.src = this.fullStar
+        this.$refs.rate3.src = this.fullStar
+        this.$refs.rate4.src = this.fullStar
+        this.$refs.rate5.src = this.fullStar
       }
     }
   },
   computed: {
     ...mapState(cartStore, ['loadingItem']),
-    ...mapGetters(dataStore, ['discount']),
-    ...mapState(markStore, ['productBookmark', 'uid', 'user'])
+    ...mapGetters(dataStore, ['discount'])
   }
 }
 </script>
@@ -177,10 +268,10 @@ export default {
             </span>
             <h2 class="mb-0 fs-lg-4 fs-5 fw-bold">{{ product.title }}</h2>
             <div class="d-flex align-items-center ms-auto ">
-              <button v-if="!productBookmark" type="button" class="border-0 bg-transparent text-tomato p-0 mt-1" @click="()=>addBookmark('productBookmarks' ,product)">
+              <button v-if="!bookMark" type="button" class="border-0 bg-transparent text-tomato p-0 mt-1" @click="()=>addBookmark('productBookmarks' ,product)">
                 <i class="bi bi-heart fs-4"></i>
               </button>
-              <button v-else-if="productBookmark" type="button" class=" border-0 bg-transparent text-tomato p-0 mt-1" @click="deleteBookmark('productBookmarks', product.id)">
+              <button v-else-if="bookMark" type="button" class=" border-0 bg-transparent text-tomato p-0 mt-1" @click="deleteBookmark('productBookmarks', product.id)">
                 <i class="bi bi-heart-fill fs-4"></i>
               </button>
               <div class="badge border rounded-pill ms-4 fs-6" :class="{'text-yellow': averageRate, 'text-gray': !averageRate,'border-yellow': averageRate, 'border-gray': !averageRate, 'bg-lightYellow': averageRate, 'bg-whiteGray': !averageRate}">
@@ -268,6 +359,12 @@ export default {
       </h5>
       <form ref="form" @submit.prevent="addProductRate" class="mt-2" v-if="uid">
         <div class="d-flex mb-3">
+          <!-- <div v-for="item in 5" :key="item + 94000" class="form-check px-1">
+            <input class="form-check-input d-none"  type="radio" name="rate" :id="`star${item}`" :value="item" v-model="score" >
+            <label class="form-check-label cursor-pointer" :for="`star${item}`" @mouseover="() => mouseoverStar(item)" @mouseout="() => mouseoutStar(item)">
+              <img :ref="`rate${item}`" :src="star" width="25">
+            </label>
+          </div> -->
           <div class="form-check px-1">
             <input class="form-check-input d-none"  type="radio" name="rate" id="star1"  value="1" v-model="score">
             <label class="form-check-label cursor-pointer" for="star1" @mouseover="() => mouseoverStar(1)" @mouseout="() => mouseoutStar(1)" >
@@ -314,9 +411,13 @@ export default {
             <div>
               <h5 class="fs-6 mb-0">{{ rate.username }}</h5>
               <p class="mb-0">
-                <i v-for="i in 5" :key="i + 400" class="bi bi-star-fill me-1" :class="{'text-yellow':rate.score >= i, 'text-lightGray':rate.score < i}"></i>
+                <i class="bi bi-star-fill me-1" :class="{'text-yellow':rate.score >= 1, 'text-lightGray':rate.score < 1}"></i>
+                <i class="bi bi-star-fill me-1" :class="{'text-yellow':rate.score >= 2, 'text-lightGray':rate.score < 2}"></i>
+                <i class="bi bi-star-fill me-1" :class="{'text-yellow':rate.score >= 3,'text-lightGray':rate.score < 3}"></i>
+                <i class="bi bi-star-fill me-1" :class="{'text-yellow':rate.score >= 4,'text-lightGray':rate.score < 4}"></i>
+                <i class="bi bi-star-fill me-1" :class="{'text-yellow':rate.score >= 5,'text-lightGray':rate.score < 5}"></i>
               </p>
-              <p>{{ new Date(rate.createAt).toLocaleString().split(':')[0] }}:{{ new Date(rate.createAt).toLocaleString().split(':')[1] }}</p>
+              <p>{{ `${new Date(rate.createAt).toLocaleDateString()}` }}</p>
               <p class="mb-2">{{ rate.message }}</p>
             </div>
           </div>

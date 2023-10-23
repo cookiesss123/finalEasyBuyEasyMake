@@ -1,5 +1,4 @@
 <script>
-import loadingStore from '../../stores/loadingStore'
 import { RouterLink } from 'vue-router'
 import { mapActions, mapState, mapGetters } from 'pinia'
 import cartStore from '../../stores/carts'
@@ -8,7 +7,11 @@ import dataStore from '../../stores/mainData'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
 import PaginationComponent from '../../components/PaginationComponent.vue'
 import Collapse from 'bootstrap/js/dist/collapse'
+import { db } from '../../firebase/db'
+import { ref, onValue } from 'firebase/database'
 
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
 import { selections } from '../../utils/publicData'
 import BannerComponent from '../../components/BannerComponent.vue'
 
@@ -16,6 +19,7 @@ export default {
   components: {
     RouterLink,
     PaginationComponent,
+    Loading,
     BannerComponent
   },
   data () {
@@ -30,7 +34,8 @@ export default {
       filterProducts: [],
       pageStatus: '全部',
       selectPage: '全部',
-      search: false
+      search: false,
+      isLoading: false
     }
   },
   mixins: [numberCommaMixin],
@@ -38,29 +43,50 @@ export default {
     ...mapActions(cartStore, ['addCart', 'toastMessage']),
     ...mapActions(markStore, ['addBookmark', 'deleteBookmark', 'getBookmarks']),
     ...mapActions(dataStore, ['getProducts', 'getRates']),
-    ...mapActions(loadingStore, ['startLoading']),
-
-    async getData () {
+    async getAllProducts () {
       this.products = await this.getProducts()
-      this.products = Object.values(this.products)
-      this.filterProducts = this.products
+      const dataRef = ref(db, 'productRates/')
+      onValue(dataRef, snapshot => {
+        const rates = snapshot.val()
 
-      if (!this.$route.query.pageStatus && this.$route.fullPath === '/products') {
-        this.$refs.pagination.renderPage(1, this.filterProducts)
-      } else if (this.$route.query.pageStatus) {
-        this.searchProducts()
-      }
-      this.getBookmarks('productBookmarks')
+        this.products = this.products.map((item, index) => {
+          this.products[index].scores = 0
+          this.products[index].ratePeople = 0
+          this.products[index].averageRate = 0
+          return item
+        })
+
+        this.products.forEach((product, index) => {
+          Object.values(rates).forEach(item => {
+            if (product.id === item.productId && !this.products[index].scores) {
+              this.products[index].scores = item.score
+              this.products[index].ratePeople = 1
+              this.products[index].averageRate = Number((this.products[index].scores / this.products[index].ratePeople).toFixed(1))
+            } else if (product.id === item.productId && this.products[index].scores) {
+              this.products[index].scores += item.score
+              this.products[index].ratePeople += 1
+              this.products[index].averageRate = Number((this.products[index].scores / this.products[index].ratePeople).toFixed(1))
+            }
+          })
+        })
+        this.products.forEach((product, index) => {
+          if (!product.averageRate) {
+            this.products[index].scores = 0
+            this.products[index].ratePeople = 0
+            this.products[index].averageRate = 0
+          }
+        })
+
+        this.filterProducts = this.products
+        if (!this.$route.query.pageStatus && this.$route.fullPath === '/products') {
+          this.$refs.pagination.renderPage(1, this.filterProducts)
+        } else if (this.$route.query.pageStatus) {
+          this.searchProducts()
+        }
+        this.isLoading = false
+      })
     },
     searchProducts () {
-      this.filterProducts.forEach((item, index) => {
-        if (this.rates[item.id]) {
-          this.filterProducts[index].averageRate = this.rates[item.id].averageRate
-        } else if (!this.rates[item.id]) {
-          this.filterProducts[index].averageRate = 0
-        }
-      })
-
       if (this.pageStatus === '全部') {
         this.filterProducts = this.products
       } else if (this.pageStatus === '食材組合包') {
@@ -84,11 +110,17 @@ export default {
       } else if (this.priceOrRate === '評價' && this.highOrLow !== '不拘') {
         if (this.highOrLow === '低到高') {
           this.filterProducts = this.filterProducts.sort((a, b) => {
-            return a.averageRate - b.averageRate
+            if (a.averageRate !== b.averageRate) {
+              return a.averageRate - b.averageRate
+            }
+            return a.scores - b.scores
           })
         } else if (this.highOrLow === '高到低') {
           this.filterProducts = this.filterProducts.sort((a, b) => {
-            return b.averageRate - a.averageRate
+            if (a.averageRate !== b.averageRate) {
+              return b.averageRate - a.averageRate
+            }
+            return b.scores - a.scores
           })
         }
       }
@@ -97,17 +129,10 @@ export default {
       })
       this.search = true
       this.$refs.pagination.renderPage(1, this.filterProducts)
-    },
-    // 選擇菜單
-    select (name) {
-      this.selectPage = name
-      this.productSearchName = ''
-      this.highOrLow = '不拘'
     }
   },
   mounted () {
-    this.startLoading()
-
+    this.isLoading = true
     this.priceOrRateCollapse = new Collapse(this.$refs.priceOrRateCollapse, {
       toggle: false,
       parent: '#myGroup'
@@ -117,19 +142,19 @@ export default {
       toggle: false,
       parent: '#myGroup'
     })
-    if (this.$route.query.pageStatus) {
+    if (this.$route.query.pageStatus || this.$route.query.searchName || this.$route.query.valueHighOrLow || this.$route.query.valuePriceOrRate) {
       this.pageStatus = this.$route.query.pageStatus
-      this.selectPage = this.$route.query.pageStatus
       this.priceOrRate = this.$route.query.valuePriceOrRate
       this.highOrLow = this.$route.query.valueHighOrLow
       this.productSearchName = this.$route.query.searchName
     }
-    this.getRates()
-    this.getData()
+    this.getAllProducts()
+    this.getBookmarks('productBookmarks')
   },
   watch: {
     selectPage () {
       this.pageStatus = this.selectPage
+      this.productSearchName = ''
 
       if (this.pageStatus === '全部') {
         this.filterProducts = this.products
@@ -163,13 +188,31 @@ export default {
 </script>
 <template>
     <div>
+        <loading v-model:active="isLoading"
+                 :lock-scroll="true">
+                 <div class="d-flex flex-column align-items-center py-96">
+      <img src="../../assets/images/loadingLogo.png" class="loading-logo mb-3" alt="logo" >
+      <p class="text-center fw-bold text-purple fs-md-2 fs-5">
+        <span class="me-1 animate-text">L</span>
+        <span class="mx-1 animate-text">o</span>
+        <span class="mx-1 animate-text">a</span>
+        <span class="mx-1 animate-text">d</span>
+        <span class="mx-1 animate-text">i</span>
+        <span class="mx-1 animate-text">n</span>
+        <span class="mx-1 animate-text">g</span>
+        <span class="mx-2 animate-text">.</span>
+        <span class="me-2 animate-text">.</span>
+        <span class="animate-text">.</span>
+      </p>
+    </div>
+        </loading>
       <BannerComponent></BannerComponent>
 
       <section class="container" data-aos="fade-up">
         <div class="pt-lg-4 pt-3 position-relative">
           <ul class="category-selector row row-cols-4 list-unstyled border-bottom">
             <li v-for="item in selections.productCategory" :key="item.icon" class="col text-center" :class="{'pointer-events-none': pageStatus === item.title}">
-              <a href="#"  @click.prevent="()=>select(item.title)" class="text-decoration-none d-inline-block" :class="{'fw-bold': pageStatus === item.title, 'link-primary': pageStatus === item.title}">
+              <a href="#"  @click.prevent="()=>selectPage = item.title" class="text-decoration-none d-inline-block" :class="{'fw-bold': pageStatus === item.title, 'link-primary': pageStatus === item.title}">
                 <i v-if="pageStatus !== item.title" :class="item.icon" class="text-gray"></i>
                 <i v-if="pageStatus === item.title" :class="item.iconSelected" class="text-primary"></i>
                 <span class="fs-12 fs-md-5 d-block pb-2">{{ item.title === '全部' ? '所有' : item.title.slice(0, 2) }}<br class="d-lg-none">{{ item.title === '全部' ? '材料' : item.title.slice(2, 5) }}</span>
@@ -218,7 +261,7 @@ export default {
           </div>
         </div>
 
-        <div v-if="filterProducts.length" class="row row-cols-xl-4 row-cols-lg-3 row-cols-2 gy-4">
+        <div v-if="filterProducts.length && !isLoading" class="row row-cols-xl-4 row-cols-lg-3 row-cols-2 gy-4">
           <div class="col" v-for="product in this.$refs.pagination.pageProducts" :key="product.id">
             <div class="card position-relative">
               <div class="card-img-hover position-relative">
@@ -232,8 +275,8 @@ export default {
                 <button type="button" class="position-absolute btn-bookmark border-0 bg-transparent top-0 end-0 m-2 m-md-3" @click="()=>addBookmark('productBookmarks' ,product)">
                   <img src="../../assets/images/image5.png" alt="收藏按鈕-未收藏">
                 </button>
-                <div v-for="(mark, key) in productBookmarks" :key="key">
-                  <button v-if="key === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-md-3"  @click="()=>deleteBookmark('productBookmarks', product.id)">
+                <div v-for="mark in productBookmarks" :key="mark">
+                  <button v-if="mark === product.id" type="button" class="position-absolute btn-bookmark-delete border-0 bg-transparent top-0 end-0 m-2 m-md-3"  @click="()=>deleteBookmark('productBookmarks', product.id)">
                       <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
                   </button>
                 </div>
@@ -248,22 +291,14 @@ export default {
                     <span class="me-1" :class="{'text-danger':product.isCheaper, 'fw-bold':product.isCheaper}">NT$ {{numberComma(product.price)}}</span>
                     <span> / {{ product.num }}{{ product.unit }}</span>
 
-                    <span v-if="rates[product.id]" class="badge rounded-pill ms-auto border d-none d-md-block" :class="{'text-yellow': rates[product.id].averageRate, 'border-yellow': rates[product.id].averageRate, 'bg-lightYellow': rates[product.id].averageRate, 'bg-whiteGray': !rates[product.id].averageRate, 'text-gray': !rates[product.id].averageRate, 'border-gray': !rates[product.id].averageRate}">
-                      {{ rates[product.id].averageRate }}
-                      <i class="bi bi-star-fill"></i>
-                    </span>
-                    <span v-else-if="!rates[product.id]" class="badge rounded-pill ms-auto border d-none d-md-block bg-whiteGray text-gray border-gray">
-                      0
+                    <span class="badge rounded-pill ms-auto border d-none d-md-block" :class="{'text-yellow': product.averageRate, 'border-yellow': product.averageRate, 'bg-lightYellow': product.averageRate, 'bg-whiteGray': !product.averageRate, 'text-gray': !product.averageRate, 'border-gray': !product.averageRate}">
+                      {{ product.averageRate }}
                       <i class="bi bi-star-fill"></i>
                     </span>
                 </div>
                 <div class="text-end mt-1 d-md-none fs-12">
-                  <span v-if="rates[product.id]" class="badge rounded-pill ms-auto border d-md-none" :class="{'text-yellow': rates[product.id].averageRate, 'border-yellow': rates[product.id].averageRate, 'bg-lightYellow': rates[product.id].averageRate, 'bg-whiteGray': !rates[product.id].averageRate, 'text-gray': !rates[product.id].averageRate, 'border-gray': !rates[product.id].averageRate}">
-                    {{ rates[product.id].averageRate }}
-                    <i class="bi bi-star-fill"></i>
-                  </span>
-                  <span v-else-if="!rates[product.id]" class="badge rounded-pill ms-auto border d-md-none bg-whiteGray text-gray border-gray">
-                    0
+                  <span class="badge rounded-pill ms-auto border d-md-none" :class="{'text-yellow': product.averageRate, 'border-yellow': product.averageRate, 'bg-lightYellow': product.averageRate, 'bg-whiteGray': !product.averageRate, 'text-gray': !product.averageRate, 'border-gray': !product.averageRate}">
+                    {{ product.averageRate }}
                     <i class="bi bi-star-fill"></i>
                   </span>
                 </div>
@@ -272,7 +307,7 @@ export default {
           </div>
         </div>
 
-        <div v-else-if="!filterProducts.length && search" class="py-lg-4 text-center">
+        <div v-else-if="!filterProducts.length && search && !isLoading" class="py-lg-4 text-center">
           <img src="../../assets/images/undraw_Page_not_found_re_e9o6.png" class="mb-lg-3 mb-2 img-md-200-sm-150" alt="查無資訊">
           <p class="fs-lg-3 fs-6">查無商品，請您重新查詢</p>
         </div>
