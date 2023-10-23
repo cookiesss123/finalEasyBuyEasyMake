@@ -11,6 +11,8 @@ import dataStore from '../../stores/mainData'
 import markStore from '../../stores/bookmark'
 import { selections } from '../../utils/publicData'
 import BannerComponent from '../../components/BannerComponent.vue'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '../../firebase/db'
 export default {
   components: {
     RouterLink,
@@ -39,21 +41,26 @@ export default {
     openDeleteModal (id, item) {
       this.deleteId = id
       this.deleteItem = item
+    },
+    checkLogin () {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          this.uid = user.uid
+        } else {
+          this.toastMessage('請先登入', 'error')
+          this.$router.push('/loginSignup')
+        }
+      })
     }
   },
   mounted () {
+    this.checkLogin()
     this.startLoading()
     this.goToTop()
     this.getBookmarks('recipeBookmarks')
     this.getBookmarks('productBookmarks')
     this.getThumbs()
     this.getRates()
-  },
-  watch: {
-    recipeBookmarks () {
-      // if (this.recipeBookmarks) {
-      // }
-    }
   },
   computed: {
     ...mapGetters(dataStore, ['discount']),
