@@ -20,7 +20,7 @@ export default {
   },
   mixins: [numberCommaMixin],
   methods: {
-    ...mapActions(cartStore, ['addOrder']),
+    ...mapActions(cartStore, ['addOrder', 'goToTop', 'toastMessage']),
     isPhone (value) {
       const phoneNumber = /^(09)[0-9]{8}$/
       return phoneNumber.test(value) ? true : '需要正確的電話號碼'
@@ -30,7 +30,20 @@ export default {
     this.goToTop()
   },
   computed: {
-    ...mapState(cartStore, ['cart', 'cartItems', 'goToTop'])
+    ...mapState(cartStore, ['cart', 'cartItems', 'myOrder'])
+  },
+  watch: {
+    cartItems () {
+      if (!this.cartItems.length && !Object.keys(this.myOrder).length) {
+        this.$swal({
+          icon: 'warning',
+          title: '請您重新操作',
+          showConfirmButton: false,
+          timer: 2500
+        })
+        this.$router.push('/products')
+      }
+    }
   }
 }
 </script>
@@ -62,7 +75,6 @@ export default {
                     </li>
                 </ul>
             </div>
-
             <div class="row row-cols-1 row-cols-lg-2 g-5">
                 <div class="col d-flex flex-column">
                     <h4 class="text-center fw-bold mb-4 bg-secondary py-2">商品確認</h4>
@@ -95,7 +107,7 @@ export default {
                             <hr>
                         </li>
                     </ul>
-                    <table class="table table-borderless">
+                    <table v-if="cart" class="table table-borderless">
                         <thead>
                             <tr>
                                 <th class="fw-normal">商品總金額</th>
@@ -209,6 +221,3 @@ export default {
       </section>
     </div>
 </template>
-<style>
-
-</style>

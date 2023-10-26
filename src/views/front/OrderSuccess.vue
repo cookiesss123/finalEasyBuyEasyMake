@@ -2,44 +2,44 @@
 import { mapActions, mapState } from 'pinia'
 import cartStore from '../../stores/carts'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
+import BannerComponent from '../../components/BannerComponent.vue'
 import { auth } from '../../firebase/db'
 import { onAuthStateChanged } from 'firebase/auth'
-import BannerComponent from '../../components/BannerComponent.vue'
 
 export default {
-  data () {
-    return {
-      uid: ''
-    }
-  },
   components: {
     BannerComponent
   },
   mixins: [numberCommaMixin],
   methods: {
-    ...mapActions(cartStore, ['getOrder', 'toastMessage', 'goToTop']),
+    ...mapActions(cartStore, ['toastMessage', 'goToTop', 'getOrder']),
     getMyOrder () {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          this.uid = user.uid
-          this.getOrder(this.uid)
-        } else {
-          this.uid = null
-          // 遊客
-          this.getOrder('1')
+          this.getOrder(user.uid)
         }
       })
     }
-
   },
   mounted () {
     this.goToTop()
-
-    this.toastMessage('恭喜您! 訂單建立完成')
     this.getMyOrder()
   },
   computed: {
-    ...mapState(cartStore, ['myOrder'])
+    ...mapState(cartStore, ['myOrder', 'visitorId'])
+  },
+  watch: {
+    visitorId () {
+      if (!Object.keys(this.myOrder).length) {
+        this.$swal({
+          icon: 'warning',
+          title: '出現錯誤！為您返回商品頁面',
+          showConfirmButton: false,
+          timer: 2500
+        })
+        this.$router.push('/products')
+      }
+    }
   }
 }
 </script>
@@ -78,7 +78,7 @@ export default {
 
             <div v-if="myOrder.cart">
                 <div class="d-flex align-items-center mb-2">
-                    <span>會員可到 <RouterLink to="/member" class="link-primary">會員專區</RouterLink> 查看訂單運送進度</span>
+                    <span>當商品到達收貨地址會傳送簡訊通知您。會員可到 <RouterLink to="/member" class="link-primary">會員專區</RouterLink> 查看訂單運送進度。</span>
                     <RouterLink to="/products" class="btn btn-sm btn-primary rounded-0 hvr-sweep-to-right ms-auto">繼續購物</RouterLink>
                 </div>
                 <p class="mb-5">訂單建立時間：{{ new Date(myOrder.creatAt).toLocaleString().split(':')[0] }}:{{ new Date(myOrder.creatAt).toLocaleString().split(':')[1] }}</p>

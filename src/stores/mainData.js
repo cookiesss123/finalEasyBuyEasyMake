@@ -6,11 +6,9 @@ const dataStore = defineStore('mainData', {
   state: () => {
     return {
       thumbs: {},
-      // 3個讚以上
-      highThumbs: {},
+      highThumbs: {}, // 3個讚以上
       rates: {},
-      // 4 星以上
-      highRates: {}
+      highRates: {} // 4 星以上
     }
   },
   actions: {
@@ -45,19 +43,6 @@ const dataStore = defineStore('mainData', {
       const dataRef = ref(db, 'recipeThumbs/')
       onValue(dataRef, snapshot => {
         const thumbs = snapshot.val()
-        // 把讚數填入
-        // recipes.forEach((recipe, index) => {
-        //   Object.keys(thumbs).forEach(thumbId => {
-        //     if (recipe.id === thumbId) {
-        //       recipes[index].thumbs = thumbs[recipe.id].thumbs
-        //     }
-        //   })
-        // })
-        // recipes.forEach((recipe, index) => {
-        //   if (!recipe.thumbs) {
-        //     recipes[index].thumbs = 0
-        //   }
-        // })
         this.thumbs = thumbs
         Object.entries(this.thumbs).forEach(item => {
           if (item[1].thumbs > 2) {

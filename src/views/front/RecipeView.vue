@@ -38,8 +38,7 @@ export default {
       recipeComments: [],
       recipeMessage: '',
       qty: 1,
-      groupProduct: {},
-      isLoading: false
+      groupProduct: {}
     }
   },
   methods: {

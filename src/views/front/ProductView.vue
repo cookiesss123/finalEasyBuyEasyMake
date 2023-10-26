@@ -200,7 +200,7 @@ export default {
                 <select name="" id="" class="form-select text-center" v-model="qty">
                   <option :value="number" v-for="number in 30" :key="number + 4596945">{{ number}}</option>
                 </select>
-                <button :disabled="loadingItem === 'loading'" class="btn btn-primary" type="button" @click="()=>addCart(product, qty)">
+                <button :disabled="loadingItem" class="btn btn-primary" type="button" @click="()=>addCart(product, qty)">
                   購買
                 </button>
               </div>

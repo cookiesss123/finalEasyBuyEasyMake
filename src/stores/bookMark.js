@@ -34,8 +34,6 @@ const markStore = defineStore('bookmark', {
       remove(ref(db, `${bookmark}/${this.uid}/${itemId}`))
       cartStore.toastMessage('已刪除收藏')
     },
-    // 改成包在裡面
-    // recipeBookmarks productBookmarks
     getBookmarks (dataName) {
       onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -62,7 +60,7 @@ const markStore = defineStore('bookmark', {
           this.uid = user.uid
           const dataRef = ref(db, 'users/' + user.uid)
           onValue(dataRef, snapshot => {
-            this.user = snapshot.val()
+            this.user = snapshot.val() // 食譜、產品單頁調用大頭貼、暱稱
             const dataRef = ref(db, `${bookmark}/${this.uid}/${id}`)
             onValue(dataRef, snapshot => {
               if (bookmark === 'recipeBookmarks') {

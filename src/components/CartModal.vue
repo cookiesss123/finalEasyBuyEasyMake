@@ -11,9 +11,9 @@
                 <div v-if="this.$route.fullPath !== '/checkout'" class="h-100">
                   <div v-if="cartItems.length !== 0" class="d-flex flex-column h-100">
                     <div class="text-end mb-3">
-                      <button type="button" class="btn btn-outline-danger" @click="clearAllCarts" :disabled="loadingItem === 'loading'">
+                      <button type="button" class="btn btn-outline-danger" @click="clearAllCarts" :disabled="loadingItem">
                         清空購物車
-                        <div v-if="loadingItem === 'loading'" class="spinner-border spinner-border-sm" role="status">
+                        <div v-if="loadingItem" class="spinner-border spinner-border-sm" role="status">
                           <span class="visually-hidden">Loading...</span>
                         </div>
                       </button>
@@ -41,21 +41,21 @@
                                   <span :class="{'text-danger':item.product.isCheaper, 'fw-bold':item.product.isCheaper}">NT$ {{numberComma(item.product.price)}}</span>
                                   <span>  / {{ item.product.num }}{{ item.product.unit }}</span><br>
 
-                                  <p class="mb-0 text-danger text-end fw-bold">小計：NT$ {{ numberComma(item.product.price * item.qty) }} / {{  }}{{ item.product.category !== '組合包' ? numberComma(item.product.num * item.qty) + item.product.unit : numberComma(item.qty) + '組' }}</p>
+                                  <p class="mb-0 text-danger text-end fw-bold">小計：NT$ {{ numberComma(item.product.price * item.qty) }} / {{ item.product.category !== '組合包' ? numberComma(item.product.num * item.qty) + item.product.unit : numberComma(item.qty) + '組' }}</p>
                                 </div>
 
                                 <div class="d-flex justify-content-end align-items-center mt-2">
-                                  <button :disabled="loadingItem === 'loading'" class="btn btn-sm btn-outline-gradient rounded-circle" :class="{'disabled': item.qty === 1}"  style="width: 30px; height: 30px;" type="button" @click="()=>updateCartNum('reduce', item.product, item.qty)">
-                                    <span v-if="loadingItem !== 'loading'">-</span>
-                                    <div v-else-if="loadingItem === 'loading'" class="spinner-border spinner-border-sm" role="status">
+                                  <button :disabled="loadingItem" class="btn btn-sm btn-outline-gradient rounded-circle" :class="{'disabled': item.qty === 1}"  style="width: 30px; height: 30px;" type="button" @click="()=>updateCartNum('reduce', item.product, item.qty)">
+                                    <span v-if="!loadingItem">-</span>
+                                    <div v-else-if="loadingItem" class="spinner-border spinner-border-sm" role="status">
                                       <span class="visually-hidden">Loading...</span>
                                     </div>
                                   </button>
 
                                   <input type="number" class="form-control border-0 text-center mx-2" v-model.number="item.qty" @change="changeCartNum(item.product, item.qty, $event)"  style="width: 70px;" @keydown="handleKeyDown">
-                                  <button :disabled="loadingItem === 'loading'" class="btn btn-sm btn-outline-gradient rounded-circle" style="width: 30px; height: 30px;" type="button" @click="()=>updateCartNum('add',item.product, item.qty)">
-                                    <span v-if="loadingItem !== 'loading'">+</span>
-                                    <div v-else-if="loadingItem === 'loading'" class="spinner-border spinner-border-sm" role="status">
+                                  <button :disabled="loadingItem" class="btn btn-sm btn-outline-gradient rounded-circle" style="width: 30px; height: 30px;" type="button" @click="()=>updateCartNum('add',item.product, item.qty)">
+                                    <span v-if="!loadingItem">+</span>
+                                    <div v-else-if="loadingItem" class="spinner-border spinner-border-sm" role="status">
                                       <span class="visually-hidden">Loading...</span>
                                     </div>
                                   </button>
@@ -134,21 +134,16 @@ import modalMixin from '../mixins/modalMixin'
 import { mapActions, mapState, mapGetters } from 'pinia'
 import cartStore from '../stores/carts'
 import numberCommaMixin from '../mixins/numberCommaMixin'
-import { db, auth } from '../firebase/db'
-import { onAuthStateChanged } from 'firebase/auth'
-import { ref, onValue } from 'firebase/database'
 
 export default {
   data () {
     return {
-      code: '',
-      uid: '',
-      user: {}
+      code: ''
     }
   },
   mixins: [modalMixin, numberCommaMixin],
   methods: {
-    ...mapActions(cartStore, ['updateCartNum', 'changeCartNum', 'handleKeyDown', 'deleteCart', 'deleteAllCarts', 'getCoupons', 'checkCoupon', 'reUseCoupon', 'getCart', 'toastMessage']),
+    ...mapActions(cartStore, ['updateCartNum', 'changeCartNum', 'handleKeyDown', 'deleteCart', 'deleteAllCarts', 'getCoupons', 'useCoupon', 'reUseCoupon', 'toastMessage']),
     cancelCoupon () {
       this.code = ''
       this.reUseCoupon()
@@ -158,34 +153,38 @@ export default {
       this.deleteAllCarts()
       this.toastMessage('已清空遊客購物車')
     },
-    getCartData () {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          this.uid = user.uid
-          this.getCart(this.uid)
-          const dataRef = ref(db, 'users/' + user.uid)
-          onValue(dataRef, snapshot => {
-            this.user = snapshot.val()
-          })
-        } else {
-          this.uid = null
-          this.user = {}
-          this.getCart('1')
-        }
+    async checkCoupon (couponCode) {
+      let coupons = await this.getCoupons()
+      coupons = Object.values(coupons).filter(coupon => coupon.isEnabled === true)
+
+      const usable = coupons.filter(coupon => {
+        return coupon.code === couponCode
       })
+      if (usable.length === 0) {
+        this.code = ''
+        this.toastMessage('沒有這個優惠券', 'error')
+      } else if (usable.length === 1) {
+        if (this.cart.total < usable[0].condition) {
+          this.code = ''
+          this.toastMessage(`您的消費額未滿${usable[0].condition}元`, 'error')
+          return
+        }
+        this.toastMessage('使用成功')
+        this.useCoupon(usable[0])
+      }
     }
-  },
-  mounted () {
-    this.getCoupons()
-    this.getCartData()
   },
   watch: {
     '$route.fullPath' (newVal) {
       if (newVal === '/checkout') {
-        this.code = ''
         this.hide()
       } else if (newVal.includes('/products')) {
         this.hide()
+      }
+    },
+    cartNum () {
+      if (this.cartNum) { // 購物車品項新增或刪減 刪除優惠券輸入框內容
+        this.code = ''
       }
     }
   },
@@ -206,5 +205,4 @@ input[type="number"] {
   -moz-appearance: textfield; /* Firefox */
   appearance: textfield;
 }
-
 </style>

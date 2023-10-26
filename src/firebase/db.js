@@ -1,5 +1,4 @@
 import { initializeApp } from 'firebase/app'
-// 取得資料
 import { getDatabase } from 'firebase/database'
 import { getAuth } from 'firebase/auth'
 
@@ -19,7 +18,5 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig)
 const db = getDatabase(firebaseApp)
 const auth = getAuth(firebaseApp)
-
-// export default writeUserData
 
 export { db, auth }

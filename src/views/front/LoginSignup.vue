@@ -194,7 +194,8 @@ import cartStore from '../../stores/carts'
 import { RouterLink } from 'vue-router'
 import { auth, db } from '../../firebase/db'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
-import { set, ref, onValue } from 'firebase/database'
+// onValue
+import { set, ref, get } from 'firebase/database'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Navigation, Pagination, Autoplay } from 'swiper'
 import 'swiper/css'
@@ -249,14 +250,13 @@ export default {
         })
 
         const dataRef = ref(db, 'users/' + userDetail.uid)
-        onValue(dataRef, snapshot => {
-          const data = snapshot.val()
-          if (data.admin) {
-            this.$router.push('/admin/recipes')
-          } else {
-            this.$router.push('/home')
-          }
-        })
+        const snapshot = await get(dataRef)
+        const data = snapshot.val()
+        if (data.admin) {
+          this.$router.push('/admin/recipes')
+        } else {
+          this.$router.push('/home')
+        }
       } catch (e) {
         console.log(e.message)
         let title = '密碼錯誤'
@@ -279,7 +279,7 @@ export default {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password)
         const userDetail = userCredential.user
         const reference = ref(db, 'users/' + userDetail.uid)
-        set(reference, {
+        await set(reference, {
           email,
           nickName: this.signupUser.nickName,
           lotteryTicket: this.signupUser.lotteryTicket,

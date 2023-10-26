@@ -30,6 +30,7 @@ import { db } from '../firebase/db'
 import { ref, remove } from 'firebase/database'
 import { mapActions, mapState } from 'pinia'
 import cartStore from '../stores/carts'
+import markStore from '../stores/bookmark'
 export default {
   data () {
     return {
@@ -62,7 +63,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(cartStore, ['uid'])
+    ...mapState(markStore, ['uid'])
   },
   mounted () {
   }

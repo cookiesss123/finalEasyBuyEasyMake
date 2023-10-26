@@ -237,7 +237,7 @@ export default {
                       <img src="../../assets/images/image4.png" alt="收藏按鈕-已收藏">
                   </button>
                 </div>
-                <button :disabled="loadingItem === 'loading'" @click="()=>addCart(product)" type="button" class="btn-buy border-0 bg-transparent m-2 m-md-3 p-0 position-absolute end-0 bottom-0">
+                <button :disabled="loadingItem" @click="()=>addCart(product)" type="button" class="btn-buy border-0 bg-transparent m-2 m-md-3 p-0 position-absolute end-0 bottom-0">
                   <img src="../../assets/images/icon-cart.png"  alt="購物車按鈕" class="shadow-sm">
                 </button>
               </div>

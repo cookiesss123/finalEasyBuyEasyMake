@@ -114,13 +114,13 @@
                   </select>
                 </li>
               </ul>
-              <div class="pt-2 border-0 position-relative ">
-                <div class="border rounded-pill border-primary">
+              <div class="row g-0 pt-2">
+                <div class="col-10 border rounded-pill border-primary">
                   <input type="search" class="form-control border-0 rounded-pill" placeholder="請輸入甜點名稱" v-model="recipeSearchName" @keyup.enter="searchRecipes">
-                  <button type="submit" class="border-0 bg-transparent position-absolute end-0 bottom-0" @click="searchRecipes">
+                </div>
+                <button type="submit" class="col-2 border-0 bg-transparent" @click="searchRecipes">
                     <span class="material-icons-outlined text-primary" >search</span>
                   </button>
-                </div>
               </div>
             </div>
             <!-- 產品搜尋 -->
@@ -146,13 +146,13 @@
                   </select>
                 </li>
               </ul>
-              <div class="pt-2 border-0 position-relative">
-                <div class="border rounded-pill border-primary">
+              <div class="pt-2 row g-0">
+                <div class="col-10 border rounded-pill border-primary">
                   <input type="search" class="form-control border-0 rounded-pill" placeholder="請輸入產品名稱" v-model="productSearchName" @keyup.enter="searchProducts">
-                  <button type="submit" class="border-0 bg-transparent position-absolute end-0 bottom-0" @click="searchProducts">
-                  <span class="material-icons-outlined text-primary">search</span>
-                  </button>
                 </div>
+                <button type="submit" class="col-2 border-0 bg-transparent" @click="searchProducts">
+                  <span class="material-icons-outlined text-primary">search</span>
+                </button>
               </div>
 
             </div>

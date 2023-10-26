@@ -1,29 +1,25 @@
 <script>
+import loadingStore from '../../stores/loadingStore'
 import { mapActions } from 'pinia'
 import cartStore from '../../stores/carts'
 import numberCommaMixin from '../../mixins/numberCommaMixin'
 import { db, auth } from '../../firebase/db'
 import { ref, onValue } from 'firebase/database'
 import { onAuthStateChanged } from 'firebase/auth'
-import Loading from 'vue-loading-overlay'
-import 'vue-loading-overlay/dist/css/index.css'
 export default {
   data () {
     return {
       uid: '',
       order: {},
-      barWidth: 0,
-      isLoading: false
+      barWidth: 0
     }
-  },
-  components: {
-    Loading
   },
   mixins: [numberCommaMixin],
   methods: {
     ...mapActions(cartStore, ['goToTop']),
+    ...mapActions(loadingStore, ['startLoading', 'endLoading']),
     getOrder () {
-      this.isLoading = true
+      this.startLoading()
       const { id } = this.$route.params
       onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -31,9 +27,10 @@ export default {
           const dataRef = ref(db, `orders/${this.uid}/${id}`)
           onValue(dataRef, snapshot => {
             this.order = snapshot.val()
-            // 非本人驅逐
+            // 驅逐非本人
             if (!this.order) {
               this.$router.push('/loginSignup')
+              this.endLoading()
               return
             }
             this.order.id = id
@@ -46,9 +43,10 @@ export default {
             } else if (this.order.deliveryStatus === '訂單完成') {
               this.barWidth = 100
             }
-            this.isLoading = false
+            this.endLoading()
           })
         } else {
+          this.endLoading()
           this.uid = null
           if (!this.uid) {
             this.$router.push('/loginSignup')
@@ -65,24 +63,6 @@ export default {
 </script>
 <template>
     <section v-if="order" class="py-md-96 py-60 container no-scroll-x">
-        <loading v-model:active="isLoading"
-                 :lock-scroll="true">
-                 <div class="d-flex flex-column align-items-center py-96">
-      <img src="../../assets/images/loadingLogo.png" class="loading-logo mb-3" alt="logo" >
-      <p class="text-center fw-bold text-purple fs-md-2 fs-5">
-        <span class="me-1 animate-text">L</span>
-        <span class="mx-1 animate-text">o</span>
-        <span class="mx-1 animate-text">a</span>
-        <span class="mx-1 animate-text">d</span>
-        <span class="mx-1 animate-text">i</span>
-        <span class="mx-1 animate-text">n</span>
-        <span class="mx-1 animate-text">g</span>
-        <span class="mx-2 animate-text">.</span>
-        <span class="me-2 animate-text">.</span>
-        <span class="animate-text">.</span>
-      </p>
-    </div>
-        </loading>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item "><RouterLink to="/member" href="#" class="link-primary">會員專區</RouterLink></li>

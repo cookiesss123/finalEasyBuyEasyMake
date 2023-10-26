@@ -1,4 +1,5 @@
 <script>
+import loadingStore from '../../stores/loadingStore'
 import { mapActions } from 'pinia'
 import cartStore from '../../stores/carts'
 import PaginationComponent from '../../components/PaginationComponent.vue'
@@ -6,14 +7,11 @@ import numberCommaMixin from '../../mixins/numberCommaMixin'
 import { db, auth } from '../../firebase/db'
 import { ref, onValue, update } from 'firebase/database'
 import { onAuthStateChanged, updatePassword } from 'firebase/auth'
-import Loading from 'vue-loading-overlay'
-import 'vue-loading-overlay/dist/css/index.css'
 import { selections } from '../../utils/publicData'
 import BannerComponent from '../../components/BannerComponent.vue'
 export default {
   components: {
     PaginationComponent,
-    Loading,
     BannerComponent
   },
   mixins: [numberCommaMixin],
@@ -29,42 +27,60 @@ export default {
       nickNameEdit: true,
       passwordEdit: true,
       newNickName: '',
-      newPassword: '',
-      isLoading: false
+      newPassword: ''
     }
   },
   methods: {
     ...mapActions(cartStore, ['toastMessage', 'goToTop']),
+    ...mapActions(loadingStore, ['startLoading', 'endLoading']),
+    // 要即時更新
     getUserInformation () {
-      return new Promise((resolve, reject) => {
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-            this.uid = user.uid
-            const dataRef = ref(db, 'users/' + this.uid)
-            onValue(dataRef, snapshot => {
-              const userData = snapshot.val()
-              resolve(userData)
-            })
-          } else {
-            this.isLoading = false
-            this.uid = null
-            this.user = {}
-            this.toastMessage('請先登入', 'error')
-            this.$router.push('/loginSignup')
-          }
-        })
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          this.uid = user.uid
+          const dataRef = ref(db, 'users/' + this.uid)
+          onValue(dataRef, snapshot => {
+            this.user = snapshot.val()
+          })
+        } else {
+          this.uid = null
+          this.user = {}
+          this.toastMessage('請先登入', 'error')
+          this.$router.push('/loginSignup')
+        }
       })
     },
     getOrders () {
-      return new Promise((resolve, reject) => {
-        const dataRef = ref(db, `orders/${this.uid}`)
-        onValue(dataRef, snapshot => {
-          let orders = snapshot.val()
-          if (!orders) {
-            orders = {}
-          }
-          resolve(orders)
-        })
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const dataRef = ref(db, `orders/${user.uid}`)
+          onValue(dataRef, snapshot => {
+            this.orders = snapshot.val()
+            this.endLoading()
+            if (!this.orders) {
+              this.orders = []
+              return
+            }
+            this.orders = Object.entries(this.orders).map(item => {
+              item[1].id = item[0]
+              return item[1]
+            })
+            this.filterOrders = (this.orders).reverse()
+            this.orderArrived = this.orders.filter(order => {
+              return order.deliveryStatus === '待取貨'
+            })
+            // 避免錯誤
+            if (this.filterOrders && this.$route.fullPath === '/member') {
+              this.$refs.pagination.renderPage(1, this.filterOrders)
+            }
+          }, {
+            onlyOnce: true
+          })
+        } else {
+          this.endLoading()
+          this.toastMessage('請先登入', 'error')
+          this.$router.push('/loginSignup')
+        }
       })
     },
     changeEmail () {
@@ -159,36 +175,13 @@ export default {
       } else {
         this.toastMessage('請勿輸入空值', 'error')
       }
-    },
-    async getAllData () {
-      try {
-        this.isLoading = true
-        this.user = await this.getUserInformation()
-        this.orders = await this.getOrders()
-        // 處理訂單資訊
-        this.orders = Object.entries(this.orders).map(item => {
-          item[1].id = item[0]
-          return item[1]
-        })
-        // 反轉 最晚的訂單在前面
-        this.filterOrders = (this.orders).reverse()
-        this.orderArrived = this.orders.filter(order => {
-          return order.deliveryStatus === '待取貨'
-        })
-        // 避免錯誤
-        if (this.filterOrders && this.$route.fullPath === '/member') {
-          this.$refs.pagination.renderPage(1, this.filterOrders)
-        }
-        this.isLoading = false
-      } catch (err) {
-        throw new Error(err)
-      }
     }
   },
   mounted () {
+    this.startLoading()
     this.goToTop()
     this.getUserInformation()
-    this.getAllData()
+    this.getOrders()
   },
   watch: {
     selectItem () {
@@ -209,24 +202,6 @@ export default {
 </script>
 <template>
     <div class="no-scroll-x">
-      <loading v-model:active="isLoading"
-              :lock-scroll="true">
-              <div class="d-flex flex-column align-items-center py-96">
-                <img src="../../assets/images/loadingLogo.png" class="loading-logo mb-3" alt="logo" >
-                <p class="text-center fw-bold text-purple fs-md-2 fs-5">
-                  <span class="me-1 animate-text">L</span>
-                  <span class="mx-1 animate-text">o</span>
-                  <span class="mx-1 animate-text">a</span>
-                  <span class="mx-1 animate-text">d</span>
-                  <span class="mx-1 animate-text">i</span>
-                  <span class="mx-1 animate-text">n</span>
-                  <span class="mx-1 animate-text">g</span>
-                  <span class="mx-2 animate-text">.</span>
-                  <span class="me-2 animate-text">.</span>
-                  <span class="animate-text">.</span>
-                </p>
-              </div>
-      </loading>
       <BannerComponent></BannerComponent>
       <div class="container">
         <section class="row row-cols-1 row-cols-lg-2 g-5 py-lg-96 py-5">
@@ -362,6 +337,5 @@ export default {
         </section>
 
       </div>
-
     </div>
 </template>
