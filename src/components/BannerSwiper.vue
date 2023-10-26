@@ -114,13 +114,13 @@
                                     </div>
 
                                 </div>
-                                <div class="card-footer rounded-2 bg-white pb-3 position-relative">
-                                    <div class="border rounded-pill border-purple">
-                                    <input type="search" class="form-control border-0 rounded-pill " placeholder="請輸入食材名稱" v-model="productSearchName" @keyup.enter="searchProducts">
-                                    <button type="submit" class="border-0 bg-transparent position-absolute translate-middle end-0 mt-n3" style="" @click="searchProducts">
-                                    <span class="material-icons-outlined text-purple">search</span>
-                                    </button>
+                                <div class="card-footer rounded-2 bg-transparent d-flex pb-3">
+                                    <div class="flex-grow-1 border rounded-pill border-purple">
+                                        <input type="search" class="form-control border-0 rounded-pill " placeholder="請輸入食材名稱" v-model="productSearchName" @keyup.enter="searchProducts">
                                     </div>
+                                    <button type="submit" class="border-0 bg-transparent me-n2" @click="searchProducts">
+                                        <span class="material-icons-outlined text-purple">search</span>
+                                    </button>
                                 </div>
                                 </div>
                             </div>
@@ -149,13 +149,13 @@
                                     </div>
                                     </div>
                                 </div>
-                                <div class="card-footer rounded-2 bg-white pb-3 position-relative">
-                                    <div class="border rounded-pill border-primary">
-                                    <input type="search" class="form-control border-0 rounded-pill " placeholder="請輸入甜點名稱" v-model="recipeSearchName" @keyup.enter="searchRecipes">
-                                    <button type="submit" class="border-0 bg-transparent position-absolute translate-middle end-0 mt-n3"  @click="searchRecipes">
-                                    <span class="material-icons-outlined text-primary">search</span>
-                                    </button>
+                                <div class="card-footer rounded-2 bg-transparent pb-3 d-flex">
+                                    <div class="flex-grow-1 border rounded-pill border-primary">
+                                        <input type="search" class="form-control border-0 rounded-pill " placeholder="請輸入甜點名稱" v-model="recipeSearchName" @keyup.enter="searchRecipes">
                                     </div>
+                                    <button type="submit" class="border-0 bg-transparent me-n2"  @click="searchRecipes">
+                                        <span class="material-icons-outlined text-primary">search</span>
+                                    </button>
                                 </div>
                                 </div>
                             </div>
