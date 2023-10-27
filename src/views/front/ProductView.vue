@@ -261,12 +261,12 @@ export default {
           <RouterLink to="/loginSignup" v-if="!uid" class="ms-auto mb-1 btn btn-outline-gradient rounded-pill">我要登入寫評價</RouterLink>
       </h3>
 
-      <h5 class="mb-2 fw-bold d-flex align-items-center">
-        <img v-if="user.headshotImg" :src="user.headshotImg" alt="大頭貼" width="50" height="50" class="rounded-circle me-3 object-fit-cover">
-        <i v-else-if="!user.headshotImg" class="bi bi-person-circle me-3 fs-45"></i>
-        {{ user.nickName }}
-      </h5>
       <form ref="form" @submit.prevent="addProductRate" class="mt-2" v-if="uid">
+        <h5 class="mb-2 fw-bold d-flex align-items-center">
+          <img v-if="user.headshotImg" :src="user.headshotImg" alt="大頭貼" width="50" height="50" class="rounded-circle me-3 object-fit-cover">
+          <i v-else-if="!user.headshotImg" class="bi bi-person-circle me-3 fs-45"></i>
+          {{ user.nickName }}
+        </h5>
         <div class="d-flex mb-3">
           <div class="form-check px-1">
             <input class="form-check-input d-none"  type="radio" name="rate" id="star1"  value="1" v-model="score">
